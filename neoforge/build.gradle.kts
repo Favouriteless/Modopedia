@@ -32,12 +32,15 @@ runs {
         systemProperty("forge.logging.console.level", "debug")
 
         modSource(project.sourceSets.getByName("main"))
-        modSource(project(":common").sourceSets.getByName("main"))
     }
 
     create("client") {
         workingDirectory(project.file("runs/$name"))
         systemProperty("neoforge.enabledGameTestNamespaces", mod_id)
+        programArguments.addAll(
+            "--username", "Favouriteless",
+            "--uuid", "9410df73-6be3-41d5-a620-51b2e9be667b"
+        )
     }
 
     create("server") {
@@ -57,8 +60,8 @@ runs {
 }
 
 dependencies {
-    implementation( libs.neoforge )
     compileOnly( project(":common") )
+    implementation( libs.neoforge )
     implementation( libs.jsr305 )
 }
 

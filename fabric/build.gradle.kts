@@ -35,6 +35,7 @@ repositories {
 
 
 dependencies {
+    compileOnly( project(":common") )
     minecraft( libs.minecraft )
     implementation( libs.jsr305 )
     mappings(loom.layered() {
@@ -43,7 +44,6 @@ dependencies {
     })
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
-    compileOnly( project(":common") )
 }
 
 loom {
@@ -55,7 +55,7 @@ loom {
             client()
             ideConfigGenerated(true)
             runDir("runs/" + name)
-            programArg("--username=Dev")
+            programArgs("--username=Favouriteless", "--uuid=9410df73-6be3-41d5-a620-51b2e9be667b")
         }
 
         named("server") {

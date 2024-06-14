@@ -13,6 +13,11 @@ import java.util.List;
 public interface Category {
 
     /**
+     * @return The ID of this category, defined by datapack location.
+     */
+    String getId();
+
+    /**
      * @return Title of the category-- this will at the top of the landing page.
      */
     Component getTitle();
@@ -44,9 +49,27 @@ public interface Category {
     List<Entry> getEntries();
 
     /**
-     * @return {@link List} of {@link Category}s which are inside this category. These will be shown in the same
+     * Get the {@link Entry} matching id if it is part of this category.
+     *
+     * @param id {@link ResourceLocation} id representing the entry's datapack location.
+     *
+     * @return An {@link Entry} matching id if one is found, otherwise null.
+     */
+    @Nullable Entry getEntry(String id);
+
+    /**
+     * @return {@link List} of Categories which are inside this category. These will be shown in the same
      * manner as entries, but always at the start of the list.
      */
     List<Category> getChildren();
+
+    /**
+     * Get the {@link Category} matching id if it is a child of this category.
+     *
+     * @param id {@link ResourceLocation} id representing the category's datapack location.
+     *
+     * @return A category matching id if one is found, otherwise null.
+     */
+    @Nullable Category getChild(String id);
 
 }

@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.api;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -12,6 +13,11 @@ public interface BookRenderContext {
      * @return The screen currently being rendered.
      */
     Screen getScreen();
+
+    /**
+     * @return Font style for the current book.
+     */
+    Style getStyle();
 
     /**
      * Render an {@link ItemStack} to the screen, with a tooltip if the mouse is hovering it.

@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api;
 
 import com.mojang.serialization.Codec;
-import net.favouriteless.modopedia.api.books.Component;
+import net.favouriteless.modopedia.api.books.PageComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,16 +20,16 @@ public interface PageComponentRegistry {
      * @param codec Codec used to deserialize components of this type.
      *
      */
-    <T extends Component> void register(ResourceLocation location, Codec<T> codec);
+    <T extends PageComponent> void register(ResourceLocation location, Codec<T> codec);
 
     /**
-     * Grab the serializer for a given type of {@link Component}.
+     * Grab the serializer for a given type of {@link PageComponent}.
      *
-     * @param type The {@link Component}'s type, as it was registered.
+     * @param type The {@link PageComponent}'s type, as it was registered.
      *
      * @return The {@link Codec} responsible for type, otherwise null if none were found.
      */
     @Nullable
-    Codec<? extends Component> getSerializer(ResourceLocation type);
+    Codec<? extends PageComponent> getSerializer(ResourceLocation type);
 
 }

@@ -52,4 +52,28 @@ public interface Book {
      */
     List<Category> getCategories();
 
+    /**
+     * Get the {@link Category} matching id if it is part of this book.
+     *
+     * @param id {@link ResourceLocation} id representing the category's datapack location.
+     *
+     * @return A category matching id if one is found, otherwise null.
+     */
+    @Nullable Category getCategory(String id);
+
+    /**
+     * @return {@link List} containing the {@link Entry} instances in this book. Entries do not know which categories
+     * they are in.
+     */
+    List<Entry> getEntries();
+
+    /**
+     * Get the {@link Entry} matching id if it is part of this book.
+     *
+     * @param id {@link ResourceLocation} id representing the entry's datapack location.
+     *
+     * @return An {@link Entry} matching id if one is found, otherwise null.
+     */
+    @Nullable Entry getEntry(String id);
+
 }

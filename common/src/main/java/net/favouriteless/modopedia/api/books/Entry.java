@@ -11,6 +11,11 @@ import java.util.List;
 public interface Entry {
 
     /**
+     * @return The ID of this entry, defined by datapack location.
+     */
+    String getId();
+
+    /**
      * @return The title of this entry, displayed in the entries list of Categories this entry is a part of.
      */
     Component getTitle();

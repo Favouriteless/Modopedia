@@ -12,6 +12,9 @@ license = "${license}"
     authors = "${author}"
     description = '''${description}'''
 
+[[mixins]]
+    config="${mod_id}.forge.mixins.json"
+
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     type="required" #mandatory

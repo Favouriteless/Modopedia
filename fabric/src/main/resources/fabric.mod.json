@@ -15,10 +15,9 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleModFabric"
+            "net.favouriteless.modopedia.ModopediaFabric"
         ],
         "client": [
-            "com.example.examplemod.client.ExampleModFabricClient"
         ]
     },
     "mixins": [

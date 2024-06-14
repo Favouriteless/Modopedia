@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  *  {@link PageComponentRegistry#register(ResourceLocation, Codec)}, otherwise Modopedia will not load it.
  *
  */
-public interface Component {
+public interface PageComponent {
 
     /**
      * Called when the Component is first created; use this for any setup needed directly after deserialization.
