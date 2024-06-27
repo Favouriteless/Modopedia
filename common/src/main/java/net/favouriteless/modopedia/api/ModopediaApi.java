@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.ModopediaApiImpl;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.text.TextFormatterRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -19,6 +20,11 @@ public interface ModopediaApi {
      * @return Modopedia's {@link PageComponentRegistry} instance.
      */
     PageComponentRegistry getComponentRegistry();
+
+    /**
+     * @return Modopedia's {@link TextFormatterRegistry} instance.
+     */
+    TextFormatterRegistry getTextFormatterRegistry();
 
     /**
      * @return True if Modopedia has finished loading books.

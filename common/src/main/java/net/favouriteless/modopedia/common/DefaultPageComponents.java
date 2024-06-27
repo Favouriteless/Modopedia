@@ -1,6 +1,8 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.common;
 
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.ModopediaApi;
+import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.books.components.TextPageComponent;
 
 public class DefaultPageComponents {

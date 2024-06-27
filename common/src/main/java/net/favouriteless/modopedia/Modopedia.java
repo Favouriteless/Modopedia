@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia;
 
-import net.favouriteless.modopedia.api.DefaultPageComponents;
+import net.favouriteless.modopedia.common.DefaultPageComponents;
 import net.favouriteless.modopedia.common.ModopediaItems;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;

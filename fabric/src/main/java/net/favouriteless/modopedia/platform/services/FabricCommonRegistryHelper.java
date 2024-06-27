@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.platform.JsonDataLoaderWrapper;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -18,6 +19,13 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	public <T extends Item> Supplier<T> registerItem(String name, Supplier<T> entry) {
 		T value = entry.get();
 		Registry.register(BuiltInRegistries.ITEM, Modopedia.id(name), value);
+		return () -> value;
+	}
+
+	@Override
+	public <T extends DataComponentType<C>, C> Supplier<T> registerDataComponent(String name, Supplier<T> entry) {
+		T value = entry.get();
+		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Modopedia.id(name), value);
 		return () -> value;
 	}
 
