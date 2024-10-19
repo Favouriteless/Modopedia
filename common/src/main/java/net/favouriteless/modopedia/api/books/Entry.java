@@ -1,6 +1,5 @@
 package net.favouriteless.modopedia.api.books;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -11,6 +10,11 @@ import java.util.List;
 public interface Entry {
 
     /**
+     * @return The {@link Book} this entry belongs to.
+     */
+    Book getBook();
+
+    /**
      * @return The ID of this entry, defined by datapack location.
      */
     String getId();
@@ -18,7 +22,7 @@ public interface Entry {
     /**
      * @return The title of this entry, displayed in the entries list of Categories this entry is a part of.
      */
-    Component getTitle();
+    String getTitle();
 
     /**
      * @return The {@link ItemStack} icon for this entry, displayed in the entries list of Categories this entry is a

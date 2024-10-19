@@ -1,6 +1,5 @@
 package net.favouriteless.modopedia;
 
-import net.favouriteless.modopedia.common.BookReloadListener;
 import net.favouriteless.modopedia.common.DefaultPageComponents;
 import net.favouriteless.modopedia.common.data_components.ModopediaDataComponents;
 import net.favouriteless.modopedia.common.items.ModopediaItems;

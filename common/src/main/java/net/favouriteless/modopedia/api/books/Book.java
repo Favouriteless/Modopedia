@@ -1,10 +1,10 @@
 package net.favouriteless.modopedia.api.books;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * Interface representing an entire book-- these can be grabbed by their {@link ResourceLocation} ID.
@@ -34,7 +34,7 @@ public interface Book {
     /**
      * @return Landing text (the text displayed on the title page).
      */
-    @Nullable String getLandingText();
+    @Nullable Component getLandingText();
 
     /**
      * @return {@link ResourceLocation} pointing to the default texture used for this book's {@link Screen}.
@@ -47,11 +47,6 @@ public interface Book {
     ResourceLocation getItemModelLocation();
 
     /**
-     * @return {@link List} containing the {@link Category} instances in this book.
-     */
-    List<Category> getCategories();
-
-    /**
      * Get the {@link Category} matching id if it is part of this book.
      *
      * @param id {@link ResourceLocation} id representing the category's datapack location.
@@ -59,12 +54,6 @@ public interface Book {
      * @return A category matching id if one is found, otherwise null.
      */
     @Nullable Category getCategory(String id);
-
-    /**
-     * @return {@link List} containing the {@link Entry} instances in this book. Entries do not know which categories
-     * they are in.
-     */
-    List<Entry> getEntries();
 
     /**
      * Get the {@link Entry} matching id if it is part of this book.

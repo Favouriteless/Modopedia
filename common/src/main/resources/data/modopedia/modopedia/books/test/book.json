@@ -1,4 +1,9 @@
 {
+  "type": "modopedia:classic",
   "title": "Test Book",
-  "subtitle": "Test subtitle"
+  "subtitle": "Test subtitle",
+  "landing_text": "Landing Text",
+  "texture": "modopedia:book/default",
+  "category_view_type": "list",
+  "item_model": "modopedia:item/book_default"
 }

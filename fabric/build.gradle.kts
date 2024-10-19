@@ -6,13 +6,7 @@ plugins {
     alias(libs.plugins.loom)
 }
 
-val mod_id: String by project
 version = libs.versions.modopedia.get()
-val minecraft_version = libs.versions.minecraft.asProvider().get()
-val parchment_minecraft_version = libs.versions.parchment.minecraft.get()
-val parchment_version = libs.versions.parchment.asProvider().get()
-val fabric_version = libs.versions.fabric.asProvider().get()
-val fapi_version = libs.versions.fabric.api.get()
 
 java {
     sourceCompatibility =  JavaVersion.VERSION_21
@@ -20,7 +14,7 @@ java {
 }
 
 base {
-    archivesName = "${mod_id}-fabric-${minecraft_version}"
+    archivesName = "modopedia-fabric-${libs.versions.minecraft.asProvider().get()}"
 }
 
 repositories {
@@ -33,21 +27,19 @@ repositories {
     }
 }
 
-
 dependencies {
     compileOnly( project(":common") )
     minecraft( libs.minecraft )
-    implementation( libs.jsr305 )
     mappings(loom.layered() {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${parchment_minecraft_version}:${parchment_version}@zip")
+        parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.minecraft.get()}:${libs.versions.parchment.asProvider().get()}@zip")
     })
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+	accessWidenerPath = file("src/main/resources/modopedia.accesswidener")
     runs {
         named("client") {
             configName = "Fabric Client"
@@ -87,7 +79,7 @@ tasks.withType<ProcessResources>().configureEach {
 
 publishing {
     publications {
-        create<MavenPublication>(mod_id) {
+        create<MavenPublication>("modopedia") {
             from(components["java"])
             artifactId = base.archivesName.get()
         }

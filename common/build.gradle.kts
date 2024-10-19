@@ -4,36 +4,30 @@ plugins {
     alias(libs.plugins.moddevgradle)
 }
 
-val mod_id: String by project
 version = libs.versions.modopedia.get()
-val minecraft_version = libs.versions.minecraft.asProvider().get()
-val neoform_version = libs.versions.neoform.get()
-val parchment_minecraft_version = libs.versions.parchment.minecraft.get()
-val parchment_version =libs.versions.parchment.asProvider().get()
 
 base {
-    archivesName = "${mod_id}-common-${minecraft_version}"
+    archivesName = "modopedia-common-${libs.versions.minecraft.asProvider().get()}"
 }
 
 neoForge {
-    neoFormVersion = neoform_version
+    neoFormVersion = libs.versions.neoform.get()
 
-    accessTransformers.add(file("src/main/resources/META-INF/accesstransformer.cfg").absolutePath)
+    accessTransformers.files.setFrom("src/main/resources/META-INF/accesstransformer.cfg")
 
     parchment {
-        minecraftVersion = parchment_minecraft_version
-        mappingsVersion = parchment_version
+        minecraftVersion = libs.versions.parchment.minecraft.get()
+        mappingsVersion = libs.versions.parchment.asProvider().get()
     }
 }
 
 dependencies {
-    implementation( libs.jsr305 )
     compileOnly(libs.mixinextras.common)
 }
 
 publishing {
     publications {
-        create<MavenPublication>(mod_id) {
+        create<MavenPublication>("modopedia") {
             from(components["java"])
             artifactId = base.archivesName.get()
         }

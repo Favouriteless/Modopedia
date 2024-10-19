@@ -2,22 +2,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven {
-            name = "NeoForge"
-            url = uri("https://maven.neoforged.net/")
-            content {
-                includeGroupAndSubgroups("net.neoforged")
-                includeGroup("net.covers1624")
-                includeGroup("codechicken")
-            }
-        }
-        maven {
-            name = "Forge" // Forge not in the template but VanillaGradle needs the repo.
-            url = uri("https://maven.minecraftforge.net/")
-            content {
-                includeGroupAndSubgroups("net.minecraftforge")
-            }
-        }
-        maven {
             name = "Fabric"
             url = uri("https://maven.fabricmc.net/")
             content {
@@ -30,6 +14,15 @@ pluginManagement {
             url = uri("https://maven.parchmentmc.org")
             content {
                 includeGroupAndSubgroups("org.parchmentmc")
+            }
+        }
+        maven {
+            name = "NeoForge"
+            url = uri("https://maven.neoforged.net/releases")
+            content {
+                includeGroupAndSubgroups("net.neoforged")
+                includeGroup("codechicken")
+                includeGroup("net.covers1624")
             }
         }
         maven {
@@ -50,4 +43,5 @@ rootProject.name = "Modopedia"
 
 include("common")
 include("fabric")
+include("forge")
 include("neoforge")

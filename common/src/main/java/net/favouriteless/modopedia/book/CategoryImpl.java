@@ -1,32 +1,35 @@
 package net.favouriteless.modopedia.book;
 
+import com.google.gson.JsonObject;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Entry;
-import net.favouriteless.modopedia.util.BookUtils;
+import net.favouriteless.modopedia.util.ItemUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CategoryImpl implements Category {
 
+    private final Book book;
     private final String id;
-    private final Component title;
-    private final Component subtitle;
-    private final String description;
+    private final String title;
+    private final String subtitle;
+    private final Component description;
     private final ItemStack iconStack;
     private final ResourceLocation defaultTexture;
 
-    private final List<Entry> entries = new ArrayList<>();
-    private final List<Category> children = new ArrayList<>();
+    private final List<String> entries = new ArrayList<>();
+    private final List<String> children = new ArrayList<>();
 
 
-    public CategoryImpl(String id, Component title, Component subtitle, String description, ItemStack iconStack,
+    public CategoryImpl(Book book, String id, String title, String subtitle, Component description, ItemStack iconStack,
                         ResourceLocation defaultTexture) {
+        this.book = book;
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -37,24 +40,29 @@ public class CategoryImpl implements Category {
 
 
     @Override
+    public Book getBook() {
+        return book;
+    }
+
+    @Override
     public String getId() {
         return id;
     }
 
     @Override
-    public Component getTitle() {
+    public String getTitle() {
         return title;
     }
 
     @Nullable
     @Override
-    public Component getSubtitle() {
+    public String getSubtitle() {
         return subtitle;
     }
 
     @Nullable
     @Override
-    public String getDescription() {
+    public Component getDescription() {
         return description;
     }
 
@@ -70,35 +78,37 @@ public class CategoryImpl implements Category {
     }
 
     @Override
-    public List<Entry> getEntries() {
+    public List<String> getEntries() {
         return entries;
     }
 
-    @Nullable
     @Override
-    public Entry getEntry(String id) {
-        return BookUtils.findEntry(id, entries);
-    }
-
-    @Override
-    public List<Category> getChildren() {
+    public List<String> getChildren() {
         return children;
     }
 
-    @Nullable
-    @Override
-    public Category getChild(String id) {
-        return BookUtils.findCategory(id, children);
-    }
-
     public CategoryImpl addChild(Category... children) {
-        Collections.addAll(this.children, children);
+        for(Category category : children) {
+            this.children.add(category.getId());
+        }
         return this;
     }
 
     public CategoryImpl addEntry(Entry... entries) {
-        Collections.addAll(this.entries, entries);
-        return this;
+        for(Entry entry : entries) {
+            this.entries.add(entry.getId());
+        }        return this;
     }
+
+    public static CategoryImpl fromJson(Book book, String id, JsonObject jsonObject) {
+        String title = jsonObject.get("title").getAsString();
+        String subtitle = jsonObject.has("subtitle") ? jsonObject.get("subtitle").getAsString() : null;
+        Component description = jsonObject.has("description") ? Component.literal(jsonObject.get("description").getAsString()) : null;
+        ItemStack iconStack = jsonObject.has("icon") ? ItemUtils.itemFromJson(jsonObject.get("icon")) : ItemStack.EMPTY;
+        ResourceLocation texture = jsonObject.has("texture") ? ResourceLocation.parse(jsonObject.get("texture").getAsString()) : null;
+
+        return new CategoryImpl(book, id, title, subtitle, description, iconStack, texture);
+    }
+
 
 }

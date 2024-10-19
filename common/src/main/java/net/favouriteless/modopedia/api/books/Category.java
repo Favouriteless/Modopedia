@@ -13,6 +13,11 @@ import java.util.List;
 public interface Category {
 
     /**
+     * @return The {@link Book} this category belongs to.
+     */
+    Book getBook();
+
+    /**
      * @return The ID of this category, defined by datapack location.
      */
     String getId();
@@ -20,17 +25,17 @@ public interface Category {
     /**
      * @return Title of the category-- this will at the top of the landing page.
      */
-    Component getTitle();
+    String getTitle();
 
     /**
      * @return Subtitle of the category-- this will be under the title.
      */
-    @Nullable Component getSubtitle();
+    @Nullable String getSubtitle();
 
     /**
      * @return The description shown underneath the title and subtitle.
      */
-    @Nullable String getDescription();
+    @Nullable Component getDescription();
 
     /**
      * @return The {@link ItemStack} which is rendered as an icon for this category.
@@ -44,9 +49,9 @@ public interface Category {
     @Nullable ResourceLocation getDefaultTexture();
 
     /**
-     * @return {@link List} of every {@link Entry} in this category.
+     * @return {@link List} of every {@link Entry} ID in this category.
      */
-    List<Entry> getEntries();
+    List<String> getEntries();
 
     /**
      * Get the {@link Entry} matching id if it is part of this category.
@@ -55,13 +60,15 @@ public interface Category {
      *
      * @return An {@link Entry} matching id if one is found, otherwise null.
      */
-    @Nullable Entry getEntry(String id);
+    @Nullable default Entry getEntry(String id) {
+        return getBook().getEntry(id);
+    }
 
     /**
-     * @return {@link List} of Categories which are inside this category. These will be shown in the same
+     * @return {@link List} of Category IDs which are inside this category. These will be shown in the same
      * manner as entries, but always at the start of the list.
      */
-    List<Category> getChildren();
+    List<String> getChildren();
 
     /**
      * Get the {@link Category} matching id if it is a child of this category.
@@ -70,6 +77,8 @@ public interface Category {
      *
      * @return A category matching id if one is found, otherwise null.
      */
-    @Nullable Category getChild(String id);
+    @Nullable default Category getChild(String id) {
+        return getBook().getCategory(id);
+    }
 
 }
