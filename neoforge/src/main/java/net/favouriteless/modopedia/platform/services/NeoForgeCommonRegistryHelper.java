@@ -31,7 +31,7 @@ public class NeoForgeCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public void register(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
+	public void registerReloadListener(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
 		dataLoaders.add(loader);
 	}
 

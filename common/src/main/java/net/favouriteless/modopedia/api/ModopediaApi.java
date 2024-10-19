@@ -34,10 +34,10 @@ public interface ModopediaApi {
     /**
      * Grab a {@link Book} by its ID.
      *
-     * @param location {@link ResourceLocation} for the book-- this will be determined by its location in the datapack.
+     * @param id {@link ResourceLocation} for the book-- this will be determined by its location in the datapack.
      *
-     * @return Book matching location, or null if none were found.
+     * @return Book matching id, or null if none were found.
      */
-    @Nullable Book getBook(ResourceLocation location);
+    @Nullable Book getBook(ResourceLocation id);
 
 }

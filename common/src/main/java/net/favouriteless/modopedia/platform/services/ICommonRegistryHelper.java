@@ -39,6 +39,6 @@ public interface ICommonRegistryHelper {
      * @param id {@link ResourceLocation} ID of the loader, only used by Fabric.
      * @param loader An instance of the ReloadListener.
      */
-    void register(ResourceLocation id, SimpleJsonResourceReloadListener loader);
+    void registerReloadListener(ResourceLocation id, SimpleJsonResourceReloadListener loader);
 
 }

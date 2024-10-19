@@ -2,14 +2,19 @@ package net.favouriteless.modopedia.api;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.books.PageComponent;
+import net.favouriteless.modopedia.common.DefaultPageComponents;
+import net.favouriteless.modopedia.common.PageComponentRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
- *     ComponentRegistry maps template component types to their serializers.
+ *     PageComponentRegistry maps template component types to their serializers. Can be obtained from
+ *     {@link ModopediaApi#getComponentRegistry()}
  * </p>
- * Can be obtained from {@link ModopediaApi#getComponentRegistry()}
+ * <p>
+ *     See {@link DefaultPageComponents} for usage of the registry.
+ * </p>
  */
 public interface PageComponentRegistry {
 

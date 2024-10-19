@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.common;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.ModopediaApi;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
-import net.favouriteless.modopedia.books.components.TextPageComponent;
+import net.favouriteless.modopedia.book.components.TextPageComponent;
 
 public class DefaultPageComponents {
 

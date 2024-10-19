@@ -7,7 +7,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
-public record BookDataComponent(ResourceLocation id) {
+import javax.annotation.Nonnull;
+
+public record BookDataComponent(@Nonnull ResourceLocation id) {
 
     public static final Codec<BookDataComponent> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("id").forGetter(BookDataComponent::id)

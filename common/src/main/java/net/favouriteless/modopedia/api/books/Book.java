@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -25,12 +24,12 @@ public interface Book {
     /**
      * @return Title of the book-- this will be the item's name and showed at the top of the landing page.
      */
-    Component getTitle();
+    String getTitle();
 
     /**
      * @return Subtitle of the book-- this is showed on the book's tooltip and under the title on the landing page.
      */
-    @Nullable Component getSubtitle();
+    @Nullable String getSubtitle();
 
     /**
      * @return Landing text (the text displayed on the title page).
@@ -40,7 +39,7 @@ public interface Book {
     /**
      * @return {@link ResourceLocation} pointing to the default texture used for this book's {@link Screen}.
      */
-    ResourceLocation getDefaultTexture();
+    ResourceLocation getTexture();
 
     /**
      * @return {@link ResourceLocation} pointing to the model this book's item should use.

@@ -16,6 +16,6 @@ public class ModopediaDataComponents {
         return CommonServices.COMMON_REGISTRY.registerDataComponent(name, supplier);
     }
 
-    public void load() {}
+    public static void load() {}
 
 }

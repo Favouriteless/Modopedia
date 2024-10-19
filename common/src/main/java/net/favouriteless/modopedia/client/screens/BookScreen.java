@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.screens;
 import net.favouriteless.modopedia.api.BookRenderContext;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
@@ -12,7 +13,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     private final Book book;
 
     protected BookScreen(Book book) {
-        super(book.getTitle());
+        super(Component.literal(book.getTitle()));
         this.book = book;
     }
 

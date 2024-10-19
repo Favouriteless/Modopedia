@@ -47,7 +47,7 @@ dependencies {
 }
 
 loom {
-	accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+	accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
     runs {
         named("client") {
             configName = "Fabric Client"

@@ -10,6 +10,7 @@ public class ModopediaNeoForge {
 
     public ModopediaNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         NeoForgeCommonRegistryHelper.ITEM_REGISTRY.register(modEventBus);
+        NeoForgeCommonRegistryHelper.DATA_COMPONENT_REGISTRY.register(modEventBus);
         Modopedia.init();
     }
 
