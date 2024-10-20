@@ -5,34 +5,21 @@ import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class EntryImpl implements Entry {
 
-    private final Book book;
-    private final String id;
+    private Book book; // This gets set after the Category is instantiated because we don't want it to be present in the persistent codec.
+    
     private final String title;
     private final ItemStack iconStack;
+    private final List<Page> pages;
 
-    private final List<Page> pages = new ArrayList<>();
-
-    public EntryImpl(Book book, String id, String title, ItemStack iconStack) {
-        this.book = book;
-        this.id = id;
+    public EntryImpl(String title, ItemStack iconStack, List<Page> pages) {
         this.title = title;
         this.iconStack = iconStack;
-    }
-
-    @Override
-    public Book getBook() {
-        return book;
-    }
-
-    @Override
-    public String getId() {
-        return id;
+        this.pages = pages;
     }
 
     @Override
@@ -41,6 +28,7 @@ public class EntryImpl implements Entry {
     }
 
     @Override
+    @Nullable
     public ItemStack getIcon() {
         return iconStack;
     }
@@ -49,10 +37,7 @@ public class EntryImpl implements Entry {
     public List<Page> getPages() {
         return pages;
     }
-
-    public EntryImpl addPage(Page... pages) {
-        Collections.addAll(this.pages, pages);
-        return this;
-    }
-
+    
+    // --------------------------------- Below this point is non-API functions ---------------------------------
+    
 }

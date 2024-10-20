@@ -1,6 +1,10 @@
 package net.favouriteless.modopedia.api.books;
 
+import com.mojang.serialization.Codec;
+import net.favouriteless.modopedia.book.CategoryImpl;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,11 +22,6 @@ public interface Category {
     Book getBook();
 
     /**
-     * @return The ID of this category, defined by datapack location.
-     */
-    String getId();
-
-    /**
      * @return Title of the category-- this will at the top of the landing page.
      */
     String getTitle();
@@ -35,18 +34,23 @@ public interface Category {
     /**
      * @return The description shown underneath the title and subtitle.
      */
-    @Nullable Component getDescription();
+    @Nullable Component getLandingText();
+    
+    /**
+     * @return The raw, unformatted landing text (containing formatting tags etc.)
+     */
+    @Nullable String getRawLandingText();
 
     /**
      * @return The {@link ItemStack} which is rendered as an icon for this category.
      */
-    ItemStack getIcon();
+    @Nullable ItemStack getIcon();
 
     /**
      * @return The texture override for this category-- if not null, all entries in the category will
-     * default to this texture for the screen.
+     * default to this texture.
      */
-    @Nullable ResourceLocation getDefaultTexture();
+    @Nullable ResourceLocation getTexture();
 
     /**
      * @return {@link List} of every {@link Entry} ID in this category.
@@ -79,6 +83,14 @@ public interface Category {
      */
     @Nullable default Category getChild(String id) {
         return getBook().getCategory(id);
+    }
+    
+    static Codec<Category> persistentCodec() {
+        return CategoryImpl.PERSISTENT_CODEC;
+    }
+    
+    static StreamCodec<RegistryFriendlyByteBuf, Category> streamCodec() {
+        return CategoryImpl.STREAM_CODEC;
     }
 
 }

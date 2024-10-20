@@ -1,7 +1,11 @@
 package net.favouriteless.modopedia.api.books;
 
+import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
+import net.favouriteless.modopedia.book.BookImpl;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -10,11 +14,6 @@ import javax.annotation.Nullable;
  * Interface representing an entire book-- these can be grabbed by their {@link ResourceLocation} ID.
  */
 public interface Book {
-
-    /**
-     * @return ID for this book, this is decided by the book.json's location.
-     */
-    ResourceLocation getId();
 
     /**
      * @return Type of the book (e.g. "modopedia:classic")
@@ -35,6 +34,11 @@ public interface Book {
      * @return Landing text (the text displayed on the title page).
      */
     @Nullable Component getLandingText();
+
+    /**
+     * @return The raw, unformatted landing text (containing formatting tags etc.)
+     */
+    @Nullable String getRawLandingText();
 
     /**
      * @return {@link ResourceLocation} pointing to the default texture used for this book's {@link Screen}.
@@ -63,5 +67,13 @@ public interface Book {
      * @return An {@link Entry} matching id if one is found, otherwise null.
      */
     @Nullable Entry getEntry(String id);
+
+    static Codec<Book> persistentCodec() {
+        return BookImpl.PERSISTENT_CODEC;
+    }
+    
+    static StreamCodec<ByteBuf, Book> streamCodec() {
+        return BookImpl.STREAM_CODEC;
+    }
 
 }
