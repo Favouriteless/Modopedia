@@ -1,35 +1,51 @@
 package net.favouriteless.modopedia.common;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
-import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.PageComponent;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
-import net.favouriteless.modopedia.book.components.TextPageComponent;
+import net.favouriteless.modopedia.api.books.PageComponent;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PageComponentRegistryImpl implements PageComponentRegistry {
 
-    public static PageComponentRegistryImpl INSTANCE = new PageComponentRegistryImpl();
+    public static final PageComponentRegistryImpl INSTANCE = new PageComponentRegistryImpl();
 
-    private final Map<ResourceLocation, Codec<? extends PageComponent>> serializersByType = new HashMap<>();
+    private final BiMap<ResourceLocation, PageComponentType> serializersByType = HashBiMap.create();
+    private final Codec<PageComponent> codec = ResourceLocation.CODEC.flatXmap(
+            loc -> {
+                PageComponentType type = serializersByType.get(loc);
+                return type != null ? DataResult.success(type) : DataResult.error(() -> "Unknown type " + loc);
+            },
+            type -> {
+                ResourceLocation loc = serializersByType.inverse().get(type);
+                return type != null ? DataResult.success(loc) : DataResult.error(() -> "Unknown type " + loc);
+            }
+    ).dispatch(PageComponent::type, PageComponentType::codec);
 
-    private PageComponentRegistryImpl() {
-        register(Modopedia.id("text"), TextPageComponent.CODEC);
+    private PageComponentRegistryImpl() {}
+
+    @Override
+    public <T extends PageComponent> PageComponentType register(ResourceLocation location, MapCodec<T> codec) {
+        if (serializersByType.containsKey(location))
+            throw new IllegalArgumentException("Attempted to register a duplicate PageComponent type: " + location.toString());
+        PageComponentType type = new PageComponentType(codec);
+        serializersByType.put(location, type);
+        return type;
     }
 
     @Override
-    public <T extends PageComponent> void register(ResourceLocation location, Codec<T> codec) {
-        if(serializersByType.containsKey(location))
-            throw new IllegalArgumentException("Attempted to register a duplicate modopedia page component: " + location.toString());
-        serializersByType.put(location, codec);
+    public MapCodec<? extends PageComponent> getCodec(ResourceLocation id) {
+        return serializersByType.get(id).codec();
     }
 
     @Override
-    public Codec<? extends PageComponent> getSerializer(ResourceLocation type) {
-        return serializersByType.get(type);
+    public Codec<PageComponent> codec() {
+        return codec;
     }
+
+    public record PageComponentType(MapCodec<? extends PageComponent> codec) {}
 
 }

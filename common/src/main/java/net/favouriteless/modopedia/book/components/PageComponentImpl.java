@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.book.components;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.PageComponent;
 
-public abstract class ModopediaPageComponent implements PageComponent {
+public abstract class PageComponentImpl implements PageComponent {
 
     protected Book book;
     protected int x;

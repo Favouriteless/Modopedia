@@ -3,7 +3,8 @@ package net.favouriteless.modopedia.api.books;
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.BookRenderContext;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
-import net.favouriteless.modopedia.book.components.ModopediaPageComponent;
+import net.favouriteless.modopedia.book.components.PageComponentImpl;
+import net.favouriteless.modopedia.common.PageComponentRegistryImpl.PageComponentType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  *  <b>IMPORTANT:</b> Components need to have a serializer registered via
  *  {@link PageComponentRegistry#register(ResourceLocation, Codec)}, otherwise Modopedia will not load it.
  * </p>
- * See: {@link ModopediaPageComponent} for the basic implementation used for all the default components.
+ * See: {@link PageComponentImpl} for the basic implementation used for all the default components.
  */
 public interface PageComponent {
 
@@ -35,5 +36,11 @@ public interface PageComponent {
      * You are responsible for all other transformations.
      */
     void render(GuiGraphics graphics, BookRenderContext context, int xMouse, int yMouse, float partialTicks);
+
+    /**
+     * @return This component's {@link PageComponentType}, this is obtained via
+     * {@link PageComponentRegistry#register(ResourceLocation, Codec)}. Recommended to keep in a static field.
+     */
+    PageComponentType type();
 
 }

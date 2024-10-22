@@ -1,18 +1,19 @@
 package net.favouriteless.modopedia.book;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.PageComponent;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PageImpl implements Page {
 
-    private final List<PageComponent> components = new ArrayList<>();
+    private final List<PageComponent> components;
 
-    public PageImpl() {
-
+    public PageImpl(List<PageComponent> components) {
+        this.components = components;
     }
 
     @Override
@@ -20,11 +21,10 @@ public class PageImpl implements Page {
         return components;
     }
 
-    public PageImpl addComponent(PageComponent... components) {
-        Collections.addAll(this.components, components);
-        return this;
-    }
+    // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-//    public final Codec<Page> PERSISTENT_CODEC =
+    public static final Codec<Page> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            PageComponentRegistry.get().codec().listOf().fieldOf("components").forGetter(Page::getComponents)
+    ).apply(instance, PageImpl::new));
 
 }
