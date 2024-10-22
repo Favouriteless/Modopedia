@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.api.books;
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.BookRenderContext;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
+import net.favouriteless.modopedia.book.components.ModopediaPageComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -11,9 +12,11 @@ import net.minecraft.resources.ResourceLocation;
  *     Interface for custom component implementations; an instance of the component will be created for every time it
  *     is present on a page-- storing data here is fine.
  * </p>
+ * <p>
  *  <b>IMPORTANT:</b> Components need to have a serializer registered via
  *  {@link PageComponentRegistry#register(ResourceLocation, Codec)}, otherwise Modopedia will not load it.
- *
+ * </p>
+ * See: {@link ModopediaPageComponent} for the basic implementation used for all the default components.
  */
 public interface PageComponent {
 

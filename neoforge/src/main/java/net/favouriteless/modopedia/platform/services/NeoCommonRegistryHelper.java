@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class NeoForgeCommonRegistryHelper implements ICommonRegistryHelper {
+public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 
 	// Usually would allocate defregs as needed, but Modopedia only has items anyway :)
 	public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(BuiltInRegistries.ITEM, Modopedia.MOD_ID);

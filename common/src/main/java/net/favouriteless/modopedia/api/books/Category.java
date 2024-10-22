@@ -2,13 +2,11 @@ package net.favouriteless.modopedia.api.books;
 
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.book.CategoryImpl;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -87,10 +85,6 @@ public interface Category {
     
     static Codec<Category> persistentCodec() {
         return CategoryImpl.PERSISTENT_CODEC;
-    }
-    
-    static StreamCodec<RegistryFriendlyByteBuf, Category> streamCodec() {
-        return CategoryImpl.STREAM_CODEC;
     }
 
 }

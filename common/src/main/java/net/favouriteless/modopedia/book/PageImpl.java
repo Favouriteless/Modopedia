@@ -25,4 +25,6 @@ public class PageImpl implements Page {
         return this;
     }
 
+//    public final Codec<Page> PERSISTENT_CODEC =
+
 }

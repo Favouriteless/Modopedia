@@ -7,6 +7,9 @@ import java.util.List;
  */
 public interface Page {
 
+    /**
+     * @return A {@link List} containing all {@link PageComponent}s on this page.
+     */
     List<PageComponent> getComponents();
 
 }

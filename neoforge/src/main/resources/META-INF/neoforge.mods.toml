@@ -1,28 +1,28 @@
 modLoader = "javafml"
 loaderVersion = "${neoforge_loader_range}"
-license = "${license}"
+license = "MIT"
 
 
 [[mods]]
-    modId = "${mod_id}"
+    modId = "modopedia"
     version = "${version}"
-    displayName = "${mod_name}"
-    displayURL= "${display_url}"
-    logoFile = "${mod_id}.png"
+    displayName = "Modopedia"
+    displayURL= "https://github.com/Favouriteless/Modopedia"
+    logoFile = "modopedia.png"
     authors = "${author}"
-    description = '''${description}'''
+    description = '''Data-driven, user-friendly documentation.'''
 
 [[mixins]]
-    config="${mod_id}.forge.mixins.json"
+    config="modopedia.neoforge.mixins.json"
 
-[[dependencies.${mod_id}]]
+[[dependencies.modopedia]]
     modId = "neoforge"
     type="required" #mandatory
     versionRange = "${neoforge_version_range}"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.modopedia]]
     modId = "minecraft"
     type="required" #mandatory
     versionRange = "${minecraft_version_range}"

@@ -2,10 +2,8 @@ package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.ModopediaApiImpl;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.text.TextFormatterRegistry;
 import net.minecraft.resources.ResourceLocation;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Main API interface for Modopedia

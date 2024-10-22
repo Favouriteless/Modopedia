@@ -2,23 +2,20 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.api.ModopediaApi;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CategoryImpl implements Category {
 
-    private Book book; // This gets set after the Category is instantiated because we don't want it to be present in the persistent codec.
+    private ResourceLocation bookId; // This gets set after the Category is instantiated because we don't want it to be present in the persistent codec.
     
     private final String title;
     private final String subtitle;
@@ -45,7 +42,7 @@ public class CategoryImpl implements Category {
 
     @Override
     public Book getBook() {
-        return book;
+        return ModopediaApi.get().getBook(bookId);
     }
 
     @Override
@@ -91,7 +88,7 @@ public class CategoryImpl implements Category {
         return children;
     }
 
-    // --------------------------------- Below this point is non-API functions ---------------------------------
+    // ------------------------------------ Below this point is non-API functions ------------------------------------
 
     public static final Codec<Category> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
@@ -102,33 +99,5 @@ public class CategoryImpl implements Category {
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren)
     ).apply(instance, CategoryImpl::new));
-    
-    public static final StreamCodec<RegistryFriendlyByteBuf, Category> STREAM_CODEC = new StreamCodec<>() { // The overloads don't provide enough fields :(
-        
-        @Override
-        public Category decode(RegistryFriendlyByteBuf buf) {
-            return new CategoryImpl(
-                    ByteBufCodecs.STRING_UTF8.decode(buf),
-                    ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
-                    ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
-                    ByteBufCodecs.optional(ItemStack.STREAM_CODEC).decode(buf).orElse(null),
-                    ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC).decode(buf).orElse(null),
-                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buf),
-                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buf)
-            );
-        }
-        
-        @Override
-        public void encode(RegistryFriendlyByteBuf buf, Category book) {
-            ByteBufCodecs.STRING_UTF8.encode(buf, book.getTitle());
-            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getSubtitle()));
-            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getRawLandingText()));
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC).encode(buf, Optional.ofNullable(book.getIcon()));
-            ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC).encode(buf, Optional.ofNullable(book.getTexture()));
-            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buf, book.getEntries());
-            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buf, book.getChildren());
-        }
-        
-    };
 
 }

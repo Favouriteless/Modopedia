@@ -1,8 +1,10 @@
 package net.favouriteless.modopedia.common;
 
 import com.mojang.serialization.Codec;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.PageComponent;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
+import net.favouriteless.modopedia.book.components.TextPageComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
     private final Map<ResourceLocation, Codec<? extends PageComponent>> serializersByType = new HashMap<>();
 
     private PageComponentRegistryImpl() {
-
+        register(Modopedia.id("text"), TextPageComponent.CODEC);
     }
 
     @Override

@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.favouriteless.modopedia.mixin.fabric",
-  "refmap": "${mod_id}.refmap.json",
+  "refmap": "modopedia.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],

@@ -1,11 +1,11 @@
-package net.favouriteless.modopedia.api.text;
+package net.favouriteless.modopedia.api;
 
-import net.favouriteless.modopedia.api.ModopediaApi;
+import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.favouriteless.modopedia.book.text.TextFormatterRegistryImpl;
 
 /**
  * <p>
- *     TextFormatterRegistry is the registry for text formatting tags in books (e.g. $(b)). Can be obtained from
+ *     TextFormatterRegistry is used for the text formatting tags in books (e.g. $(b)). Can be obtained from
  *     {@link ModopediaApi#getTextFormatterRegistry()}
  * </p>
  * <p>
@@ -13,6 +13,10 @@ import net.favouriteless.modopedia.book.text.TextFormatterRegistryImpl;
  * </p>
  */
 public interface TextFormatterRegistry {
+
+    static TextFormatterRegistry get() {
+        return TextFormatterRegistryImpl.INSTANCE;
+    }
 
     /**
      * Register a {@link TextFormatter}.

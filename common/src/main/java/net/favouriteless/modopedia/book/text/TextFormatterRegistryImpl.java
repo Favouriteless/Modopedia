@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.book.text;
 
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
-import net.favouriteless.modopedia.api.text.TextFormatterRegistry;
+import net.favouriteless.modopedia.api.TextFormatterRegistry;
 import net.favouriteless.modopedia.book.text.formatters.*;
 
 import java.util.HashSet;

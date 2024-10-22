@@ -1,36 +1,36 @@
 {
     "schemaVersion": 1,
-    "id": "${mod_id}",
+    "id": "modopedia",
     "version": "${version}",
-    "name": "${mod_name}",
-    "description": "${description}",
+    "name": "Modopedia",
+    "description": "Data-driven, user-friendly documentation.",
     "authors": [
         "${author}"
     ],
     "contact": {
-        "homepage": "${display_url}"
+        "homepage": "https://github.com/Favouriteless/Modopedia"
     },
-    "license": "${license}",
-    "icon": "${mod_id}.png",
+    "license": "MIT",
+    "icon": "modopedia.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.favouriteless.modopedia.ModopediaFabric"
+            "net.favouriteless.modopedia.fabric.ModopediaFabric"
         ],
         "client": [
         ]
     },
     "mixins": [
-        "${mod_id}.mixins.json",
-        "${mod_id}.fabric.mixins.json"
+        "modopedia.mixins.json",
+        "modopedia.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": ">=${fabric_api_version}",
         "fabric": "*",
         "minecraft": "${minecraft_version}",
-        "java": ">=17"
+        "java": ">=21"
     },
-    "accessWidener" : "${mod_id}.accesswidener"
+    "accessWidener" : "modopedia.accesswidener"
 }
   

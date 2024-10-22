@@ -13,8 +13,8 @@ public class TextPageComponent extends ModopediaPageComponent {
 
     public static final Codec<TextPageComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("text").forGetter(data -> data.text.getString()),
-            Codec.INT.optionalFieldOf("width").forGetter(data -> Optional.of(data.width))
-    ).apply(instance, (text, optional) -> new TextPageComponent(text, optional.orElse(100))));
+            Codec.INT.optionalFieldOf("width", 100).forGetter(data -> data.width)
+    ).apply(instance, TextPageComponent::new));
 
     private final Component text;
     private final int width;
