@@ -4,14 +4,17 @@ import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
-public record SyncBookPayload(Book book) implements CustomPacketPayload {
+public record SyncBookPayload(ResourceLocation id, Book book) implements CustomPacketPayload {
 
 	public static final Type<SyncBookPayload> TYPE = new Type<>(Modopedia.id("sync_book"));
 
 	public static final StreamCodec<ByteBuf, SyncBookPayload> STREAM_CODEC = StreamCodec.composite(
+			ResourceLocation.STREAM_CODEC, SyncBookPayload::id,
 			Book.streamCodec(), SyncBookPayload::book,
 			SyncBookPayload::new
 	);
@@ -22,7 +25,7 @@ public record SyncBookPayload(Book book) implements CustomPacketPayload {
 	}
 
 	public void handle() {
-		BookRegistry.get().register(book.getId(), book);
+		BookRegistry.get().register(id, book);
 	}
 
 }

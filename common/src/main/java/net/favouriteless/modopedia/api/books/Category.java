@@ -63,7 +63,8 @@ public interface Category {
      * @return An {@link Entry} matching id if one is found, otherwise null.
      */
     @Nullable default Entry getEntry(String id) {
-        return getBook().getEntry(id);
+//        return getBook().getEntry(id);
+        return null;
     }
 
     /**
@@ -80,7 +81,8 @@ public interface Category {
      * @return A category matching id if one is found, otherwise null.
      */
     @Nullable default Category getChild(String id) {
-        return getBook().getCategory(id);
+//        return getBook().getCategory(id);
+        return null;
     }
     
     static Codec<Category> persistentCodec() {

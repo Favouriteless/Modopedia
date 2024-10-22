@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.book;
 
-import net.favouriteless.modopedia.api.BookContentManager;
+import net.favouriteless.modopedia.api.books.BookContentManager;
 
 public class BookContentManagerImpl implements BookContentManager {
 

@@ -13,7 +13,7 @@ public class CommonEvents {
         INetworkHelper networkHelper = CommonServices.NETWORK;
 
         networkHelper.sendToPlayer(new ClearBooksPayload(), player); // When reloading clear the client's book registry and sync new ones; contents will sync automatically
-        BookRegistry.get().getBooks().forEach(book -> networkHelper.sendToPlayer(new SyncBookPayload(book), player));
+        BookRegistry.get().getBooks().forEach(book -> networkHelper.sendToPlayer(new SyncBookPayload(BookRegistry.get().getId(book), book), player));
     }
 
 }

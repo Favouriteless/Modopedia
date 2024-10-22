@@ -22,6 +22,8 @@ neoForge {
         mappingsVersion = libs.versions.parchment.asProvider().get()
     }
 
+    mods.create("modopedia").sourceSet(project.sourceSets.getByName("main"))
+
     runs {
         configureEach {
             logLevel = org.slf4j.event.Level.DEBUG

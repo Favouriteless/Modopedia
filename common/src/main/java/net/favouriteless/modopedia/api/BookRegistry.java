@@ -38,6 +38,13 @@ public interface BookRegistry {
     @Nullable Book getBook(ResourceLocation id);
 
     /**
+     * Fetch a book's ID.
+     *
+     * @return ID of book, or null if none were found.
+     */
+    @Nullable ResourceLocation getId(Book book);
+
+    /**
      * @return A collection containing all registered Books.
      */
     Collection<Book> getBooks();

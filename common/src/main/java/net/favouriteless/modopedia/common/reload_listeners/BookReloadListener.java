@@ -24,15 +24,14 @@ public class BookReloadListener extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager manager, ProfilerFiller profiler) {
         BookRegistry.get().clear();
 
-        jsonMap.forEach((location, jsonElement) -> {
+        jsonMap.forEach((id, jsonElement) -> {
             try {
-                ResourceLocation id = location;
                 Book.persistentCodec().decode(JsonOps.INSTANCE, jsonElement)
-                        .resultOrPartial(error -> Modopedia.LOG.error("Error attempting to load book {}: {}", location, error))
+                        .resultOrPartial(error -> Modopedia.LOG.error("Error attempting to load book {}: {}", id, error))
                         .ifPresent(result -> BookRegistry.get().register(id, result.getFirst()));
             }
             catch (IllegalArgumentException | JsonParseException exception) {
-                Modopedia.LOG.error("Critical error attempting to load book {}: {}", location, exception.getMessage());
+                Modopedia.LOG.error("Critical error attempting to load book {}: {}", id, exception.getMessage());
             }
         });
     }

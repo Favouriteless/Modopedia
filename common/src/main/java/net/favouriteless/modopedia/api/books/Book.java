@@ -17,11 +17,6 @@ import org.jetbrains.annotations.Nullable;
 public interface Book {
 
     /**
-     * @return The ID of this book (defined in the datapack test.json)
-     */
-    ResourceLocation getId();
-
-    /**
      * @return Type of this book (e.g. "modopedia:classic")
      */
     ResourceLocation getType();
@@ -60,36 +55,6 @@ public interface Book {
      * @return The language code this book defaults to when attempting to find entries and categories. en_us by default.
      */
     String getDefaultLanguageCode();
-
-    /**
-     * Get the {@link Category} matching ID if it is part of this book. If one of the specified localisation cannot
-     * be found, it will default to en_us.
-     *
-     * @param languageCode ID for the language (See: {@link LanguageManager#languages})
-     * @param id ID representing the category's resource pack location.
-     *
-     * @return A category matching id if one is found, otherwise null.
-     */
-    @Nullable Category getCategory(String languageCode, String id);
-
-    /**
-     * Get the {@link Entry} matching ID if it is part of this book. If one of the specified localisation cannot
-     * be found, it will default to en_us.
-     *
-     * @param languageCode ID for the language (See: {@link LanguageManager#languages})
-     * @param id ID representing the entry's resource pack location.
-     *
-     * @return An {@link Entry} matching id if one is found, otherwise null.
-     */
-    @Nullable Entry getEntry(String languageCode, String id);
-
-    default @Nullable Category getCategory(String id) {
-        return getCategory("en_us", id);
-    }
-
-    default @Nullable Entry getEntry(String id) {
-        return getEntry("en_us", id);
-    }
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;
