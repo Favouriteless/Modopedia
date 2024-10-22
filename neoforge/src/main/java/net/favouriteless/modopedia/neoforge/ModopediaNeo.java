@@ -13,12 +13,13 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 @Mod(Modopedia.MOD_ID)
 public class ModopediaNeo {
 
-    public ModopediaNeo(IEventBus eventBus, ModContainer container) {
-        NeoCommonRegistryHelper.ITEM_REGISTRY.register(eventBus);
-        NeoCommonRegistryHelper.DATA_COMPONENT_REGISTRY.register(eventBus);
+    public ModopediaNeo(IEventBus bus, ModContainer container) {
+        NeoCommonRegistryHelper.ITEM_REGISTRY.register(bus);
+        NeoCommonRegistryHelper.DATA_COMPONENT_REGISTRY.register(bus);
         Modopedia.init();
 
-        eventBus.addListener(this::registerPayloads);
+
+        bus.addListener(this::registerPayloads);
     }
 
     public void registerPayloads(final RegisterPayloadHandlersEvent event) {

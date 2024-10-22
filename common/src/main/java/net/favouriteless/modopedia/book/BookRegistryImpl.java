@@ -1,5 +1,6 @@
-package net.favouriteless.modopedia.common;
+package net.favouriteless.modopedia.book;
 
+import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -8,37 +9,35 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * <p>
- *     BookRegistry maps book IDs ({@link ResourceLocation}) to their {@link Book} instance. The registry will be
- *     populated on datapack reload.
- * </p>
- */
-public class BookRegistry {
+public class BookRegistryImpl implements BookRegistry {
 
-    private static final Map<ResourceLocation, Book> bookById = new HashMap<>();
+    public static final BookRegistry INSTANCE = new BookRegistryImpl();
 
-    public static Book register(ResourceLocation id, Book book) {
+    private final Map<ResourceLocation, Book> bookById = new HashMap<>();
+
+    private BookRegistryImpl() {}
+
+    public void register(ResourceLocation id, Book book) {
         if(bookById.containsKey(id))
             throw new IllegalArgumentException("Attempted to register a duplicate Modopedia book: " + id.toString());
         bookById.put(id, book);
-
-        return book;
     }
 
+    @Override
     @Nullable
-    public static Book getBook(ResourceLocation id) {
+    public Book getBook(ResourceLocation id) {
         return bookById.get(id);
     }
 
-    public static Collection<Book> getBooks() {
+    @Override
+    public Collection<Book> getBooks() {
         return bookById.values();
     }
 
     /**
      * Danger danger don't call this unless you really mean it.
      */
-    public static void clear() {
+    public void clear() {
         bookById.clear();
     }
 

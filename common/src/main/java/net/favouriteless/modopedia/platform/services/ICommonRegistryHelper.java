@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.platform.services;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.world.item.Item;
 
@@ -39,6 +40,6 @@ public interface ICommonRegistryHelper {
      * @param id {@link ResourceLocation} ID of the loader, only used by Fabric.
      * @param loader An instance of the ReloadListener.
      */
-    void registerReloadListener(ResourceLocation id, SimpleJsonResourceReloadListener loader);
+    void registerReloadListener(ResourceLocation id, PreparableReloadListener loader);
 
 }

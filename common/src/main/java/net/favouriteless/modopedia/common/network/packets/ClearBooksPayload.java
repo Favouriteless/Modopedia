@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.common.network.packets;
 
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.common.BookRegistry;
+import net.favouriteless.modopedia.api.BookRegistry;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
@@ -18,7 +18,7 @@ public class ClearBooksPayload implements CustomPacketPayload {
 	}
 
 	public void handle() {
-		BookRegistry.clear();
+		BookRegistry.get().clear();
 	}
 
 }

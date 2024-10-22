@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.common;
 
+import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.common.network.packets.ClearBooksPayload;
 import net.favouriteless.modopedia.common.network.packets.SyncBookPayload;
 import net.favouriteless.modopedia.platform.CommonServices;
@@ -11,8 +12,8 @@ public class CommonEvents {
     public static void datapackSync(ServerPlayer player) {
         INetworkHelper networkHelper = CommonServices.NETWORK;
 
-        networkHelper.sendToPlayer(new ClearBooksPayload(), player);
-        BookRegistry.getBooks().forEach(book -> networkHelper.sendToPlayer(new SyncBookPayload(book), player));
+        networkHelper.sendToPlayer(new ClearBooksPayload(), player); // When reloading clear the client's book registry and sync new ones; contents will sync automatically
+        BookRegistry.get().getBooks().forEach(book -> networkHelper.sendToPlayer(new SyncBookPayload(book), player));
     }
 
 }

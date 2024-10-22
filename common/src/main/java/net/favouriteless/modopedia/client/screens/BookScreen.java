@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.client.screens;
 
-import net.favouriteless.modopedia.api.BookRenderContext;
+import net.favouriteless.modopedia.api.books.BookRenderContext;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

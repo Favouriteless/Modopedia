@@ -5,8 +5,7 @@ import net.favouriteless.modopedia.book.text.TextFormatterRegistryImpl;
 
 /**
  * <p>
- *     TextFormatterRegistry is used for the text formatting tags in books (e.g. $(b)). Can be obtained from
- *     {@link ModopediaApi#getTextFormatterRegistry()}
+ *     TextFormatterRegistry is used for the text formatting tags in books (e.g. $(b)).
  * </p>
  * <p>
  *     See {@link TextFormatterRegistryImpl} for usage of the registry.

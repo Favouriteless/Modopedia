@@ -4,7 +4,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,7 +18,7 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(BuiltInRegistries.ITEM, Modopedia.MOD_ID);
 	public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_REGISTRY = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Modopedia.MOD_ID);
 
-	public static final List<SimpleJsonResourceReloadListener> dataLoaders = new ArrayList<>();
+	public static final List<PreparableReloadListener> RELOAD_LISTENERS = new ArrayList<>();
 
 	@Override
 	public <T extends Item> Supplier<T> registerItem(String name, Supplier<T> entry) {
@@ -31,8 +31,8 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public void registerReloadListener(ResourceLocation id, SimpleJsonResourceReloadListener loader) {
-		dataLoaders.add(loader);
+	public void registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
+		RELOAD_LISTENERS.add(loader);
 	}
 
 }

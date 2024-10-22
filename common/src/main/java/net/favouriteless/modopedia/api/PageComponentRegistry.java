@@ -5,15 +5,14 @@ import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.PageComponent;
 import net.favouriteless.modopedia.book.components.DefaultPageComponents;
-import net.favouriteless.modopedia.common.PageComponentRegistryImpl;
-import net.favouriteless.modopedia.common.PageComponentRegistryImpl.PageComponentType;
+import net.favouriteless.modopedia.book.PageComponentRegistryImpl;
+import net.favouriteless.modopedia.book.PageComponentRegistryImpl.PageComponentType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>
  *     PageComponentRegistry maps template component types to their serializers. Can be obtained from
- *     {@link ModopediaApi#getComponentRegistry()} as well.
  * </p>
  * <p>
  *     See {@link DefaultPageComponents} for usage of the registry.
@@ -35,11 +34,11 @@ public interface PageComponentRegistry {
     <T extends PageComponent> PageComponentType register(ResourceLocation location, MapCodec<T> codec);
 
     /**
-     * Grab the {@link Codec} for a given type of {@link PageComponent}.
+     * Grab the {@link MapCodec} for a given type of {@link PageComponent}.
      *
      * @param type The {@link PageComponent}'s type, as it was registered.
      *
-     * @return The {@link Codec} responsible for type, otherwise null if none were found.
+     * @return The {@link MapCodec} responsible for type, otherwise null if none were found.
      */
     @Nullable MapCodec<? extends PageComponent> getCodec(ResourceLocation id);
 

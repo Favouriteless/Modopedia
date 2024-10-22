@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.api.books;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

@@ -2,8 +2,8 @@ package net.favouriteless.modopedia.common.network.packets;
 
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.common.BookRegistry;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
@@ -22,7 +22,7 @@ public record SyncBookPayload(Book book) implements CustomPacketPayload {
 	}
 
 	public void handle() {
-		BookRegistry.register(book.getId(), book);
+		BookRegistry.get().register(book.getId(), book);
 	}
 
 }

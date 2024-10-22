@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 public interface Book {
 
     /**
-     * @return The ID of this book (defined in the datapack book.json)
+     * @return The ID of this book (defined in the datapack test.json)
      */
     ResourceLocation getId();
 
@@ -83,17 +83,11 @@ public interface Book {
      */
     @Nullable Entry getEntry(String languageCode, String id);
 
-    /**
-     * Get the {@link Category} matching ID if it is part of this book. Defaults to en_us localisation.
-     */
-    @Nullable default Category getCategory(String id) {
+    default @Nullable Category getCategory(String id) {
         return getCategory("en_us", id);
     }
 
-    /**
-     * Get the {@link Entry} matching ID if it is part of this book. Defaults to en_us localisation.
-     */
-    @Nullable default Entry getEntry(String id) {
+    default @Nullable Entry getEntry(String id) {
         return getEntry("en_us", id);
     }
 

@@ -15,22 +15,13 @@ public interface ModopediaApi {
     }
 
     /**
-     * @return Modopedia's {@link PageComponentRegistry} instance.
+     * @return True if Modopedia has finished loading book contents. False when resources start loading
+     * (or reloading) and set to true when they have finished being registered.
      */
-    PageComponentRegistry getComponentRegistry();
+    boolean bookContentsLoaded();
 
     /**
-     * @return Modopedia's {@link TextFormatterRegistry} instance.
-     */
-    TextFormatterRegistry getTextFormatterRegistry();
-
-    /**
-     * @return True if Modopedia has finished loading books.
-     */
-    boolean booksLoaded();
-
-    /**
-     * Grab a {@link Book} by its ID.
+     * Grab a {@link Book} by its ID. (Forwards call to {@link BookRegistry#getBook(ResourceLocation)})
      *
      * @param id {@link ResourceLocation} for the book-- this will be determined by its location in the datapack.
      *

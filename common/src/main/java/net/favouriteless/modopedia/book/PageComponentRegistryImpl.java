@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.common;
+package net.favouriteless.modopedia.book;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
