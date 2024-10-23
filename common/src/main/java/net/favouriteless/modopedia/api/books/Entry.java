@@ -1,5 +1,7 @@
 package net.favouriteless.modopedia.api.books;
 
+import com.mojang.serialization.Codec;
+import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,11 +11,6 @@ import java.util.List;
  * Interface representing an entry (a group of templates/pages) in a book.
  */
 public interface Entry {
-
-    /**
-     * @return The {@link Book} this category belongs to.
-     */
-    Book getBook();
 
     /**
      * @return The title of this entry, displayed in the entries list of Categories this entry is a part of.
@@ -31,5 +28,9 @@ public interface Entry {
      * opened.
      */
     List<Page> getPages();
+
+    static Codec<Entry> persistentCodec() {
+        return EntryImpl.PERSISTENT_CODEC;
+    }
     
 }

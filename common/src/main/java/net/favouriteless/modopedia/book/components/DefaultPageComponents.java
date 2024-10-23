@@ -13,4 +13,8 @@ public class DefaultPageComponents {
 
     public static final PageComponentType TEXT = REGISTRY.register(Modopedia.id("text"), TextPageComponent.CODEC);
 
+    public static void load() {
+
+    }
+
 }

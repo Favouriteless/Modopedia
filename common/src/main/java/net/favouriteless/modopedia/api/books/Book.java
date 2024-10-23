@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.api.ModopediaApi;
 import net.favouriteless.modopedia.book.BookImpl;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -54,7 +53,7 @@ public interface Book {
     /**
      * @return The language code this book defaults to when attempting to find entries and categories. en_us by default.
      */
-    String getDefaultLanguageCode();
+    String getDefaultLanguage();
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;

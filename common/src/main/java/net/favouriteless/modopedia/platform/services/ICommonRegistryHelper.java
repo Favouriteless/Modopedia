@@ -31,15 +31,12 @@ public interface ICommonRegistryHelper {
     <T extends DataComponentType<C>, C> Supplier<T> registerDataComponent(String name, Supplier<T> entry);
 
     /**
-     * Register a {@link SimpleJsonResourceReloadListener}, necessary because Fabric requires ReloadListeners to provide
+     * Register a {@link PreparableReloadListener}, necessary because Fabric requires ReloadListeners to provide
      * an ID (god knows why).
-     *
-     * <p>Implementations of {@link SimpleJsonResourceReloadListener} should not store data, they should only be used
-     * to load data to be used in common.</p>
      *
      * @param id {@link ResourceLocation} ID of the loader, only used by Fabric.
      * @param loader An instance of the ReloadListener.
      */
-    void registerReloadListener(ResourceLocation id, PreparableReloadListener loader);
+    PreparableReloadListener registerReloadListener(ResourceLocation id, PreparableReloadListener loader);
 
 }

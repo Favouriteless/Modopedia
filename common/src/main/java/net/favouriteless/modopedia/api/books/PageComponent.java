@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.api.books;
 
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
-import net.favouriteless.modopedia.book.components.PageComponentImpl;
+import net.favouriteless.modopedia.book.components.PositionedPageComponent;
 import net.favouriteless.modopedia.book.PageComponentRegistryImpl.PageComponentType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -16,19 +16,14 @@ import net.minecraft.resources.ResourceLocation;
  *  <b>IMPORTANT:</b> Components need to have a serializer registered via
  *  {@link PageComponentRegistry#register(ResourceLocation, MapCodec)}, otherwise Modopedia will not load it.
  * </p>
- * See: {@link PageComponentImpl} for the basic implementation used for all the default components.
+ * See: {@link PositionedPageComponent} for the basic implementation used for all the default components.
  */
 public interface PageComponent {
 
     /**
      * Called when the Component is first created; use this for any setup needed directly after deserialization.
-     *
-     * @param x X position of this Component in pixels (relative to the page).
-     * @param y Y position of this Component in pixels (relative to the page).
-     * @param pageNum Index of the page this Component is on within the template.
-     *
      */
-    void init(Book book, int x, int y, int pageNum);
+    void init(int pageNum);
 
     /**
      * Called every render frame. The pose is transformed so that (0, 0) is the top left corner of the page.

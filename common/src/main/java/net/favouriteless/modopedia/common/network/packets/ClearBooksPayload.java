@@ -10,7 +10,7 @@ public class ClearBooksPayload implements CustomPacketPayload {
 
 	public static final Type<ClearBooksPayload> TYPE = new Type<>(Modopedia.id("clear_books"));
 
-	// Not a unit streamcodec because it's a different instance of the payload each time.
+	// Not a unit stream codec because it's a different instance of the payload each time.
 	public static final StreamCodec<ByteBuf, ClearBooksPayload> STREAM_CODEC = StreamCodec.of((b, p) -> {}, b -> new ClearBooksPayload());
 
 	@Override

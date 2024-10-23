@@ -2,8 +2,6 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.favouriteless.modopedia.api.ModopediaApi;
-import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,11 +10,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryImpl implements Category {
 
-    private ResourceLocation bookId; // This gets set after the Category is instantiated because we don't want it to be present in the persistent codec.
-    
     private final String title;
     private final String subtitle;
     private final String rawLandingText;
@@ -38,11 +35,6 @@ public class CategoryImpl implements Category {
         this.iconStack = iconStack;
         this.entries = entries;
         this.children = children;
-    }
-
-    @Override
-    public Book getBook() {
-        return ModopediaApi.get().getBook(bookId);
     }
 
     @Override
@@ -92,12 +84,15 @@ public class CategoryImpl implements Category {
 
     public static final Codec<Category> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
-            Codec.STRING.optionalFieldOf("subtitle", null).forGetter(Category::getSubtitle),
-            Codec.STRING.optionalFieldOf("landingText", null).forGetter(Category::getRawLandingText),
-            ItemStack.CODEC.optionalFieldOf("iconStack", null).forGetter(Category::getIcon),
-            ResourceLocation.CODEC.optionalFieldOf("texture", null).forGetter(Category::getTexture),
+            Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
+            Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
+            ItemStack.CODEC.optionalFieldOf("icon").forGetter(c -> Optional.ofNullable(c.getIcon())),
+            ResourceLocation.CODEC.optionalFieldOf("texture").forGetter(c -> Optional.ofNullable(c.getTexture())),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren)
-    ).apply(instance, CategoryImpl::new));
+    ).apply(instance, (title, subtitle, landingText, iconStack, texture, entries, children) ->
+            new CategoryImpl(title, subtitle.orElse(null), landingText.orElse(null),
+                             iconStack.orElse(null), texture.orElse(null), entries, children))
+    );
 
 }

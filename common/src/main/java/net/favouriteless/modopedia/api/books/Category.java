@@ -15,11 +15,6 @@ import java.util.List;
 public interface Category {
 
     /**
-     * @return The {@link Book} this category belongs to.
-     */
-    Book getBook();
-
-    /**
      * @return Title of the category-- this will at the top of the landing page.
      */
     String getTitle();
@@ -55,17 +50,6 @@ public interface Category {
      */
     List<String> getEntries();
 
-    /**
-     * Get the {@link Entry} matching id if it is part of this category.
-     *
-     * @param id {@link ResourceLocation} id representing the entry's datapack location.
-     *
-     * @return An {@link Entry} matching id if one is found, otherwise null.
-     */
-    @Nullable default Entry getEntry(String id) {
-//        return getBook().getEntry(id);
-        return null;
-    }
 
     /**
      * @return {@link List} of Category IDs which are inside this category. These will be shown in the same
@@ -73,18 +57,6 @@ public interface Category {
      */
     List<String> getChildren();
 
-    /**
-     * Get the {@link Category} matching id if it is a child of this category.
-     *
-     * @param id {@link ResourceLocation} id representing the category's datapack location.
-     *
-     * @return A category matching id if one is found, otherwise null.
-     */
-    @Nullable default Category getChild(String id) {
-//        return getBook().getCategory(id);
-        return null;
-    }
-    
     static Codec<Category> persistentCodec() {
         return CategoryImpl.PERSISTENT_CODEC;
     }

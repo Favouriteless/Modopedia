@@ -18,6 +18,7 @@
             "net.favouriteless.modopedia.fabric.ModopediaFabric"
         ],
         "client": [
+            "net.favouriteless.modopedia.fabric.client.ModopediaFabricClient"
         ]
     },
     "mixins": [

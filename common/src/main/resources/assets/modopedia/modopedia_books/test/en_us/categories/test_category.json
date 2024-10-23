@@ -1,5 +1,8 @@
 {
   "title": "Test Category",
   "subtitle": "Test Subtitle",
-  "description": "This is a test description for a category."
+  "landing_text": "This is a test description for a category.",
+  "entries": [
+    "test_entry"
+  ]
 }

@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.neoforge;
+package net.favouriteless.modopedia.neoforge.common;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.common.CommonEvents;

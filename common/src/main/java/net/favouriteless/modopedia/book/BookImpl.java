@@ -5,16 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.Category;
-import net.favouriteless.modopedia.api.books.Entry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class BookImpl implements Book {
@@ -79,7 +75,7 @@ public class BookImpl implements Book {
     }
 
     @Override
-    public String getDefaultLanguageCode() {
+    public String getDefaultLanguage() {
         return defaultLang;
     }
 
@@ -92,7 +88,7 @@ public class BookImpl implements Book {
             Codec.STRING.optionalFieldOf("landing_text", null).forGetter(Book::getRawLandingText),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("gui/book/default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
-            Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguageCode)
+            Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguage)
     ).apply(instance, BookImpl::new));
 
     public static final StreamCodec<ByteBuf, Book> STREAM_CODEC = new StreamCodec<>() { // StreamCodec.composite overloads were too small :(
@@ -118,7 +114,7 @@ public class BookImpl implements Book {
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getRawLandingText()));
             ResourceLocation.STREAM_CODEC.encode(buf, book.getTexture());
             ResourceLocation.STREAM_CODEC.encode(buf, book.getItemModelLocation());
-            ByteBufCodecs.STRING_UTF8.encode(buf, book.getDefaultLanguageCode());
+            ByteBufCodecs.STRING_UTF8.encode(buf, book.getDefaultLanguage());
         }
 
     };

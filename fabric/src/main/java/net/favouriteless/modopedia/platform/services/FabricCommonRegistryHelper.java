@@ -30,8 +30,9 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public void registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
+	public PreparableReloadListener registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
 		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new JsonDataLoaderWrapper(id, loader)); // Fabric impl adds a wrapper for loaders.
+		return loader;
 	}
 
 }

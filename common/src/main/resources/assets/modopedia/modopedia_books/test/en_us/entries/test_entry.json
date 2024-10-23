@@ -1,3 +1,17 @@
 {
+  "title": "Test Entry",
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:text",
+          "x": 0,
+          "y": 0,
+          "text": "Test text component",
+          "width": 200
+        }
+      ]
+    }
+  ]
 
 }

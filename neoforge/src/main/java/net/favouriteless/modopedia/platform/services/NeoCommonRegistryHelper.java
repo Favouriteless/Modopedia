@@ -31,8 +31,9 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public void registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
+	public PreparableReloadListener registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
 		RELOAD_LISTENERS.add(loader);
+		return loader;
 	}
 
 }

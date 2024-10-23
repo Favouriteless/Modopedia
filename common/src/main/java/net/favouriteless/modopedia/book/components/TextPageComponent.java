@@ -9,17 +9,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-public class TextPageComponent extends PageComponentImpl {
+public class TextPageComponent extends PositionedPageComponent {
 
     public static final MapCodec<TextPageComponent> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.INT.fieldOf("x").forGetter(component -> component.x),
+            Codec.INT.fieldOf("y").forGetter(component -> component.y),
             Codec.STRING.fieldOf("text").forGetter(component -> component.text.getString()),
             Codec.INT.optionalFieldOf("width", 100).forGetter(component -> component.width)
     ).apply(instance, TextPageComponent::new));
 
-    private final Component text;
-    private final int width;
+    protected final Component text;
+    protected final int width;
 
-    public TextPageComponent(String text, int width) {
+    public TextPageComponent(int x, int y, String text, int width) {
+        super(x, y);
         this.text = Component.literal(text);
         this.width = width;
     }
