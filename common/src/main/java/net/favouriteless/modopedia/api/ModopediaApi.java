@@ -7,9 +7,6 @@ import net.favouriteless.modopedia.api.books.BookContentManager;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Main API interface for Modopedia
- */
 public interface ModopediaApi {
 
     static ModopediaApi get() {
@@ -17,8 +14,8 @@ public interface ModopediaApi {
     }
 
     /**
-     * @return True if Modopedia has finished loading book contents. False when resources start loading
-     * (or reloading) and set to true when they have finished being registered.
+     * @return True if Modopedia has finished loading book contents. Set false when resources start loading
+     * (or reloading) and set true when they have finished being registered.
      */
     boolean bookContentsLoaded();
 

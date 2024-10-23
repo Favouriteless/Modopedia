@@ -42,15 +42,14 @@ public class CategoryImpl implements Category {
         return title;
     }
 
-    @Nullable
+
     @Override
-    public String getSubtitle() {
+    public @Nullable String getSubtitle() {
         return subtitle;
     }
 
-    @Nullable
     @Override
-    public Component getLandingText() {
+    public @Nullable Component getLandingText() {
         return landingText;
     }
 
@@ -64,9 +63,8 @@ public class CategoryImpl implements Category {
         return iconStack;
     }
 
-    @Nullable
     @Override
-    public ResourceLocation getTexture() {
+    public @Nullable ResourceLocation getTexture() {
         return texture;
     }
 
@@ -82,7 +80,7 @@ public class CategoryImpl implements Category {
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-    public static final Codec<Category> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final Codec<CategoryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
             Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),

@@ -15,7 +15,10 @@ public class ColorFormatter implements TextFormatter {
     public void apply(StyleStack styleStack, String tag) {
         String colorString = tag.substring(2);
 
-        if(colorString.matches("\\d+")) {
+        if(colorString.matches("#[a-fA-F0-9]{6}")) {
+            styleStack.modify(style -> style.withColor(Integer.decode(colorString)));
+        }
+        else if(colorString.matches("\\d+")) {
             ChatFormatting formatting = ChatFormatting.getById(Integer.parseUnsignedInt(colorString));
             if(formatting == null) {
                 styleStack.pop();
@@ -23,9 +26,6 @@ public class ColorFormatter implements TextFormatter {
             }
 
             styleStack.modify(style -> style.withColor(formatting));
-        }
-        else if(colorString.matches("#[a-fA-F0-9]{6}")) {
-            styleStack.modify(style -> style.withColor(Integer.decode(colorString)));
         }
         else {
             ChatFormatting formatting = ChatFormatting.getByName(colorString.toUpperCase());

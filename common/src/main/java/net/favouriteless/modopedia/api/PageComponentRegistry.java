@@ -1,14 +1,14 @@
 package net.favouriteless.modopedia.api;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.modopedia.api.books.Page;
-import net.favouriteless.modopedia.api.books.PageComponent;
-import net.favouriteless.modopedia.book.components.DefaultPageComponents;
+import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.books.page_components.PageComponentType;
 import net.favouriteless.modopedia.book.PageComponentRegistryImpl;
-import net.favouriteless.modopedia.book.PageComponentRegistryImpl.PageComponentType;
+import net.favouriteless.modopedia.book.components.DefaultPageComponents;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 /**
  * <p>
@@ -28,10 +28,10 @@ public interface PageComponentRegistry {
      * Register a Component serializer.
      *
      * @param location Component's type: should match the one used in template JSONs.
-     * @param codec Codec used to deserialize components of this type.
+     * @param factory Factory supplying an instance of a component of this type.
      *
      */
-    <T extends PageComponent> PageComponentType register(ResourceLocation location, MapCodec<T> codec);
+    PageComponentType register(ResourceLocation location, Supplier<PageComponent> factory);
 
     /**
      * Grab the {@link MapCodec} for a given type of {@link PageComponent}.
@@ -40,11 +40,6 @@ public interface PageComponentRegistry {
      *
      * @return The {@link MapCodec} responsible for type, otherwise null if none were found.
      */
-    @Nullable MapCodec<? extends PageComponent> getCodec(ResourceLocation id);
-
-    /**
-     * @return The type codec for the registry. Used to serialize {@link Page}s, most mods shouldn't need this.
-     */
-    Codec<PageComponent> codec();
+    @Nullable PageComponentType get(ResourceLocation id);
 
 }

@@ -1,7 +1,5 @@
 package net.favouriteless.modopedia.api.books;
 
-import com.mojang.serialization.Codec;
-import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,9 +26,5 @@ public interface Entry {
      * opened.
      */
     List<Page> getPages();
-
-    static Codec<Entry> persistentCodec() {
-        return EntryImpl.PERSISTENT_CODEC;
-    }
     
 }

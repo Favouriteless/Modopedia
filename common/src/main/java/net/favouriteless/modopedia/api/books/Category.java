@@ -1,7 +1,5 @@
 package net.favouriteless.modopedia.api.books;
 
-import com.mojang.serialization.Codec;
-import net.favouriteless.modopedia.book.CategoryImpl;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -46,19 +44,14 @@ public interface Category {
     @Nullable ResourceLocation getTexture();
 
     /**
-     * @return {@link List} of every {@link Entry} ID in this category.
+     * @return {@link List} of every Entry ID in this category.
      */
     List<String> getEntries();
-
 
     /**
      * @return {@link List} of Category IDs which are inside this category. These will be shown in the same
      * manner as entries, but always at the start of the list.
      */
     List<String> getChildren();
-
-    static Codec<Category> persistentCodec() {
-        return CategoryImpl.PERSISTENT_CODEC;
-    }
 
 }

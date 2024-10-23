@@ -1,6 +1,8 @@
 package net.favouriteless.modopedia.api.books;
 
-import java.util.List;
+import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+
+import java.util.Collection;
 
 /**
  * Interface representing a single page or template within an {@link Entry}.
@@ -8,8 +10,8 @@ import java.util.List;
 public interface Page {
 
     /**
-     * @return A {@link List} containing all {@link PageComponent}s on this page.
+     * @return A {@link Collection} containing all {@link PageComponent}s on this page.
      */
-    List<PageComponent> getComponents();
+    Collection<PageComponent> getComponents();
 
 }
