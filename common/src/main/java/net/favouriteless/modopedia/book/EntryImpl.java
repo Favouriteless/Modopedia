@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,10 @@ public class EntryImpl implements Entry {
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-
+    public Entry addPages(Page... pages) {
+        this.pages.addAll(Arrays.asList(pages));
+        return this;
+    }
 
     // This isn't the only deserialization done, but the rest is near impossible to do as a codec.
     public static final Codec<EntryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(

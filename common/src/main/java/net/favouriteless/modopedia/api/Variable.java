@@ -21,7 +21,7 @@ public interface Variable {
      * @return The value of this Variable, decoded as T. This could be from a Codec ({@link JsonVariable}) or just a
      * cast ({@link ObjectVariable}).
      */
-    <T> T as(TypeToken<T> clazz);
+    <T> T as(TypeToken<T> token);
 
     <T> T as(Class<T> clazz);
 
@@ -39,26 +39,33 @@ public interface Variable {
 
     Stream<Variable> asStream();
 
-    static Variable of(JsonElement element) {
-        return JsonVariable.wrap(element);
-    }
-
     static Variable of(Object object) {
-        return ObjectVariable.wrap(object);
+        return ObjectVariable.of(object);
     }
 
     /**
      * Register a new {@link Codec} to deserialize types for all JsonVariables.
      *
-     * @param clazz Class of the result.
-     * @param codec A codec providing a decoded T given JsonOps and a JsonElement.
+     * @param token TypeToken representing the type of the codec. Usually fine to pass a new TypeToken<>() {}.
+     * @param codec A codec for T.
+     */
+    static <T> void registerCodec(TypeToken<T> token, Codec<T> codec) {
+        JsonVariable.registerCodec(token, codec);
+    }
+
+    /**
+     * Register a new {@link Codec} to deserialize types for all JsonVariables.
+     *
+     * @param clazz Class representing the type of the codec.
+     * @param codec A codec for T.
      */
     static <T> void registerCodec(Class<T> clazz, Codec<T> codec) {
         JsonVariable.registerCodec(clazz, codec);
     }
 
+
     /**
-     * Lookup wraps the JsonVariables {@link Map} given to a component.
+     * Lookup wraps the Variables {@link Map} given to a {@link PageComponent}.
      */
     interface Lookup {
 
@@ -66,14 +73,7 @@ public interface Variable {
 
         Variable getOrDefault(String key, Object def);
 
-        void set(String key, Variable value);
-
         boolean has(String key);
-
-        /**
-         * @return An <b>IMMUTABLE</b> set containing the keys in this lookup.
-         */
-        Set<String> getKeys();
 
     }
 

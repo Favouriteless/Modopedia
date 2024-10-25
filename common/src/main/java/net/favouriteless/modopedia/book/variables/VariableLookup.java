@@ -8,15 +8,7 @@ import java.util.Set;
 
 public class VariableLookup implements Variable.Lookup {
 
-    private final Map<String, Variable> internalMap;
-
-    public VariableLookup(Map<String, Variable> variables) {
-        this.internalMap = variables;
-    }
-
-    public VariableLookup() {
-        this.internalMap = new HashMap<>();
-    }
+    private final Map<String, Variable> internalMap = new HashMap<>();;
 
     @Override
     public Variable get(String key) {
@@ -29,18 +21,12 @@ public class VariableLookup implements Variable.Lookup {
     }
 
     @Override
-    public void set(String key, Variable value) {
-        internalMap.put(key, value);
-    }
-
-    @Override
     public boolean has(String key) {
         return internalMap.containsKey(key);
     }
 
-    @Override
-    public Set<String> getKeys() {
-        return internalMap.keySet();
+    public void set(String key, Variable variable) {
+        internalMap.put(key, variable);
     }
 
 }

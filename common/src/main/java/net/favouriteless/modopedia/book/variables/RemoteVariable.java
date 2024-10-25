@@ -1,70 +1,69 @@
 package net.favouriteless.modopedia.book.variables;
 
 import com.google.common.reflect.TypeToken;
-import com.google.gson.JsonParseException;
 import net.favouriteless.modopedia.api.Variable;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-public class ObjectVariable implements Variable {
+public class RemoteVariable implements Variable {
 
-    private final Object value;
+    private final String key;
+    private final Lookup lookup;
 
-    private ObjectVariable(Object value) {
-        this.value = value;
+    private RemoteVariable(String key, Lookup lookup) {
+        this.key = key;
+        this.lookup = lookup;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T as(TypeToken<T> token) {
-        return (T)value;
+        return lookup.get(key).as(token);
     }
 
     @Override
     public <T> T as(Class<T> clazz) {
-        return clazz.cast(value);
+        return lookup.get(key).as(clazz);
     }
 
     @Override
     public int asInt() {
-        return (int)value;
+        return lookup.get(key).asInt();
     }
 
     @Override
     public long asLong() {
-        return (int)value;
+        return lookup.get(key).asLong();
     }
 
     @Override
     public float asFloat() {
-        return (float)value;
+        return lookup.get(key).asFloat();
     }
 
     @Override
     public double asDouble() {
-        return (double)value;
+        return lookup.get(key).asDouble();
     }
 
     @Override
     public boolean asBoolean() {
-        return (boolean)value;
+        return lookup.get(key).asBoolean();
     }
 
     @Override
     public String asString() {
-        return value.toString();
+        return lookup.get(key).asString();
     }
 
     @Override
     public Stream<Variable> asStream() {
-        return ((List<?>)value).stream().map(Variable::of);
+        return lookup.get(key).asStream();
     }
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-    public static Variable of(Object object) {
-        return new ObjectVariable(object);
+    public static Variable of(String key, Lookup lookup) {
+        return new RemoteVariable(key, lookup);
     }
 
 }

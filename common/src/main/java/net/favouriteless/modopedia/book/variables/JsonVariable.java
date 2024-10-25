@@ -21,7 +21,9 @@ import java.util.stream.StreamSupport;
 public class JsonVariable implements Variable {
 
     private static final Map<TypeToken<?>, Codec<?>> tokenCodecs = new HashMap<>();
+
     private final JsonElement internal;
+    private Object cached;
 
     static {
         registerCodec(ResourceLocation.class, ResourceLocation.CODEC);
@@ -43,17 +45,21 @@ public class JsonVariable implements Variable {
         return as(TypeToken.of(clazz));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T as(TypeToken<T> token) {
         Codec<T> codec = getCodec(token);
-
         if(codec == null)
             throw new JsonParseException(String.format("Could not decode JsonVariable: %s does not have a codec.", token.getType().getTypeName()));
 
-        return codec.decode(JsonOps.INSTANCE, internal)
-                .resultOrPartial(error -> { throw new JsonParseException("Could not decode JsonVariable: " + error); })
-                .map(Pair::getFirst)
-                .orElse(null);
+        if(cached == null || token.getType() != cached.getClass()) {
+            cached = codec.decode(JsonOps.INSTANCE, internal)
+                    .resultOrPartial(error -> { throw new JsonParseException("Could not decode JsonVariable: " + error); })
+                    .map(Pair::getFirst)
+                    .orElse(null);
+        }
+
+        return (T)cached;
     }
 
     @Override
@@ -91,7 +97,7 @@ public class JsonVariable implements Variable {
         if(!internal.isJsonArray())
             throw new JsonParseException("Could not decode JsonVariable: Cannot convert non-array variable to a stream");
 
-        return StreamSupport.stream(unwrap().getAsJsonArray().spliterator(), false)
+        return StreamSupport.stream(internal.getAsJsonArray().spliterator(), false)
                 .map(Variable::of);
     }
 
@@ -105,17 +111,8 @@ public class JsonVariable implements Variable {
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-    public JsonElement unwrap() {
-        return internal;
-    }
-
-    public static Variable wrap(JsonElement internal) {
+    public static Variable of(JsonElement internal) {
         return new JsonVariable(internal);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> Codec<T> getCodec(Class<T> clazz) {
-        return (Codec<T>)tokenCodecs.get(TypeToken.of(clazz));
     }
 
     @SuppressWarnings("unchecked")
