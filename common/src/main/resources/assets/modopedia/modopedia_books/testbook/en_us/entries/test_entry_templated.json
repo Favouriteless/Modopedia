@@ -1,0 +1,14 @@
+{
+  "title": "Templated Test Entry",
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:test_template",
+          "passthrough": "Test text component"
+        }
+      ]
+    }
+  ]
+
+}

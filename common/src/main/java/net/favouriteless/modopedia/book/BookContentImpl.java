@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.books.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BookContentImpl implements BookContent {
@@ -59,6 +60,12 @@ public class BookContentImpl implements BookContent {
         return content.computeIfAbsent(langCode, k -> new LocalisedBookContent(Map.of(), Map.of()));
     }
 
-    public record LocalisedBookContent(Map<String, Category> categories, Map<String, Entry> entries) {}
+    public record LocalisedBookContent(Map<String, Category> categories, Map<String, Entry> entries) {
+
+        public static LocalisedBookContent create() {
+            return new LocalisedBookContent(new HashMap<>(), new HashMap<>());
+        }
+
+    }
 
 }

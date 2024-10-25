@@ -2,19 +2,16 @@ package net.favouriteless.modopedia.book.text;
 
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
-import net.favouriteless.modopedia.api.TextFormatterRegistry;
 import net.favouriteless.modopedia.book.text.formatters.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class TextFormatterRegistryImpl implements TextFormatterRegistry {
+public class TextFormatterRegistry {
 
-    public static TextFormatterRegistryImpl INSTANCE = new TextFormatterRegistryImpl();
+    private static final Set<TextFormatter> formatters = new HashSet<>();
 
-    private final Set<TextFormatter> formatters = new HashSet<>();
-
-    private TextFormatterRegistryImpl() {
+    static {
         register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withBold(true)), "b"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withItalic(true)), "i"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withUnderlined(true)), "u"));
@@ -36,12 +33,11 @@ public class TextFormatterRegistryImpl implements TextFormatterRegistry {
         register(new TooltipFormatter());
     }
 
-    @Override
-    public void register(TextFormatter formatter) {
+    public static void register(TextFormatter formatter) {
         formatters.add(formatter);
     }
 
-    public void tryApply(StyleStack styleStack, String tag) {
+    public static void tryApply(StyleStack styleStack, String tag) {
         for(TextFormatter formatter : formatters) {
             if(formatter.matches(tag)) {
                 formatter.apply(styleStack, tag);

@@ -14,6 +14,7 @@ public class PageImpl implements Page {
 
     public PageImpl(JsonObject json, int pageNum) {
         holder = new PageComponentHolder(json, pageNum);
+        holder.initComponents();
     }
 
     @Override

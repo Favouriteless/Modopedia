@@ -7,8 +7,8 @@ import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.ObjectVariable;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -75,6 +75,18 @@ public interface Variable {
 
         boolean has(String key);
 
+        Collection<String> keys();
+
     }
+
+    /**
+     * Mutable version of Lookup used for template processors.
+     */
+    interface MutableLookup extends Lookup {
+
+        Variable set(String key, Variable variable);
+
+    }
+
 
 }

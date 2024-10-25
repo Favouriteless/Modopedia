@@ -4,6 +4,8 @@ import net.favouriteless.modopedia.ModopediaApiImpl;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookContentManager;
+import net.favouriteless.modopedia.api.books.TemplateProcessor;
+import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,5 +38,9 @@ public interface ModopediaApi {
      * @return BookContent matching id, or null if none were found.
      */
     @Nullable BookContent getBookContent(ResourceLocation id);
+
+    void registerTemplateProcessor(ResourceLocation id, TemplateProcessor processor);
+
+    void registerTextFormatter(TextFormatter formatter);
 
 }

@@ -2,9 +2,7 @@ package net.favouriteless.modopedia.book.variables;
 
 import net.favouriteless.modopedia.api.Variable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VariableLookup implements Variable.Lookup {
 
@@ -23,6 +21,11 @@ public class VariableLookup implements Variable.Lookup {
     @Override
     public boolean has(String key) {
         return internalMap.containsKey(key);
+    }
+
+    @Override
+    public Collection<String> keys() {
+        return internalMap.keySet();
     }
 
     public void set(String key, Variable variable) {

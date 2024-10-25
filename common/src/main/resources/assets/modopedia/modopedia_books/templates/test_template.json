@@ -1,0 +1,11 @@
+{
+  "components": [
+    {
+      "type": "modopedia:text",
+      "x": 0,
+      "y": 0,
+      "text": "#passthrough",
+      "width": 200
+    }
+  ]
+}

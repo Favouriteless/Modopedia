@@ -4,6 +4,7 @@ import net.favouriteless.modopedia.book.components.DefaultPageComponents;
 import net.favouriteless.modopedia.common.data_components.ModopediaDataComponents;
 import net.favouriteless.modopedia.common.items.ModopediaItems;
 import net.favouriteless.modopedia.common.reload_listeners.BookReloadListener;
+import net.favouriteless.modopedia.common.reload_listeners.TemplateReloadListener;
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class Modopedia {
         ModopediaItems.load();
         DefaultPageComponents.load();
 
-        CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("book"), new BookReloadListener(BOOK_DIRECTORY));
+        CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(BOOK_DIRECTORY));
     }
 
     public static ResourceLocation id(String path) {

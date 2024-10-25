@@ -21,8 +21,8 @@ public abstract class PageComponent {
      * Called when the component is first created. Data-driven content will not be accessible yet (e.g. recipes).
      */
     public void init(Variable.Lookup lookup) {
-        this.x = lookup.get("x").asInt();
-        this.y = lookup.get("y").asInt();
+        this.x = lookup.has("x") ? lookup.get("x").asInt() : 0;
+        this.y = lookup.has("y") ? lookup.get("y").asInt() : 0;
         this.pageNum = lookup.get("pageNum").asInt();
     }
 
