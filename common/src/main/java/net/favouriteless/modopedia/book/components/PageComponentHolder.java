@@ -23,8 +23,8 @@ public class PageComponentHolder implements Lookup {
     private final Map<PageComponent, Lookup> components = new LinkedHashMap<>();
     private final Map<String, Variable> variables = new HashMap<>();
 
-    public PageComponentHolder(JsonObject json) {
-        createVariables(json);
+    public PageComponentHolder(JsonObject json, int pageNum) {
+        createVariables(json, pageNum);
 
         if(json.has("components"))
             tryCreateComponents(json.getAsJsonArray("components"));
@@ -32,11 +32,12 @@ public class PageComponentHolder implements Lookup {
         initComponents();
     }
 
-    private void createVariables(JsonObject json) {
+    private void createVariables(JsonObject json, int pageNum) {
         json.keySet().forEach(key -> {
             if(!key.equals("template") && !key.equals("components"))
                 variables.put(key, JsonVariable.of(json.get(key)));
         });
+        variables.put("pageNum", Variable.of(pageNum));
     }
 
     private void initComponents() {
@@ -51,7 +52,7 @@ public class PageComponentHolder implements Lookup {
     }
 
     private void createComponent(JsonObject jsonObject) {
-        ResourceLocation id = ResourceLocation.parse(jsonObject.getAsJsonObject("type").getAsString());
+        ResourceLocation id = ResourceLocation.parse(jsonObject.get("type").getAsString());
         PageComponentType type = PageComponentRegistry.get().get(id);
 
         if(type == null)
@@ -75,6 +76,7 @@ public class PageComponentHolder implements Lookup {
             }
             lookup.set(key, JsonVariable.of(element));
         }
+        lookup.set("pageNum", RemoteVariable.of("pageNum", this));
         components.put(component, lookup);
     }
 
