@@ -5,7 +5,7 @@
       "components": [
         {
           "template": "modopedia:test_template",
-          "passthrough": "Test text component"
+          "passthrough": "$(c:#32A852)Testing text with $(b)$(u)bold$(/b) and$(c:#FF0000) red $(i)italic$() text! And a bunch of$(b) text to make it longer\n\nplus$(/b) newline test."
         }
       ]
     }

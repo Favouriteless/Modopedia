@@ -1,10 +1,11 @@
 package net.favouriteless.modopedia.common.items;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.ModopediaApi;
-import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.client.ModopediaClient;
 import net.favouriteless.modopedia.common.data_components.BookDataComponent;
 import net.favouriteless.modopedia.common.data_components.ModopediaDataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +18,7 @@ public class ModopediaBookItem extends Item {
     public ModopediaBookItem() {
         super(new Properties()
                 .stacksTo(1)
-                .component(ModopediaDataComponents.BOOK.get(), new BookDataComponent(Modopedia.id("none")))
+                .component(ModopediaDataComponents.BOOK.get(), new BookDataComponent(Modopedia.id("testbook")))
         );
     }
 
@@ -27,14 +28,11 @@ public class ModopediaBookItem extends Item {
             ItemStack stack = player.getItemInHand(hand);
             BookDataComponent data = stack.get(ModopediaDataComponents.BOOK.get());
 
-            if(!data.id().getPath().equals("none")) {
-                Book book = ModopediaApi.get().getBook(data.id());
-                if(book != null)
-                    Modopedia.LOG.info(book.getTitle());
-            }
+            ResourceLocation id = data.id();
+            if(!id.equals(Modopedia.id("none")))
+                ModopediaClient.tryOpenBook(BookRegistry.get().getBook(data.id()));
         }
-
-        return super.use(level, player, hand);
+        return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
 
 }

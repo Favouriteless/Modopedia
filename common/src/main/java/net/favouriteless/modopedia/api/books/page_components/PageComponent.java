@@ -35,7 +35,7 @@ public abstract class PageComponent {
      * Called every render frame. The pose is transformed so that (0, 0) is the top left corner of the page.
      * You are responsible for all other transformations.
      */
-    public abstract void render(GuiGraphics graphics, BookRenderContext context, int xMouse, int yMouse,
+    public abstract void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY,
                                 float partialTicks);
 
 }

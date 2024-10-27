@@ -45,9 +45,9 @@ public class TemplatePageComponent extends PageComponent {
     }
 
     @Override
-    public void render(GuiGraphics graphics, BookRenderContext context, int xMouse, int yMouse, float partialTicks) {
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         for(PageComponent component : holder.getComponents()) {
-            component.render(graphics, context, xMouse, yMouse, partialTicks);
+            component.render(graphics, context, mouseX, mouseY, partialTicks);
         }
     }
 

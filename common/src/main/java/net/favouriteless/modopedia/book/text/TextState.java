@@ -24,7 +24,12 @@ public class TextState implements StyleStack {
 
     @Override
     public void push(Style style) {
-        stack.push(new PartialTextState(style.applyTo(last())));
+        stack.push(new PartialTextState(style.applyTo(peek())));
+    }
+
+    @Override
+    public void push() {
+        stack.push(new PartialTextState(peek()));
     }
 
     @Override
@@ -33,7 +38,7 @@ public class TextState implements StyleStack {
     }
 
     @Override
-    public Style last() {
+    public Style peek() {
         return !stack.isEmpty() ? stack.peek().getStyle() : baseStyle;
     }
 
@@ -46,16 +51,15 @@ public class TextState implements StyleStack {
     public void setBaseStyle(Style style) {
         baseStyle = style;
         for(PartialTextState partial : stack) {
-            partial.replace(style);
+            partial.replace(style); // Iterate through entire stack replacing bases.
             style = partial.getStyle();
         }
     }
 
-
     private static class PartialTextState {
 
-        private Style style;
-        private List<UnaryOperator<Style>> modifications = new ArrayList<>(); // Keep a list of modifications so the state can be reconstructed with a new base.
+        private Style style; // The current style
+        private List<UnaryOperator<Style>> modifications = new ArrayList<>();
 
         private PartialTextState(Style style) {
             this.style = style;

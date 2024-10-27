@@ -15,36 +15,26 @@ public interface BookRenderContext {
     Screen getScreen();
 
     /**
-     * @return Font style for the current book.
+     * @return Default style for the current book.
      */
     Style getStyle();
 
     /**
-     * Render an {@link ItemStack} to the screen, with a tooltip if the mouse is hovering it.
-     */
-    void renderItemStack(GuiGraphics graphics, int x, int y, int xMouse, int yMouse, ItemStack stack);
-
-    /**
-     * Render an {@link ItemStack} to the screen, with no tooltip.
-     */
-    void renderItemStackNoTooltip(GuiGraphics graphics, int x, int y, int xMouse, int yMouse, ItemStack stack);
-
-    /**
      * Render the {@link ItemStack}s in an {@link Ingredient} in sequence, with a tooltip if the mouse is hovering it.
      */
-    void renderIngredient(GuiGraphics graphics, int x, int y, int xMouse, int yMouse, Ingredient ingredient);
+    void renderIngredient(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient);
 
     /**
      * Render the {@link ItemStack}s in an {@link Ingredient} in sequence, with no tooltip.
      */
-    void renderIngredientNoTooltip(GuiGraphics graphics, int x, int y, int xMouse, int yMouse, Ingredient ingredient);
+    void renderIngredientNoTooltip(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient);
 
     /**
      * Check if the mouse is hovering within a rectangle.
      *
      * @return true if mouse is within bounds.
      */
-    boolean isHovered(int xMouse, int yMouse, int x, int y, int width, int height);
+    boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height);
 
     /**
      * @return {@link ResourceLocation} pointing to this category's book texture.

@@ -11,15 +11,22 @@ import java.util.function.UnaryOperator;
 public interface StyleStack {
 
     /**
-     * Apply a modification to the {@link Style} on top of the stack. Use this to ensure the stack can be reconstructed
-     * if the base style is replaced.
+     * Apply a modification to the {@link Style} on top of the stack.
      */
     void modify(UnaryOperator<Style> op);
 
     /**
      * Push a {@link Style} to the top of the stack.
+     *
+     * @param style Style to get merged into the top of the stack. Any values set will override existing ones, while
+     *              values not set will be taken from the original.
      */
     void push(Style style);
+
+    /**
+     * Push a {@link Style} to the top of the stack-- the stack will create a new state using the current top style.
+     */
+    void push();
 
     /**
      * Remove the {@link Style} on top of the stack.
@@ -31,7 +38,7 @@ public interface StyleStack {
     /**
      * @return The {@link Style} on top of the stack.
      */
-    Style last();
+    Style peek();
 
     /**
      * @return The {@link Style} at the base of this stack (i.e. what the stack was created with)

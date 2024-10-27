@@ -86,7 +86,7 @@ public class BookImpl implements Book {
             Codec.STRING.optionalFieldOf("subtitle", null).forGetter(Book::getSubtitle),
             ResourceLocation.CODEC.optionalFieldOf("type", Modopedia.id("classic")).forGetter(Book::getType),
             Codec.STRING.optionalFieldOf("landing_text", null).forGetter(Book::getRawLandingText),
-            ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("gui/book/default")).forGetter(Book::getTexture),
+            ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("textures/gui/book/default.png")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
             Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguage)
     ).apply(instance, BookImpl::new));

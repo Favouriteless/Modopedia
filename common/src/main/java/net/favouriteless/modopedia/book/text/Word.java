@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
 /**
- * Each word is represented in its own class to allow for the layouter to wrap them correctly.
+ * Each word is represented in its own class to allow for the {@link TextParser} to wrap them correctly.
  */
 public class Word {
 
@@ -27,7 +27,7 @@ public class Word {
 
     public void render(GuiGraphics graphics, Font font, int mouseX, int mouseY) {
         Style style = text.getStyle();
-        graphics.drawString(font, text, x, y, style.getColor() != null ? style.getColor().getValue() : 0x000000); // Defaults to black if no colour is present.
+        graphics.drawString(font, text, x, y, style.getColor() != null ? style.getColor().getValue() : 0x000000, false); // Defaults to black if no colour is present.
 
         if(isHovered(mouseX, mouseY))
             graphics.renderComponentHoverEffect(font, style, mouseX, mouseY);

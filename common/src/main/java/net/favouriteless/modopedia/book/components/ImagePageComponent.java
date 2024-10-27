@@ -21,7 +21,7 @@ public class ImagePageComponent extends PageComponent {
     }
 
     @Override
-    public void render(GuiGraphics graphics, BookRenderContext context, int xMouse, int yMouse, float partialTicks) {
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         graphics.blit(image, x, y, 0, 0, width, height);
     }
 

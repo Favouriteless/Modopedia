@@ -1,8 +1,0 @@
-{
-  "title": "Test Book",
-  "subtitle": "Test Subtitle",
-  "type": "modopedia:classic",
-  "landing_text": "Landing Text",
-  "texture": "modopedia:book/default",
-  "item_model": "modopedia:item/book_default"
-}
