@@ -51,4 +51,12 @@ public class TemplatePageComponent extends PageComponent {
         }
     }
 
+    @Override
+    public boolean pageClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.pageClicked(context, mouseX, mouseY, button))
+                return true;
+        }
+        return false;
+    }
 }

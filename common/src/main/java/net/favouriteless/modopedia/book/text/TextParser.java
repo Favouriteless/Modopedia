@@ -1,8 +1,11 @@
 package net.favouriteless.modopedia.book.text;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 
 import java.util.ArrayList;
@@ -12,55 +15,87 @@ public class TextParser {
 
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
-    public static List<Word> parse(String rawText, int lineWidth, int lineHeight) {
+    public static List<TextChunk> parse(String rawText, int lineWidth) {
         String[] split = rawText.splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
 
-        TextState state = new TextState(Style.EMPTY.withFont(Style.DEFAULT_FONT));
-        List<String> chunks = new ArrayList<>();
+        TextState styleStack = new TextState(Style.EMPTY.withFont(Style.DEFAULT_FONT));
+        List<Component> paragraph = new ArrayList<>();
 
-        for(String chunk : split) {
-            if(chunk.matches(FORMATTER_REGEX)) {
-                state.push();
-                TextFormatterRegistry.tryApply(state, chunk.substring(2, chunk.length()-1));
+        boolean lastFormat = false;
+        for(String section : split) {
+            if(section.isEmpty())
+                continue;
+
+            if(section.matches(FORMATTER_REGEX)) {
+                if(!lastFormat)
+                    styleStack.push();
+                TextFormatterRegistry.tryApply(styleStack, section.substring(2, section.length()-1));
+                lastFormat = true;
             }
             else {
-                if(!chunk.isEmpty())
-                    chunks.add(chunk);
+                paragraph.add(Component.literal(section).withStyle(styleStack.peek()));
+                lastFormat = false;
             }
         }
 
-        return getChunksFrom(state, chunks, lineWidth, lineHeight);
+        return getChunksFrom(paragraph, lineWidth);
     }
 
-    private static List<Word> getChunksFrom(TextState state, List<String> chunks, int lineWidth, int lineHeight) {
-        List<List<String>> groups = new ArrayList<>();
-        for(String chunk : chunks)
-            groups.add(List.of(chunk.split(" "))); // Split the chunks into words.
-
-
-        List<Word> out = new ArrayList<>();
+    public static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth) {
         Font font = Minecraft.getInstance().font;
-        int space = font.width(Component.literal(" ").withStyle(state.getBaseStyle()));
         int x = 0;
         int line = 0;
 
-        for(List<String> group : groups) {
-            for(String chunk : group) {
-                Component component = Component.literal(chunk).withStyle(state.peek());
-                int width = font.width(component);
+        List<TextChunk> chunks = new ArrayList<>();
+        for(Component section : sections) {
+            while(true) {
+                Pair<Component, Component> pair = tryWrapComponent(section, lineWidth-x, lineWidth);
 
-                if((x + width + space) > lineWidth) {
-                    line++;
-                    x = 0;
+                if(pair.getFirst() != null) {
+                    int width = font.width(pair.getFirst()); // First add component to current line-- we know this one is pre-linebreak
+                    chunks.add(new TextChunk(pair.getFirst(), x, line*font.lineHeight, width, font.lineHeight));
+                    x += width;
                 }
 
-                out.add(new Word(component, x, line*lineHeight, width, lineHeight));
-                x += width + space;
+                if(pair.getSecond() == null) // If no linebreak is present we've reached the end of the section.
+                    break;
+                else {
+                    line++; // If linebreak present, start new line and attempt another wrap.
+                    x = 0;
+                    section = pair.getSecond();
+                }
             }
-            state.pop();
+
+        }
+        return chunks;
+    }
+
+    /**
+     * Similar to font split, but only splits one time, so we can use variable lengths.
+     */
+    public static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth) {
+        Font font = Minecraft.getInstance().font;
+        StringSplitter splitter = font.getSplitter();
+
+        String rawString = text.getString();
+        int lineBreak = splitter.findLineBreak(text.getString(), maxWidth, text.getStyle());
+        if(lineBreak == rawString.length()) // If break is end of section, we don't need to wrap.
+            return Pair.of(text, null);
+
+        int firstSpace = rawString.indexOf(" "); // For single word sequences OR breaks from a newline
+        if((firstSpace == -1 || lineBreak < firstSpace) && rawString.charAt(lineBreak) != '\n') { // If we follow word-split rules for \n we cause an infinite loop
+            if(font.width(text) > lineWidth)
+                // If the single word section is longer than an entire line, we split it and add a -
+                return Pair.of(Component.literal(rawString.substring(0, lineBreak-1) + "-").withStyle(text.getStyle()),
+                        Component.literal(rawString.substring(lineBreak)).withStyle(text.getStyle()));
+            else
+                return Pair.of(null, text); // For short single word sections, return it on the next line.
         }
 
-        return out;
+        return Pair.of(
+                Component.literal(rawString.substring(0, lineBreak)).withStyle(text.getStyle()),
+                Component.literal(rawString.substring(lineBreak+1)).withStyle(text.getStyle())
+        );
     }
 
 }

@@ -12,14 +12,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
-    public static final int FULL_WIDTH = 271;
-    public static final int FULL_HEIGHT = 180;
+    public static final int TEX_WIDTH = 271;
+    public static final int TEXT_HEIGHT = 180;
 
     protected final ResourceLocation bookId;
     protected final Book book;
     protected final ResourceLocation texture;
 
     protected int ticks = 0;
+    protected int leftPos = 0;
+    protected int topPos = 0;
 
     public BookScreen(Book book) {
         super(Component.literal(book.getTitle()));
@@ -29,9 +31,16 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     }
 
     @Override
+    protected void init() {
+        super.init();
+        this.leftPos = (width - TEX_WIDTH) / 2;
+        this.topPos = (height - TEXT_HEIGHT) / 2;
+    }
+
+    @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderTransparentBackground(graphics);
-        graphics.blit(texture, (width - FULL_WIDTH) / 2, (height - FULL_HEIGHT) / 2, 0, 0, FULL_WIDTH, FULL_HEIGHT, 512, 512);
+        graphics.blit(texture, leftPos, topPos, 0, 0, TEX_WIDTH, TEXT_HEIGHT, 512, 512);
     }
 
     @Override

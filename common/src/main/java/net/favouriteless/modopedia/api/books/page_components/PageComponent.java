@@ -38,4 +38,13 @@ public abstract class PageComponent {
     public abstract void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY,
                                 float partialTicks);
 
+    /**
+     * Called when mouse is clicked on the page this component is on.
+     *
+     * @return True if the click should be consumed by this component.
+     */
+    public boolean pageClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
+        return false;
+    }
+
 }
