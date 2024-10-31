@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.common.network.packets;
+package net.favouriteless.modopedia.common.network.packets.client;
 
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;

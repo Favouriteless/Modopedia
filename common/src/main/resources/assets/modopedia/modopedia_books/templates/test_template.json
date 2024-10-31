@@ -5,6 +5,14 @@
       "x": 0,
       "y": 0,
       "text": "#passthrough"
+    },
+    {
+      "type": "modopedia:tooltip",
+      "x": 10,
+      "y": 0,
+      "width": 30,
+      "height": 9,
+      "tooltip": ["Test tooltip line 1", "Line 2"]
     }
   ]
 }

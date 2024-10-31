@@ -16,26 +16,12 @@ public interface ModopediaApi {
     }
 
     /**
-     * @return True if Modopedia has finished loading book contents. Set false when resources start loading
-     * (or reloading) and set true when they have finished being registered.
-     */
-    boolean bookContentsLoaded();
-
-    /**
-     * Grab a {@link Book} by its ID. (Forwards call to {@link BookRegistry#getBook(ResourceLocation)})
-     *
-     * @param id {@link ResourceLocation} for the book-- this will be determined by its location in the datapack.
-     *
-     * @return Book matching id, or null if none were found.
+     * @return Book matching id, or null if none were found. (Forwards call to {@link BookRegistry#getBook(ResourceLocation)}
      */
     @Nullable Book getBook(ResourceLocation id);
 
     /**
-     * Grab a {@link Book}'s content by its ID. (Forwards call to {@link BookContentManager#getContent(ResourceLocation)})
-     *
-     * @param id {@link ResourceLocation} for the book-- this will be determined by its location in the datapack.
-     *
-     * @return BookContent matching id, or null if none were found.
+     * @return BookContent matching id, or null if none were found. (Forwards call to {@link BookContentManager#getContent(ResourceLocation)})
      */
     @Nullable BookContent getBookContent(ResourceLocation id);
 

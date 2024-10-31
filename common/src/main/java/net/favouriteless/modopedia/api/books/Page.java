@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
+import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.minecraft.world.level.Level;
 
@@ -16,8 +17,9 @@ public interface Page {
     Collection<PageComponent> getComponents();
 
     /**
-     * Called every time data is reloaded or synchronised.
+     * Calls {@link PageComponent#init(Lookup, Level)} on all components within this Page
      */
-    void onDataReload(Level level);
+    void init(Level level);
+
 
 }

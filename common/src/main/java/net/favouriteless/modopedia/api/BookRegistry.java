@@ -12,7 +12,7 @@ import java.util.Collection;
  *     BookRegistry maps book IDs to their book objects. This will be populated on both the client and server.
  * </p>
  * <p>
- *     Using the registry directly should be avoided where possible as Modopedia will clear and repopulate it when
+ *     Using the registry directly should be avoided where possible as Modopedia will repopulate it when
  *     datapacks reload.
  * </p>
  */
@@ -31,15 +31,11 @@ public interface BookRegistry {
     void register(ResourceLocation id, Book book);
 
     /**
-     * Grab a book by its ID.
-     *
      * @return Book registered under id, otherwise null if none were found.
      */
     @Nullable Book getBook(ResourceLocation id);
 
     /**
-     * Fetch a book's ID.
-     *
      * @return ID of book, or null if none were found.
      */
     @Nullable ResourceLocation getId(Book book);

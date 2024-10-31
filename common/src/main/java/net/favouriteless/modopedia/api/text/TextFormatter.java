@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api.text;
 
 /**
- * Represents a formatting tag for text, i.e $(b) for bold.
+ * Represents a formatting tag for text, e.g. $(b) for bold.
  */
 public interface TextFormatter {
 

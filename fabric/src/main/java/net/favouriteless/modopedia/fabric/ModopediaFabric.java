@@ -4,8 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.common.network.packets.ClearBooksPayload;
-import net.favouriteless.modopedia.common.network.packets.SyncBookPayload;
+import net.favouriteless.modopedia.common.network.packets.client.ClearBooksPayload;
+import net.favouriteless.modopedia.common.network.packets.client.ReloadBookContentPayload;
+import net.favouriteless.modopedia.common.network.packets.client.SyncBookPayload;
 import net.favouriteless.modopedia.fabric.common.FabricCommonEvents;
 
 public class ModopediaFabric implements ModInitializer {
@@ -23,6 +24,9 @@ public class ModopediaFabric implements ModInitializer {
 
         PayloadTypeRegistry.playS2C().register(SyncBookPayload.TYPE, SyncBookPayload.STREAM_CODEC);
         ClientPlayNetworking.registerGlobalReceiver(SyncBookPayload.TYPE, (payload, context) -> payload.handle());
+
+        PayloadTypeRegistry.playS2C().register(ReloadBookContentPayload.TYPE, ReloadBookContentPayload.STREAM_CODEC);
+        ClientPlayNetworking.registerGlobalReceiver(ReloadBookContentPayload.TYPE, (payload, context) -> payload.handle());
     }
 
 }

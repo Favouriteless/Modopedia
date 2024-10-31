@@ -41,11 +41,10 @@ public interface BookContent {
 
     @Nullable Category getCategory(String id);
 
-    @Nullable
-
     /**
      * @return A collection of all entries under the given language code.
      */
+    @Nullable
     Collection<Entry> getEntries(String language);
 
     /**

@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api;
 
 import com.google.common.reflect.TypeToken;
-import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
@@ -12,8 +11,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * Represents a variable within a template or {@link PageComponent}. The value is stored internally as a
- * {@link JsonElement}.
+ * Represents a variable within a template or {@link PageComponent}. You should never be directly creating these, use
+ * {@link Variable#of(Object)} instead.
  */
 public interface Variable {
 

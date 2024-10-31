@@ -1,8 +1,9 @@
 package net.favouriteless.modopedia.neoforge;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.common.network.packets.ClearBooksPayload;
-import net.favouriteless.modopedia.common.network.packets.SyncBookPayload;
+import net.favouriteless.modopedia.common.network.packets.client.ClearBooksPayload;
+import net.favouriteless.modopedia.common.network.packets.client.ReloadBookContentPayload;
+import net.favouriteless.modopedia.common.network.packets.client.SyncBookPayload;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -27,6 +28,7 @@ public class ModopediaNeo {
 
         registrar.playToClient(ClearBooksPayload.TYPE, ClearBooksPayload.STREAM_CODEC, (payload, context) -> payload.handle());
         registrar.playToClient(SyncBookPayload.TYPE, SyncBookPayload.STREAM_CODEC, (payload, context) -> payload.handle());
+        registrar.playToClient(ReloadBookContentPayload.TYPE, ReloadBookContentPayload.STREAM_CODEC, (payload, context) -> payload.handle());
     }
 
 }

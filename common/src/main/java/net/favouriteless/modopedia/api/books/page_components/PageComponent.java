@@ -18,18 +18,13 @@ public abstract class PageComponent {
     protected int pageNum;
 
     /**
-     * Called when the component is first created. Data-driven content will not be accessible yet (e.g. recipes).
+     * Called when the component is first created. Use this for setup like grabbing recipes.
      */
-    public void init(Variable.Lookup lookup) {
+    public void init(Variable.Lookup lookup, Level level) {
         this.x = lookup.has("x") ? lookup.get("x").asInt() : 0;
         this.y = lookup.has("y") ? lookup.get("y").asInt() : 0;
         this.pageNum = lookup.get("page_num").asInt();
     }
-
-    /**
-     * Called when datapacks are reloaded or synchronised; use this for any data-driven setup (e.g. fetching a recipe)
-     */
-    public void refreshData(Level level, Variable.Lookup lookup) {}
 
     /**
      * Called every render frame. The pose is transformed so that (0, 0) is the top left corner of the page.

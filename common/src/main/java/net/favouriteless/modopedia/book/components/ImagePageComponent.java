@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.books.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
 public class ImagePageComponent extends PageComponent {
 
@@ -13,8 +14,8 @@ public class ImagePageComponent extends PageComponent {
     protected int height;
 
     @Override
-    public void init(Lookup lookup) {
-        super.init(lookup);
+    public void init(Lookup lookup, Level level) {
+        super.init(lookup, level);
         image = lookup.get("image").as(ResourceLocation.class);
         width = lookup.getOrDefault("width", 100).asInt();
         height = lookup.getOrDefault("height", 100).asInt();

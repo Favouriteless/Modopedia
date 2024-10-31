@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,8 @@ public class TextPageComponent extends PageComponent {
     protected int lineHeight;
 
     @Override
-    public void init(Lookup lookup) {
-        super.init(lookup);
+    public void init(Lookup lookup, Level level) {
+        super.init(lookup, level);
         rawText = lookup.get("text").asString();
         width = lookup.getOrDefault("width", 100).asInt();
         lineHeight = lookup.getOrDefault("line_height", 9).asInt();

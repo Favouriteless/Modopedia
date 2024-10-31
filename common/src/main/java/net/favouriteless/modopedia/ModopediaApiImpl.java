@@ -15,14 +15,8 @@ import org.jetbrains.annotations.Nullable;
 public class ModopediaApiImpl implements ModopediaApi {
 
     public static final ModopediaApi INSTANCE = new ModopediaApiImpl();
-    public static boolean isLoading = true;
 
     private ModopediaApiImpl() {}
-
-    @Override
-    public boolean bookContentsLoaded() {
-        return !isLoading;
-    }
 
     @Override
     public @Nullable Book getBook(ResourceLocation id) {
