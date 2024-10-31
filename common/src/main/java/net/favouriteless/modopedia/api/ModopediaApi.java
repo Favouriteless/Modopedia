@@ -3,7 +3,6 @@ package net.favouriteless.modopedia.api;
 import net.favouriteless.modopedia.ModopediaApiImpl;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.api.books.BookContentManager;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.minecraft.resources.ResourceLocation;

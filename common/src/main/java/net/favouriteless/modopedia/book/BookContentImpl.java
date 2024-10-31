@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.book;
 
+import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.*;
 import org.jetbrains.annotations.Nullable;

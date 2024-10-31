@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
+import net.favouriteless.modopedia.api.BookContentManager;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

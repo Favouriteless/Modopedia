@@ -43,5 +43,4 @@ rootProject.name = "Modopedia"
 
 include("common")
 include("fabric")
-include("forge")
 include("neoforge")

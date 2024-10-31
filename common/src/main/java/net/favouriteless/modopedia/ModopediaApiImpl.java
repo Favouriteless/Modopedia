@@ -4,7 +4,7 @@ import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.ModopediaApi;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.api.books.BookContentManager;
+import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.favouriteless.modopedia.book.TemplateRegistry;

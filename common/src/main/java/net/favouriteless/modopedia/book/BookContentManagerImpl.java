@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.book;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.api.books.BookContentManager;
+import net.favouriteless.modopedia.api.BookContentManager;
 import net.minecraft.resources.ResourceLocation;
 
 public class BookContentManagerImpl implements BookContentManager {

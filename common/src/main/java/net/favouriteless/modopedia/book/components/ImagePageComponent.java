@@ -9,21 +9,23 @@ import net.minecraft.world.level.Level;
 
 public class ImagePageComponent extends PageComponent {
 
-    protected ResourceLocation image;
+    protected ResourceLocation[] images;
     protected int width;
     protected int height;
+
+    protected int selectedImage = 0;
 
     @Override
     public void init(Lookup lookup, Level level) {
         super.init(lookup, level);
-        image = lookup.get("image").as(ResourceLocation.class);
+        images = lookup.get("images").asStream().map(var -> var.as(ResourceLocation.class)).toArray(ResourceLocation[]::new);
         width = lookup.getOrDefault("width", 100).asInt();
         height = lookup.getOrDefault("height", 100).asInt();
     }
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
-        graphics.blit(image, x, y, 0, 0, width, height);
+//        graphics.blit(image, x, y, 0, 0, width, height);
     }
 
 }

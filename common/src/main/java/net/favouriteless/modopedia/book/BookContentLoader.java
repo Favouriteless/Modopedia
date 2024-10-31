@@ -6,7 +6,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.books.BookContentManager;
+import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.books.page_components.PageComponentType;

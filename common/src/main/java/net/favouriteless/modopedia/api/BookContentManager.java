@@ -1,10 +1,11 @@
-package net.favouriteless.modopedia.api.books;
+package net.favouriteless.modopedia.api;
 
+import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.book.BookContentManagerImpl;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * BookContentManager maps all existing {@link BookContent}s to their book ID.
+ * BookContentManager maps all existing {@link BookContent}s to their book ID. Will only be populated client side.
  */
 public interface BookContentManager {
 

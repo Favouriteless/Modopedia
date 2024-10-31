@@ -28,11 +28,6 @@ run
 runs/
 key.properties
 
-# Files from Forge MDK
-forge*changelog.txt
-build.bat
-*.bat
-
 # allow gradlew
 !core/gradle/wrapper
 !core/gradlew.bat
