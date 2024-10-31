@@ -50,6 +50,11 @@ public interface BookRegistry {
     Collection<Book> getBooks();
 
     /**
+     * @return A collection containing all registered book IDs
+     */
+    Collection<ResourceLocation> getBookIds();
+
+    /**
      * Removes all registered books. Danger: do not call unless you really mean it.
      */
     void clear();

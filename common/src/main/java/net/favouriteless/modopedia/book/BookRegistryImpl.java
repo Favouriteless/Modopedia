@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.List;
 
 public class BookRegistryImpl implements BookRegistry {
 
@@ -40,6 +41,11 @@ public class BookRegistryImpl implements BookRegistry {
     @Override
     public Collection<Book> getBooks() {
         return books.values();
+    }
+
+    @Override
+    public Collection<ResourceLocation> getBookIds() {
+        return books.keySet();
     }
 
     /**

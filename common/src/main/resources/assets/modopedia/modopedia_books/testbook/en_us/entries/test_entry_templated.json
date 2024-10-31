@@ -5,7 +5,7 @@
       "components": [
         {
           "template": "modopedia:test_template",
-          "passthrough": "$(c:#32A852)Testing text $(t:tooltipped)with$()$(b) $(u)bold$(/b) and$(c:red) red $(i)$(l:https://www.youtube.com/watch?v=1ml33OCwfHI)italic$() text! And a bunch of$(b) text to make it longer\n\nplus$(/b) newline test. j1io34joi1m4ojpasdqenrmioermtcf"
+          "passthrough": "$(c:#32A852)Testing text $(t:tooltipped)with$()$(b) $(u)bold$(/b) and$(c:red) red $(i)$(l:https://https://docs.neoforged.net/)italic$() text! And a bunch of$(b) text to make it longer\n\nplus$(/b) newline test. j1io34joi1m4ojpasdqenrmioermtcf"
         }
       ]
     }

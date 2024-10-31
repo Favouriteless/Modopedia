@@ -26,4 +26,11 @@ public interface BookContentManager {
      */
     void clear();
 
+    /**
+     * Remove the contents of a specific book from the manager.
+     *
+     * @param id The ID of the book to be removed.
+     */
+    void remove(ResourceLocation id);
+
 }

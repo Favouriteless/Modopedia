@@ -23,7 +23,7 @@ public abstract class PageComponent {
     public void init(Variable.Lookup lookup) {
         this.x = lookup.has("x") ? lookup.get("x").asInt() : 0;
         this.y = lookup.has("y") ? lookup.get("y").asInt() : 0;
-        this.pageNum = lookup.get("pageNum").asInt();
+        this.pageNum = lookup.get("page_num").asInt();
     }
 
     /**

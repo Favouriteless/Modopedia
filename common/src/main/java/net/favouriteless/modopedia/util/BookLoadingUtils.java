@@ -33,7 +33,7 @@ public class BookLoadingUtils {
         }
 
         VariableLookup lookup = new VariableLookup();
-        lookup.set("pageNum", RemoteVariable.of("pageNum", parent));
+        lookup.set("page_num", RemoteVariable.of("page_num", parent));
 
         for(String key : json.keySet()) {
             if(key.equals("type"))

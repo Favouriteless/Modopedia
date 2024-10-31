@@ -16,14 +16,16 @@ public class TextPageComponent extends PageComponent {
     protected List<TextChunk> textChunks = new ArrayList<>();
     protected String rawText;
     protected int width;
+    protected int lineHeight;
 
     @Override
     public void init(Lookup lookup) {
         super.init(lookup);
         rawText = lookup.get("text").asString();
         width = lookup.getOrDefault("width", 100).asInt();
+        lineHeight = lookup.getOrDefault("line_height", 9).asInt();
 
-        textChunks = TextParser.parse(rawText, width);
+        textChunks = TextParser.parse(rawText, width, lineHeight);
     }
 
     @Override

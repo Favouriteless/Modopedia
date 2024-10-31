@@ -34,4 +34,9 @@ public class BookContentManagerImpl implements BookContentManager {
         bookContents.clear();
     }
 
+    @Override
+    public void remove(ResourceLocation id) {
+        bookContents.remove(id);
+    }
+
 }

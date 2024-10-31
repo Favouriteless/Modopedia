@@ -15,7 +15,7 @@ public class TextParser {
 
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
-    public static List<TextChunk> parse(String rawText, int lineWidth) {
+    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight) {
         String[] split = rawText.splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
 
         TextState styleStack = new TextState(Style.EMPTY.withFont(Style.DEFAULT_FONT));
@@ -38,10 +38,10 @@ public class TextParser {
             }
         }
 
-        return getChunksFrom(paragraph, lineWidth);
+        return getChunksFrom(paragraph, lineWidth, lineHeight);
     }
 
-    public static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth) {
+    public static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight) {
         Font font = Minecraft.getInstance().font;
         int x = 0;
         int line = 0;
@@ -53,7 +53,7 @@ public class TextParser {
 
                 if(pair.getFirst() != null) {
                     int width = font.width(pair.getFirst()); // First add component to current line-- we know this one is pre-linebreak
-                    chunks.add(new TextChunk(pair.getFirst(), x, line*font.lineHeight, width, font.lineHeight));
+                    chunks.add(new TextChunk(pair.getFirst(), x, line*lineHeight, width, lineHeight));
                     x += width;
                 }
 

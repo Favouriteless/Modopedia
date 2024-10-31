@@ -32,7 +32,7 @@ public class PageComponentHolder implements MutableLookup {
             if(!key.equals("components"))
                 variables.put(key, JsonVariable.of(json.get(key)));
         });
-        variables.put("pageNum", Variable.of(pageNum));
+        variables.put("page_num", Variable.of(pageNum));
     }
 
     public void initComponents() {
