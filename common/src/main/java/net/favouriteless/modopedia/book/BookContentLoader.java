@@ -9,7 +9,6 @@ import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.api.books.page_components.PageComponentType;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContent;
 import net.favouriteless.modopedia.book.components.TemplatePageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;

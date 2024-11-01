@@ -5,7 +5,6 @@ import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.api.books.page_components.PageComponentType;
 import net.favouriteless.modopedia.book.components.ImagePageComponent;
 import net.favouriteless.modopedia.book.components.TextPageComponent;
 import net.favouriteless.modopedia.book.components.TooltipPageComponent;

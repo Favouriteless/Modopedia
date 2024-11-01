@@ -20,8 +20,8 @@ public abstract class PageComponent {
      * Called when the component is first created. Use this to grab any values from the lookup.
      */
     public void init(Variable.Lookup lookup, Level level) {
-        this.x = lookup.has("x") ? lookup.get("x").asInt() : 0;
-        this.y = lookup.has("y") ? lookup.get("y").asInt() : 0;
+        this.x = lookup.getOrDefault("x", 0).asInt();
+        this.y = lookup.getOrDefault("y", 0).asInt();
         this.pageNum = lookup.get("page_num").asInt();
     }
 
