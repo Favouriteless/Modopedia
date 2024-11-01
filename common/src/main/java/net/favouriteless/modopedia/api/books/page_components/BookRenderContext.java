@@ -1,12 +1,14 @@
-package net.favouriteless.modopedia.api.books;
+package net.favouriteless.modopedia.api.books.page_components;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
+/**
+ * Passed into {@link PageComponent#render(GuiGraphics, BookRenderContext, int, int, float)} and
+ * {@link PageComponent#pageClicked(BookRenderContext, double, double, int)} to provide context for the action.
+ */
 public interface BookRenderContext {
 
     /**
@@ -18,16 +20,6 @@ public interface BookRenderContext {
      * @return Default style for the current book.
      */
     Style getStyle();
-
-    /**
-     * Render the {@link ItemStack}s in an {@link Ingredient} in sequence, with a tooltip if the mouse is hovering it.
-     */
-    void renderIngredient(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient);
-
-    /**
-     * Render the {@link ItemStack}s in an {@link Ingredient} in sequence, with no tooltip.
-     */
-    void renderIngredientNoTooltip(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient);
 
     /**
      * Check if the mouse is hovering within a rectangle.

@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 /**
  * Responsible for loading the content of all books (categories, entries etc). Do not attempt to use this on server side.
@@ -172,12 +173,12 @@ public class BookContentLoader {
         PageComponent component;
         if(json.has("type")) {
             ResourceLocation id = ResourceLocation.parse(json.get("type").getAsString());
-            PageComponentType type = PageComponentRegistry.get().get(id);
+            Supplier<PageComponent> type = PageComponentRegistry.get().get(id);
 
             if(type == null)
                 throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered component type", id));
 
-            component = type.create();
+            component = type.get();
         }
         else if(json.has("template")) {
             component = new TemplatePageComponent(loadPageComponentHolder(TemplateRegistry.getTemplate(ResourceLocation.parse(json.get("template").getAsString())).getData(), pageNum));

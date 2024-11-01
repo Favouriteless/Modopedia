@@ -2,13 +2,12 @@ package net.favouriteless.modopedia.client.screens;
 
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookRenderContext;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
@@ -56,16 +55,6 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     @Override
     public Style getStyle() {
         return null;
-    }
-
-    @Override
-    public void renderIngredient(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient) {
-
-    }
-
-    @Override
-    public void renderIngredientNoTooltip(GuiGraphics graphics, int x, int y, int mouseX, int mouseY, Ingredient ingredient) {
-
     }
 
     @Override

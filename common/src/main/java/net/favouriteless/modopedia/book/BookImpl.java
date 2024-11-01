@@ -5,12 +5,14 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
-import net.minecraft.network.chat.Component;
+import net.favouriteless.modopedia.book.text.TextChunk;
+import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BookImpl implements Book {
@@ -19,7 +21,7 @@ public class BookImpl implements Book {
     private final String title;
     private final String subtitle;
     private final String rawLandingText;
-    private final Component landingText;
+    private final List<TextChunk> landingText;
     private final ResourceLocation texture;
     private final ResourceLocation itemModel;
     private final String defaultLang;
@@ -30,7 +32,7 @@ public class BookImpl implements Book {
         this.title = title;
         this.subtitle = subtitle;
         this.rawLandingText = rawLandingText;
-        this.landingText = Component.literal(rawLandingText);
+        this.landingText = TextParser.parse(rawLandingText, 100, 9);
         this.texture = texture;
         this.itemModel = itemModel;
         this.defaultLang = defaultLang;
@@ -54,7 +56,7 @@ public class BookImpl implements Book {
 
     @Nullable
     @Override
-    public Component getLandingText() {
+    public List<TextChunk> getLandingText() {
         return landingText;
     }
 

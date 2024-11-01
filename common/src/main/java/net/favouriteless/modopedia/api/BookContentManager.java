@@ -13,8 +13,14 @@ public interface BookContentManager {
         return BookContentManagerImpl.INSTANCE;
     }
 
+    /**
+     * @return The content for the given book ID.
+     */
     BookContent getContent(ResourceLocation id);
 
+    /**
+     * @return The book ID the given content belongs to.
+     */
     ResourceLocation getBookId(BookContent content);
 
     /**

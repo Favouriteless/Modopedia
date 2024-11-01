@@ -45,7 +45,7 @@ public interface Variable {
     /**
      * Register a new {@link Codec} to deserialize types for all JsonVariables.
      *
-     * @param token TypeToken representing the type of the codec. Usually fine to pass a new TypeToken<>() {}.
+     * @param token TypeToken representing the type of the codec. Usually fine to pass a <code>new TypeToken<>() {}</code>.
      * @param codec A codec for T.
      */
     static <T> void registerCodec(TypeToken<T> token, Codec<T> codec) {
@@ -64,7 +64,7 @@ public interface Variable {
 
 
     /**
-     * Lookup wraps the Variables {@link Map} given to a {@link PageComponent}.
+     * Lookup wraps a {@link Map} of Variables.
      */
     interface Lookup {
 
@@ -79,7 +79,7 @@ public interface Variable {
     }
 
     /**
-     * Mutable version of Lookup used for template processors.
+     * Mutable version of {@link Lookup} used for template processors.
      */
     interface MutableLookup extends Lookup {
 

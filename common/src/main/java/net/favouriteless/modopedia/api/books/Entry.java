@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * Interface representing an entry (a group of templates/pages) in a book.
+ * Interface representing an entry in a book.
  */
 public interface Entry {
 

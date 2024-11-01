@@ -31,7 +31,7 @@ public interface StyleStack {
     /**
      * Remove the {@link Style} on top of the stack.
      *
-     * @return The style removed, or the base style if one was not removed.
+     * @return The style removed, or the base style if none existed to be removed.
      */
     Style pop();
 

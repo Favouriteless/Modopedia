@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.book.components;
 
 import net.favouriteless.modopedia.api.Variable.Lookup;
-import net.favouriteless.modopedia.api.books.BookRenderContext;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.book.text.TextChunk;

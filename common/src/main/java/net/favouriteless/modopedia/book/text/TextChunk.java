@@ -1,11 +1,9 @@
 package net.favouriteless.modopedia.book.text;
 
-import net.favouriteless.modopedia.api.books.BookRenderContext;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.util.FormattedCharSequence;
 
 /**
  * Each "chunk" is represented in its own class to allow for the {@link TextParser} to wrap them correctly. A chunk is

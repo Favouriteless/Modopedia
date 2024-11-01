@@ -9,11 +9,10 @@ import java.util.Collection;
 
 /**
  * <p>
- *     BookRegistry maps book IDs to their book objects. This will be populated on both the client and server.
+ *     BookRegistry maps book IDs to their {@link Book} objects. This will be populated on both the client and server.
  * </p>
  * <p>
- *     Using the registry directly should be avoided where possible as Modopedia will repopulate it when
- *     datapacks reload.
+ *     Modopedia will repopulate the registry when datapacks reload.
  * </p>
  */
 public interface BookRegistry {
@@ -51,7 +50,7 @@ public interface BookRegistry {
     Collection<ResourceLocation> getBookIds();
 
     /**
-     * Removes all registered books. Danger: do not call unless you really mean it.
+     * Removes all registered books. <b>DANGER:</b> do not call unless you really mean it.
      */
     void clear();
 

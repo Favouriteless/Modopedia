@@ -3,9 +3,13 @@
   "pages": [
     {
       "components": [
-
+        {
+          "type": "modopedia:text",
+          "x": 0,
+          "y": 0,
+          "text": "This is a very cool $(c:gold)gold$() entry."
+        }
       ]
     }
   ]
-
 }

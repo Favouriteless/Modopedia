@@ -7,7 +7,7 @@ import net.minecraft.world.level.Level;
 import java.util.Collection;
 
 /**
- * Interface representing a single page or template within an {@link Entry}.
+ * Interface representing a single page within an {@link Entry}.
  */
 public interface Page {
 

@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +24,7 @@ public interface Category {
     /**
      * @return The description shown underneath the title and subtitle.
      */
-    @Nullable Component getLandingText();
+    @Nullable List<TextChunk> getLandingText();
     
     /**
      * @return The raw, unformatted landing text (containing formatting tags etc.)
@@ -36,12 +35,6 @@ public interface Category {
      * @return The {@link ItemStack} which is rendered as an icon for this category.
      */
     @Nullable ItemStack getIcon();
-
-    /**
-     * @return The texture override for this category-- if not null, all entries in the category will
-     * default to this texture.
-     */
-    @Nullable ResourceLocation getTexture();
 
     /**
      * @return {@link List} of every Entry ID in this category.

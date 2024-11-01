@@ -1,14 +1,13 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.books.BookRenderContext;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.Level;
 
 /**
  * <p>
  *     Base class for component implementations; an instance of the component will be created for every time it
- *     is present on a page-- storing data here is fine.
+ *     is present on a page so storing data here is fine.
  * </p>
  */
 public abstract class PageComponent {
@@ -18,7 +17,7 @@ public abstract class PageComponent {
     protected int pageNum;
 
     /**
-     * Called when the component is first created. Use this for setup like grabbing recipes.
+     * Called when the component is first created. Use this to grab any values from the lookup.
      */
     public void init(Variable.Lookup lookup, Level level) {
         this.x = lookup.has("x") ? lookup.get("x").asInt() : 0;

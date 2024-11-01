@@ -17,8 +17,7 @@ import java.util.Collection;
 public interface BookContent {
 
     /**
-     * Fetch an Entry by its ID and a given language code. If no match is found, will attempt to find the same entry
-     * with the book's default language.
+     * Fetch an Entry by its ID and language code.
      *
      * @param id ID of the target entry.
      * @param language Language code to target. (e.g. en_us)
@@ -27,11 +26,8 @@ public interface BookContent {
      */
     @Nullable Entry getEntry(String id, String language);
 
-    @Nullable Entry getEntry(String id);
-
     /**
-     * Fetch a Category by its ID and a given language code. If no match is found, will attempt to find the same
-     * category with the book's default language.
+     * Fetch a Category by its ID and language code.
      *
      * @param id ID of the target category.
      * @param language Language code to target. (e.g. en_us)
@@ -40,12 +36,9 @@ public interface BookContent {
      */
     @Nullable Category getCategory(String id, String language);
 
-    @Nullable Category getCategory(String id);
-
     /**
      * @return A collection of all entries under the given language code.
      */
-    @Nullable
     Collection<Entry> getEntries(String language);
 
     /**

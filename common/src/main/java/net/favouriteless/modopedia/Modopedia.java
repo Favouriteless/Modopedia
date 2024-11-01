@@ -1,6 +1,5 @@
 package net.favouriteless.modopedia;
 
-import net.favouriteless.modopedia.book.components.DefaultPageComponents;
 import net.favouriteless.modopedia.common.data_components.ModopediaDataComponents;
 import net.favouriteless.modopedia.common.items.ModopediaItems;
 import net.favouriteless.modopedia.common.reload_listeners.BookReloadListener;
@@ -19,7 +18,6 @@ public class Modopedia {
     public static void init() {
         ModopediaDataComponents.load();
         ModopediaItems.load();
-        DefaultPageComponents.load();
 
         CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(BOOK_DIRECTORY));
     }

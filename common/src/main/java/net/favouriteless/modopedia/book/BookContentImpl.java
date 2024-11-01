@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.book;
 
-import net.favouriteless.modopedia.api.BookContentManager;
-import net.favouriteless.modopedia.api.BookRegistry;
-import net.favouriteless.modopedia.api.books.*;
+import net.favouriteless.modopedia.api.books.BookContent;
+import net.favouriteless.modopedia.api.books.Category;
+import net.favouriteless.modopedia.api.books.Entry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -21,28 +21,18 @@ public class BookContentImpl implements BookContent {
     public @Nullable Entry getEntry(String id, String language) {
         LocalisedBookContent localised = content.get(language);
         if(localised == null)
-            return getEntry(id);
+            return null;
 
-        return localised.entries.getOrDefault(id, getEntry(id));
-    }
-
-    @Override
-    public @Nullable Entry getEntry(String id) {
-        return getDefaultLocalisation().entries().get(id);
+        return localised.entries.get(id);
     }
 
     @Override
     public @Nullable Category getCategory(String id, String language) {
         LocalisedBookContent localised = content.get(language);
         if(localised == null)
-            return getCategory(id);
+            return null;
 
-        return localised.categories.getOrDefault(id, getCategory(id));
-    }
-
-    @Override
-    public @Nullable Category getCategory(String id) {
-        return getDefaultLocalisation().categories.get(id);
+        return localised.categories.get(id);
     }
 
     @Override
@@ -55,11 +45,7 @@ public class BookContentImpl implements BookContent {
         return content.containsKey(language) ? content.get(language).categories.values() : null;
     }
 
-    private LocalisedBookContent getDefaultLocalisation() {
-        Book book = BookRegistry.get().getBook(BookContentManager.get().getBookId(this));
-        String langCode = book != null ? book.getDefaultLanguage() : "en_us";
-        return content.computeIfAbsent(langCode, k -> new LocalisedBookContent(Map.of(), Map.of()));
-    }
+
 
     public record LocalisedBookContent(Map<String, Category> categories, Map<String, Entry> entries) {
 

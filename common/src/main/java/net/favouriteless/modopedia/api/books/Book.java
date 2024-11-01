@@ -2,16 +2,18 @@ package net.favouriteless.modopedia.api.books;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.favouriteless.modopedia.api.ModopediaApi;
+import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.book.BookImpl;
+import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
- * Interface representing an entire book-- can be obtained with {@link ModopediaApi#getBook(ResourceLocation)}
+ * Interface representing an entire book-- can be obtained with {@link BookRegistry#getBook(ResourceLocation)}
  */
 public interface Book {
 
@@ -33,7 +35,7 @@ public interface Book {
     /**
      * @return Landing text (the text displayed on the title page).
      */
-    @Nullable Component getLandingText();
+    @Nullable List<TextChunk> getLandingText();
 
     /**
      * @return The raw, unformatted landing text (containing formatting tags etc.)

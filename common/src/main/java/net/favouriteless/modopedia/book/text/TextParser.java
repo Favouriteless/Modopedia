@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class TextParser {
         return getChunksFrom(paragraph, lineWidth, lineHeight);
     }
 
-    public static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight) {
+    private static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight) {
         Font font = Minecraft.getInstance().font;
         int x = 0;
         int line = 0;
@@ -73,7 +72,7 @@ public class TextParser {
     /**
      * Similar to font split, but only splits one time, so we can use variable lengths.
      */
-    public static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth) {
+    private static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth) {
         Font font = Minecraft.getInstance().font;
         StringSplitter splitter = font.getSplitter();
 

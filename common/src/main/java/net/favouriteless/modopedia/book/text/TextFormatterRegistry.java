@@ -29,6 +29,7 @@ public class TextFormatterRegistry {
         register(new ColorFormatter());
         register(new ClearFormatter());
         register(new LinkFormatter());
+        register(new CommandFormatter());
         register(new ClipboardFormatter());
         register(new TooltipFormatter());
     }
