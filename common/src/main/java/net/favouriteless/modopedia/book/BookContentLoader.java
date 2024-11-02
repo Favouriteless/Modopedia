@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.BookContentManager;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContent;
@@ -33,7 +34,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 /**
- * Responsible for loading the content of all books (categories, entries etc). Do not attempt to use this on server side.
+ * Responsible for loading the content of all books (categories, entries etc.). Do not attempt to use this on server side.
  */
 public class BookContentLoader {
 
@@ -58,11 +59,15 @@ public class BookContentLoader {
     }
 
     private static void reloadInternal(ResourceLocation id, ResourceManager manager, Level level) {
-        CompletableFuture
-                .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
-                .thenApply(map -> parseBookResources(map, level))
-                .thenAcceptAsync(content -> BookContentManager.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
-                .thenRunAsync(() -> Modopedia.LOG.info("Reloaded book: {}", id), Minecraft.getInstance());
+        Book book = BookRegistry.get().getBook(id);
+
+        if(book != null) { // If book is null we don't really want to load the content anyway.
+            CompletableFuture
+                    .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
+                    .thenApply(map -> parseBookResources(map, book, level))
+                    .thenAcceptAsync(content -> BookContentManager.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
+                    .thenRunAsync(() -> Modopedia.LOG.info("Reloaded book: {}", id), Minecraft.getInstance());
+        }
     }
 
     private static CompletableFuture<Void> reloadTemplates(ResourceManager manager) {
@@ -89,7 +94,7 @@ public class BookContentLoader {
     }
 
     private static Map<String, LocalisedBookContent> parseBookResources(Map<ResourceLocation, JsonElement> jsonMap,
-                                                                        Level level) {
+                                                                        Book book, Level level) {
         Map<String, LocalisedBookContent> content = new HashMap<>();
         jsonMap.forEach((location, element) -> {
             String[] splitPath = location.getPath().split("/");
@@ -97,23 +102,23 @@ public class BookContentLoader {
             String type = splitPath[1];
             String id = splitPath[2];
 
-            loadBookJson(element, id, type, content.computeIfAbsent(langCode, k -> LocalisedBookContent.create()), level);
+            loadBookJson(element, book, id, type, content.computeIfAbsent(langCode, k -> LocalisedBookContent.create()), level);
         });
         return content;
     }
 
-    private static void loadBookJson(JsonElement json, String id, String type, LocalisedBookContent content, Level level) {
+    private static void loadBookJson(JsonElement json, Book book, String id, String type, LocalisedBookContent content, Level level) {
         try {
             if(type.equals("categories")) {
                 CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                         .resultOrPartial(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e))
-                        .ifPresent(p -> content.categories().put(id, p.getFirst()));
+                        .ifPresent(p -> content.categories().put(id, p.getFirst().init(book)));
             }
             else if(type.equals("entries")) {
                 EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                         .resultOrPartial(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e))
                         .ifPresent(p -> content.entries().put(id, p.getFirst()
-                                .addPages(loadPages(json.getAsJsonObject().getAsJsonArray("pages"), level))));
+                                .addPages(loadPages(json.getAsJsonObject().getAsJsonArray("pages"), book, level))));
             }
         }
         catch(Exception e) {
@@ -124,7 +129,7 @@ public class BookContentLoader {
     /**
      * Create pages from a given JsonArray and run init on their components.
      */
-    private static Page[] loadPages(JsonArray array, Level level) {
+    private static Page[] loadPages(JsonArray array, Book book, Level level) {
         Page[] out = new Page[array.size()];
         for(int i = 0; i < out.length; i++) {
             JsonElement element = array.get(i);
@@ -132,7 +137,7 @@ public class BookContentLoader {
                 continue;
 
             out[i] = new PageImpl(loadPageComponentHolder(element.getAsJsonObject(), i));
-            out[i].init(level);
+            out[i].init(book, level);
         }
         return out;
     }

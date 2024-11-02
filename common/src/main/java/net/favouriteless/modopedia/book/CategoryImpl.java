@@ -2,9 +2,12 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,22 +17,20 @@ import java.util.Optional;
 
 public class CategoryImpl implements Category {
 
-    private final String title;
+    private final String title; // Fields here get set by the codec
     private final String subtitle;
     private final String rawLandingText;
-    private final List<TextChunk> landingText;
     private final ItemStack iconStack;
-
     private final List<String> entries;
     private final List<String> children;
 
+    private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
     public CategoryImpl(String title, String subtitle, String rawLandingText, ItemStack iconStack,
                         List<String> entries, List<String> children) {
         this.title = title;
         this.subtitle = subtitle;
         this.rawLandingText = rawLandingText;
-        this.landingText = TextParser.parse(rawLandingText, 100, 9);
         this.iconStack = iconStack;
         this.entries = entries;
         this.children = children;
@@ -40,19 +41,21 @@ public class CategoryImpl implements Category {
         return title;
     }
 
-
+    @Nullable
     @Override
-    public @Nullable String getSubtitle() {
+    public String getSubtitle() {
         return subtitle;
     }
 
+    @Nullable
     @Override
-    public @Nullable List<TextChunk> getLandingText() {
+    public List<TextChunk> getLandingText() {
         return landingText;
     }
 
+    @Nullable
     @Override
-    public @Nullable String getRawLandingText() {
+    public String getRawLandingText() {
         return rawLandingText;
     }
 
@@ -72,6 +75,14 @@ public class CategoryImpl implements Category {
     }
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
+
+    public CategoryImpl init(Book book) {
+        this.landingText = rawLandingText != null ?
+                TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())) :
+                List.of();
+
+        return this;
+    }
 
     public static final Codec<CategoryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),

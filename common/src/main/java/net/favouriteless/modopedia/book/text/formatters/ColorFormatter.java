@@ -13,28 +13,28 @@ public class ColorFormatter implements TextFormatter {
 
     @Override
     public void apply(StyleStack styleStack, String tag) {
-        String colorString = tag.substring(2);
+        String colour = tag.substring(2);
 
-        if(colorString.matches("#[a-fA-F0-9]{6}")) {
-            styleStack.modify(style -> style.withColor(Integer.decode(colorString)));
+        if(colour.matches("#[a-fA-F0-9]{6}")) { // Hex colour with #
+            styleStack.modify(style -> style.withColor(Integer.decode(colour)));
+            return;
         }
-        else if(colorString.matches("\\d+")) {
-            ChatFormatting formatting = ChatFormatting.getById(Integer.parseUnsignedInt(colorString));
-            if(formatting == null) {
-                styleStack.pop();
-                throw new IllegalArgumentException(colorString + " is not a valid colour ID, name or hex value.");
+        else if(colour.matches("\\d{1,2}")) { // ChatFormatting ID (1 or 2 digit int)
+            ChatFormatting formatting = ChatFormatting.getById(Integer.parseUnsignedInt(colour));
+            if(formatting != null) {
+                styleStack.modify(style -> style.withColor(formatting));
+                return;
             }
-
-            styleStack.modify(style -> style.withColor(formatting));
         }
-        else {
-            ChatFormatting formatting = ChatFormatting.getByName(colorString.toUpperCase());
-            if(formatting == null) {
-                styleStack.pop();
-                throw new IllegalArgumentException(colorString + " is not a valid colour ID, name or hex value.");
+        else if(colour.matches("[a-zA-Z]+")){ // ChatFormatting name (word)
+            ChatFormatting formatting = ChatFormatting.getByName(colour.toUpperCase());
+            if(formatting != null) {
+                styleStack.modify(style -> style.withColor(formatting));
+                return;
             }
-            styleStack.modify(style -> style.withColor(formatting));
         }
+        styleStack.pop();
+        throw new IllegalArgumentException(colour + " is not a valid colour ID, name or hex value.");
     }
 
 }

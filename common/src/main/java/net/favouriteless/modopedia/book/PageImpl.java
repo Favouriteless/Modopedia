@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.book;
 
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.minecraft.world.level.Level;
@@ -15,8 +16,8 @@ public class PageImpl implements Page {
     }
 
     @Override
-    public void init(Level level) {
-        holder.initComponents(level);
+    public void init(Book book, Level level) {
+        holder.initComponents(book, level);
     }
 
     @Override

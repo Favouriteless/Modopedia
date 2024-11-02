@@ -1,12 +1,14 @@
 package net.favouriteless.modopedia.book.components;
 
 import net.favouriteless.modopedia.api.Variable.Lookup;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
@@ -20,13 +22,13 @@ public class TextPageComponent extends PageComponent {
     protected int lineHeight;
 
     @Override
-    public void init(Lookup lookup, Level level) {
-        super.init(lookup, level);
+    public void init(Book book, Lookup lookup, Level level) {
+        super.init(book, lookup, level);
         rawText = lookup.get("text").asString();
-        width = lookup.getOrDefault("width", 100).asInt();
+        width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
         lineHeight = lookup.getOrDefault("line_height", 9).asInt();
 
-        textChunks = TextParser.parse(rawText, width, lineHeight);
+        textChunks = TextParser.parse(rawText, width, lineHeight, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
     }
 
     @Override

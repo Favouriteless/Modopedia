@@ -33,11 +33,6 @@ public interface Book {
     @Nullable String getSubtitle();
 
     /**
-     * @return Landing text (the text displayed on the title page).
-     */
-    @Nullable List<TextChunk> getLandingText();
-
-    /**
      * @return The raw, unformatted landing text (containing formatting tags etc.)
      */
     @Nullable String getRawLandingText();
@@ -56,6 +51,26 @@ public interface Book {
      * @return The language code this book defaults to when attempting to find entries and categories. en_us by default.
      */
     String getDefaultLanguage();
+
+    /**
+     * @return The default font for all formatted text in this book.
+     */
+    ResourceLocation getFont();
+
+    /**
+     * @return The default colour for all formatted text in this book.
+     */
+    int getTextColour();
+
+    /**
+     * @return The default colour for all headers in this book.
+     */
+    int getHeaderColour();
+
+    /**
+     * @return The default line width for formatted text in this book.
+     */
+    int getLineWidth();
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;

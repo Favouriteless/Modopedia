@@ -7,18 +7,18 @@ import java.util.function.BiConsumer;
 
 public class SimpleFormatter implements TextFormatter {
 
-    private final String[] tagVariants;
+    private final String[] tagRegexes;
     private final BiConsumer<StyleStack, String> applyConsumer;
 
-    public SimpleFormatter(BiConsumer<StyleStack, String> applyConsumer, String... tagVariants) {
-        this.tagVariants = tagVariants;
+    public SimpleFormatter(BiConsumer<StyleStack, String> applyConsumer, String... tagRegexes) {
+        this.tagRegexes = tagRegexes;
         this.applyConsumer = applyConsumer;
     }
 
     @Override
     public boolean matches(String tag) {
-        for(String test : tagVariants) {
-            if(tag.equals(test))
+        for(String test : tagRegexes) {
+            if(tag.matches(test))
                 return true;
         }
         return false;

@@ -16,9 +16,13 @@ public class ClassicEntryScreen extends BookScreen {
 
     protected final Entry entry;
 
-    public ClassicEntryScreen(Book book, Entry entry) {
-        super(book);
+    public ClassicEntryScreen(Book book, Entry entry, BookScreen lastScreen) {
+        super(book, lastScreen);
         this.entry = entry;
+    }
+
+    public ClassicEntryScreen(Book book, Entry entry) {
+        this(book, entry, null);
     }
 
     @Override

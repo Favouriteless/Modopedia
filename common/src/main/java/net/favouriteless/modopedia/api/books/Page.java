@@ -17,9 +17,9 @@ public interface Page {
     Collection<PageComponent> getComponents();
 
     /**
-     * Calls {@link PageComponent#init(Lookup, Level)} on all components within this Page
+     * Calls {@link PageComponent#init(Book, Lookup, Level)} on all components within this Page
      */
-    void init(Level level);
+    void init(Book book, Level level);
 
 
 }

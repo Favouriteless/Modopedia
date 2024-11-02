@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.book;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.Variable.MutableLookup;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.variables.ObjectVariable;
 import net.minecraft.world.level.Level;
@@ -23,8 +24,8 @@ public class PageComponentHolder implements MutableLookup {
         components.put(component, lookup);
     }
 
-    public void initComponents(Level level) {
-        components.forEach((component, lookup) -> component.init(lookup, level));
+    public void initComponents(Book book, Level level) {
+        components.forEach((component, lookup) -> component.init(book, lookup, level));
     }
 
     public Collection<PageComponent> getComponents() {

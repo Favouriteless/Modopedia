@@ -1,5 +1,5 @@
 {
   "title": "Test Book",
   "subtitle": "Test Subtitle",
-  "landing_text": "Landing Text"
+  "landing_text": "Landing Text with $(b)bold$(/b) and $(c:gold)gold$(/c)."
 }

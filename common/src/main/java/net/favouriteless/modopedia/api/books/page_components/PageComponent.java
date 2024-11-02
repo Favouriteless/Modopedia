@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
 import net.favouriteless.modopedia.api.Variable;
+import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.Level;
 
@@ -19,7 +20,7 @@ public abstract class PageComponent {
     /**
      * Called when the component is first created. Use this to grab any values from the lookup.
      */
-    public void init(Variable.Lookup lookup, Level level) {
+    public void init(Book book, Variable.Lookup lookup, Level level) {
         this.x = lookup.getOrDefault("x", 0).asInt();
         this.y = lookup.getOrDefault("y", 0).asInt();
         this.pageNum = lookup.get("page_num").asInt();

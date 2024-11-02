@@ -30,9 +30,9 @@ public interface BookTypeRegistry {
     @Nullable BookScreen getScreen(Book book);
 
     /**
-     * Attempt to grab the screen factory for a given book ID.
+     * Attempt to grab the BookType for a given book ID.
      *
-     * @return Factory if one exists, otherwise null.
+     * @return type if one exists, otherwise null.
      */
     @Nullable Function<Book, BookScreen> getFactory(ResourceLocation id);
 

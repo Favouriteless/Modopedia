@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.book.text;
 
 import com.mojang.datafixers.util.Pair;
+import net.favouriteless.modopedia.Modopedia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
@@ -14,10 +15,10 @@ public class TextParser {
 
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
-    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight) {
+    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Style baseStyle) {
         String[] split = rawText.splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
 
-        TextState styleStack = new TextState(Style.EMPTY.withFont(Style.DEFAULT_FONT));
+        TextState styleStack = new TextState(baseStyle);
         List<Component> paragraph = new ArrayList<>();
 
         boolean lastFormat = false;

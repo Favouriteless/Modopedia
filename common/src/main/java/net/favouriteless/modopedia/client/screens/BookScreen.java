@@ -11,35 +11,36 @@ import net.minecraft.resources.ResourceLocation;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
-    public static final int TEX_WIDTH = 271;
-    public static final int TEXT_HEIGHT = 180;
-
     protected final ResourceLocation bookId;
     protected final Book book;
     protected final ResourceLocation texture;
+    protected final BookScreen lastScreen;
 
     protected int ticks = 0;
+    protected int texWidth;
+    protected int texHeight;
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book) {
+    public BookScreen(Book book, BookScreen lastScreen) {
         super(Component.literal(book.getTitle()));
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
         this.texture = book.getTexture();
+        this.lastScreen = lastScreen;
     }
 
     @Override
     protected void init() {
         super.init();
-        this.leftPos = (width - TEX_WIDTH) / 2;
-        this.topPos = (height - TEXT_HEIGHT) / 2;
+        this.leftPos = (width - texWidth) / 2;
+        this.topPos = (height - texHeight) / 2;
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderTransparentBackground(graphics);
-        graphics.blit(texture, leftPos, topPos, 0, 0, TEX_WIDTH, TEXT_HEIGHT, 512, 512);
+        graphics.blit(texture, leftPos, topPos, 0, 0, texWidth, texHeight, 512, 512);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.book.components;
 
 import net.favouriteless.modopedia.api.Variable.Lookup;
+import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
@@ -25,8 +26,8 @@ public class TemplatePageComponent extends PageComponent {
     }
 
     @Override
-    public void init(Lookup lookup, Level level) {
-        super.init(lookup, level);
+    public void init(Book book, Lookup lookup, Level level) {
+        super.init(book, lookup, level);
         for(String key : lookup.keys()) { // The passthroughs for the template are actually on the parent object so we create an extra remote link.
             if(!passthroughExempt.contains(key))
                 holder.set(key, RemoteVariable.of(key, lookup));
@@ -35,7 +36,7 @@ public class TemplatePageComponent extends PageComponent {
         if(processor != null)
             processor.init(holder, level);
 
-        holder.initComponents(level);
+        holder.initComponents(book, level);
     }
 
     @Override
