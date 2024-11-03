@@ -2,12 +2,9 @@ package net.favouriteless.modopedia.api.books.page_components;
 
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.client.screens.classic.EntryScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -15,12 +12,7 @@ import java.util.List;
  *     is present on a page so storing data here is fine.
  * </p>
  */
-public abstract class PageComponent implements PageComponentEventHandler, PageRenderable {
-
-    private final List<PageRenderable> renderables = new ArrayList<>();
-    private final List<PageEventListener> widgets = new ArrayList<>();
-    private boolean isDragging = false;
-    private PageEventListener focused = null;
+public abstract class PageComponent implements PageRenderable, PageEventListener {
 
     protected int x;
     protected int y;
@@ -40,48 +32,12 @@ public abstract class PageComponent implements PageComponentEventHandler, PageRe
      * You are responsible for all other transformations.
      */
     @Override
-    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
-        for (PageRenderable renderable : this.renderables) {
-            renderable.render(graphics, context, mouseX, mouseY, partialTick);
-        }
-    }
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {}
 
-    protected <T extends PageRenderable> T addRenderable(T widget) {
-        renderables.add(widget);
-        return widget;
-    }
-
-    protected <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget) {
-        renderables.add(widget);
-        widgets.add(widget);
-        return widget;
-    }
-
-    // You can ignore stuff below this point, it isn't needed for normal PageComponent implementation.
-
-    @Override
-    public List<? extends PageEventListener> children() {
-        return widgets;
-    }
-
-    @Override
-    public boolean isDragging() {
-        return isDragging;
-    }
-
-    @Override
-    public void setDragging(boolean isDragging) {
-        this.isDragging = isDragging;
-    }
-
-    @Override
-    public @Nullable PageEventListener getFocused() {
-        return focused;
-    }
-
-    @Override
-    public void setFocused(@Nullable PageEventListener focused) {
-        this.focused = focused;
-    }
+    /**
+     * Called when this component first gets added to an {@link EntryScreen}. The screen will prioritise widgets for
+     * input handling.
+     */
+    public void initWidgets(PageWidgetHolder holder) {}
 
 }

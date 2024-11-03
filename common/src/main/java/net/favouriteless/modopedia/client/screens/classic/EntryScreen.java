@@ -6,15 +6,24 @@ import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.PageDetails;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
+import net.favouriteless.modopedia.api.books.page_components.PageRenderable;
+import net.favouriteless.modopedia.api.books.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class EntryScreen extends BookScreen {
+public class EntryScreen extends BookScreen implements PageWidgetHolder {
+
+    // All of our page widgets/renderables are separate to regular ones so we can hide/reveal them as needed.
+    protected final List<List<PageRenderable>> pageRenderables = new ArrayList<>();
+    protected final List<List<PageEventListener>> pageWidgets = new ArrayList<>();
+    protected boolean pageDragging = false;
+    protected PageEventListener pageFocused = null;
 
     protected final Entry entry;
-    protected final List<Page> pages;
     protected final PageDetails[] pageDetails; // This lets us re-use EntryScreen for screens with any number, pos and size of page
 
     protected int leftPage = 0; // Index of the leftmost page being displayed.
@@ -23,10 +32,19 @@ public class EntryScreen extends BookScreen {
         super(book, lastScreen);
         this.texWidth = 271;
         this.texHeight = 180;
-
         this.entry = entry;
-        this.pages = entry.getPages();
         this.pageDetails = pageDetails;
+
+        for(Page page : entry.getPages()) {
+            List<PageRenderable> renderables = addToList(pageRenderables, new ArrayList<>());
+            List<PageEventListener> listeners = addToList(pageWidgets, new ArrayList<>());
+
+            for(PageComponent component : page.getComponents())
+                component.initWidgets(this);
+
+            renderables.addAll(page.getComponents());
+            listeners.addAll(page.getComponents());
+        }
     }
 
     public EntryScreen(Book book, Entry entry, PageDetails... pageDetails) {
@@ -43,14 +61,13 @@ public class EntryScreen extends BookScreen {
     }
 
     private void tryRenderPage(GuiGraphics graphics, int index, int mouseX, int mouseY, float partialTick) {
-        Page page = getPage(index);
-        if(page == null)
+        if(leftPage+index >= pageRenderables.size())
             return;
 
-        PageDetails pageDetails = this.pageDetails[index];
+        PageDetails details = pageDetails[index];
         PoseStack poseStack = graphics.pose();
-        int xShift = leftPos + pageDetails.x();
-        int yShift = topPos + pageDetails.y();
+        int xShift = leftPos + details.x();
+        int yShift = topPos + details.y();
 
         poseStack.pushPose();
         poseStack.translate(xShift, yShift, 0);
@@ -58,19 +75,13 @@ public class EntryScreen extends BookScreen {
         mouseX -= xShift; // Offset mouse pos by page position-- components work in local space.
         mouseY -= yShift;
 
-        for(PageComponent component : page.getComponents()) {
-            component.render(graphics, this, mouseX, mouseY, partialTick);
-        }
+        for(PageRenderable renderable : pageRenderables.get(leftPage+index))
+            renderable.render(graphics, this, mouseX, mouseY, partialTick);
 
         poseStack.popPose();
     }
-
-    protected Page getPage(int index) {
-        return pages.size() > index ? pages.get(index) : null;
-    }
-
     /**
-     * x and y are assumed to be in local space.
+     * x and y are assumed to be local compared to leftPos and topPos.
      */
     protected int getPageIndex(double x, double y) {
         for(int i = 0; i < pageDetails.length; i++) {
@@ -81,33 +92,47 @@ public class EntryScreen extends BookScreen {
         return -1;
     }
 
+    private boolean tryStartDragging(PageEventListener listener, int button) {
+        pageFocused = listener;
+        if(button == 0)
+            pageDragging = true;
+        return true;
+    }
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        int pageIndex = getPageIndex(mouseX-leftPos, mouseY-topPos);
+        int pageIndex = getPageIndex(mouseX-leftPos, mouseY-topPos); // We only care about the page the mouse is on for clicking
         if(pageIndex != -1) {
-            Page page = getPage(leftPage+pageIndex);
-            if(page != null) {
-                PageDetails pageDetails = this.pageDetails[pageIndex];
-                for(PageComponent component : page.getComponents()) {
-                    if(component.mouseClicked(this, mouseX - (leftPos + pageDetails.x()), mouseY - (topPos + pageDetails.y()), button))
-                        return true;
+            int index = leftPage + pageIndex;
+            if(index < pageWidgets.size()) {
+                PageDetails details = pageDetails[pageIndex];
+                for(PageEventListener widget : pageWidgets.get(index)) {
+                    if(widget.mouseClicked(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
+                        return tryStartDragging(widget, button);
                 }
             }
         }
+        pageFocused = null;
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            Page page = getPage(leftPage + i);
-            if(page == null)
-                break;
+        if(button == 0 && pageDragging) { // On release, first we check if there was a focused widget.
+            pageDragging = false;
+            if(pageFocused != null)
+                return pageFocused.mouseReleased(this, mouseX, mouseY, button);
+        }
 
-            PageDetails pageDetails = this.pageDetails[i];
-            for(PageComponent component : page.getComponents()) {
-                if(component.mouseReleased(this, mouseX - (leftPos + pageDetails.x()), mouseY - (topPos + pageDetails.y()), button))
-                    return true;
+        int pageIndex = getPageIndex(mouseX-leftPos, mouseY-topPos); //... then check the page the mouse is on if it wasn't consumed.
+        if(pageIndex != -1) {
+            int index = leftPage + pageIndex;
+            if(index < pageWidgets.size()) {
+                PageDetails details = pageDetails[pageIndex];
+                for(PageEventListener widget : pageWidgets.get(index)) {
+                    if(widget.mouseReleased(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
+                        return true;
+                }
             }
         }
         return super.mouseReleased(mouseX, mouseY, button);
@@ -115,29 +140,22 @@ public class EntryScreen extends BookScreen {
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            Page page = getPage(leftPage + i);
-            if(page == null)
-                break;
+        if(pageFocused != null && pageDragging && button == 0 && // We ONLY care about dragging the focused element
+                pageFocused.mouseDragged(this, mouseX, mouseY, button, dragX, dragY))
+            return true;
 
-            PageDetails pageDetails = this.pageDetails[i];
-            for(PageComponent component : page.getComponents()) {
-                if(component.mouseDragged(this, mouseX - (leftPos + pageDetails.x()), mouseY - (topPos + pageDetails.y()), button, dragX, dragY))
-                    return true;
-            }
-        }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        int pageIndex = getPageIndex(mouseX-leftPos, mouseY-topPos);
+        int pageIndex = getPageIndex(mouseX-leftPos, mouseY-topPos); // Only care about the page the scroll was on
         if(pageIndex != -1) {
-            Page page = getPage(leftPage+pageIndex);
-            if(page != null) {
-                PageDetails pageDetails = this.pageDetails[pageIndex];
-                for(PageComponent component : page.getComponents()) {
-                    if(component.mouseScrolled(this, mouseX - (leftPos + pageDetails.x()), mouseY - (topPos + pageDetails.y()), scrollX, scrollY))
+            int index = leftPage + pageIndex;
+            if(index < pageWidgets.size()) {
+                PageDetails details = pageDetails[pageIndex];
+                for(PageEventListener widget : pageWidgets.get(index)) {
+                    if(widget.mouseScrolled(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), scrollX, scrollY))
                         return true;
                 }
             }
@@ -147,44 +165,47 @@ public class EntryScreen extends BookScreen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            Page page = getPage(leftPage + i);
-            if(page == null)
-                break;
-            for(PageComponent component : page.getComponents()) {
-                if(component.keyPressed(this, keyCode, scanCode, modifiers))
-                    return true;
-            }
-        }
+        if(pageFocused != null && pageFocused.keyPressed(this, keyCode, scanCode, modifiers))
+            return true;
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            Page page = getPage(leftPage + i);
-            if(page == null)
-                break;
-            for(PageComponent component : page.getComponents()) {
-                if(component.keyReleased(this, keyCode, scanCode, modifiers))
-                    return true;
-            }
-        }
+        if(pageFocused != null && pageFocused.keyReleased(this, keyCode, scanCode, modifiers))
+            return true;
         return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            Page page = getPage(leftPage + i);
-            if(page == null)
-                break;
-            for(PageComponent component : page.getComponents()) {
-                if(component.charTyped(this, codePoint, modifiers))
-                    return true;
-            }
-        }
+        if(pageFocused != null && pageFocused.charTyped(this, codePoint, modifiers))
+            return true;
         return super.charTyped(codePoint, modifiers);
+    }
+
+    @Override
+    public <T extends PageRenderable> T addRenderable(T renderable, int pageNum) {
+        pageRenderables.get(pageNum).add(renderable);
+        return renderable;
+    }
+
+    @Override
+    public <T extends PageEventListener> T addWidget(T widget, int pageNum) {
+        pageWidgets.get(pageNum).add(widget);
+        return widget;
+    }
+
+    @Override
+    public <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget, int pageNum) {
+        pageRenderables.get(pageNum).add(widget);
+        pageWidgets.get(pageNum).add(widget);
+        return widget;
+    }
+
+    public static <T> T addToList(List<T> list, T value) {
+        list.add(value);
+        return value;
     }
 
 }

@@ -3,10 +3,12 @@ package net.favouriteless.modopedia.book.page_components;
 import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.PageComponentHolder;
 import net.favouriteless.modopedia.book.TemplateRegistry;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
@@ -34,7 +36,85 @@ public class TemplatePageComponent extends PageComponent {
             processor.init(holder, level);
 
         holder.initComponents(book, level);
-        holder.getComponents().forEach(this::addRenderableWidget); // Allows render and gui events to pass through.
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
+        for(PageComponent component : holder.getComponents()) {
+            component.render(graphics, context, mouseX, mouseY, partialTick);
+        }
+    }
+
+    @Override
+    public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.mouseClicked(context, mouseX, mouseY, button))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(BookRenderContext context, double mouseX, double mouseY, int button) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.mouseReleased(context, mouseX, mouseY, button))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseDragged(BookRenderContext context, double mouseX, double mouseY, int button, double dragX, double dragY) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.mouseDragged(context, mouseX, mouseY, button, dragX, dragY))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(BookRenderContext context, double mouseX, double mouseY, double scrollX, double scrollY) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.mouseScrolled(context, mouseX, mouseY, scrollX, scrollY))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyPressed(BookRenderContext context, int keyCode, int scanCode, int modifiers) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.keyPressed(context, keyCode, scanCode, modifiers))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyReleased(BookRenderContext context, int keyCode, int scanCode, int modifiers) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.keyReleased(context, keyCode, scanCode, modifiers))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean charTyped(BookRenderContext context, char codePoint, int modifiers) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.charTyped(context, codePoint, modifiers))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        for(PageComponent component : holder.getComponents()) {
+            if(component.isMouseOver(mouseX, mouseY))
+                return true;
+        }
+        return false;
     }
 
 }

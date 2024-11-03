@@ -6,6 +6,8 @@ import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.favouriteless.modopedia.util.StringUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -69,8 +71,9 @@ public class ClassicLandingScreen extends BookScreen {
 
         poseStack.pushPose();
         poseStack.translate(0, 30, 0);
+        Font font = Minecraft.getInstance().font;
         for(TextChunk chunk : landingText) {
-            chunk.render(graphics, this, mouseX, mouseY, partialTick);
+            chunk.render(graphics, font, mouseX, mouseY);
         }
         poseStack.popPose();
 

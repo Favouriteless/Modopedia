@@ -2,14 +2,9 @@ package net.favouriteless.modopedia.api.books.page_components;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.client.screens.BookScreen;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * Passed into {@link PageComponent#render(GuiGraphics, BookRenderContext, int, int, float)} and Gui Event methods to
- * provide context for the action.
- */
 public interface BookRenderContext {
 
     /**
