@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.book.text;
 
 import com.mojang.datafixers.util.Pair;
-import net.favouriteless.modopedia.Modopedia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
@@ -51,7 +50,7 @@ public class TextParser {
             while(true) {
                 Pair<Component, Component> pair = tryWrapComponent(section, lineWidth-x, lineWidth);
 
-                if(pair.getFirst() != null) {
+                if(pair.getFirst() != null && !pair.getFirst().getString().isEmpty()) {
                     int width = font.width(pair.getFirst()); // First add component to current line-- we know this one is pre-linebreak
                     chunks.add(new TextChunk(pair.getFirst(), x, line*lineHeight, width, lineHeight));
                     x += width;

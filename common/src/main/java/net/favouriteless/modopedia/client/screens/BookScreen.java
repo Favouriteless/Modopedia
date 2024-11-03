@@ -49,17 +49,22 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     }
 
     @Override
-    public Screen getScreen() {
+    public Book getBook() {
+        return book;
+    }
+
+    @Override
+    public BookScreen getScreen() {
         return this;
     }
 
     @Override
     public Style getStyle() {
-        return null;
+        return Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
     }
 
     @Override
-    public boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height) {
+    public boolean isHovered(double mouseX, double mouseY, int x, int y, int width, int height) {
         return mouseX > x && mouseY > y && mouseX < x+width && mouseY < y+height;
     }
 

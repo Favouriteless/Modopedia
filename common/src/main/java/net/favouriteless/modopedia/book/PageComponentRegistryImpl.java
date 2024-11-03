@@ -5,9 +5,9 @@ import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.book.components.ImagePageComponent;
-import net.favouriteless.modopedia.book.components.TextPageComponent;
-import net.favouriteless.modopedia.book.components.TooltipPageComponent;
+import net.favouriteless.modopedia.book.page_components.ImagePageComponent;
+import net.favouriteless.modopedia.book.page_components.TextPageComponent;
+import net.favouriteless.modopedia.book.page_components.TooltipPageComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;

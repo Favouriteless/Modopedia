@@ -1,20 +1,26 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
+import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Passed into {@link PageComponent#render(GuiGraphics, BookRenderContext, int, int, float)} and
- * {@link PageComponent#pageClicked(BookRenderContext, double, double, int)} to provide context for the action.
+ * Passed into {@link PageComponent#render(GuiGraphics, BookRenderContext, int, int, float)} and Gui Event methods to
+ * provide context for the action.
  */
 public interface BookRenderContext {
 
     /**
+     * @return The {@link Book} currently opened.
+     */
+    Book getBook();
+
+    /**
      * @return The screen currently being rendered.
      */
-    Screen getScreen();
+    BookScreen getScreen();
 
     /**
      * @return Default style for the current book.
@@ -26,7 +32,7 @@ public interface BookRenderContext {
      *
      * @return true if mouse is within bounds.
      */
-    boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height);
+    boolean isHovered(double mouseX, double mouseY, int x, int y, int width, int height);
 
     /**
      * @return {@link ResourceLocation} pointing to this category's book texture.

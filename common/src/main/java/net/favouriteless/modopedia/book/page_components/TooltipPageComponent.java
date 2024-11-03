@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.book.components;
+package net.favouriteless.modopedia.book.page_components;
 
 import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
@@ -19,7 +19,6 @@ public class TooltipPageComponent extends PageComponent {
     protected int width;
     protected int height;
 
-
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
@@ -27,12 +26,12 @@ public class TooltipPageComponent extends PageComponent {
         height = lookup.get("height").asInt();
 
         tooltipLines = lookup.get("tooltip").asStream()
-                .map(var -> Component.literal(var.asString()))
+                .map(var -> Component.translatable(var.asString()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
-    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
         if(context.isHovered(mouseX, mouseY, x, y, width, height))
             graphics.renderComponentTooltip(Minecraft.getInstance().font, tooltipLines, mouseX, mouseY);
     }

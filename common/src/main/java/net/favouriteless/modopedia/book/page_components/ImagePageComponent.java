@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.book.components;
+package net.favouriteless.modopedia.book.page_components;
 
 import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
@@ -25,8 +25,9 @@ public class ImagePageComponent extends PageComponent {
     }
 
     @Override
-    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
 //        graphics.blit(image, x, y, 0, 0, width, height);
     }
+
 
 }

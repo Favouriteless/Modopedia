@@ -6,16 +6,11 @@ import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.favouriteless.modopedia.util.StringUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.Mth;
-import org.apache.commons.codec.language.bm.Lang;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClassicLandingScreen extends BookScreen {
@@ -33,6 +28,8 @@ public class ClassicLandingScreen extends BookScreen {
 
     public ClassicLandingScreen(Book book, BookScreen lastScreen) {
         super(book, lastScreen);
+        this.texWidth = 271;
+        this.texHeight = 180;
         this.title = Component.literal(book.getTitle());
         this.subtitle = book.getSubtitle() != null ? Component.literal(book.getSubtitle()) : null;
 
@@ -61,8 +58,6 @@ public class ClassicLandingScreen extends BookScreen {
     }
 
     protected void renderTitlePage(GuiGraphics graphics, PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        Minecraft mc = Minecraft.getInstance();
-
         int xShift = leftPos + PAGE_1_X; // We shift our click positions and pose to be relative to the page
         int yShift = topPos + PAGE_Y;
 
@@ -75,7 +70,7 @@ public class ClassicLandingScreen extends BookScreen {
         poseStack.pushPose();
         poseStack.translate(0, 30, 0);
         for(TextChunk chunk : landingText) {
-            chunk.render(graphics, this, Minecraft.getInstance().font, mouseX, mouseY);
+            chunk.render(graphics, this, mouseX, mouseY, partialTick);
         }
         poseStack.popPose();
 

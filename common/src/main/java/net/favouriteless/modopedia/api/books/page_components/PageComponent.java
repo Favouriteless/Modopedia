@@ -4,6 +4,10 @@ import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -11,7 +15,12 @@ import net.minecraft.world.level.Level;
  *     is present on a page so storing data here is fine.
  * </p>
  */
-public abstract class PageComponent {
+public abstract class PageComponent implements PageComponentEventHandler, PageRenderable {
+
+    private final List<PageRenderable> renderables = new ArrayList<>();
+    private final List<PageEventListener> widgets = new ArrayList<>();
+    private boolean isDragging = false;
+    private PageEventListener focused = null;
 
     protected int x;
     protected int y;
@@ -30,16 +39,49 @@ public abstract class PageComponent {
      * Called every render frame. The pose is transformed so that (0, 0) is the top left corner of the page.
      * You are responsible for all other transformations.
      */
-    public abstract void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY,
-                                float partialTicks);
+    @Override
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
+        for (PageRenderable renderable : this.renderables) {
+            renderable.render(graphics, context, mouseX, mouseY, partialTick);
+        }
+    }
 
-    /**
-     * Called when mouse is clicked on the page this component is on.
-     *
-     * @return True if the click should be consumed by this component.
-     */
-    public boolean pageClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
-        return false;
+    protected <T extends PageRenderable> T addRenderable(T widget) {
+        renderables.add(widget);
+        return widget;
+    }
+
+    protected <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget) {
+        renderables.add(widget);
+        widgets.add(widget);
+        return widget;
+    }
+
+    // You can ignore stuff below this point, it isn't needed for normal PageComponent implementation.
+
+    @Override
+    public List<? extends PageEventListener> children() {
+        return widgets;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return isDragging;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        this.isDragging = isDragging;
+    }
+
+    @Override
+    public @Nullable PageEventListener getFocused() {
+        return focused;
+    }
+
+    @Override
+    public void setFocused(@Nullable PageEventListener focused) {
+        this.focused = focused;
     }
 
 }
