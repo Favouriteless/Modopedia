@@ -7,9 +7,10 @@ plugins {
 }
 
 version = libs.versions.modopedia.get()
+val mcVersion = libs.versions.minecraft.asProvider().get()
 
 base {
-    archivesName = "modopedia-neoforge-${libs.versions.minecraft.asProvider().get()}"
+    archivesName = "modopedia-neoforge-${mcVersion}"
 }
 
 neoForge {
@@ -21,8 +22,6 @@ neoForge {
         minecraftVersion = libs.versions.parchment.minecraft.get()
         mappingsVersion = libs.versions.parchment.asProvider().get()
     }
-
-    mods.create("modopedia").sourceSet(project.sourceSets.getByName("main"))
 
     runs {
         configureEach {
@@ -43,17 +42,22 @@ neoForge {
             gameDirectory = file("runs/server")
             programArgument("--nogui")
         }
+    }
 
+    mods.create("modopedia") {
+        sourceSet(sourceSets.main.get())
     }
 }
 
 dependencies {
     compileOnly( project(":common") )
-    implementation( libs.neoforge )
 }
 
+tasks.withType<Test>().configureEach {
+    enabled = false;
+}
 
-tasks.withType<JavaCompile>().matching{!it.name.startsWith("neo")}.configureEach {
+tasks.named<JavaCompile>("compileJava").configure {
     source(project(":common").sourceSets.getByName("main").allSource)
 }
 

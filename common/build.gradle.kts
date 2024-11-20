@@ -1,13 +1,13 @@
 plugins {
     id("modopedia-convention")
-
     alias(libs.plugins.moddevgradle)
 }
 
 version = libs.versions.modopedia.get()
+val mcVersion = libs.versions.minecraft.asProvider().get()
 
 base {
-    archivesName = "modopedia-common-${libs.versions.minecraft.asProvider().get()}"
+    archivesName = "modopedia-common-${mcVersion}"
 }
 
 neoForge {
@@ -22,8 +22,11 @@ neoForge {
 }
 
 dependencies {
-    compileOnly(libs.mixinextras.common)
+    compileOnly( libs.mixin )
+    compileOnly( libs.mixinextras.common )
 }
+
+sourceSets.main.get().resources.srcDir(file("src/generated/resources"))
 
 publishing {
     publications {
@@ -33,5 +36,3 @@ publishing {
         }
     }
 }
-
-sourceSets.main.get().resources.srcDir(project(":common").file("src/generated/resources"))

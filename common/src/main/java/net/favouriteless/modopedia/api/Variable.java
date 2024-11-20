@@ -45,7 +45,7 @@ public interface Variable {
     /**
      * Register a new {@link Codec} to deserialize types for all JsonVariables.
      *
-     * @param token TypeToken representing the type of the codec. Usually fine to pass a <code>new TypeToken<>() {}</code>.
+     * @param token TypeToken representing the type of the codec. Usually fine to pass a {@code new TypeToken<>() {}}.
      * @param codec A codec for T.
      */
     static <T> void registerCodec(TypeToken<T> token, Codec<T> codec) {

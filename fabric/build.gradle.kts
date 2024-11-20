@@ -7,6 +7,7 @@ plugins {
 }
 
 version = libs.versions.modopedia.get()
+val minecraftVersion = libs.versions.minecraft.asProvider().get();
 
 java {
     sourceCompatibility =  JavaVersion.VERSION_21
@@ -14,7 +15,7 @@ java {
 }
 
 base {
-    archivesName = "modopedia-fabric-${libs.versions.minecraft.asProvider().get()}"
+    archivesName = "modopedia-fabric-${minecraftVersion}"
 }
 
 repositories {
@@ -34,19 +35,21 @@ dependencies {
         officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.minecraft.get()}:${libs.versions.parchment.asProvider().get()}@zip")
     })
+
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
 }
 
 loom {
 	accessWidenerPath = file("src/main/resources/modopedia.accesswidener")
+
     runs {
         named("client") {
             configName = "Fabric Client"
 
             client()
             ideConfigGenerated(true)
-            runDir("runs/" + name)
+            runDir("runs/$name")
             programArgs("--username=Favouriteless", "--uuid=9410df73-6be3-41d5-a620-51b2e9be667b")
         }
 
@@ -55,7 +58,7 @@ loom {
 
             server()
             ideConfigGenerated(true)
-            runDir("runs/" + name)
+            runDir("runs/$name")
         }
     }
 }

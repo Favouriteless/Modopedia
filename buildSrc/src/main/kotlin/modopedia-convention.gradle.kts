@@ -1,8 +1,8 @@
 plugins {
-    `java`
+    java
     `maven-publish`
-    `idea`
-    `eclipse`
+    idea
+    eclipse
 }
 
 java {
@@ -75,9 +75,6 @@ tasks.withType<ProcessResources>().configureEach {
     inputs.properties(expandProps)
 }
 
-// Disables Gradle's custom module metadata from being published to maven. The
-// metadata includes mapped dependencies which are not reasonably consumable by
-// other mod developers.
 tasks.withType<GenerateModuleMetadata>().configureEach {
     enabled = false
 }
