@@ -38,6 +38,8 @@ dependencies {
 
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
+
+    runtimeOnly( project(":test_books") )
 }
 
 loom {

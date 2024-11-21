@@ -2,13 +2,14 @@ package net.favouriteless.modopedia.common.data_components;
 
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
 public class ModopediaDataComponents {
 
-    public static Supplier<DataComponentType<BookDataComponent>> BOOK = register("book",() -> DataComponentType.<BookDataComponent>builder()
-            .persistent(BookDataComponent.PERSISTENT_CODEC).networkSynchronized(BookDataComponent.STREAM_CODEC)
+    public static Supplier<DataComponentType<ResourceLocation>> BOOK = register("book",() -> DataComponentType.<ResourceLocation>builder()
+            .persistent(ResourceLocation.CODEC).networkSynchronized(ResourceLocation.STREAM_CODEC)
             .cacheEncoding().build()
     );
 

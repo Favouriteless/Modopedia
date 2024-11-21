@@ -51,6 +51,7 @@ neoForge {
 
 dependencies {
     compileOnly( project(":common") )
+    runtimeOnly( project(":test_books") )
 }
 
 tasks.withType<Test>().configureEach {

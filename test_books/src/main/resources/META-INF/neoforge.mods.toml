@@ -1,0 +1,27 @@
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_range}"
+license = "MIT"
+
+
+[[mods]]
+    modId = "test_books"
+    version = "${version}"
+    displayName = "Modopedia Test Books"
+    displayURL= "https://github.com/Favouriteless/Modopedia"
+    logoFile = "modopedia.png"
+    authors = "${author}"
+    description = ''''''
+
+[[dependencies.test_books]]
+    modId = "neoforge"
+    type="required" #mandatory
+    versionRange = "${neoforge_version_range}"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.test_books]]
+    modId = "minecraft"
+    type="required" #mandatory
+    versionRange = "${minecraft_version_range}"
+    ordering = "NONE"
+    side = "BOTH"

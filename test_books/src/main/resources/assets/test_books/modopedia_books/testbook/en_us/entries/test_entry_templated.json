@@ -4,7 +4,7 @@
     {
       "components": [
         {
-          "template": "modopedia:test_template",
+          "template": "test_books:test_template",
           "passthrough": "$(c:#32A852)Testing text $(t:tooltipped)with$()$(b) $(u)bold$(/b) and$(c:red) red $(i)$(l:https://docs.neoforged.net/)italic$() text! And a bunch of$(b) text to make it longer\n\nplus$(/b) newline test."
         }
       ]

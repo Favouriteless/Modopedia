@@ -23,7 +23,7 @@ public class BookTypeRegistryImpl implements BookTypeRegistry {
 //        register(Modopedia.id("classic"), ClassicLandingScreen::new);
         register(Modopedia.id("classic"), book ->
                 new EntryScreen(book,
-                        BookContentManager.get().getContent(Modopedia.id("testbook")).getEntry("test_entry_templated", "en_us"),
+                        BookContentManager.get().getContent(ResourceLocation.fromNamespaceAndPath("test_books", "testbook")).getEntry("test_entry_templated", "en_us"),
                         PageDetails.of(24, 15, 100, 148),
                         PageDetails.of(147, 15, 100, 148))
         );
