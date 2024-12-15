@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
-public class ModopediaDataComponents {
+public class MDataComponents {
 
     public static Supplier<DataComponentType<ResourceLocation>> BOOK = register("book",() -> DataComponentType.<ResourceLocation>builder()
             .persistent(ResourceLocation.CODEC).networkSynchronized(ResourceLocation.STREAM_CODEC)

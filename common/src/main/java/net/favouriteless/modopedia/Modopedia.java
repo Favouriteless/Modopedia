@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia;
 
-import net.favouriteless.modopedia.common.data_components.ModopediaDataComponents;
-import net.favouriteless.modopedia.common.items.ModopediaItems;
+import net.favouriteless.modopedia.common.data_components.MDataComponents;
+import net.favouriteless.modopedia.common.items.MItems;
 import net.favouriteless.modopedia.common.reload_listeners.BookReloadListener;
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +16,8 @@ public class Modopedia {
     public static final String BOOK_DIRECTORY = Modopedia.MOD_ID + "_books";
 
     public static void init() {
-        ModopediaDataComponents.load();
-        ModopediaItems.load();
+        MDataComponents.load();
+        MItems.load();
 
         CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(BOOK_DIRECTORY));
     }
