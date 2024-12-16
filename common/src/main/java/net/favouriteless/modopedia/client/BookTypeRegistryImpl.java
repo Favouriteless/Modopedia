@@ -3,8 +3,8 @@ package net.favouriteless.modopedia.client;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.BookTypeRegistry;
-import net.favouriteless.modopedia.api.books.PageDetails;
 import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.favouriteless.modopedia.client.screens.classic.EntryScreen;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ public class BookTypeRegistryImpl implements BookTypeRegistry {
 //        register(Modopedia.id("classic"), ClassicLandingScreen::new);
         register(Modopedia.id("classic"), book ->
                 new EntryScreen(book,
-                        BookContentManager.get().getContent(ResourceLocation.fromNamespaceAndPath("test_books", "testbook")).getEntry("test_entry_templated", "en_us"),
+                        BookContentManager.get().getContent(ResourceLocation.fromNamespaceAndPath("test_books", "testbook")).getEntry("test_entry_image", "en_us"),
                         PageDetails.of(24, 15, 100, 148),
                         PageDetails.of(147, 15, 100, 148))
         );

@@ -2,9 +2,9 @@ package net.favouriteless.modopedia.client.screens.classic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
-import net.favouriteless.modopedia.api.books.PageDetails;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
 import net.favouriteless.modopedia.api.books.page_components.PageRenderable;

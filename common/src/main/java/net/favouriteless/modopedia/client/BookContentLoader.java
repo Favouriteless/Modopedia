@@ -1,15 +1,14 @@
-package net.favouriteless.modopedia.book;
+package net.favouriteless.modopedia.client;
 
 import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookRegistry;
-import net.favouriteless.modopedia.api.PageComponentRegistry;
-import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.BookContentManager;
+import net.favouriteless.modopedia.api.*;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.book.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContent;
 import net.favouriteless.modopedia.book.page_components.TemplatePageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
@@ -39,6 +38,10 @@ import java.util.function.Supplier;
 public class BookContentLoader {
 
     private static final Gson gson = new Gson();
+    
+    public static final String BOOK_DIR = "books";
+    public static final String TEMPLATE_DIR = "templates";
+    public static final String BOOK_TEX_DIR = "book_textures";
 
     public static void reloadAll() {
         Minecraft mc = Minecraft.getInstance();
@@ -46,6 +49,7 @@ public class BookContentLoader {
 
         if(mc.level != null)
             reloadTemplates(manager)
+                    .thenRun(() -> reloadBookTextures(manager))
                     .thenRun(() -> BookRegistry.get().getBookIds().forEach(id -> reloadInternal(id, manager, mc.level)));
     }
 
@@ -55,6 +59,7 @@ public class BookContentLoader {
 
         if(mc.level != null)
             reloadTemplates(manager)
+                    .thenRun(() -> reloadBookTextures(manager))
                     .thenRun(() -> reloadInternal(id, manager, mc.level));
     }
 
@@ -76,8 +81,14 @@ public class BookContentLoader {
                 .thenAcceptAsync(BookContentLoader::loadTemplates, Minecraft.getInstance());
     }
 
+    private static CompletableFuture<Void> reloadBookTextures(ResourceManager manager) {
+        return CompletableFuture
+                .supplyAsync(() -> getBookTextureResources(manager), Util.backgroundExecutor())
+                .thenAcceptAsync(BookContentLoader::loadBookTextures, Minecraft.getInstance());
+    }
+
     private static Map<ResourceLocation, JsonElement> getBookResources(ResourceLocation bookId, ResourceManager manager) {
-        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.BOOK_DIRECTORY + "/" + bookId.getPath());
+        FileToIdConverter filetoidconverter = FileToIdConverter.json(String.format("%s/%s/%s", Modopedia.MOD_ID, BOOK_DIR, bookId.getPath()));
 
         Map<ResourceLocation, JsonElement> out = new HashMap<>();
         for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
@@ -122,7 +133,7 @@ public class BookContentLoader {
             }
         }
         catch(Exception e) {
-            Modopedia.LOG.error("Error loading book json {}: {}", id, e);
+            Modopedia.LOG.error("Error loading book json {}: {}", id, e.getMessage());
         }
     }
 
@@ -213,19 +224,16 @@ public class BookContentLoader {
     }
 
     private static Map<ResourceLocation, JsonElement> getTemplateResources(ResourceManager manager) {
-        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.BOOK_DIRECTORY + "/templates");
+        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.MOD_ID + "/" + TEMPLATE_DIR);
 
         Map<ResourceLocation, JsonElement> out = new HashMap<>();
         for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
             try (Reader reader = entry.getValue().openAsReader()) {
-                JsonElement json = GsonHelper.fromJson(gson, reader, JsonElement.class);
-                ResourceLocation nonFile = filetoidconverter.fileToId(entry.getKey());
-                out.put(nonFile, json);
+                out.put(filetoidconverter.fileToId(entry.getKey()), GsonHelper.fromJson(gson, reader, JsonElement.class));
             } catch (IllegalArgumentException | IOException | JsonParseException exception) {
                 Modopedia.LOG.error("Error trying to fetch template resources for {}: {}", entry.getKey(), exception);
             }
         }
-
         return out;
     }
 
@@ -237,6 +245,32 @@ public class BookContentLoader {
             }
             catch (JsonParseException e) {
                 Modopedia.LOG.error("Could not load template {}: {}", location, e);
+            }
+        });
+    }
+
+    private static Map<ResourceLocation, JsonElement> getBookTextureResources(ResourceManager manager) {
+        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.MOD_ID + "/" + BOOK_TEX_DIR);
+
+        Map<ResourceLocation, JsonElement> out = new HashMap<>();
+        for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
+            try (Reader reader = entry.getValue().openAsReader()) {
+                out.put(filetoidconverter.fileToId(entry.getKey()), GsonHelper.fromJson(gson, reader, JsonElement.class));
+            } catch (IllegalArgumentException | IOException | JsonParseException exception) {
+                Modopedia.LOG.error("Error trying to fetch book texture resources for {}: {}", entry.getKey(), exception);
+            }
+        }
+        return out;
+    }
+
+    private static void loadBookTextures(Map<ResourceLocation, JsonElement> jsonMap) {
+        BookTextureRegistry.get().clear();
+        jsonMap.forEach((location, element) -> {
+            try {
+                BookTextureRegistry.get().register(location, BookTexture.CODEC.decode(JsonOps.INSTANCE, element).getOrThrow().getFirst());
+            }
+            catch(Exception e) {
+                Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.getMessage());
             }
         });
     }

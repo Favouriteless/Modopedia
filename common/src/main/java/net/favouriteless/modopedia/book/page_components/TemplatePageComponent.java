@@ -6,7 +6,7 @@ import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.PageComponentHolder;
-import net.favouriteless.modopedia.book.TemplateRegistry;
+import net.favouriteless.modopedia.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;

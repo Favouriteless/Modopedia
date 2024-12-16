@@ -8,5 +8,4 @@ public interface PageWidgetHolder {
 
     <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget, int pageNum);
 
-
 }

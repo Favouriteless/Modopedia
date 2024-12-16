@@ -40,7 +40,7 @@ public class ClassicLandingScreen extends BookScreen {
             if(StringUtils.isTranslationKey(rawLandingText))
                 rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
 
-            landingText = TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+            landingText = TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()), 0, 0);
         }
         else {
             landingText = List.of();

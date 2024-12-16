@@ -29,7 +29,7 @@ public class TextPageComponent extends PageComponent {
         width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
         lineHeight = lookup.getOrDefault("line_height", 9).asInt();
 
-        textChunks = TextParser.parse(rawText, width, lineHeight, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+        textChunks = TextParser.parse(rawText, width, lineHeight, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()), x, y);
     }
 
     @Override

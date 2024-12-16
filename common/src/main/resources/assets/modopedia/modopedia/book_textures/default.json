@@ -1,0 +1,17 @@
+{
+  "texture": "modopedia:textures/gui/book/default.png",
+  "pages": [
+    {
+      "x": 24,
+      "y": 15,
+      "width": 100,
+      "height": 148
+    },
+    {
+      "x": 24,
+      "y": 15,
+      "width": 147,
+      "height": 148
+    }
+  ]
+}

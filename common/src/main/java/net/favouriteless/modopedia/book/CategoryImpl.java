@@ -78,7 +78,7 @@ public class CategoryImpl implements Category {
 
     public CategoryImpl init(Book book) {
         this.landingText = rawLandingText != null ?
-                TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())) :
+                TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()), 0, 0) :
                 List.of();
 
         return this;

@@ -1,7 +1,8 @@
-package net.favouriteless.modopedia.book;
+package net.favouriteless.modopedia.client;
 
 import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
+import net.favouriteless.modopedia.book.Template;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;

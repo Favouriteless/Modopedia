@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.book.BookRegistryImpl;
+import net.favouriteless.modopedia.common.BookRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

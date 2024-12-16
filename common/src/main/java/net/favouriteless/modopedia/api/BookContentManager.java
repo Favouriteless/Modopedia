@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.book.BookContentManagerImpl;
+import net.favouriteless.modopedia.client.BookContentManagerImpl;
 import net.minecraft.resources.ResourceLocation;
 
 /**

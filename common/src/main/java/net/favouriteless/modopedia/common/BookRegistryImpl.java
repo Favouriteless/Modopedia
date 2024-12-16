@@ -1,16 +1,13 @@
-package net.favouriteless.modopedia.book;
+package net.favouriteless.modopedia.common;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.List;
 
 public class BookRegistryImpl implements BookRegistry {
 
@@ -51,6 +48,7 @@ public class BookRegistryImpl implements BookRegistry {
     /**
      * Danger danger don't call this unless you really mean it.
      */
+    @Override
     public void clear() {
         books.clear();
     }

@@ -13,13 +13,11 @@ public class Modopedia {
     public static final String MOD_ID = "modopedia";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
 
-    public static final String BOOK_DIRECTORY = Modopedia.MOD_ID + "_books";
-
     public static void init() {
         MDataComponents.load();
         MItems.load();
 
-        CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(BOOK_DIRECTORY));
+        CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(MOD_ID + "/books"));
     }
 
     public static ResourceLocation id(String path) {
