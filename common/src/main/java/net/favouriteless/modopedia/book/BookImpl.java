@@ -5,17 +5,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.book.text.TextChunk;
-import net.favouriteless.modopedia.book.text.TextParser;
-import net.favouriteless.modopedia.util.StringUtils;
-import net.minecraft.locale.Language;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
 
 public class BookImpl implements Book {
@@ -113,7 +107,7 @@ public class BookImpl implements Book {
             Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
             ResourceLocation.CODEC.optionalFieldOf("type", Modopedia.id("classic")).forGetter(Book::getType),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
-            ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("textures/gui/book/default.png")).forGetter(Book::getTexture),
+            ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
             Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguage),
             ResourceLocation.CODEC.optionalFieldOf("font", Modopedia.id("default")).forGetter(Book::getFont),

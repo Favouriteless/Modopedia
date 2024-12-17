@@ -30,8 +30,6 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
 
     public EntryScreen(Book book, Entry entry, BookScreen lastScreen, PageDetails... pageDetails) {
         super(book, lastScreen);
-        this.texWidth = 271;
-        this.texHeight = 180;
         this.entry = entry;
         this.pageDetails = pageDetails;
 

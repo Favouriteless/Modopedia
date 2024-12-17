@@ -1,5 +1,8 @@
 {
   "texture": "modopedia:textures/gui/book/default.png",
+  "width": 271,
+  "height": 180,
+  "tex_size": 512,
   "pages": [
     {
       "x": 24,

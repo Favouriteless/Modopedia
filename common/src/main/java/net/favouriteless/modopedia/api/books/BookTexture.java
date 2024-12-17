@@ -10,19 +10,22 @@ import java.util.List;
  * Links a book texture to its page details-- this ensures everybody can use custom textures and not have to worry about
  * forcing the texture to line up with where Modopedia expects the pages to be!
  */
-public record BookTexture(ResourceLocation location, List<PageDetails> details) {
+public record BookTexture(ResourceLocation location, int width, int height, int texSize, List<PageDetails> details) {
 
     public static final Codec<BookTexture> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         ResourceLocation.CODEC.fieldOf("texture").forGetter(t -> t.location),
+        Codec.INT.fieldOf("width").forGetter(t -> t.width),
+        Codec.INT.fieldOf("height").forGetter(t -> t.height),
+        Codec.INT.fieldOf("tex_size").forGetter(t -> t.texSize),
         PageDetails.CODEC.listOf(1, Integer.MAX_VALUE).fieldOf("pages").forGetter(t -> t.details)
     ).apply(instance, BookTexture::new));
 
-    public static BookTexture of(ResourceLocation location, PageDetails... details) {
-        return of(location, List.of(details));
+    public static BookTexture of(ResourceLocation location, int width, int height, int texSize, PageDetails... details) {
+        return of(location, width, height, texSize, List.of(details));
     }
 
-    public static BookTexture of(ResourceLocation location, List<PageDetails> details) {
-        return new BookTexture(location, details);
+    public static BookTexture of(ResourceLocation location, int width, int height, int texSize, List<PageDetails> details) {
+        return new BookTexture(location, width, height, texSize, details);
     }
 
     /**

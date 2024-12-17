@@ -1,8 +1,12 @@
 package net.favouriteless.modopedia.client.screens;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -13,12 +17,10 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected final ResourceLocation bookId;
     protected final Book book;
-    protected final ResourceLocation texture;
+    protected final BookTexture texture;
     protected final BookScreen lastScreen;
 
     protected int ticks = 0;
-    protected int texWidth;
-    protected int texHeight;
     protected int leftPos = 0;
     protected int topPos = 0;
 
@@ -26,21 +28,28 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         super(Component.literal(book.getTitle()));
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
-        this.texture = book.getTexture();
+        this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
         this.lastScreen = lastScreen;
     }
 
     @Override
     protected void init() {
         super.init();
-        this.leftPos = (width - texWidth) / 2;
-        this.topPos = (height - texHeight) / 2;
+        if(texture == null) {
+            Modopedia.LOG.error("Could not find book texture: {}", book.getTexture().toString());
+            Minecraft.getInstance().setScreen(null); // Force close the screen if using an unregistered texture.
+            return;
+        }
+
+        this.leftPos = (width - texture.width()) / 2;
+        this.topPos = (height - texture.height()) / 2;
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderTransparentBackground(graphics);
-        graphics.blit(texture, leftPos, topPos, 0, 0, texWidth, texHeight, 512, 512);
+        graphics.blit(texture.location(), leftPos, topPos, 0, 0,
+                texture.width(), texture.height(), texture.texSize(), texture.texSize());
     }
 
     @Override

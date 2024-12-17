@@ -30,8 +30,6 @@ public class ClassicLandingScreen extends BookScreen {
 
     public ClassicLandingScreen(Book book, BookScreen lastScreen) {
         super(book, lastScreen);
-        this.texWidth = 271;
-        this.texHeight = 180;
         this.title = Component.literal(book.getTitle());
         this.subtitle = book.getSubtitle() != null ? Component.literal(book.getSubtitle()) : null;
 

@@ -1,6 +1,5 @@
 package net.favouriteless.modopedia.common.items;
 
-import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.client.ModopediaClient;
 import net.favouriteless.modopedia.common.data_components.MDataComponents;
 import net.minecraft.resources.ResourceLocation;
