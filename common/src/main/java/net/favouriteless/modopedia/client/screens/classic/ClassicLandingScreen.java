@@ -1,7 +1,9 @@
 package net.favouriteless.modopedia.client.screens.classic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
@@ -17,16 +19,11 @@ import java.util.List;
 
 public class ClassicLandingScreen extends BookScreen {
 
-    protected static final int PAGE_1_X = 24;
-    protected static final int PAGE_2_X = 147;
-    protected static final int PAGE_Y = 15;
-    protected static final int PAGE_WIDTH = 100;
-
     protected final Component title;
     protected final Component subtitle;
 
     protected final List<TextChunk> landingText;
-
+    protected int categoryPage = 0;
 
     public ClassicLandingScreen(Book book, BookScreen lastScreen) {
         super(book, lastScreen);
@@ -55,17 +52,46 @@ public class ClassicLandingScreen extends BookScreen {
         PoseStack poseStack = graphics.pose();
 
         renderTitlePage(graphics, poseStack, mouseX, mouseY, partialTick);
+
+        for(int i = 1; i < texture.pages().size(); i++) {
+            renderCategoriesPage(graphics, poseStack, mouseX, mouseY, partialTick, i);
+        }
     }
 
     protected void renderTitlePage(GuiGraphics graphics, PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        int xShift = leftPos + PAGE_1_X; // We shift our click positions and pose to be relative to the page
-        int yShift = topPos + PAGE_Y;
+        PageDetails page = texture.pages().get(0);
+
+        int xShift = leftPos + page.x(); // We shift our click positions and pose to be relative to the page
+        int yShift = topPos + page.y();
 
         mouseX -= xShift;
         mouseY -= yShift;
 
         poseStack.pushPose();
         poseStack.translate(xShift, yShift, 0);
+
+        poseStack.translate(0, 30, 0);
+        for(TextChunk chunk : landingText) {
+            chunk.render(graphics, Minecraft.getInstance().font, mouseX, mouseY);
+        }
+
+        poseStack.popPose();
+    }
+
+    protected void renderCategoriesPage(GuiGraphics graphics, PoseStack poseStack, int mouseX, int mouseY, float partialTick, int index) {
+        PageDetails page = texture.pages().get(index);
+
+        int xShift = leftPos + page.x(); // We shift our click positions and pose to be relative to the page
+        int yShift = topPos + page.y();
+
+        mouseX -= xShift;
+        mouseY -= yShift;
+
+
+        poseStack.pushPose();
+        poseStack.translate(xShift, yShift, 0); // Translate to page position.
+
+        renderCenteredHeader(graphics, poseStack, Component.translatable(Modopedia.translation("screen", "categories")), page.width());
 
         poseStack.pushPose();
         poseStack.translate(0, 30, 0);
@@ -78,8 +104,11 @@ public class ClassicLandingScreen extends BookScreen {
         poseStack.popPose();
     }
 
-    protected void renderCategoriesPage(GuiGraphics graphics, PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-
+    protected void renderCenteredHeader(GuiGraphics graphics, PoseStack poseStack, Component header, int width) {
+        poseStack.pushPose();
+        Font font = minecraft.font;
+        graphics.drawString(Minecraft.getInstance().font, header, width/2 - font.width(header)/2, 0, book.getHeaderColour(), false);
+        poseStack.popPose();
     }
 
 }

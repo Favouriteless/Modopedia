@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public class PageComponentRegistryImpl implements PageComponentRegistry {
 
-    public static final PageComponentRegistryImpl INSTANCE = new PageComponentRegistryImpl();
+    public static final PageComponentRegistry INSTANCE = new PageComponentRegistryImpl();
 
     private final BiMap<ResourceLocation, Supplier<PageComponent>> serializersByType = HashBiMap.create();
 

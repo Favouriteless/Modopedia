@@ -24,4 +24,8 @@ public class Modopedia {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
+    public static String translation(String prefix, String suffix) {
+        return String.format("%s.%s.%s", prefix, MOD_ID, suffix);
+    }
+
 }

@@ -24,14 +24,12 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
     protected PageEventListener pageFocused = null;
 
     protected final Entry entry;
-    protected final PageDetails[] pageDetails; // This lets us re-use EntryScreen for screens with any number, pos and size of page
 
     protected int leftPage = 0; // Index of the leftmost page being displayed.
 
-    public EntryScreen(Book book, Entry entry, BookScreen lastScreen, PageDetails... pageDetails) {
+    public EntryScreen(Book book, Entry entry, BookScreen lastScreen) {
         super(book, lastScreen);
         this.entry = entry;
-        this.pageDetails = pageDetails;
 
         for(Page page : entry.getPages()) {
             List<PageRenderable> renderables = addToList(pageRenderables, new ArrayList<>());
@@ -45,15 +43,15 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         }
     }
 
-    public EntryScreen(Book book, Entry entry, PageDetails... pageDetails) {
-        this(book, entry, null, pageDetails);
+    public EntryScreen(Book book, Entry entry) {
+        this(book, entry, null);
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
 
-        for(int i = 0; i < pageDetails.length; i++) {
+        for(int i = 0; i < texture.pages().size(); i++) {
             tryRenderPage(graphics, i, mouseX, mouseY, partialTick);
         }
     }
@@ -62,7 +60,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(leftPage+index >= pageRenderables.size())
             return;
 
-        PageDetails details = pageDetails[index];
+        PageDetails details = texture.pages().get(index);
         PoseStack poseStack = graphics.pose();
         int xShift = leftPos + details.x();
         int yShift = topPos + details.y();
@@ -78,13 +76,14 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
 
         poseStack.popPose();
     }
+
     /**
      * x and y are assumed to be local compared to leftPos and topPos.
      */
     protected int getPageIndex(double x, double y) {
-        for(int i = 0; i < pageDetails.length; i++) {
-            PageDetails pageDetails = this.pageDetails[i];
-            if(isHovered(x, y, pageDetails.x(), pageDetails.y(), pageDetails.width(), pageDetails.height()))
+        for(int i = 0; i < texture.pages().size(); i++) {
+            PageDetails page = texture.pages().get(i);
+            if(isHovered(x, y, page.x(), page.y(), page.width(), page.height()))
                 return i;
         }
         return -1;
@@ -103,7 +102,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = pageDetails[pageIndex];
+                PageDetails details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseClicked(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
                         return tryStartDragging(widget, button);
@@ -126,7 +125,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = pageDetails[pageIndex];
+                PageDetails details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseReleased(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
                         return true;
@@ -151,7 +150,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = pageDetails[pageIndex];
+                PageDetails details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseScrolled(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), scrollX, scrollY))
                         return true;
