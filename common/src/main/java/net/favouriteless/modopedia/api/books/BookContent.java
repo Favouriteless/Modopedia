@@ -37,13 +37,29 @@ public interface BookContent {
     @Nullable Category getCategory(String id, String language);
 
     /**
-     * @return A collection of all entries under the given language code.
+     * @param language Language code to target. (e.g. en_us)
+     *
+     * @return The {@link LocalisedBookContent} for the specified language. If the selected language does not exist,
+     * try en_us. If en_us does not exist pick the first element, or null if the book is empty.
      */
-    Collection<Entry> getEntries(String language);
+    @Nullable LocalisedBookContent getLocalisedContent(String language);
 
     /**
-     * @return A collection of all categories under the given language code.
+     * @return A collection of all {@link LocalisedBookContent}s in this book.
      */
-    Collection<Category> getCategories(String language);
+    Collection<LocalisedBookContent> getLocalisedContents();
+
+
+
+    /**
+     * Represents a set of categories and entries in a book of a single language or localisation.
+     */
+    interface LocalisedBookContent {
+
+        @Nullable Category getCategory(String id);
+
+        @Nullable Entry getEntry(String id);
+
+    }
 
 }

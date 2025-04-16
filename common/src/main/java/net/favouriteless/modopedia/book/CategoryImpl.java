@@ -7,7 +7,6 @@ import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +22,7 @@ public class CategoryImpl implements Category {
     private final ItemStack iconStack;
     private final List<String> entries;
     private final List<String> children;
+    private final List<String> parents = new ArrayList<>();
 
     private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
@@ -74,7 +74,14 @@ public class CategoryImpl implements Category {
         return children;
     }
 
-    // ------------------------------------ Below this point is non-API functions ------------------------------------
+    @Override
+    public List<String> getParents() {
+        return parents;
+    }
+
+    public void addParent(String parent) {
+        parents.add(parent);
+    }
 
     public CategoryImpl init(Book book) {
         this.landingText = rawLandingText != null ?

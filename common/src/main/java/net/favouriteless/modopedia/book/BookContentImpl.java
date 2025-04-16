@@ -23,7 +23,7 @@ public class BookContentImpl implements BookContent {
         if(localised == null)
             return null;
 
-        return localised.entries.get(id);
+        return localised.getEntry(id);
     }
 
     @Override
@@ -32,25 +32,39 @@ public class BookContentImpl implements BookContent {
         if(localised == null)
             return null;
 
-        return localised.categories.get(id);
+        return localised.getCategory(id);
     }
 
     @Override
-    public Collection<Entry> getEntries(String language) {
-        return content.containsKey(language) ? content.get(language).entries.values() : null;
+    public @Nullable LocalisedBookContent getLocalisedContent(String language) {
+        if(content.containsKey(language))
+            return content.get(language);
+        else if(content.containsKey("en_us"))
+            return content.get("en_us");
+
+        return content.values().stream().findFirst().orElse(null);
     }
 
     @Override
-    public Collection<Category> getCategories(String language) {
-        return content.containsKey(language) ? content.get(language).categories.values() : null;
+    public Collection<LocalisedBookContent> getLocalisedContents() {
+        return content.values();
     }
 
+    public record LocalisedBookContentImpl(Map<String, Category> categories,
+                                           Map<String, Entry> entries) implements LocalisedBookContent {
 
+        public static LocalisedBookContentImpl create() {
+            return new LocalisedBookContentImpl(new HashMap<>(), new HashMap<>());
+        }
 
-    public record LocalisedBookContent(Map<String, Category> categories, Map<String, Entry> entries) {
+        @Override
+        public @Nullable Category getCategory(String id) {
+            return categories.get(id);
+        }
 
-        public static LocalisedBookContent create() {
-            return new LocalisedBookContent(new HashMap<>(), new HashMap<>());
+        @Override
+        public @Nullable Entry getEntry(String id) {
+            return entries.get(id);
         }
 
     }

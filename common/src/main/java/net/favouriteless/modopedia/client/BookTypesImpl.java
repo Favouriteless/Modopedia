@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.client;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookContentManager;
-import net.favouriteless.modopedia.api.BookTypeRegistry;
+import net.favouriteless.modopedia.api.BookTypes;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookType;
@@ -13,13 +13,13 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BookTypeRegistryImpl implements BookTypeRegistry {
+public class BookTypesImpl implements BookTypes {
 
-    public static final BookTypeRegistry INSTANCE = new BookTypeRegistryImpl();
+    public static final BookTypes INSTANCE = new BookTypesImpl();
 
     private final Map<ResourceLocation, BookType> factories = new HashMap<>();
 
-    private BookTypeRegistryImpl() {
+    private BookTypesImpl() {
         register(Modopedia.id("classic"), new ClassicBookType());
     }
 

@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.api.books.page_components;
 
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.client.screens.classic.EntryScreen;
+import net.favouriteless.modopedia.client.screens.books.classic.EntryScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.Level;
 

@@ -1,12 +1,14 @@
-package net.favouriteless.modopedia.client.screens.classic;
+package net.favouriteless.modopedia.client.screens.books.classic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
+import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
 import net.favouriteless.modopedia.util.StringUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -15,6 +17,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassicLandingScreen extends BookScreen {
@@ -23,10 +26,12 @@ public class ClassicLandingScreen extends BookScreen {
     protected final Component subtitle;
 
     protected final List<TextChunk> landingText;
-    protected int categoryPage = 0;
 
-    public ClassicLandingScreen(Book book, BookScreen lastScreen) {
-        super(book, lastScreen);
+    protected int categoryPage = 0;
+    protected final List<List<ItemTextButton>> categoryButtons = new ArrayList<>();
+
+    public ClassicLandingScreen(Book book, LocalisedBookContent content, BookScreen lastScreen) {
+        super(book, content, lastScreen);
         this.title = Component.literal(book.getTitle());
         this.subtitle = book.getSubtitle() != null ? Component.literal(book.getSubtitle()) : null;
 
@@ -42,8 +47,8 @@ public class ClassicLandingScreen extends BookScreen {
         }
     }
 
-    public ClassicLandingScreen(Book book) {
-        this(book, null);
+    public ClassicLandingScreen(Book book, LocalisedBookContent content) {
+        this(book, content, null);
     }
 
     @Override
@@ -95,6 +100,7 @@ public class ClassicLandingScreen extends BookScreen {
 
         poseStack.pushPose();
         poseStack.translate(0, 30, 0);
+
         Font font = Minecraft.getInstance().font;
         for(TextChunk chunk : landingText) {
             chunk.render(graphics, font, mouseX, mouseY);

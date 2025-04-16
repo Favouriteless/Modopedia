@@ -47,4 +47,10 @@ public interface Category {
      */
     List<String> getChildren();
 
+    /**
+     * @return {@link List} of Category IDs which contain this category. These aren't normally shown to the user, it's
+     * just for sorting purposes.
+     */
+    List<String> getParents();
+
 }

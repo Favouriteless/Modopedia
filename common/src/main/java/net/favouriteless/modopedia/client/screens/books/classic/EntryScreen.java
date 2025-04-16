@@ -1,7 +1,8 @@
-package net.favouriteless.modopedia.client.screens.classic;
+package net.favouriteless.modopedia.client.screens.books.classic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
@@ -27,8 +28,8 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
 
     protected int leftPage = 0; // Index of the leftmost page being displayed.
 
-    public EntryScreen(Book book, Entry entry, BookScreen lastScreen) {
-        super(book, lastScreen);
+    public EntryScreen(Book book, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
+        super(book, content, lastScreen);
         this.entry = entry;
 
         for(Page page : entry.getPages()) {
@@ -43,8 +44,8 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         }
     }
 
-    public EntryScreen(Book book, Entry entry) {
-        this(book, entry, null);
+    public EntryScreen(Book book, LocalisedBookContent content, Entry entry) {
+        this(book, content, entry, null);
     }
 
     @Override

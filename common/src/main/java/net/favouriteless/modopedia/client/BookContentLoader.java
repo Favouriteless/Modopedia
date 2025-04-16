@@ -5,11 +5,13 @@ import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.*;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
+import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.*;
-import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContent;
+import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
 import net.favouriteless.modopedia.book.page_components.TemplatePageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
@@ -106,34 +108,43 @@ public class BookContentLoader {
 
     private static Map<String, LocalisedBookContent> parseBookResources(Map<ResourceLocation, JsonElement> jsonMap,
                                                                         Book book, Level level) {
-        Map<String, LocalisedBookContent> content = new HashMap<>();
+        Map<String, LocalisedBookContentImpl> content = new HashMap<>();
         jsonMap.forEach((location, element) -> {
             String[] splitPath = location.getPath().split("/");
             String langCode = splitPath[0];
             String type = splitPath[1];
             String id = splitPath[2];
 
-            loadBookJson(element, book, id, type, content.computeIfAbsent(langCode, k -> LocalisedBookContent.create()), level);
+            if(type.equals("categories"))
+                loadCategoryJson(element, book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).categories());
+            else if(type.equals("entries"))
+                loadEntryJson(element, book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).entries());
         });
-        return content;
+        return new HashMap<>(content); // Convert map to the "immutable" LocalisedBookContent type after loading.
     }
 
-    private static void loadBookJson(JsonElement json, Book book, String id, String type, LocalisedBookContent content, Level level) {
+    private static void loadEntryJson(JsonElement json, Book book, String id, Level level,
+                                      Map<String, net.favouriteless.modopedia.api.books.Entry> entries) {
         try {
-            if(type.equals("categories")) {
-                CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                        .resultOrPartial(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e))
-                        .ifPresent(p -> content.categories().put(id, p.getFirst().init(book)));
-            }
-            else if(type.equals("entries")) {
-                EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                        .resultOrPartial(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e))
-                        .ifPresent(p -> content.entries().put(id, p.getFirst()
-                                .addPages(loadPages(json.getAsJsonObject().getAsJsonArray("pages"), book, level))));
-            }
+            EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
+                    .resultOrPartial(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e))
+                    .ifPresent(p -> entries.put(id, p.getFirst()
+                            .addPages(loadPages(json.getAsJsonObject().getAsJsonArray("pages"), book, level))));
         }
         catch(Exception e) {
-            Modopedia.LOG.error("Error loading book json {}: {}", id, e.getMessage());
+            Modopedia.LOG.error("Error loading entry json {}: {}", id, e.getMessage());
+        }
+    }
+
+    private static void loadCategoryJson(JsonElement json, Book book, String id, Level level,
+                                         Map<String, Category> categories) {
+        try {
+            CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
+                    .resultOrPartial(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e))
+                    .ifPresent(p -> categories.put(id, p.getFirst().init(book)));
+        }
+        catch(Exception e) {
+            Modopedia.LOG.error("Error loading category json {}: {}", id, e.getMessage());
         }
     }
 

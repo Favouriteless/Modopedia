@@ -2,14 +2,14 @@ package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.client.BookTypeRegistryImpl;
+import net.favouriteless.modopedia.client.BookTypesImpl;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
-public interface BookTypeRegistry {
+public interface BookTypes {
 
-    static BookTypeRegistry get() {
-        return BookTypeRegistryImpl.INSTANCE;
+    static BookTypes get() {
+        return BookTypesImpl.INSTANCE;
     }
 
     /**

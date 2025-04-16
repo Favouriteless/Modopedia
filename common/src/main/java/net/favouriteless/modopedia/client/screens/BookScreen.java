@@ -4,6 +4,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected final ResourceLocation bookId;
     protected final Book book;
+    protected final LocalisedBookContent content;
     protected final BookTexture texture;
     protected final BookScreen lastScreen;
 
@@ -24,10 +26,11 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book, BookScreen lastScreen) {
+    public BookScreen(Book book, LocalisedBookContent content, BookScreen lastScreen) {
         super(Component.literal(book.getTitle()));
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
+        this.content = content;
         this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
         this.lastScreen = lastScreen;
     }
