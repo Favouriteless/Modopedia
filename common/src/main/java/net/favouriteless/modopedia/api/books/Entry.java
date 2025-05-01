@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface Entry {
      * @return The {@link ItemStack} icon for this entry, displayed in the entries list of Categories this entry is a
      * part of.
      */
-    @Nullable ItemStack getIcon();
+    ItemStack getIcon();
     
     /**
      * @return {@link List} of all pages within this Entry, these are what actually get rendered when the entry is

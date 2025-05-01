@@ -8,6 +8,7 @@ import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -95,12 +96,12 @@ public class CategoryImpl implements Category {
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
             Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
-            ItemStack.CODEC.optionalFieldOf("icon").forGetter(c -> Optional.ofNullable(c.getIcon())),
+            ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(CategoryImpl::getIcon),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren)
     ).apply(instance, (title, subtitle, landingText, iconStack, entries, children) ->
             new CategoryImpl(title, subtitle.orElse(null), landingText.orElse(null),
-                             iconStack.orElse(null), entries, children))
+                             iconStack, entries, children))
     );
 
 }

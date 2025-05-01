@@ -4,13 +4,10 @@ import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.book.BookImpl;
-import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * Interface representing an entire book-- can be obtained with {@link BookRegistry#getBook(ResourceLocation)}
@@ -71,6 +68,11 @@ public interface Book {
      * @return The default line width for formatted text in this book.
      */
     int getLineWidth();
+
+    /**
+     * @return The display type for categories in this book. Defaults to modopedia:list, other option is modopedia:grid.
+     */
+    ResourceLocation getCategoryListType();
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;

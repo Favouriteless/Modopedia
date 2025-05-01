@@ -67,6 +67,16 @@ public class BookContentImpl implements BookContent {
             return entries.get(id);
         }
 
+        @Override
+        public Collection<String> getCategoryIds() {
+            return categories.keySet();
+        }
+
+        @Override
+        public Collection<String> getEntryIds() {
+            return entries.keySet();
+        }
+
     }
 
 }

@@ -60,6 +60,10 @@ public interface BookContent {
 
         @Nullable Entry getEntry(String id);
 
+        Collection<String> getCategoryIds();
+
+        Collection<String> getEntryIds();
+
     }
 
 }

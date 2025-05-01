@@ -26,10 +26,11 @@ public class BookImpl implements Book {
     private final int textColour;
     private final int headerColour;
     private final int lineWidth;
+    private final ResourceLocation categoryListType;
 
     public BookImpl(String title, String subtitle, ResourceLocation type, String rawLandingText,
                     ResourceLocation texture, ResourceLocation itemModel, String defaultLang, ResourceLocation font,
-                    int textColour, int headerColour, int lineWidth) {
+                    int textColour, int headerColour, int lineWidth, ResourceLocation categoryListType) {
         this.type = type;
         this.title = title;
         this.subtitle = subtitle;
@@ -41,6 +42,7 @@ public class BookImpl implements Book {
         this.textColour = textColour;
         this.headerColour = headerColour;
         this.lineWidth = lineWidth;
+        this.categoryListType = categoryListType;
     }
 
     @Override
@@ -100,24 +102,30 @@ public class BookImpl implements Book {
         return lineWidth;
     }
 
+    @Override
+    public ResourceLocation getCategoryListType() {
+        return categoryListType;
+    }
+
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
     public static final Codec<Book> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Book::getTitle),
-            Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
+            Codec.STRING.optionalFieldOf("subtitle").forGetter(b -> Optional.ofNullable(b.getSubtitle())),
             ResourceLocation.CODEC.optionalFieldOf("type", Modopedia.id("classic")).forGetter(Book::getType),
-            Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
+            Codec.STRING.optionalFieldOf("landing_text").forGetter(b -> Optional.ofNullable(b.getRawLandingText())),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
             Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguage),
             ResourceLocation.CODEC.optionalFieldOf("font", Modopedia.id("default")).forGetter(Book::getFont),
-            Codec.STRING.optionalFieldOf("text_colour", "000000").forGetter(book -> Integer.toHexString(book.getTextColour())),
-            Codec.STRING.optionalFieldOf("header_colour", "000000").forGetter(book -> Integer.toHexString(book.getHeaderColour())),
-            Codec.INT.optionalFieldOf("line_width", 100).forGetter(Book::getLineWidth)
-    ).apply(instance, (title, subtitle, type, landingText, texture, model, lang, font, textColour, headerColour, lineWidth) ->
-                       new BookImpl(title, subtitle.orElse(null), type, landingText.orElse(null), texture,
-                               model, lang, font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
-                               lineWidth))
+            Codec.STRING.optionalFieldOf("text_colour", "000000").forGetter(b -> Integer.toHexString(b.getTextColour())),
+            Codec.STRING.optionalFieldOf("header_colour", "000000").forGetter(b -> Integer.toHexString(b.getHeaderColour())),
+            Codec.INT.optionalFieldOf("line_width", 100).forGetter(Book::getLineWidth),
+            ResourceLocation.CODEC.optionalFieldOf("category_list_type", Modopedia.id("list")).forGetter(Book::getCategoryListType)
+    ).apply(instance, (title, subtitle, type, landingText, texture, model, lang, font, textColour, headerColour, lineWidth, categoryListType) ->
+            new BookImpl(title, subtitle.orElse(null), type, landingText.orElse(null), texture,
+                    model, lang, font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
+                    lineWidth, categoryListType))
     );
 
     public static final StreamCodec<ByteBuf, Book> STREAM_CODEC = new StreamCodec<>() { // StreamCodec.composite overloads were too small :(
@@ -135,7 +143,8 @@ public class BookImpl implements Book {
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
-                    ByteBufCodecs.INT.decode(buf)
+                    ByteBufCodecs.INT.decode(buf),
+                    ResourceLocation.STREAM_CODEC.decode(buf)
             );
         }
 
@@ -152,6 +161,7 @@ public class BookImpl implements Book {
             ByteBufCodecs.INT.encode(buf, book.getTextColour());
             ByteBufCodecs.INT.encode(buf, book.getHeaderColour());
             ByteBufCodecs.INT.encode(buf, book.getLineWidth());
+            ResourceLocation.STREAM_CODEC.encode(buf, book.getCategoryListType());
         }
 
     };

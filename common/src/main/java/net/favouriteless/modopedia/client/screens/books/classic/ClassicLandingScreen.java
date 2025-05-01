@@ -5,17 +5,18 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
 import net.favouriteless.modopedia.util.StringUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,36 @@ public class ClassicLandingScreen extends BookScreen {
     }
 
     @Override
+    protected void init() {
+        super.init();
+
+        // If tex only has more than one page we'll assume they're all the same size as the 2nd, the 1st is reserved for
+        // the landing text and title.
+        PageDetails page = texture.pages().size() > 1 ? texture.pages().get(1) : texture.pages().getFirst();
+
+        int size = minecraft.font.lineHeight + 3;
+        int perPage = page.height() / (minecraft.font.lineHeight + 3);
+
+        for(int i = 0; i < Mth.ceil(content.getCategoryIds().size() / (float)perPage); i++)
+            categoryButtons.add(new ArrayList<>());
+
+        int count = 0;
+        for(String id : content.getCategoryIds()) {
+            Category cat = content.getCategory(id);
+            int y = page.y() + minecraft.font.lineHeight + 2 + size * (count % perPage);
+
+            ItemTextButton button = new ItemTextButton(leftPos + page.x(), topPos + y, page.width(),
+                    b -> minecraft.setScreen(new CategoryScreen(book, content, cat, this)),
+                    cat.getIcon(), Component.literal(cat.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont())));
+
+            categoryButtons.get(count / perPage).add(button);
+            addRenderableWidget(button);
+            count++;
+        }
+
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         PoseStack poseStack = graphics.pose();
@@ -64,7 +95,7 @@ public class ClassicLandingScreen extends BookScreen {
     }
 
     protected void renderTitlePage(GuiGraphics graphics, PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        PageDetails page = texture.pages().get(0);
+        PageDetails page = texture.pages().getFirst();
 
         int xShift = leftPos + page.x(); // We shift our click positions and pose to be relative to the page
         int yShift = topPos + page.y();
@@ -98,22 +129,6 @@ public class ClassicLandingScreen extends BookScreen {
 
         renderCenteredHeader(graphics, poseStack, Component.translatable(Modopedia.translation("screen", "categories")), page.width());
 
-        poseStack.pushPose();
-        poseStack.translate(0, 30, 0);
-
-        Font font = Minecraft.getInstance().font;
-        for(TextChunk chunk : landingText) {
-            chunk.render(graphics, font, mouseX, mouseY);
-        }
-        poseStack.popPose();
-
-        poseStack.popPose();
-    }
-
-    protected void renderCenteredHeader(GuiGraphics graphics, PoseStack poseStack, Component header, int width) {
-        poseStack.pushPose();
-        Font font = minecraft.font;
-        graphics.drawString(Minecraft.getInstance().font, header, width/2 - font.width(header)/2, 0, book.getHeaderColour(), false);
         poseStack.popPose();
     }
 

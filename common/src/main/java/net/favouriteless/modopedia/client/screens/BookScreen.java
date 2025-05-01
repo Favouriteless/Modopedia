@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.BookTextureRegistry;
@@ -88,6 +89,10 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     @Override
     public int getTicks() {
         return ticks;
+    }
+
+    protected void renderCenteredHeader(GuiGraphics graphics, PoseStack poseStack, Component header, int width) {
+        graphics.drawString(Minecraft.getInstance().font, header, width/2 - minecraft.font.width(header)/2, 0, book.getHeaderColour(), false);
     }
 
 }

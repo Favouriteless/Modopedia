@@ -34,7 +34,7 @@ public interface Category {
     /**
      * @return The {@link ItemStack} which is rendered as an icon for this category.
      */
-    @Nullable ItemStack getIcon();
+    ItemStack getIcon();
 
     /**
      * @return {@link List} of every Entry ID in this category.

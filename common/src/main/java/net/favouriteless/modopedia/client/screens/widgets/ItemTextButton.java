@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.widgets;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -12,9 +12,8 @@ public class ItemTextButton extends Button {
 
     private final ItemStack stack;
 
-    public ItemTextButton(int x, int y, int width, int height, Button.OnPress onPress, ItemStack stack, Book book,
-                          Component message) {
-        super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
+    public ItemTextButton(int x, int y, int width, Button.OnPress onPress, ItemStack stack, Component message) {
+        super(x, y, width, Minecraft.getInstance().font.lineHeight+2, message, onPress, DEFAULT_NARRATION);
         this.stack = stack;
     }
 
@@ -22,17 +21,25 @@ public class ItemTextButton extends Button {
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         PoseStack poseStack = graphics.pose();
 
-        float scale = height / 16F; // We want the item to always "fill" the size of the button.
+        float scale = (height * 0.9F) / 16F; // We want the item to always "fill" 95% of the size of the button.
         int x = getX();
         int y = getY();
 
+        if(isHovered()) {
+            RenderSystem.enableBlend();
+            graphics.fill(x, y, x + width, y + height, 0x33000000);
+            RenderSystem.disableBlend();
+        }
+
         poseStack.pushPose();
+
         poseStack.scale(scale, scale, 1);
-        graphics.renderItem(stack, x, y);
+        poseStack.translate(x / scale, (y / scale) + height*0.05F, 0);
+        graphics.renderItem(stack, 0, 0);
+
         poseStack.popPose();
 
-        graphics.drawString(Minecraft.getInstance().font, getMessage(), x + height, y, 0x000000);
-
+        graphics.drawString(Minecraft.getInstance().font, getMessage(), x + height, y+1, 0x000000, false);
     }
 
 }
