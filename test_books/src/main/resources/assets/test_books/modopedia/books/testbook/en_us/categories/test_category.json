@@ -3,6 +3,8 @@
   "subtitle": "Test Subtitle",
   "landing_text": "This is a test description for a category.",
   "entries": [
-    "test_entry"
+    "test_entry",
+    "test_entry_templated",
+    "test_entry_image"
   ]
 }

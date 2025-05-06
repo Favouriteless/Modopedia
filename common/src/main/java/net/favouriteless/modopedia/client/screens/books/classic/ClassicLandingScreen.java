@@ -9,6 +9,7 @@ import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.BookScreen;
+import net.favouriteless.modopedia.client.screens.books.ListNavigableBookScreen;
 import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
 import net.favouriteless.modopedia.util.StringUtils;
 import net.minecraft.client.Minecraft;
@@ -16,20 +17,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.Mth;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ClassicLandingScreen extends BookScreen {
+public class ClassicLandingScreen extends ListNavigableBookScreen {
 
     protected final Component title;
     protected final Component subtitle;
 
     protected final List<TextChunk> landingText;
-
-    protected int categoryPage = 0;
-    protected final List<List<ItemTextButton>> categoryButtons = new ArrayList<>();
 
     public ClassicLandingScreen(Book book, LocalisedBookContent content, BookScreen lastScreen) {
         super(book, content, lastScreen);
@@ -55,31 +51,12 @@ public class ClassicLandingScreen extends BookScreen {
     @Override
     protected void init() {
         super.init();
-
-        // If tex only has more than one page we'll assume they're all the same size as the 2nd, the 1st is reserved for
-        // the landing text and title.
-        PageDetails page = texture.pages().size() > 1 ? texture.pages().get(1) : texture.pages().getFirst();
-
-        int size = minecraft.font.lineHeight + 3;
-        int perPage = page.height() / (minecraft.font.lineHeight + 3);
-
-        for(int i = 0; i < Mth.ceil(content.getCategoryIds().size() / (float)perPage); i++)
-            categoryButtons.add(new ArrayList<>());
-
-        int count = 0;
-        for(String id : content.getCategoryIds()) {
-            Category cat = content.getCategory(id);
-            int y = page.y() + minecraft.font.lineHeight + 2 + size * (count % perPage);
-
-            ItemTextButton button = new ItemTextButton(leftPos + page.x(), topPos + y, page.width(),
-                    b -> minecraft.setScreen(new CategoryScreen(book, content, cat, this)),
-                    cat.getIcon(), Component.literal(cat.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont())));
-
-            categoryButtons.get(count / perPage).add(button);
-            addRenderableWidget(button);
-            count++;
-        }
-
+        initButtonList(0, content.getCategoryIds(), (id, x, y, width) -> {
+            Category category = content.getCategory(id);
+            return new ItemTextButton(x, y, width, category.getIcon(),
+                    Component.literal(category.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont())),
+                    b -> minecraft.setScreen(new CategoryScreen(book, content, category, this)));
+        });
     }
 
     @Override
@@ -119,10 +96,6 @@ public class ClassicLandingScreen extends BookScreen {
 
         int xShift = leftPos + page.x(); // We shift our click positions and pose to be relative to the page
         int yShift = topPos + page.y();
-
-        mouseX -= xShift;
-        mouseY -= yShift;
-
 
         poseStack.pushPose();
         poseStack.translate(xShift, yShift, 0); // Translate to page position.

@@ -12,7 +12,7 @@ public class ItemTextButton extends Button {
 
     private final ItemStack stack;
 
-    public ItemTextButton(int x, int y, int width, Button.OnPress onPress, ItemStack stack, Component message) {
+    public ItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress) {
         super(x, y, width, Minecraft.getInstance().font.lineHeight+2, message, onPress, DEFAULT_NARRATION);
         this.stack = stack;
     }
