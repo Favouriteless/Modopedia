@@ -18,6 +18,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
+import java.util.Collection;
 import java.util.List;
 
 public class ClassicLandingScreen extends ListNavigableBookScreen {
@@ -51,7 +52,10 @@ public class ClassicLandingScreen extends ListNavigableBookScreen {
     @Override
     protected void init() {
         super.init();
-        initButtonList(0, content.getCategoryIds(), (id, x, y, width) -> {
+        Collection<String> categories = content.getCategoryIds();
+
+        initItemTextButtonList(categories.size());
+        createItemTextButtons(0, categories, (id, x, y, width) -> {
             Category category = content.getCategory(id);
             return new ItemTextButton(x, y, width, category.getIcon(),
                     Component.literal(category.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont())),

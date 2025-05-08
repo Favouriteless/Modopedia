@@ -15,6 +15,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
+import java.util.List;
+
 public class CategoryScreen extends ListNavigableBookScreen {
 
     protected final Category category;
@@ -31,7 +33,18 @@ public class CategoryScreen extends ListNavigableBookScreen {
     @Override
     protected void init() {
         super.init();
-        initButtonList(0, category.getEntries(), (id, x, y, width) -> {
+        List<String> children = category.getChildren();
+        List<String> entries = category.getEntries();
+
+        initItemTextButtonList(children.size() + entries.size());
+
+        createItemTextButtons(0, children, (id, x, y, width) -> {
+            Category category = content.getCategory(id);
+            return new ItemTextButton(x, y, width, category.getIcon(),
+                    Component.literal(category.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont()).withItalic(true)),
+                    b -> minecraft.setScreen(new CategoryScreen(book, content, category, this)));
+        });
+        createItemTextButtons(children.size(), entries, (id, x, y, width) -> {
             Entry entry = content.getEntry(id);
             return new ItemTextButton(x, y, width, entry.getIcon(),
                     Component.literal(entry.getTitle()).withStyle(Style.EMPTY.withFont(book.getFont())),

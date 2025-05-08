@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.api.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -93,6 +94,34 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected void renderCenteredHeader(GuiGraphics graphics, PoseStack poseStack, Component header, int width) {
         graphics.drawString(Minecraft.getInstance().font, header, width/2 - minecraft.font.width(header)/2, 0, book.getHeaderColour(), false);
+    }
+
+    /**
+     * @return The height of the shortest page on this screen's BookTexture, not including the first page. Relevant for
+     * side scrolling behaviour.
+     */
+    protected int getShortestHeight(int startIndex) {
+        int smallest = Integer.MAX_VALUE;
+        for(int i = startIndex; i < texture.pages().size(); i++) {
+            PageDetails page = texture.pages().get(i);
+            if(page.height() < smallest)
+                smallest = page.height();
+        }
+        return smallest;
+    }
+
+    /**
+     * @return The width of the thinnest page on this screen's BookTexture, not including the first page. Relevant for
+     * side scrolling behaviour.
+     */
+    protected int getThinnestWidth(int startIndex) {
+        int smallest = Integer.MAX_VALUE;
+        for(int i = startIndex; i < texture.pages().size(); i++) {
+            PageDetails page = texture.pages().get(i);
+            if(page.height() < smallest)
+                smallest = page.height();
+        }
+        return smallest;
     }
 
 }

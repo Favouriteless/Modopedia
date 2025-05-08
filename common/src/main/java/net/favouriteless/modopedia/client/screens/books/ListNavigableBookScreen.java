@@ -19,14 +19,18 @@ public abstract class ListNavigableBookScreen extends BookScreen {
         super(book, content, lastScreen);
     }
 
-    protected void initButtonList(int startIndex, Collection<String> ids, ItemTextButtonFactory factory) {
+    protected void initItemTextButtonList(int count) {
         int size = minecraft.font.lineHeight + 3;
-        int perPage = getListHeight() / size;
+        int perPage = getShortestHeight(1) / size;
 
         for(int i = 0; i < Mth.ceil(content.getCategoryIds().size() / (float)perPage); i++)
             buttons.add(new ItemTextButton[perPage]);
+    }
 
-        int index = startIndex;
+    protected void createItemTextButtons(int index, Collection<String> ids, ItemTextButtonFactory factory) {
+        int size = minecraft.font.lineHeight + 3;
+        int perPage = getShortestHeight(1) / size;
+
         for(String id : ids) {
             PageDetails page = texture.pages().get(index / perPage + 1);
 
@@ -40,20 +44,6 @@ public abstract class ListNavigableBookScreen extends BookScreen {
             addRenderableWidget(button);
             index++;
         }
-    }
-
-    /**
-     * @return The height of the shortest page on this screen's BookTexture, not including the first page. Relevant for
-     * side scrolling behaviour.
-     */
-    protected int getListHeight() {
-        int smallest = Integer.MAX_VALUE;
-        for(int i = 1; i < texture.pages().size(); i++) {
-            PageDetails page = texture.pages().get(i);
-            if(page.height() < smallest)
-                smallest = page.height();
-        }
-        return smallest;
     }
 
     @FunctionalInterface
