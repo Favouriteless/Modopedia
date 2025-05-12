@@ -52,6 +52,9 @@ public class ClassicLandingScreen extends ListNavigableBookScreen {
     @Override
     protected void init() {
         super.init();
+        if(content == null)
+            return;
+
         Collection<String> categories = content.getCategoryIds();
 
         initItemTextButtonList(categories.size());

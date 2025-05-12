@@ -33,6 +33,9 @@ public class CategoryScreen extends ListNavigableBookScreen {
     @Override
     protected void init() {
         super.init();
+        if(category == null)
+            return;
+
         List<String> children = category.getChildren();
         List<String> entries = category.getEntries();
 
