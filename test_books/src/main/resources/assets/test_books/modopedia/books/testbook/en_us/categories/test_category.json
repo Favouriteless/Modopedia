@@ -5,6 +5,7 @@
   "entries": [
     "test_entry",
     "test_entry_templated",
-    "test_entry_image"
+    "test_entry_image",
+    "test_header_text"
   ]
 }

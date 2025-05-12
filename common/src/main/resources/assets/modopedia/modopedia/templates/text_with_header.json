@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "type": "modopedia:header",
+      "text": "#header",
+      "centered": "#centered",
+      "colour": "#colour",
+      "bold": "#bold",
+      "underline": "#underline"
+    },
+    {
+      "type": "modopedia:text",
+      "x": 0,
+      "y": 10,
+      "text": "#text"
+    }
+  ]
+}

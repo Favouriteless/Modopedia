@@ -17,24 +17,26 @@ public class HeaderPageComponent extends PageComponent {
     protected boolean centered;
     protected int colour;
 
+    protected int centerX;
+
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
 
         Style style = Style.EMPTY
-                .withFont(book.getFont())
                 .withBold(lookup.getOrDefault("bold", false).asBoolean())
                 .withUnderlined(lookup.getOrDefault("underline", false).asBoolean());
 
         header = Component.literal(lookup.get("text").asString()).withStyle(style);
         centered = lookup.getOrDefault("centered", true).asBoolean();
         colour = Integer.parseInt(lookup.getOrDefault("colour", 0).asString(), 16);
+        centerX = book.getLineWidth() / 2;
     }
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         Font font = Minecraft.getInstance().font;
-        graphics.drawString(font, header, centered ? x - font.width(header) / 2 : x, y, colour, false);
+        graphics.drawString(font, header, centered ? centerX - font.width(header) / 2 : x, y, colour, false);
     }
 
 }

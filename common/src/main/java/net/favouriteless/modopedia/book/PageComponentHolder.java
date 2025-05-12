@@ -5,18 +5,17 @@ import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.Variable.MutableLookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.book.variables.ObjectVariable;
+import net.favouriteless.modopedia.book.variables.VariableLookup;
 import net.minecraft.world.level.Level;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PageComponentHolder implements MutableLookup {
 
     private final Map<PageComponent, Lookup> components = new LinkedHashMap<>();
-    private final Map<String, Variable> variables = new HashMap<>();
+    private final VariableLookup lookup = new VariableLookup();
 
     public PageComponentHolder() {}
 
@@ -33,28 +32,28 @@ public class PageComponentHolder implements MutableLookup {
     }
 
     @Override
+    public Variable set(String key, Variable variable) {
+        return lookup.set(key, variable);
+    }
+
+    @Override
     public Variable get(String key) {
-        return variables.get(key);
+        return lookup.get(key);
     }
 
     @Override
     public Variable getOrDefault(String key, Object def) {
-        return has(key) ? variables.get(key) : ObjectVariable.of(def);
+        return lookup.getOrDefault(key, def);
     }
 
     @Override
     public boolean has(String key) {
-        return variables.containsKey(key);
+        return lookup.has(key);
     }
 
     @Override
     public Collection<String> keys() {
-        return variables.keySet();
-    }
-
-    @Override
-    public Variable set(String key, Variable variable) {
-        return variables.put(key, variable);
+        return lookup.keys();
     }
 
 }

@@ -1,10 +1,11 @@
 package net.favouriteless.modopedia.book.variables;
 
 import net.favouriteless.modopedia.api.Variable;
+import net.favouriteless.modopedia.api.Variable.MutableLookup;
 
 import java.util.*;
 
-public class VariableLookup implements Variable.Lookup {
+public class VariableLookup implements MutableLookup {
 
     private final Map<String, Variable> internalMap = new HashMap<>();;
 
@@ -20,7 +21,7 @@ public class VariableLookup implements Variable.Lookup {
 
     @Override
     public boolean has(String key) {
-        return internalMap.containsKey(key);
+        return internalMap.containsKey(key) && (!(get(key) instanceof RemoteVariable remote) || remote.has(key));
     }
 
     @Override
@@ -28,8 +29,10 @@ public class VariableLookup implements Variable.Lookup {
         return internalMap.keySet();
     }
 
-    public void set(String key, Variable variable) {
+    @Override
+    public Variable set(String key, Variable variable) {
         internalMap.put(key, variable);
+        return variable;
     }
 
 }
