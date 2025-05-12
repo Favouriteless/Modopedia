@@ -110,7 +110,7 @@ public class BookContentLoader {
                                                                         Book book, Level level) {
         Map<String, LocalisedBookContentImpl> content = new HashMap<>();
         jsonMap.forEach((location, element) -> {
-            String[] splitPath = location.getPath().split("/");
+            String[] splitPath = location.getPath().split("/", 3);
             String langCode = splitPath[0];
             String type = splitPath[1];
             String id = splitPath[2];
