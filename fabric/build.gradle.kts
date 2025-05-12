@@ -28,6 +28,9 @@ repositories {
     }
 }
 
+val localRuntimeOnly = configurations.create("localRuntimeOnly")
+configurations.get("runtimeClasspath").extendsFrom(localRuntimeOnly)
+
 dependencies {
     compileOnly( project(":common") )
     minecraft( libs.minecraft )
@@ -39,7 +42,7 @@ dependencies {
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
 
-    runtimeOnly( project(":test_books") )
+    localRuntimeOnly( project(":test_books") )
 }
 
 loom {

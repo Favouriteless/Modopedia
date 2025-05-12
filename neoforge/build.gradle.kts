@@ -49,9 +49,13 @@ neoForge {
     }
 }
 
+val localRuntimeOnly = configurations.create("localRuntimeOnly")
+configurations.get("runtimeClasspath").extendsFrom(localRuntimeOnly)
+
 dependencies {
     compileOnly( project(":common") )
-    runtimeOnly( project(":test_books") )
+
+    localRuntimeOnly( project(":test_books") )
 }
 
 tasks.withType<Test>().configureEach {

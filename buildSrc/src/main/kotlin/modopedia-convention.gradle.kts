@@ -20,7 +20,6 @@ idea {
 }
 
 val libs = project.versionCatalogs.find("libs")
-
 val version = libs.get().findVersion("modopedia").get()
 val author: String by project
 
