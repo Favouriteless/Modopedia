@@ -17,11 +17,6 @@ public interface Category {
     String getTitle();
 
     /**
-     * @return Subtitle of the category-- this will be under the title.
-     */
-    @Nullable String getSubtitle();
-
-    /**
      * @return The description shown underneath the title and subtitle.
      */
     @Nullable List<TextChunk> getLandingText();

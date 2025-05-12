@@ -1,5 +1,5 @@
 [versions]
-    modopedia = "0.0.5"
+    modopedia = "0.0.6"
 
 # Common
     minecraft = "1.21.1"

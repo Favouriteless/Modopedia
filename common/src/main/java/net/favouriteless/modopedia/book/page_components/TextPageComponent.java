@@ -27,7 +27,7 @@ public class TextPageComponent extends PageComponent {
         super.init(book, lookup, level);
         rawText = lookup.get("text").asString();
         width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
-        lineHeight = lookup.getOrDefault("line_height", 9).asInt();
+        lineHeight = lookup.getOrDefault("line_height", Minecraft.getInstance().font.lineHeight).asInt();
 
         textChunks = TextParser.parse(rawText, width, lineHeight, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()), x, y);
     }

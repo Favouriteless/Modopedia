@@ -18,7 +18,6 @@ import java.util.Optional;
 public class CategoryImpl implements Category {
 
     private final String title; // Fields here get set by the codec
-    private final String subtitle;
     private final String rawLandingText;
     private final ItemStack iconStack;
     private final List<String> entries;
@@ -27,10 +26,9 @@ public class CategoryImpl implements Category {
 
     private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
-    public CategoryImpl(String title, String subtitle, String rawLandingText, ItemStack iconStack,
+    public CategoryImpl(String title, String rawLandingText, ItemStack iconStack,
                         List<String> entries, List<String> children) {
         this.title = title;
-        this.subtitle = subtitle;
         this.rawLandingText = rawLandingText;
         this.iconStack = iconStack;
         this.entries = entries;
@@ -40,12 +38,6 @@ public class CategoryImpl implements Category {
     @Override
     public String getTitle() {
         return title;
-    }
-
-    @Nullable
-    @Override
-    public String getSubtitle() {
-        return subtitle;
     }
 
     @Nullable
@@ -94,13 +86,12 @@ public class CategoryImpl implements Category {
 
     public static final Codec<CategoryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
-            Codec.STRING.optionalFieldOf("subtitle").forGetter(c -> Optional.ofNullable(c.getSubtitle())),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
             ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(CategoryImpl::getIcon),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren)
-    ).apply(instance, (title, subtitle, landingText, iconStack, entries, children) ->
-            new CategoryImpl(title, subtitle.orElse(null), landingText.orElse(null),
+    ).apply(instance, (title, landingText, iconStack, entries, children) ->
+            new CategoryImpl(title, landingText.orElse(null),
                              iconStack, entries, children))
     );
 

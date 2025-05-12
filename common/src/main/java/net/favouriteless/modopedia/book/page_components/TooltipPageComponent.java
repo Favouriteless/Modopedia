@@ -9,13 +9,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TooltipPageComponent extends PageComponent {
 
-    protected List<Component> tooltipLines = new ArrayList<>();
+    protected List<Component> tooltipLines;
     protected int width;
     protected int height;
 
@@ -24,7 +23,6 @@ public class TooltipPageComponent extends PageComponent {
         super.init(book, lookup, level);
         width = lookup.get("width").asInt();
         height = lookup.get("height").asInt();
-
         tooltipLines = lookup.get("tooltip").asStream()
                 .map(var -> Component.translatable(var.asString()))
                 .collect(Collectors.toUnmodifiableList());
