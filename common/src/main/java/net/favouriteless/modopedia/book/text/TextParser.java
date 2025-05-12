@@ -15,7 +15,7 @@ public class TextParser {
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
     public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Style baseStyle, int xOffset, int yOffset) {
-        String[] split = rawText.replace("\n", "").splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
+        String[] split = rawText.splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
 
         TextState styleStack = new TextState(baseStyle);
         List<Component> paragraph = new ArrayList<>();
