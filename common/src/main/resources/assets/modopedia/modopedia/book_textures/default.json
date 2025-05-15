@@ -16,5 +16,29 @@
       "width": 100,
       "height": 148
     }
-  ]
+  ],
+  "left_button": {
+    "x": 0,
+    "y": 180,
+    "width": 18,
+    "height": 8
+  },
+  "right_button": {
+    "x": 19,
+    "y": 180,
+    "width": 18,
+    "height": 8
+  },
+  "back_button": {
+    "x": 54,
+    "y": 180,
+    "width": 18,
+    "height": 10
+  },
+  "refresh_button": {
+    "x": 38,
+    "y": 180,
+    "width": 16,
+    "height": 16
+  }
 }

@@ -15,9 +15,8 @@ public class PageImpl implements Page {
         this.holder = holder;
     }
 
-    @Override
-    public void init(Book book, Level level) {
-        holder.initComponents(book, level);
+    public void init(Book book, String entry, Level level) {
+        holder.initComponents(book, entry, level);
     }
 
     @Override

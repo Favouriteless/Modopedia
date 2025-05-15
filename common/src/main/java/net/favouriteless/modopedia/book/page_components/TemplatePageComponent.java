@@ -35,7 +35,7 @@ public class TemplatePageComponent extends PageComponent {
         if(processor != null)
             processor.init(holder, level);
 
-        holder.initComponents(book, level);
+        holder.initComponents(book, lookup.get("entry").asString(), level);
     }
 
     @Override

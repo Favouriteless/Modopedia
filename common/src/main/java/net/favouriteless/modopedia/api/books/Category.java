@@ -43,9 +43,8 @@ public interface Category {
     List<String> getChildren();
 
     /**
-     * @return {@link List} of Category IDs which contain this category. These aren't normally shown to the user, it's
-     * just for sorting purposes.
+     * @return True if this category is part of the front page of a book. Sub-categories generally set this to false.
      */
-    List<String> getParents();
+    boolean getDisplayOnFrontPage();
 
 }

@@ -1,4 +1,5 @@
 {
-  "screen.modopedia.categories": "Categories",
-  "screen.modopedia.entries": "Entries"
+  "screen.modopedia.categories": "Chapters",
+  "screen.modopedia.entries": "Chapters",
+  "screen.modopedia.error": "ERROR"
 }

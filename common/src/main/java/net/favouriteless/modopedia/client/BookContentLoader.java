@@ -28,7 +28,9 @@ import net.minecraft.world.level.Level;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
@@ -90,13 +92,13 @@ public class BookContentLoader {
     }
 
     private static Map<ResourceLocation, JsonElement> getBookResources(ResourceLocation bookId, ResourceManager manager) {
-        FileToIdConverter filetoidconverter = FileToIdConverter.json(String.format("%s/%s/%s", Modopedia.MOD_ID, BOOK_DIR, bookId.getPath()));
+        FileToIdConverter converter = FileToIdConverter.json(String.format("%s/%s/%s", Modopedia.MOD_ID, BOOK_DIR, bookId.getPath()));
 
         Map<ResourceLocation, JsonElement> out = new HashMap<>();
-        for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
+        for(Entry<ResourceLocation, Resource> entry : converter.listMatchingResources(manager).entrySet()) {
             try (Reader reader = entry.getValue().openAsReader()) {
                 JsonElement json = GsonHelper.fromJson(gson, reader, JsonElement.class);
-                ResourceLocation nonFile = filetoidconverter.fileToId(entry.getKey());
+                ResourceLocation nonFile = converter.fileToId(entry.getKey());
                 out.put(nonFile, json);
             } catch (IllegalArgumentException | IOException | JsonParseException exception) {
                 Modopedia.LOG.error("Error trying to fetch book resources for {}: {}", entry.getKey(), exception);
@@ -111,6 +113,8 @@ public class BookContentLoader {
         Map<String, LocalisedBookContentImpl> content = new HashMap<>();
         jsonMap.forEach((location, element) -> {
             String[] splitPath = location.getPath().split("/", 3);
+            if(splitPath.length < 3)
+                return;
             String langCode = splitPath[0];
             String type = splitPath[1];
             String id = splitPath[2];
@@ -125,41 +129,33 @@ public class BookContentLoader {
 
     private static void loadEntryJson(JsonElement json, Book book, String id, Level level,
                                       Map<String, net.favouriteless.modopedia.api.books.Entry> entries) {
-        try {
-            EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                    .resultOrPartial(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e))
-                    .ifPresent(p -> entries.put(id, p.getFirst()
-                            .addPages(loadPages(json.getAsJsonObject().getAsJsonArray("pages"), book, level))));
-        }
-        catch(Exception e) {
-            Modopedia.LOG.error("Error loading entry json {}: {}", id, e.getMessage());
-        }
+        EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
+                .ifSuccess(p -> entries.put(id, p.getFirst().addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
+                .ifError(e -> Modopedia.LOG.error("Error loading entry json {}: {}", id, e.message()));
     }
 
     private static void loadCategoryJson(JsonElement json, Book book, String id, Level level,
                                          Map<String, Category> categories) {
-        try {
-            CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                    .resultOrPartial(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e))
-                    .ifPresent(p -> categories.put(id, p.getFirst().init(book)));
-        }
-        catch(Exception e) {
-            Modopedia.LOG.error("Error loading category json {}: {}", id, e.getMessage());
-        }
+        CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
+                .ifSuccess(p -> categories.put(id, p.getFirst().init(book))) // Init just parses the landing text
+                .ifError(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e.message()));
     }
 
     /**
      * Create pages from a given JsonArray and run init on their components.
      */
-    private static Page[] loadPages(JsonArray array, Book book, Level level) {
-        Page[] out = new Page[array.size()];
-        for(int i = 0; i < out.length; i++) {
-            JsonElement element = array.get(i);
-            if(!element.isJsonObject())
-                continue;
+    private static List<Page> loadPages(String entry, JsonArray array, Book book, Level level) {
+        List<Page> out = new ArrayList<>();
 
-            out[i] = new PageImpl(loadPageComponentHolder(element.getAsJsonObject(), i));
-            out[i].init(book, level);
+        for(JsonElement element : array) {
+            try {
+                PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), out.size()));
+                page.init(book, entry, level);
+                out.add(page);
+            }
+            catch(Exception e) {
+                Modopedia.LOG.info("Error loading page for entry {}: {}", entry, e.getMessage());
+            }
         }
         return out;
     }
@@ -167,7 +163,7 @@ public class BookContentLoader {
     /**
      * Create a new PageComponentHolder and set up it's variables/components from the given JsonObject.
      */
-    private static PageComponentHolder loadPageComponentHolder(JsonObject json, int pageNum) {
+    private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, int pageNum) {
         PageComponentHolder holder = new PageComponentHolder();
 
         json.keySet().forEach(key -> {
@@ -175,14 +171,18 @@ public class BookContentLoader {
                 holder.set(key, JsonVariable.of(json.get(key)));
         });
         holder.set("page_num", Variable.of(pageNum));
+        holder.set("entry", Variable.of(entry));
 
         if(!json.has("components"))
             return holder;
 
-        for(JsonElement element : json.getAsJsonArray("components")) {
-            if(element.isJsonObject()) {
-                loadComponent(holder, element.getAsJsonObject(), pageNum);
-            }
+        JsonArray components = json.getAsJsonArray("components");
+        if(components.isEmpty())
+            return holder;
+
+        for(JsonElement element : components) {
+            if(element.isJsonObject())
+                loadComponent(entry, holder, element.getAsJsonObject(), pageNum);
         }
         return holder;
     }
@@ -195,7 +195,7 @@ public class BookContentLoader {
      * @param pageNum Index of the page this component is on.
      *
      */
-    private static void loadComponent(PageComponentHolder holder, JsonObject json, int pageNum) {
+    private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, int pageNum) {
         PageComponent component;
         if(json.has("type")) {
             ResourceLocation id = ResourceLocation.parse(json.get("type").getAsString());
@@ -207,7 +207,11 @@ public class BookContentLoader {
             component = type.get();
         }
         else if(json.has("template")) {
-            component = new TemplatePageComponent(loadPageComponentHolder(TemplateRegistry.getTemplate(ResourceLocation.parse(json.get("template").getAsString())).getData(), pageNum));
+            ResourceLocation id = ResourceLocation.parse(json.get("template").getAsString());
+            Template template = TemplateRegistry.getTemplate(id);
+            if(template == null)
+                throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered template", id));
+            component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum));
         }
         else {
             throw new JsonParseException("Error creating PageComponent: component does not have a type or template");
@@ -215,6 +219,7 @@ public class BookContentLoader {
 
         VariableLookup lookup = new VariableLookup();
         lookup.set("page_num", Variable.of(pageNum));
+        lookup.set("entry", Variable.of(entry));
 
         for(String key : json.keySet()) {
             if(key.equals("type"))
@@ -222,7 +227,7 @@ public class BookContentLoader {
 
             JsonElement element = json.get(key);
 
-            if(element instanceof JsonPrimitive primitive && primitive.isString()) {
+            if(element instanceof JsonPrimitive primitive && primitive.isString()) { // Handle passthrough variables
                 String val = primitive.getAsString();
                 if(val.startsWith("#")) {
                     lookup.set(key, RemoteVariable.of(val.substring(1), holder));
@@ -265,10 +270,10 @@ public class BookContentLoader {
 
         Map<ResourceLocation, JsonElement> out = new HashMap<>();
         for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
-            try (Reader reader = entry.getValue().openAsReader()) {
+            try(Reader reader = entry.getValue().openAsReader()) {
                 out.put(filetoidconverter.fileToId(entry.getKey()), GsonHelper.fromJson(gson, reader, JsonElement.class));
-            } catch (IllegalArgumentException | IOException | JsonParseException exception) {
-                Modopedia.LOG.error("Error trying to fetch book texture resources for {}: {}", entry.getKey(), exception);
+            } catch (IllegalArgumentException | IOException | JsonParseException e) {
+                Modopedia.LOG.error("Error trying to fetch book texture resources for {}: {}", entry.getKey(), e.getMessage());
             }
         }
         return out;
@@ -276,14 +281,10 @@ public class BookContentLoader {
 
     private static void loadBookTextures(Map<ResourceLocation, JsonElement> jsonMap) {
         BookTextureRegistry.get().clear();
-        jsonMap.forEach((location, element) -> {
-            try {
-                BookTextureRegistry.get().register(location, BookTexture.CODEC.decode(JsonOps.INSTANCE, element).getOrThrow().getFirst());
-            }
-            catch(Exception e) {
-                Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.getMessage());
-            }
-        });
+        jsonMap.forEach((location, element) -> BookTexture.CODEC.decode(JsonOps.INSTANCE, element)
+                .ifSuccess(p -> BookTextureRegistry.get().register(location, p.getFirst()))
+                .ifError(e -> Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.message()))
+        );
     }
 
 }

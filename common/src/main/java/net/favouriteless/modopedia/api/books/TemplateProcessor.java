@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 public interface TemplateProcessor {
 
     /**
-     * Called after a template's {@link PageComponent}s have been loaded.
+     * Called after a template's {@link PageComponent}s have been created, but before they have been initialised.
      *
      * @param lookup Lookup belonging to the template, remote variables will pull from this.
      * @param level Level access for whatever.

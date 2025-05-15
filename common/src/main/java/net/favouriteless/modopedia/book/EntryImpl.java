@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EntryImpl implements Entry {
@@ -41,8 +40,8 @@ public class EntryImpl implements Entry {
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-    public Entry addPages(Page... pages) {
-        this.pages.addAll(Arrays.asList(pages));
+    public Entry addPages(List<Page> pages) {
+        this.pages.addAll(pages);
         return this;
     }
 

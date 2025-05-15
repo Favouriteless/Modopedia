@@ -6,6 +6,7 @@ import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,17 +23,18 @@ public class CategoryImpl implements Category {
     private final ItemStack iconStack;
     private final List<String> entries;
     private final List<String> children;
-    private final List<String> parents = new ArrayList<>();
+    private final boolean displayFrontPage;
 
     private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
     public CategoryImpl(String title, String rawLandingText, ItemStack iconStack,
-                        List<String> entries, List<String> children) {
+                        List<String> entries, List<String> children, boolean displayFrontPage) {
         this.title = title;
         this.rawLandingText = rawLandingText;
         this.iconStack = iconStack;
         this.entries = entries;
         this.children = children;
+        this.displayFrontPage = displayFrontPage;
     }
 
     @Override
@@ -68,19 +70,13 @@ public class CategoryImpl implements Category {
     }
 
     @Override
-    public List<String> getParents() {
-        return parents;
-    }
-
-    public void addParent(String parent) {
-        parents.add(parent);
+    public boolean getDisplayOnFrontPage() {
+        return displayFrontPage;
     }
 
     public CategoryImpl init(Book book) {
-        this.landingText = rawLandingText != null ?
-                TextParser.parse(rawLandingText, book.getLineWidth(), 9, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()), 0, 0) :
-                List.of();
-
+        landingText = TextParser.parse(rawLandingText, book.getLineWidth(), Minecraft.getInstance().font.lineHeight,
+                Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
         return this;
     }
 
@@ -89,10 +85,10 @@ public class CategoryImpl implements Category {
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
             ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(CategoryImpl::getIcon),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
-            Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren)
-    ).apply(instance, (title, landingText, iconStack, entries, children) ->
-            new CategoryImpl(title, landingText.orElse(null),
-                             iconStack, entries, children))
+            Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren),
+            Codec.BOOL.optionalFieldOf("display_on_front_page", true).forGetter(Category::getDisplayOnFrontPage)
+    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront) ->
+            new CategoryImpl(title, landingText.orElse(null), iconStack, entries, children, displayFront))
     );
 
 }

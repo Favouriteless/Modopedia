@@ -58,7 +58,11 @@ public interface BookContent {
 
         @Nullable Category getCategory(String id);
 
+        boolean hasCategory(String id);
+
         @Nullable Entry getEntry(String id);
+
+        boolean hasEntry(String id);
 
         Collection<String> getCategoryIds();
 

@@ -14,7 +14,10 @@ public class TextParser {
 
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
-    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Style baseStyle, int xOffset, int yOffset) {
+    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Style baseStyle) {
+        if(rawText == null || rawText.isBlank())
+            return List.of();
+
         String[] split = rawText.splitWithDelimiters(FORMATTER_REGEX, 0); // Separate actual text and formatters
 
         TextState styleStack = new TextState(baseStyle);
@@ -37,10 +40,10 @@ public class TextParser {
             }
         }
 
-        return getChunksFrom(paragraph, lineWidth, lineHeight, xOffset, yOffset);
+        return getChunksFrom(paragraph, lineWidth, lineHeight);
     }
 
-    private static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight, int xOffset, int yOffset) {
+    private static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight) {
         Font font = Minecraft.getInstance().font;
         int x = 0;
         int line = 0;
@@ -52,7 +55,7 @@ public class TextParser {
 
                 if(pair.getFirst() != null && !pair.getFirst().getString().isEmpty()) {
                     int width = font.width(pair.getFirst()); // First add component to current line-- we know this one is pre-linebreak
-                    chunks.add(new TextChunk(pair.getFirst(), x + xOffset, line*lineHeight + yOffset, width, lineHeight));
+                    chunks.add(new TextChunk(pair.getFirst(), x, line*lineHeight, width, lineHeight));
                     x += width;
                 }
 

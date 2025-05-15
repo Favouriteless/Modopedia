@@ -1,13 +1,12 @@
-package net.favouriteless.modopedia.client.screens;
+package net.favouriteless.modopedia.client.screens.books;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,8 +27,8 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book, LocalisedBookContent content, BookScreen lastScreen) {
-        super(Component.literal(book.getTitle()));
+    public BookScreen(Book book, LocalisedBookContent content, BookScreen lastScreen, Component title) {
+        super(title);
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
         this.content = content;
@@ -78,22 +77,17 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     }
 
     @Override
+    public BookTexture getBookTexture() {
+        return texture;
+    }
+
+    @Override
     public boolean isHovered(double mouseX, double mouseY, int x, int y, int width, int height) {
         return mouseX > x && mouseY > y && mouseX < x+width && mouseY < y+height;
     }
-
-    @Override
-    public ResourceLocation getBookTexture() {
-        return book.getTexture();
-    }
-
     @Override
     public int getTicks() {
         return ticks;
-    }
-
-    protected void renderCenteredHeader(GuiGraphics graphics, PoseStack poseStack, Component header, int width) {
-        graphics.drawString(Minecraft.getInstance().font, header, width/2 - minecraft.font.width(header)/2, 0, book.getHeaderColour(), false);
     }
 
     /**
@@ -103,7 +97,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int getShortestHeight(int startIndex) {
         int smallest = Integer.MAX_VALUE;
         for(int i = startIndex; i < texture.pages().size(); i++) {
-            PageDetails page = texture.pages().get(i);
+            Dimensions page = texture.pages().get(i);
             if(page.height() < smallest)
                 smallest = page.height();
         }
@@ -117,7 +111,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int getThinnestWidth(int startIndex) {
         int smallest = Integer.MAX_VALUE;
         for(int i = startIndex; i < texture.pages().size(); i++) {
-            PageDetails page = texture.pages().get(i);
+            Dimensions page = texture.pages().get(i);
             if(page.height() < smallest)
                 smallest = page.height();
         }

@@ -25,8 +25,8 @@
           "type": "modopedia:image",
           "x": 0,
           "y": 0,
-          "width": 64,
-          "height": 64,
+          "width": 27,
+          "height": 24,
           "images": ["test_books:textures/gui/test_image_1.png", "test_books:textures/gui/test_image_0.png"]
         },
         {
@@ -34,6 +34,24 @@
           "x": 0,
           "y": 65,
           "text": "$(c:red)$(b)Test$() entry for $(c:#B8A349)$(u)Modopedia$()'s second image page!"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "type": "modopedia:image",
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64,
+          "images": ["test_books:textures/gui/test_image_0.png", "test_books:textures/gui/test_image_1.png"]
+        },
+        {
+          "type": "modopedia:text",
+          "x": 0,
+          "y": 65,
+          "text": "$(c:red)$(b)Third test$() entry for $(c:#B8A349)$(u)Modopedia$()'s image page!"
         }
       ]
     }

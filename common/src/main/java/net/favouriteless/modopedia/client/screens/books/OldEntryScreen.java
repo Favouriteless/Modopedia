@@ -1,22 +1,22 @@
-package net.favouriteless.modopedia.client.screens.books.classic;
+package net.favouriteless.modopedia.client.screens.books;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
 import net.favouriteless.modopedia.api.books.page_components.PageRenderable;
 import net.favouriteless.modopedia.api.books.page_components.PageWidgetHolder;
-import net.favouriteless.modopedia.client.screens.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntryScreen extends BookScreen implements PageWidgetHolder {
+public class OldEntryScreen extends BookScreen implements PageWidgetHolder {
 
     // All of our page widgets/renderables are separate to regular ones so we can hide/reveal them as needed.
     protected final List<List<PageRenderable>> pageRenderables = new ArrayList<>();
@@ -28,8 +28,8 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
 
     protected int leftPage = 0; // Index of the leftmost page being displayed.
 
-    public EntryScreen(Book book, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
-        super(book, content, lastScreen);
+    public OldEntryScreen(Book book, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
+        super(book, content, lastScreen, Component.literal(entry.getTitle()));
         this.entry = entry;
 
         for(Page page : entry.getPages()) {
@@ -44,7 +44,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         }
     }
 
-    public EntryScreen(Book book, LocalisedBookContent content, Entry entry) {
+    public OldEntryScreen(Book book, LocalisedBookContent content, Entry entry) {
         this(book, content, entry, null);
     }
 
@@ -61,7 +61,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(leftPage+index >= pageRenderables.size())
             return;
 
-        PageDetails details = texture.pages().get(index);
+        Dimensions details = texture.pages().get(index);
         PoseStack poseStack = graphics.pose();
         int xShift = leftPos + details.x();
         int yShift = topPos + details.y();
@@ -83,7 +83,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
      */
     protected int getPageIndex(double x, double y) {
         for(int i = 0; i < texture.pages().size(); i++) {
-            PageDetails page = texture.pages().get(i);
+            Dimensions page = texture.pages().get(i);
             if(isHovered(x, y, page.x(), page.y(), page.width(), page.height()))
                 return i;
         }
@@ -103,7 +103,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = texture.pages().get(pageIndex);
+                Dimensions details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseClicked(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
                         return tryStartDragging(widget, button);
@@ -126,7 +126,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = texture.pages().get(pageIndex);
+                Dimensions details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseReleased(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), button))
                         return true;
@@ -151,7 +151,7 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
         if(pageIndex != -1) {
             int index = leftPage + pageIndex;
             if(index < pageWidgets.size()) {
-                PageDetails details = texture.pages().get(pageIndex);
+                Dimensions details = texture.pages().get(pageIndex);
                 for(PageEventListener widget : pageWidgets.get(index)) {
                     if(widget.mouseScrolled(this, mouseX - (leftPos + details.x()), mouseY - (topPos + details.y()), scrollX, scrollY))
                         return true;
@@ -183,21 +183,17 @@ public class EntryScreen extends BookScreen implements PageWidgetHolder {
     }
 
     @Override
-    public <T extends PageRenderable> T addRenderable(T renderable, int pageNum) {
-        pageRenderables.get(pageNum).add(renderable);
+    public <T extends PageRenderable> T addRenderable(T renderable) {
         return renderable;
     }
 
     @Override
-    public <T extends PageEventListener> T addWidget(T widget, int pageNum) {
-        pageWidgets.get(pageNum).add(widget);
+    public <T extends PageEventListener> T addWidget(T widget) {
         return widget;
     }
 
     @Override
-    public <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget, int pageNum) {
-        pageRenderables.get(pageNum).add(widget);
-        pageWidgets.get(pageNum).add(widget);
+    public <T extends PageRenderable & PageEventListener> T addRenderableWidget(T widget) {
         return widget;
     }
 

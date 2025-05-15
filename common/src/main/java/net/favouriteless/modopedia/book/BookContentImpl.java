@@ -63,8 +63,18 @@ public class BookContentImpl implements BookContent {
         }
 
         @Override
+        public boolean hasCategory(String id) {
+            return categories.containsKey(id);
+        }
+
+        @Override
         public @Nullable Entry getEntry(String id) {
             return entries.get(id);
+        }
+
+        @Override
+        public boolean hasEntry(String id) {
+            return entries.containsKey(id);
         }
 
         @Override

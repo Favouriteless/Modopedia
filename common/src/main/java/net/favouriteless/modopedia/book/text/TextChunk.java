@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.book.text;
 
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -27,8 +28,9 @@ public class TextChunk implements PageEventListener {
         this.height = height;
     }
 
-    public void render(GuiGraphics graphics, Font font, int mouseX, int mouseY) {
-        graphics.drawString(font, text, x, y, 0x000000, false); // Defaults to black if no colour is present.
+    public void render(GuiGraphics graphics, int x, int y, int mouseX, int mouseY) {
+        Font font = Minecraft.getInstance().font;
+        graphics.drawString(font, text, this.x + x, this.y + y, 0x000000, false); // Defaults to black if no colour is present.
 
         if(isMouseOver(mouseX, mouseY))
             graphics.renderComponentHoverEffect(font, text.getStyle(), mouseX, mouseY);

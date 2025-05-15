@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.client.book_types;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.client.screens.books.classic.ClassicLandingScreen;
+import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;

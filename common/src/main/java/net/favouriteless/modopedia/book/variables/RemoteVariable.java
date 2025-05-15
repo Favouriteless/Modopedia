@@ -66,7 +66,7 @@ public class RemoteVariable implements Variable {
         return new RemoteVariable(key, lookup);
     }
 
-    public boolean has(String key) {
+    public boolean hasValue() {
         return lookup.has(key);
     }
 
