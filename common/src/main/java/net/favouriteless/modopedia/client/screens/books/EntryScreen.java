@@ -27,10 +27,14 @@ public class EntryScreen extends MultiPageBookScreen {
         this.entry = entry;
     }
 
+    public EntryScreen(Book book, LocalisedBookContent content, Entry entry) {
+        this(book, content, entry, null);
+    }
+
     @Override
     protected void initPages(Consumer<ScreenPage> pageConsumer) {
         for(Page page : entry.getPages()) {
-            Dimensions dims = texture.pages().get(children().size() % texture.pages().size());
+            Dimensions dims = texture.pages().get(children.size() % texture.pages().size());
             EntryScreenPage screenPage = new EntryScreenPage(this, dims, page);
             children.add(screenPage);
             pageConsumer.accept(screenPage);

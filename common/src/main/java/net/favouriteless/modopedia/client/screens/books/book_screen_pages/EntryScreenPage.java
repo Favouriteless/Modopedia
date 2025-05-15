@@ -25,14 +25,16 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
         this.dimensions = dimensions;
         for(PageComponent component : page.getComponents()) {
             renderables.add(component);
-            component.initWidgets(this);
+            component.initWidgets(this, parent);
         }
     }
 
     @Override
     public void render(GuiGraphics graphics, PoseStack poseStack, Dimensions dimensions, int mouseX, int mouseY, float partialTick) {
-        for(PageRenderable renderable : renderables)
-            renderable.render(graphics, parent, mouseX, mouseY, partialTick);
+        for(PageRenderable renderable : renderables) {
+            if(renderable.shouldRender())
+                renderable.render(graphics, parent, mouseX, mouseY, partialTick);
+        }
     }
 
     @Override

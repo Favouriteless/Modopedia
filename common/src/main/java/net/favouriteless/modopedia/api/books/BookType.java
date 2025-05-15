@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * A BookScreenFactory represents a single "type" of book by providing the methods used to open its GUIs. e.g
@@ -19,12 +18,12 @@ public interface BookType {
      * @return A "category" screen for a given category location. Traditionally this shows a list of entries in the
      * category.
      */
-    Screen openCategoryScreen(Book book, BookContent content, ResourceLocation category);
+    Screen openCategoryScreen(Book book, BookContent content, String category);
 
     /**
      * @return An "entry" screen for a given category location. Traditionally this just renders each of the pages with
      * the components on them.
      */
-    Screen openEntryScreen(Book book, BookContent content, ResourceLocation entry);
+    Screen openEntryScreen(Book book, BookContent content, String entry);
 
 }

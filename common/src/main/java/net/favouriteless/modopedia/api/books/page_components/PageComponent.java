@@ -37,6 +37,6 @@ public abstract class PageComponent implements PageRenderable, PageEventListener
      * Called when this component first gets added to a Screen. The screen will prioritise widgets for
      * input handling.
      */
-    public void initWidgets(PageWidgetHolder holder) {}
+    public void initWidgets(PageWidgetHolder holder, BookRenderContext context) {}
 
 }
