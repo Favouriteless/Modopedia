@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
@@ -65,25 +65,24 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
         int startIndex = 0;
         while(startIndex < categories.size()) {
             int pageCount = getPageCount();
-            int dimIndex = pageCount % texture.pages().size();
-            Dimensions dims = texture.pages().get(dimIndex);
+            PageDetails details = texture.pages().get(pageCount % texture.pages().size());
 
             ScreenPage page;
-            int yStart = dims.y();
+            int yStart = details.y();
 
             if(pageCount == 1) {
                 yStart += minecraft.font.lineHeight + 2;
-                page = new TitledScreenPage(this, header, dims.width()/2 - minecraft.font.width(header)/2, 0);
+                page = new TitledScreenPage(this, header, details.width()/2 - minecraft.font.width(header)/2, 0);
             }
             else {
                 page = new BlankScreenPage(this);
             }
 
-            int onPage = (dims.height() - yStart) / spacing;
+            int onPage = (details.height() - yStart) / spacing;
 
-            ItemTextButton.createItemTextButtons(categories.subList(startIndex, Math.min(startIndex+onPage, categories.size())), dims.x(), yStart, (id, x, y) -> {
+            ItemTextButton.createItemTextButtons(categories.subList(startIndex, Math.min(startIndex+onPage, categories.size())), details.x(), yStart, (id, x, y) -> {
                 Category cat = content.getCategory(id);
-                return new ItemTextButton(leftPos + x, topPos + y, dims.width(), cat.getIcon(),
+                return new ItemTextButton(leftPos + x, topPos + y, details.width(), cat.getIcon(),
                         Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, content, cat, this)));
             }).forEach(page::addWidget);
 

@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.*;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, PageEventListener {
 
-    protected final Dimensions dimensions;
+    protected final PageDetails details;
 
     protected final List<PageRenderable> renderables = new ArrayList<>();
     protected final List<PageEventListener> widgets = new ArrayList<>();
@@ -20,9 +20,9 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     protected boolean dragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreenPage(BookScreen parent, Dimensions dimensions, Page page) {
+    public EntryScreenPage(BookScreen parent, PageDetails details, Page page) {
         super(parent);
-        this.dimensions = dimensions;
+        this.details = details;
         for(PageComponent component : page.getComponents()) {
             renderables.add(component);
             component.initWidgets(this, parent);
@@ -30,7 +30,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, Dimensions dimensions, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, PageDetails details, int mouseX, int mouseY, float partialTick) {
         for(PageRenderable renderable : renderables) {
             if(renderable.shouldRender())
                 renderable.render(graphics, parent, mouseX, mouseY, partialTick);
@@ -59,7 +59,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     @Override
     public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
         for(PageEventListener widget : widgets) {
-            if(widget.mouseClicked(context, mouseX - dimensions.x(), mouseY - dimensions.y(), button)) {
+            if(widget.mouseClicked(context, mouseX - details.x(), mouseY - details.y(), button)) {
                 focused = widget;
                 if(button == 0)
                     dragging = true;
@@ -75,11 +75,11 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
         if(button == 0 && dragging) { // On release, first we check if there was a focused widget.
             dragging = false;
             if(focused != null)
-                return focused.mouseReleased(context, mouseX - dimensions.x(), mouseY - dimensions.y(), button);
+                return focused.mouseReleased(context, mouseX - details.x(), mouseY - details.y(), button);
         }
 
         for(PageEventListener widget : widgets) {
-            if(widget.mouseReleased(context, mouseX - dimensions.x(), mouseY - dimensions.y(), button))
+            if(widget.mouseReleased(context, mouseX - details.x(), mouseY - details.y(), button))
                 return true;
         }
 
@@ -88,13 +88,13 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
 
     @Override
     public boolean mouseDragged(BookRenderContext context, double mouseX, double mouseY, int button, double dragX, double dragY) {
-        return focused != null && dragging && button == 0 && focused.mouseDragged(context, mouseX - dimensions.x(), mouseY - dimensions.y(), button, dragX, dragY);
+        return focused != null && dragging && button == 0 && focused.mouseDragged(context, mouseX - details.x(), mouseY - details.y(), button, dragX, dragY);
     }
 
     @Override
     public boolean mouseScrolled(BookRenderContext context, double mouseX, double mouseY, double scrollX, double scrollY) {
         for(PageEventListener widget : widgets) {
-            if(widget.mouseScrolled(context, mouseX - dimensions.x(), mouseY - dimensions.y(), scrollX, scrollY))
+            if(widget.mouseScrolled(context, mouseX - details.x(), mouseY - details.y(), scrollX, scrollY))
                 return true;
         }
         return false;

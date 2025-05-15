@@ -2,7 +2,8 @@
   "texture": "modopedia:textures/gui/book/default.png",
   "width": 271,
   "height": 180,
-  "tex_size": 512,
+  "tex_width": 512,
+  "tex_height": 512,
   "pages": [
     {
       "x": 24,
@@ -19,26 +20,34 @@
   ],
   "left_button": {
     "x": 0,
-    "y": 180,
+    "y": 182,
     "width": 18,
-    "height": 8
+    "height": 8,
+    "u": 0,
+    "v": 180
   },
   "right_button": {
-    "x": 19,
-    "y": 180,
+    "x": 253,
+    "y": 182,
     "width": 18,
-    "height": 8
+    "height": 8,
+    "u": 19,
+    "v": 180
   },
   "back_button": {
-    "x": 54,
-    "y": 180,
+    "x": 126,
+    "y": 182,
     "width": 18,
-    "height": 10
+    "height": 10,
+    "u": 54,
+    "v": 180
   },
   "refresh_button": {
-    "x": 38,
-    "y": 180,
+    "x": 0,
+    "y": 0,
     "width": 16,
-    "height": 16
+    "height": 16,
+    "u": 38,
+    "v": 180
   }
 }

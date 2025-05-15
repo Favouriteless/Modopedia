@@ -3,7 +3,8 @@ package net.favouriteless.modopedia.client.screens.books;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;
 import net.minecraft.client.gui.GuiGraphics;
@@ -42,14 +43,16 @@ public abstract class MultiPageBookScreen extends BookScreen {
         });
 
         ResourceLocation tex = texture.location();
-        int texSize = texture.texSize();
-        Dimensions left = texture.left();
-        Dimensions right = texture.right();
-        Dimensions back = texture.back();
+        int texWidth = texture.texWidth();
+        int texHeight = texture.texHeight();
 
-        leftButton = addRenderableWidget(new HoverableImageButton(tex, leftPos, topPos + texture.height() + 1, left.width(), left.height(), left.x(), left.y(), texSize, texSize, b -> turnPageLeft(1)));
-        rightButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + texture.width() - right.width(), topPos + texture.height() + 1, right.width(), right.height(), right.x(), right.y(), texSize, texSize, b -> turnPageRight(1)));
-        backButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + texture.width()/2 - back.width()/2, topPos + texture.height() + 1, back.width(), back.height(), back.x(), back.y(), texSize, texSize, b -> minecraft.setScreen(lastScreen)));
+        WidgetDetails left = texture.left();
+        WidgetDetails right = texture.right();
+        WidgetDetails back = texture.back();
+
+        leftButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + left.x(), topPos + left.y(), left.width(), left.height(), left.u(), left.v(), texWidth, texHeight, b -> turnPageLeft(1)));
+        rightButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + right.x(), topPos + right.y(), right.width(), right.height(), right.u(), right.v(), texWidth, texHeight, b -> turnPageRight(1)));
+        backButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + back.x(), topPos + back.y(), back.width(), back.height(), back.u(), back.v(), texWidth, texHeight, b -> minecraft.setScreen(lastScreen)));
 
         updateHiddenWidgets();
     }
@@ -61,14 +64,14 @@ public abstract class MultiPageBookScreen extends BookScreen {
         PoseStack poseStack = graphics.pose();
         for(int i = 0; i < texture.pages().size() && leftPage+i < pages.size(); i++) {
             ScreenPage page = pages.get(leftPage + i);
-            Dimensions dim = texture.pages().get(i);
+            PageDetails details = texture.pages().get(i);
 
-            int xShift = leftPos + dim.x();
-            int yShift = topPos + dim.y();
+            int xShift = leftPos + details.x();
+            int yShift = topPos + details.y();
 
             poseStack.pushPose();
             poseStack.translate(xShift, yShift, 0);
-            page.render(graphics, poseStack, dim, mouseX - xShift, mouseY - yShift, partialTick);
+            page.render(graphics, poseStack, details, mouseX - xShift, mouseY - yShift, partialTick);
             poseStack.popPose();
         }
     }

@@ -3,13 +3,14 @@ package net.favouriteless.modopedia.book.page_components;
 import net.favouriteless.modopedia.api.Variable.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.books.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.book.page_widgets.PageImageButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 public class ImagePageComponent extends PageComponent {
@@ -44,24 +45,27 @@ public class ImagePageComponent extends PageComponent {
 
         BookTexture bookTex = context.getBookTexture();
         ResourceLocation tex = bookTex.location();
-        Dimensions left = bookTex.left();
-        Dimensions right = bookTex.right();
+        WidgetDetails left = bookTex.left();
+        WidgetDetails right = bookTex.right();
 
         leftButton = holder.addRenderableWidget(
                 new PageImageButton(tex, x, y + height - left.height(), left.width(), left.height(),
-                        left.x(), left.y(), bookTex.texSize(), bookTex.texSize(), b -> changeImage(-1))
+                        left.u(), left.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(-1))
         );
         rightButton = holder.addRenderableWidget(
                 new PageImageButton(tex, x + width - right.width(), y + height - right.height(), right.width(), right.height(),
-                        right.x(), right.y(), bookTex.texSize(), bookTex.texSize(), b -> changeImage(1))
+                        right.u(), right.v(), bookTex.texWidth(), bookTex.texHeight(), b -> changeImage(1))
         );
 
-        leftButton.active = false;
+        updateWidgetVisibility();
     }
 
     protected void changeImage(int by) {
-        selectedImage += by;
+        selectedImage = Mth.clamp(selectedImage + by, 0, images.length-1);
+        updateWidgetVisibility();
+    }
 
+    protected void updateWidgetVisibility() {
         if(selectedImage <= 0) {
             selectedImage = 0;
             leftButton.active = false;

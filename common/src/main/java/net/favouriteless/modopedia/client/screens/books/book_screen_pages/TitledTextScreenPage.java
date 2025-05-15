@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.Minecraft;
@@ -26,7 +26,7 @@ public class TitledTextScreenPage extends FormattedTextPage {
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, Dimensions dimensions, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, PageDetails dimensions, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, poseStack, dimensions, mouseX, mouseY, partialTick);
         TextColor color = title.getStyle().getColor();
         graphics.drawString(Minecraft.getInstance().font, title, titleX, titleY, color != null ? color.getValue() : 0, false);

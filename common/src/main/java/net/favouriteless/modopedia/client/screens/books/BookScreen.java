@@ -6,7 +6,7 @@ import net.favouriteless.modopedia.api.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Dimensions;
+import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -53,7 +53,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderTransparentBackground(graphics);
         graphics.blit(texture.location(), leftPos, topPos, 0, 0,
-                texture.width(), texture.height(), texture.texSize(), texture.texSize());
+                texture.width(), texture.height(), texture.texWidth(), texture.texHeight());
     }
 
     @Override
@@ -97,7 +97,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int getShortestHeight(int startIndex) {
         int smallest = Integer.MAX_VALUE;
         for(int i = startIndex; i < texture.pages().size(); i++) {
-            Dimensions page = texture.pages().get(i);
+            PageDetails page = texture.pages().get(i);
             if(page.height() < smallest)
                 smallest = page.height();
         }
@@ -111,7 +111,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int getThinnestWidth(int startIndex) {
         int smallest = Integer.MAX_VALUE;
         for(int i = startIndex; i < texture.pages().size(); i++) {
-            Dimensions page = texture.pages().get(i);
+            PageDetails page = texture.pages().get(i);
             if(page.height() < smallest)
                 smallest = page.height();
         }
