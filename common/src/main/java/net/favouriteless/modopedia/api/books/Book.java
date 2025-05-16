@@ -45,11 +45,6 @@ public interface Book {
     ResourceLocation getItemModelLocation();
 
     /**
-     * @return The language code this book defaults to when attempting to find entries and categories. en_us by default.
-     */
-    String getDefaultLanguage();
-
-    /**
      * @return The default font for all formatted text in this book.
      */
     ResourceLocation getFont();
@@ -68,11 +63,6 @@ public interface Book {
      * @return The default line width for formatted text in this book.
      */
     int getLineWidth();
-
-    /**
-     * @return The display type for categories in this book. Defaults to modopedia:list, other option is modopedia:grid.
-     */
-    ResourceLocation getCategoryListType();
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;

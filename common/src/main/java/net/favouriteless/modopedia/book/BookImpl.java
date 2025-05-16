@@ -20,29 +20,25 @@ public class BookImpl implements Book {
     private final String rawLandingText;
     private final ResourceLocation texture;
     private final ResourceLocation itemModel;
-    private final String defaultLang;
 
     private final ResourceLocation font;
     private final int textColour;
     private final int headerColour;
     private final int lineWidth;
-    private final ResourceLocation categoryListType;
 
     public BookImpl(String title, String subtitle, ResourceLocation type, String rawLandingText,
-                    ResourceLocation texture, ResourceLocation itemModel, String defaultLang, ResourceLocation font,
-                    int textColour, int headerColour, int lineWidth, ResourceLocation categoryListType) {
+                    ResourceLocation texture, ResourceLocation itemModel, ResourceLocation font, int textColour,
+                    int headerColour, int lineWidth) {
         this.type = type;
         this.title = title;
         this.subtitle = subtitle;
         this.rawLandingText = rawLandingText;
         this.texture = texture;
         this.itemModel = itemModel;
-        this.defaultLang = defaultLang;
         this.font = font;
         this.textColour = textColour;
         this.headerColour = headerColour;
         this.lineWidth = lineWidth;
-        this.categoryListType = categoryListType;
     }
 
     @Override
@@ -78,11 +74,6 @@ public class BookImpl implements Book {
     }
 
     @Override
-    public String getDefaultLanguage() {
-        return defaultLang;
-    }
-
-    @Override
     public ResourceLocation getFont() {
         return font;
     }
@@ -102,11 +93,6 @@ public class BookImpl implements Book {
         return lineWidth;
     }
 
-    @Override
-    public ResourceLocation getCategoryListType() {
-        return categoryListType;
-    }
-
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
     public static final Codec<Book> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -116,16 +102,14 @@ public class BookImpl implements Book {
             Codec.STRING.optionalFieldOf("landing_text").forGetter(b -> Optional.ofNullable(b.getRawLandingText())),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
-            Codec.STRING.optionalFieldOf("default_language", "en_us").forGetter(Book::getDefaultLanguage),
             ResourceLocation.CODEC.optionalFieldOf("font", Modopedia.id("default")).forGetter(Book::getFont),
             Codec.STRING.optionalFieldOf("text_colour", "000000").forGetter(b -> Integer.toHexString(b.getTextColour())),
             Codec.STRING.optionalFieldOf("header_colour", "000000").forGetter(b -> Integer.toHexString(b.getHeaderColour())),
-            Codec.INT.optionalFieldOf("line_width", 100).forGetter(Book::getLineWidth),
-            ResourceLocation.CODEC.optionalFieldOf("category_list_type", Modopedia.id("list")).forGetter(Book::getCategoryListType)
-    ).apply(instance, (title, subtitle, type, landingText, texture, model, lang, font, textColour, headerColour, lineWidth, categoryListType) ->
+            Codec.INT.optionalFieldOf("line_width", 100).forGetter(Book::getLineWidth)
+    ).apply(instance, (title, subtitle, type, landingText, texture, model, font, textColour, headerColour, lineWidth) ->
             new BookImpl(title, subtitle.orElse(null), type, landingText.orElse(null), texture,
-                    model, lang, font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
-                    lineWidth, categoryListType))
+                    model, font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
+                    lineWidth))
     );
 
     public static final StreamCodec<ByteBuf, Book> STREAM_CODEC = new StreamCodec<>() { // StreamCodec.composite overloads were too small :(
@@ -139,12 +123,10 @@ public class BookImpl implements Book {
                     ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ResourceLocation.STREAM_CODEC.decode(buf),
-                    ByteBufCodecs.STRING_UTF8.decode(buf),
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
-                    ByteBufCodecs.INT.decode(buf),
-                    ResourceLocation.STREAM_CODEC.decode(buf)
+                    ByteBufCodecs.INT.decode(buf)
             );
         }
 
@@ -156,14 +138,11 @@ public class BookImpl implements Book {
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getRawLandingText()));
             ResourceLocation.STREAM_CODEC.encode(buf, book.getTexture());
             ResourceLocation.STREAM_CODEC.encode(buf, book.getItemModelLocation());
-            ByteBufCodecs.STRING_UTF8.encode(buf, book.getDefaultLanguage());
             ResourceLocation.STREAM_CODEC.encode(buf, book.getFont());
             ByteBufCodecs.INT.encode(buf, book.getTextColour());
             ByteBufCodecs.INT.encode(buf, book.getHeaderColour());
             ByteBufCodecs.INT.encode(buf, book.getLineWidth());
-            ResourceLocation.STREAM_CODEC.encode(buf, book.getCategoryListType());
         }
-
     };
 
 }

@@ -1,10 +1,9 @@
 package net.favouriteless.modopedia.api;
 
-import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookType;
 import net.favouriteless.modopedia.client.BookTypesImpl;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 public interface BookTypes {
 
@@ -17,6 +16,6 @@ public interface BookTypes {
      */
     void register(ResourceLocation id, BookType factory);
 
-    Screen openLandingScreen(ResourceLocation id, Book book);
+    @Nullable BookType getType(ResourceLocation id);
 
 }

@@ -29,7 +29,7 @@ public class HeaderPageComponent extends PageComponent {
 
         header = Component.literal(lookup.get("text").asString()).withStyle(style);
         centered = lookup.getOrDefault("centered", true).asBoolean();
-        colour = Integer.parseInt(lookup.getOrDefault("colour", 0).asString(), 16);
+        colour = Integer.parseInt(lookup.getOrDefault("colour", book.getHeaderColour()).asString(), 16);
         centerX = book.getLineWidth() / 2;
     }
 

@@ -6,15 +6,23 @@ import net.favouriteless.modopedia.api.books.BookType;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.client.screens.books.CategoryScreen;
-import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
 import net.favouriteless.modopedia.client.screens.books.EntryScreen;
 import net.minecraft.client.gui.screens.Screen;
 
-public class ClassicBookType implements BookType {
+public class PamphletBookType implements BookType {
 
     @Override
     public Screen openLandingScreen(Book book, LocalisedBookContent content) {
-        return new ClassicLandingScreen(book, content);
+        Category cat = null;
+        for(String id : content.getCategoryIds()) {
+            Category c = content.getCategory(id);
+            if(c.getDisplayOnFrontPage()) {
+                cat = c;
+                break;
+            }
+        }
+
+        return cat != null ? new CategoryScreen(book, content, cat) : null;
     }
 
     @Override

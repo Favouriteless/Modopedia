@@ -1,13 +1,11 @@
 package net.favouriteless.modopedia.client;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.BookTypes;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookType;
 import net.favouriteless.modopedia.client.book_types.ClassicBookType;
-import net.minecraft.client.gui.screens.Screen;
+import net.favouriteless.modopedia.client.book_types.PageBookType;
+import net.favouriteless.modopedia.client.book_types.PamphletBookType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -21,6 +19,8 @@ public class BookTypesImpl implements BookTypes {
 
     private BookTypesImpl() {
         register(Modopedia.id("classic"), new ClassicBookType());
+        register(Modopedia.id("pamphlet"), new PamphletBookType());
+        register(Modopedia.id("page"), new PageBookType());
     }
 
     @Override
@@ -32,16 +32,8 @@ public class BookTypesImpl implements BookTypes {
     }
 
     @Override
-    public Screen openLandingScreen(ResourceLocation id, Book book) {
-        BookType factory = factories.get(book.getType());
-        if(factory == null)
-            return null;
-
-        BookContent content = BookContentManager.get().getContent(id);
-        if(content == null)
-            return null;
-
-        return factory.openLandingScreen(book, content);
+    public BookType getType(ResourceLocation id) {
+        return factories.get(id);
     }
 
 }
