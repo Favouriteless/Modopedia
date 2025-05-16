@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public interface BookType {
 
     /**
-     * @return The "Landing Screen" of a book of this type. The first page viewed when a book is opene for the first
+     * @return The "Landing Screen" of a book of this type. The first page viewed when a book is opened for the first
      * time. It acts as the "home page" of a book.
      */
     @Nullable Screen openLandingScreen(Book book, String langCode, LocalisedBookContent content);
@@ -23,7 +23,7 @@ public interface BookType {
     @Nullable Screen openCategoryScreen(Book book, String langCode, LocalisedBookContent content, String category);
 
     /**
-     * @return An "entry" screen for a given category location. Traditionally this just renders each of the pages with
+     * @return An "entry" screen for a given entry location. Traditionally this just renders each of the pages with
      * the components on them.
      */
     @Nullable Screen openEntryScreen(Book book, String langCode, LocalisedBookContent content, String entry);
