@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.client;
 
 import net.favouriteless.modopedia.api.BookContentManager;
 import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.BookScreenCache;
 import net.favouriteless.modopedia.api.BookTypes;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
@@ -35,7 +36,9 @@ public class ModopediaClient {
         if(localContent == null)
             return;
 
-        Screen screen = type.openLandingScreen(book, localContent);
+        Screen screen = BookScreenCache.get().getLastScreen(id, lang);
+        if(screen == null)
+            screen = type.openLandingScreen(book, lang, localContent);
 
         if(screen != null)
             Minecraft.getInstance().setScreen(screen);

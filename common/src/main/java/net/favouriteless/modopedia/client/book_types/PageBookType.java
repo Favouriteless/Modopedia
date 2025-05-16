@@ -10,21 +10,21 @@ import net.minecraft.client.gui.screens.Screen;
 public class PageBookType implements BookType {
 
     @Override
-    public Screen openLandingScreen(Book book, LocalisedBookContent content) {
+    public Screen openLandingScreen(Book book, String langCode, LocalisedBookContent content) {
         Entry entry = getFirstEntry(content);
-        return entry != null ? new EntryScreen(book, content, entry) : null;
+        return entry != null ? new EntryScreen(book, langCode, content, entry) : null;
     }
 
     @Override
-    public Screen openCategoryScreen(Book book, LocalisedBookContent content, String category) {
+    public Screen openCategoryScreen(Book book, String langCode, LocalisedBookContent content, String category) {
         Entry entry = getFirstEntry(content);
-        return entry != null ? new EntryScreen(book, content, entry) : null;
+        return entry != null ? new EntryScreen(book, langCode, content, entry) : null;
     }
 
     @Override
-    public Screen openEntryScreen(Book book, LocalisedBookContent content, String entry) {
+    public Screen openEntryScreen(Book book, String langCode, LocalisedBookContent content, String entry) {
         Entry e = getFirstEntry(content);
-        return e != null ? new EntryScreen(book, content, e) : null;
+        return e != null ? new EntryScreen(book, langCode, content, e) : null;
     }
 
     public Entry getFirstEntry(LocalisedBookContent content) {

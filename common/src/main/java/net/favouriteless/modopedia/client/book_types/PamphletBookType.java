@@ -12,7 +12,7 @@ import net.minecraft.client.gui.screens.Screen;
 public class PamphletBookType implements BookType {
 
     @Override
-    public Screen openLandingScreen(Book book, LocalisedBookContent content) {
+    public Screen openLandingScreen(Book book, String langCode, LocalisedBookContent content) {
         Category cat = null;
         for(String id : content.getCategoryIds()) {
             Category c = content.getCategory(id);
@@ -22,19 +22,19 @@ public class PamphletBookType implements BookType {
             }
         }
 
-        return cat != null ? new CategoryScreen(book, content, cat) : null;
+        return cat != null ? new CategoryScreen(book, langCode, content, cat) : null;
     }
 
     @Override
-    public Screen openCategoryScreen(Book book, LocalisedBookContent content, String category) {
+    public Screen openCategoryScreen(Book book, String langCode, LocalisedBookContent content, String category) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, content, cat) : null;
+        return cat != null ? new CategoryScreen(book, langCode, content, cat) : null;
     }
 
     @Override
-    public Screen openEntryScreen(Book book, LocalisedBookContent content, String entry) {
+    public Screen openEntryScreen(Book book, String langCode, LocalisedBookContent content, String entry) {
         Entry ent = content.getEntry(entry);
-        return ent != null ? new EntryScreen(book, content, ent) : null;
+        return ent != null ? new EntryScreen(book, langCode, content, ent) : null;
     }
 
 }

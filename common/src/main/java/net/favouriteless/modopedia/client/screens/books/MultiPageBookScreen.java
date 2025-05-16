@@ -26,8 +26,8 @@ public abstract class MultiPageBookScreen extends BookScreen {
     private HoverableImageButton rightButton;
     private HoverableImageButton backButton;
 
-    public MultiPageBookScreen(Book book, LocalisedBookContent content, BookScreen lastScreen, Component title) {
-        super(book, content, lastScreen, title);
+    public MultiPageBookScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen, Component title) {
+        super(book, langCode, content, lastScreen, title);
     }
 
     protected abstract void initPages(final Consumer<ScreenPage> pageConsumer);

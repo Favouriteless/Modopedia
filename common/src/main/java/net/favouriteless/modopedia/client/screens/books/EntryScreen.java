@@ -22,13 +22,13 @@ public class EntryScreen extends MultiPageBookScreen {
     protected boolean isDragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreen(Book book, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
-        super(book, content, lastScreen, Component.literal(entry.getTitle()));
+    public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
+        super(book, langCode, content, lastScreen, Component.literal(entry.getTitle()));
         this.entry = entry;
     }
 
-    public EntryScreen(Book book, LocalisedBookContent content, Entry entry) {
-        this(book, content, entry, null);
+    public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry) {
+        this(book, langCode, content, entry, null);
     }
 
     @Override

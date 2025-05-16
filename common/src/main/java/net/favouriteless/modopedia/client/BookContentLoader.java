@@ -50,6 +50,7 @@ public class BookContentLoader {
     public static void reloadAll() {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
+        ((BookScreenCacheImpl)BookScreenCache.get()).clear();
 
         if(mc.level != null)
             reloadTemplates(manager)
@@ -60,6 +61,7 @@ public class BookContentLoader {
     public static void reload(ResourceLocation id) {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
+        ((BookScreenCacheImpl)BookScreenCache.get()).remove(id);
 
         if(mc.level != null)
             reloadTemplates(manager)

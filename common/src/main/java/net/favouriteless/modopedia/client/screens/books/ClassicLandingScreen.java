@@ -23,13 +23,13 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
 
     protected final Component subtitle;
 
-    public ClassicLandingScreen(Book book, LocalisedBookContent content, BookScreen lastScreen) {
-        super(book, content, lastScreen, Component.translatable(book.getTitle()));
+    public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
+        super(book, langCode, content, lastScreen, Component.translatable(book.getTitle()));
         this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()) : null;
     }
 
-    public ClassicLandingScreen(Book book, LocalisedBookContent content) {
-        this(book, content, null);
+    public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content) {
+        this(book, langCode, content, null);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
             ItemTextButton.createItemTextButtons(categories.subList(startIndex, Math.min(startIndex+onPage, categories.size())), details.x(), yStart, (id, x, y) -> {
                 Category cat = content.getCategory(id);
                 return new ItemTextButton(leftPos + x, topPos + y, details.width(), cat.getIcon(),
-                        Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, content, cat, this)));
+                        Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, langCode, content, cat, this)));
             }).forEach(page::addWidget);
 
             pageConsumer.accept(page);

@@ -24,13 +24,13 @@ public class CategoryScreen extends MultiPageBookScreen {
 
     protected final Category category;
 
-    public CategoryScreen(Book book, LocalisedBookContent content, Category category, BookScreen lastScreen) {
-        super(book, content, lastScreen, Component.literal(category.getTitle()));
+    public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category, BookScreen lastScreen) {
+        super(book, langCode, content, lastScreen, Component.literal(category.getTitle()));
         this.category = category;
     }
 
-    public CategoryScreen(Book book, LocalisedBookContent content, Category category) {
-        this(book, content, category, null);
+    public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category) {
+        this(book, langCode, content, category, null);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class CategoryScreen extends MultiPageBookScreen {
                 ItemTextButton.createItemTextButtons(categories.subList(startIndex, endIndex), details.x(), yStart, (id, x, y) -> {
                     Category cat = content.getCategory(id);
                     return new ItemTextButton(leftPos + x, topPos + y, details.width(), cat.getIcon(),
-                            Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, content, cat, this)));
+                            Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, langCode, content, cat, this)));
                 }).forEach(page::addWidget);
 
                 yStart += diff * spacing;
@@ -93,7 +93,7 @@ public class CategoryScreen extends MultiPageBookScreen {
                 ItemTextButton.createItemTextButtons(entries.subList(entriesStart, Math.min(entriesStart+onPage, entries.size())), details.x(), yStart, (id, x, y) -> {
                     Entry entry = content.getEntry(id);
                     return new ItemTextButton(leftPos + x, topPos + y, details.width(), entry.getIcon(),
-                            Component.literal(entry.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new EntryScreen(book, content, entry, this)));
+                            Component.literal(entry.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new EntryScreen(book, langCode, content, entry, this)));
                 }).forEach(page::addWidget);
                 startIndex += onPage;
             }
