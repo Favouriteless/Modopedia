@@ -76,7 +76,7 @@ public class BookContentLoader {
             CompletableFuture
                     .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
                     .thenApply(map -> parseBookResources(map, book, level))
-                    .thenAcceptAsync(content -> BookContentManager.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
+                    .thenAcceptAsync(content -> BookContentRegistry.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
                     .thenRunAsync(() -> Modopedia.LOG.info("Reloaded book: {}", id), Minecraft.getInstance());
         }
     }

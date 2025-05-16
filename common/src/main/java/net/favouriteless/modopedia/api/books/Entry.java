@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -25,5 +26,10 @@ public interface Entry {
      * opened.
      */
     List<Page> getPages();
+
+    /**
+     * @return The item IDs "assigned" to this entry. For the ponder feature.
+     */
+    List<ResourceLocation> getAssignedItems();
     
 }

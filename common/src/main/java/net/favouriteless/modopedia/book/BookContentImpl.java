@@ -18,25 +18,7 @@ public class BookContentImpl implements BookContent {
     }
 
     @Override
-    public @Nullable Entry getEntry(String id, String language) {
-        LocalisedBookContent localised = content.get(language);
-        if(localised == null)
-            return null;
-
-        return localised.getEntry(id);
-    }
-
-    @Override
-    public @Nullable Category getCategory(String id, String language) {
-        LocalisedBookContent localised = content.get(language);
-        if(localised == null)
-            return null;
-
-        return localised.getCategory(id);
-    }
-
-    @Override
-    public @Nullable LocalisedBookContent getLocalisedContent(String language) {
+    public @Nullable LocalisedBookContent getContent(String language) {
         if(content.containsKey(language))
             return content.get(language);
         else if(content.containsKey("en_us"))
@@ -46,8 +28,13 @@ public class BookContentImpl implements BookContent {
     }
 
     @Override
-    public Collection<LocalisedBookContent> getLocalisedContents() {
+    public Collection<LocalisedBookContent> getAllContents() {
         return content.values();
+    }
+
+    @Override
+    public Collection<String> getLanguages() {
+        return content.keySet();
     }
 
     public record LocalisedBookContentImpl(Map<String, Category> categories,
@@ -75,6 +62,16 @@ public class BookContentImpl implements BookContent {
         @Override
         public boolean hasEntry(String id) {
             return entries.containsKey(id);
+        }
+
+        @Override
+        public Collection<Entry> getEntries() {
+            return entries.values();
+        }
+
+        @Override
+        public Collection<Category> getCategories() {
+            return categories.values();
         }
 
         @Override

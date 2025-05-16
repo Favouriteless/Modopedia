@@ -1,16 +1,16 @@
 package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.client.BookContentManagerImpl;
+import net.favouriteless.modopedia.client.BookContentRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 
 /**
  * BookContentManager maps all existing {@link BookContent}s to their book ID. Will only be populated client side.
  */
-public interface BookContentManager {
+public interface BookContentRegistry {
 
-    static BookContentManager get() {
-        return BookContentManagerImpl.INSTANCE;
+    static BookContentRegistry get() {
+        return BookContentRegistryImpl.INSTANCE;
     }
 
     /**

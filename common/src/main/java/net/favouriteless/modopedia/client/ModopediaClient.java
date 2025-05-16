@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.client;
 
-import net.favouriteless.modopedia.api.BookContentManager;
+import net.favouriteless.modopedia.api.BookContentRegistry;
 import net.favouriteless.modopedia.api.BookRegistry;
 import net.favouriteless.modopedia.api.BookScreenCache;
-import net.favouriteless.modopedia.api.BookTypes;
+import net.favouriteless.modopedia.api.BookTypeRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
@@ -23,16 +23,16 @@ public class ModopediaClient {
         if(book == null)
             return;
 
-        BookType type = BookTypes.get().getType(book.getType());
+        BookType type = BookTypeRegistry.get().getType(book.getType());
         if(type == null)
             return;
 
-        BookContent content = BookContentManager.get().getContent(id);
+        BookContent content = BookContentRegistry.get().getContent(id);
         if(content == null)
             return;
 
         String lang = Minecraft.getInstance().options.languageCode;
-        LocalisedBookContent localContent = content.getLocalisedContent(lang);
+        LocalisedBookContent localContent = content.getContent(lang);
         if(localContent == null)
             return;
 
