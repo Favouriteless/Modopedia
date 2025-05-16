@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
@@ -34,7 +34,7 @@ public class EntryScreen extends MultiPageBookScreen {
     @Override
     protected void initPages(Consumer<ScreenPage> pageConsumer) {
         for(Page page : entry.getPages()) {
-            PageDetails details = texture.pages().get(children.size() % texture.pages().size());
+            Rectangle details = texture.pages().get(children.size() % texture.pages().size());
             EntryScreenPage screenPage = new EntryScreenPage(this, details, page);
             children.add(screenPage);
             pageConsumer.accept(screenPage);

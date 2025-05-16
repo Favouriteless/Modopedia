@@ -17,8 +17,6 @@ public class HeaderPageComponent extends PageComponent {
     protected boolean centered;
     protected int colour;
 
-    protected int centerX;
-
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
@@ -30,13 +28,12 @@ public class HeaderPageComponent extends PageComponent {
         header = Component.literal(lookup.get("text").asString()).withStyle(style);
         centered = lookup.getOrDefault("centered", true).asBoolean();
         colour = Integer.parseInt(lookup.getOrDefault("colour", book.getHeaderColour()).asString(), 16);
-        centerX = book.getLineWidth() / 2;
     }
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         Font font = Minecraft.getInstance().font;
-        graphics.drawString(font, header, centered ? centerX - font.width(header) / 2 : x, y, colour, false);
+        graphics.drawString(font, header, centered ? context.getBook().getLineWidth() / 2 - font.width(header) / 2 : x, y, colour, false);
     }
 
 }

@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
@@ -45,9 +45,9 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
         );
 
         int titleX = texture.pages().getFirst().width()/2 - mc.font.width(title)/2;
-        int landingTextY = mc.font.lineHeight + 2;
+        int textY = minecraft.font.lineHeight + texture.separator().height() + 3;
 
-        pageConsumer.accept(new TitledTextScreenPage(this, title, titleX, 0, landingText, 0, landingTextY));
+        pageConsumer.accept(new TitledTextScreenPage(this, title, titleX, 0, landingText, 0, textY));
 
         if(content == null)
             return;
@@ -65,13 +65,13 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
         int startIndex = 0;
         while(startIndex < categories.size()) {
             int pageCount = getPageCount();
-            PageDetails details = texture.pages().get(pageCount % texture.pages().size());
+            Rectangle details = texture.pages().get(pageCount % texture.pages().size());
 
             ScreenPage page;
             int yStart = details.y();
 
             if(pageCount == 1) {
-                yStart += minecraft.font.lineHeight + 2;
+                yStart += textY;
                 page = new TitledScreenPage(this, header, details.width()/2 - minecraft.font.width(header)/2, 0);
             }
             else {

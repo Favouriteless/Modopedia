@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.client.screens.books;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;
@@ -64,7 +64,7 @@ public abstract class MultiPageBookScreen extends BookScreen {
         PoseStack poseStack = graphics.pose();
         for(int i = 0; i < texture.pages().size() && leftPage+i < pages.size(); i++) {
             ScreenPage page = pages.get(leftPage + i);
-            PageDetails details = texture.pages().get(i);
+            Rectangle details = texture.pages().get(i);
 
             int xShift = leftPos + details.x();
             int yShift = topPos + details.y();

@@ -5,10 +5,7 @@ import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.book.page_components.HeaderPageComponent;
-import net.favouriteless.modopedia.book.page_components.ImagePageComponent;
-import net.favouriteless.modopedia.book.page_components.TextPageComponent;
-import net.favouriteless.modopedia.book.page_components.TooltipPageComponent;
+import net.favouriteless.modopedia.book.page_components.*;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
@@ -24,6 +21,7 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("image"), ImagePageComponent::new);
         register(Modopedia.id("tooltip"), TooltipPageComponent::new);
         register(Modopedia.id("header"), HeaderPageComponent::new);
+        register(Modopedia.id("separator"), SeparatorPageComponent::new);
     }
 
     @Override

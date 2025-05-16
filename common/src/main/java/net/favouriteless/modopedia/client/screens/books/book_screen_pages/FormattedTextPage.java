@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +22,7 @@ public class FormattedTextPage extends ScreenPage {
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, PageDetails dimensions, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick) {
         for(TextChunk chunk : landingText) {
             chunk.render(graphics, textX, textY, mouseX, mouseY);
         }

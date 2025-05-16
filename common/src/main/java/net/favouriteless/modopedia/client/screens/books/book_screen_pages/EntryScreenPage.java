@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.*;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, PageEventListener {
 
-    protected final PageDetails details;
+    protected final Rectangle details;
 
     protected final List<PageRenderable> renderables = new ArrayList<>();
     protected final List<PageEventListener> widgets = new ArrayList<>();
@@ -20,7 +20,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     protected boolean dragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreenPage(BookScreen parent, PageDetails details, Page page) {
+    public EntryScreenPage(BookScreen parent, Rectangle details, Page page) {
         super(parent);
         this.details = details;
         for(PageComponent component : page.getComponents()) {
@@ -30,7 +30,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, PageDetails details, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle details, int mouseX, int mouseY, float partialTick) {
         for(PageRenderable renderable : renderables) {
             if(renderable.shouldRender())
                 renderable.render(graphics, parent, mouseX, mouseY, partialTick);

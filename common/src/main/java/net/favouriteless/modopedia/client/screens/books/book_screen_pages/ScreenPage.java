@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.favouriteless.modopedia.api.books.BookTexture.PageDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,12 +28,12 @@ public abstract class ScreenPage {
      *
      * @param graphics {@link GuiGraphics} belonging to the parent {@link Screen}
      * @param poseStack {@link PoseStack} belonging to graphics
-     * @param dimensions {@link PageDetails} object for where this page is placed on it's texture
+     * @param dimensions {@link Rectangle} object for where this page is placed on it's texture
      * @param mouseX X position of the mouse relative to this page
      * @param mouseY Y position of the mouse relative to this page
      * @param partialTick
      */
-    public abstract void render(GuiGraphics graphics, PoseStack poseStack, PageDetails dimensions, int mouseX, int mouseY, float partialTick);
+    public abstract void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick);
 
     public void hideWidgets() {
         for(AbstractWidget widget : widgets) {
