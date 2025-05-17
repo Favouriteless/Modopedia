@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
@@ -7,9 +8,9 @@ import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.BlankScreenPage;
+import net.favouriteless.modopedia.client.screens.books.book_screen_pages.LandingScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledScreenPage;
-import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
@@ -24,8 +25,8 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
     protected final Component subtitle;
 
     public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
-        super(book, langCode, content, lastScreen, Component.translatable(book.getTitle()));
-        this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()) : null;
+        super(book, langCode, content, lastScreen, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(0xEFE732)));
+        this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()).withStyle(Style.EMPTY.withColor(0xEFE732).withFont(Modopedia.id("default"))) : null;
     }
 
     public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content) {
@@ -44,10 +45,7 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
                 Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())
         );
 
-        int titleX = texture.pages().getFirst().width()/2 - mc.font.width(title)/2;
-        int textY = minecraft.font.lineHeight + texture.separator().height() + 3;
-
-        pageConsumer.accept(new TitledTextScreenPage(this, title, titleX, 0, landingText, 0, textY));
+        pageConsumer.accept(new LandingScreenPage(this, title, subtitle, 37, 7, 10, landingText, 0, 0));
 
         if(content == null)
             return;
@@ -71,7 +69,7 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
             int yStart = details.y();
 
             if(pageCount == 1) {
-                yStart += textY;
+                yStart += minecraft.font.lineHeight + texture.separator().height() + 3;
                 page = new TitledScreenPage(this, header, details.width()/2 - minecraft.font.width(header)/2, 0);
             }
             else {

@@ -1,6 +1,6 @@
 {
-  "title": "Test Category",
-  "subtitle": "Test Subtitle",
+  "title": "Features",
+  "icon": { "id": "minecraft:music_disc_blocks" },
   "landing_text": "This is a test description for a category.",
   "entries": [
     "test_entry",

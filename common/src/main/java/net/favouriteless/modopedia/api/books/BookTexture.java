@@ -11,7 +11,8 @@ import java.util.List;
  * forcing the texture to line up with where Modopedia expects the pages to be!
  */
 public record BookTexture(ResourceLocation location, int width, int height, int texWidth, int texHeight, List<Rectangle> pages,
-                          WidgetDetails left, WidgetDetails right, WidgetDetails back, WidgetDetails refresh, Rectangle separator) {
+                          WidgetDetails titleBacker, WidgetDetails left, WidgetDetails right, WidgetDetails back,
+                          WidgetDetails refresh, Rectangle separator) {
 
     public static final Codec<BookTexture> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         ResourceLocation.CODEC.fieldOf("texture").forGetter(t -> t.location),
@@ -20,6 +21,7 @@ public record BookTexture(ResourceLocation location, int width, int height, int 
         Codec.INT.fieldOf("tex_width").forGetter(t -> t.texWidth),
         Codec.INT.fieldOf("tex_height").forGetter(t -> t.texHeight),
         Rectangle.CODEC.listOf(1, Integer.MAX_VALUE).fieldOf("pages").forGetter(t -> t.pages),
+        WidgetDetails.CODEC.fieldOf("title_backer").forGetter(t -> t.titleBacker),
         WidgetDetails.CODEC.fieldOf("left_button").forGetter(t -> t.left),
         WidgetDetails.CODEC.fieldOf("right_button").forGetter(t -> t.right),
         WidgetDetails.CODEC.fieldOf("back_button").forGetter(t -> t.back),
