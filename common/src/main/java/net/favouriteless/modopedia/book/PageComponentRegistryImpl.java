@@ -22,6 +22,7 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("tooltip"), TooltipPageComponent::new);
         register(Modopedia.id("header"), HeaderPageComponent::new);
         register(Modopedia.id("separator"), SeparatorPageComponent::new);
+        register(Modopedia.id("item"), ItemPageComponent::new);
     }
 
     @Override

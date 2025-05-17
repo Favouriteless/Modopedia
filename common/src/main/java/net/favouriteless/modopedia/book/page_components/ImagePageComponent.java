@@ -30,6 +30,8 @@ public class ImagePageComponent extends PageComponent {
         width = lookup.getOrDefault("width", 100).asInt();
         height = lookup.getOrDefault("height", 100).asInt();
 
+        if(images.length == 0)
+            throw new IllegalArgumentException("Image gallery cannot have zero images in it.");
     }
 
     @Override

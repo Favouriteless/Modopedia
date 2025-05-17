@@ -6,8 +6,19 @@
         {
           "type": "modopedia:text",
           "x": 0,
-          "y": 0,
+          "y": 33,
           "text": "This is a very cool $(c:gold)gold$(/c) entry."
+        },
+        {
+          "type": "modopedia:item",
+          "x": 0,
+          "y": 0,
+          "items": [
+            { "id": "minecraft:diamond", "count": 2 },
+            { "id": "minecraft:emerald", "count": 1 },
+            { "id": "minecraft:iron_ingot", "count": 64 }
+          ],
+          "row_max": 2
         }
       ]
     }
