@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 /**
- * Interface representing an entry in a book.
+ * The lowest level object in a book, containing user generated content. Only exists client-side.
  */
 public interface Entry {
 
@@ -22,8 +22,8 @@ public interface Entry {
     ItemStack getIcon();
     
     /**
-     * @return {@link List} of all pages within this Entry, these are what actually get rendered when the entry is
-     * opened.
+     * @return {@link List} of all {@link Page}s within this Entry, these are what actually get rendered when the entry
+     * is opened.
      */
     List<Page> getPages();
 

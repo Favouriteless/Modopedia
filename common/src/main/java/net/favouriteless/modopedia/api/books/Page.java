@@ -5,7 +5,7 @@ import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import java.util.Collection;
 
 /**
- * Interface representing a single page within an {@link Entry}.
+ * An individual page full of {@link PageComponent}s within an {@link Entry}.
  */
 public interface Page {
 

@@ -1,9 +1,9 @@
-package net.favouriteless.modopedia.book;
+package net.favouriteless.modopedia.book.registries;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.PageComponentRegistry;
+import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.page_components.*;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.book.variables;
 
 import com.google.common.reflect.TypeToken;
-import com.google.gson.JsonParseException;
 import net.favouriteless.modopedia.api.Variable;
 
 import java.util.List;

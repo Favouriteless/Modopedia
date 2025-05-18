@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.client;
+package net.favouriteless.modopedia.book;
 
 import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
@@ -10,12 +10,15 @@ import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.book.*;
+import net.favouriteless.modopedia.api.registries.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
 import net.favouriteless.modopedia.book.page_components.TemplatePageComponent;
+import net.favouriteless.modopedia.book.registries.BookTextureRegistryImpl;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
 import net.favouriteless.modopedia.book.variables.VariableLookup;
+import net.favouriteless.modopedia.client.ScreenCacheImpl;
+import net.favouriteless.modopedia.client.TemplateRegistryImpl;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.FileToIdConverter;
@@ -50,7 +53,7 @@ public class BookContentLoader {
     public static void reloadAll() {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
-        ((BookScreenCacheImpl)BookScreenCache.get()).clear();
+        ((ScreenCacheImpl) ScreenCache.get()).clear();
 
         if(mc.level != null)
             reloadTemplates(manager)
@@ -61,7 +64,7 @@ public class BookContentLoader {
     public static void reload(ResourceLocation id) {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
-        ((BookScreenCacheImpl)BookScreenCache.get()).remove(id);
+        ((ScreenCacheImpl) ScreenCache.get()).remove(id);
 
         if(mc.level != null)
             reloadTemplates(manager)
@@ -210,7 +213,7 @@ public class BookContentLoader {
         }
         else if(json.has("template")) {
             ResourceLocation id = ResourceLocation.parse(json.get("template").getAsString());
-            Template template = TemplateRegistry.getTemplate(id);
+            Template template = TemplateRegistry.get().getTemplate(id);
             if(template == null)
                 throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered template", id));
             component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum));
@@ -256,10 +259,10 @@ public class BookContentLoader {
     }
 
     private static void loadTemplates(Map<ResourceLocation, JsonElement> jsonMap) {
-        TemplateRegistry.clear();
+        TemplateRegistryImpl.INSTANCE.clear();
         jsonMap.forEach((location, element) -> {
             try {
-                TemplateRegistry.createTemplate(location, element.getAsJsonObject());
+                TemplateRegistry.get().registerTemplate(location, element.getAsJsonObject());
             }
             catch (JsonParseException e) {
                 Modopedia.LOG.error("Could not load template {}: {}", location, e);
@@ -282,7 +285,7 @@ public class BookContentLoader {
     }
 
     private static void loadBookTextures(Map<ResourceLocation, JsonElement> jsonMap) {
-        BookTextureRegistry.get().clear();
+        BookTextureRegistryImpl.INSTANCE.clear();
         jsonMap.forEach((location, element) -> BookTexture.CODEC.decode(JsonOps.INSTANCE, element)
                 .ifSuccess(p -> BookTextureRegistry.get().register(location, p.getFirst()))
                 .ifError(e -> Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.message()))

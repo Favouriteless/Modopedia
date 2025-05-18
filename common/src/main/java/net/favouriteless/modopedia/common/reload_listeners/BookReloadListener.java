@@ -5,8 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.common.BookRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -22,7 +23,7 @@ public class BookReloadListener extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager manager, ProfilerFiller profiler) {
-        BookRegistry.get().clear();
+        BookRegistryImpl.INSTANCE.clear();
 
         jsonMap.forEach((id, jsonElement) -> {
             try {

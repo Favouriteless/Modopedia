@@ -1,16 +1,14 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.api.registries;
 
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.book.PageComponentRegistryImpl;
+import net.favouriteless.modopedia.book.registries.PageComponentRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
 /**
- * <p>
- *     PageComponentRegistry maps {@link PageComponent} IDs to their Suppliers.
- * </p>
+ * Maps {@link PageComponent} IDs to their Suppliers.
  */
 public interface PageComponentRegistry {
 

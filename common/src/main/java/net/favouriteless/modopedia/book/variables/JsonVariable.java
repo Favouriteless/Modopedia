@@ -97,8 +97,7 @@ public class JsonVariable implements Variable {
         if(!internal.isJsonArray())
             throw new JsonParseException("Could not decode JsonVariable: Cannot convert non-array variable to a stream");
 
-        return StreamSupport.stream(internal.getAsJsonArray().spliterator(), false)
-                .map(JsonVariable::of);
+        return StreamSupport.stream(internal.getAsJsonArray().spliterator(), false).map(JsonVariable::of);
     }
 
     public static <T> void registerCodec(Class<T> clazz, Codec<T> codec) {

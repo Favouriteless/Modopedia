@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.common.network.packets.client;
 
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

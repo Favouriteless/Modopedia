@@ -1,27 +1,40 @@
 package net.favouriteless.modopedia.api;
 
 import com.google.common.reflect.TypeToken;
+import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.ObjectVariable;
+import net.favouriteless.modopedia.book.variables.RemoteVariable;
 
-import java.util.Collection;
-import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * Represents a variable within a template or {@link PageComponent}. You should never be directly creating these, use
- * {@link Variable#of(Object)} instead.
+ * Represents a variable within a template or {@link PageComponent}. Has several types:
+ * <ul>
+ *     <li>{@link JsonVariable} a variable wrapping a {@link JsonElement}.</li>
+ *     <li>{@link ObjectVariable} a variable wrapping an {@link Object}.</li>
+ *     <li>{@link RemoteVariable} a variable wrapping a key from its parent {@link Lookup}.</li>
+ * </ul>
  */
 public interface Variable {
 
     /**
-     * @return The value of this Variable, decoded as T. This could be from a Codec ({@link JsonVariable}) or just a
-     * cast ({@link ObjectVariable}).
+     * Wraps any {@link Object} in a variable.
+     */
+    static Variable of(Object object) {
+        return ObjectVariable.of(object);
+    }
+
+    /**
+     * @return The value of this Variable as T. May need to register a codec for JsonVariables to decode.
      */
     <T> T as(TypeToken<T> token);
 
+    /**
+     * @return The value of this Variable as T. May need to register a codec for JsonVariables to decode.
+     */
     <T> T as(Class<T> clazz);
 
     int asInt();
@@ -37,10 +50,6 @@ public interface Variable {
     String asString();
 
     Stream<Variable> asStream();
-
-    static Variable of(Object object) {
-        return ObjectVariable.of(object);
-    }
 
     /**
      * Register a new {@link Codec} to deserialize types for all JsonVariables.
@@ -61,31 +70,5 @@ public interface Variable {
     static <T> void registerCodec(Class<T> clazz, Codec<T> codec) {
         JsonVariable.registerCodec(clazz, codec);
     }
-
-
-    /**
-     * Lookup wraps a {@link Map} of Variables.
-     */
-    interface Lookup {
-
-        Variable get(String key);
-
-        Variable getOrDefault(String key, Object def);
-
-        boolean has(String key);
-
-        Collection<String> keys();
-
-    }
-
-    /**
-     * Mutable version of {@link Lookup} used for template processors.
-     */
-    interface MutableLookup extends Lookup {
-
-        Variable set(String key, Variable variable);
-
-    }
-
 
 }

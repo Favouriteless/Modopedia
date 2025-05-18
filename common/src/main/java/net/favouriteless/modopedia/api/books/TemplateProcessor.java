@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.api.books;
 
-import net.favouriteless.modopedia.api.Variable.MutableLookup;
+import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.minecraft.world.level.Level;
 

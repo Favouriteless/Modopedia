@@ -1,5 +1,12 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
+import net.minecraft.client.gui.components.AbstractWidget;
+
+/**
+ * An alternative to {@link AbstractWidget} used for widgets instantiated by
+ * {@link PageComponent#initWidgets(PageWidgetHolder, BookRenderContext)}. Differs to a normal widget in that the
+ * {@link BookRenderContext} is passed into render and input handling methods.
+ */
 public abstract class AbstractPageWidget implements PageEventListener, PageRenderable {
 
     protected final int x;
@@ -36,4 +43,5 @@ public abstract class AbstractPageWidget implements PageEventListener, PageRende
     public boolean shouldRender() {
         return active;
     }
+
 }

@@ -1,5 +1,8 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
+/**
+ * Represents an object which holds and manages {@link PageRenderable}s and {@link PageEventListener}s.
+ */
 public interface PageWidgetHolder {
 
     <T extends PageRenderable> T addRenderable(T renderable);

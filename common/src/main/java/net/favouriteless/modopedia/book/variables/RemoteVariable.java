@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.book.variables;
 
 import com.google.common.reflect.TypeToken;
+import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.Variable;
 
 import java.util.stream.Stream;

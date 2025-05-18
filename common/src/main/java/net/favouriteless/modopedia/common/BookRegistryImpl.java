@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.common;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.minecraft.resources.ResourceLocation;
 
@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public class BookRegistryImpl implements BookRegistry {
 
-    public static final BookRegistry INSTANCE = new BookRegistryImpl();
+    public static final BookRegistryImpl INSTANCE = new BookRegistryImpl();
 
     private final BiMap<ResourceLocation, Book> books = HashBiMap.create();
 
@@ -45,7 +45,6 @@ public class BookRegistryImpl implements BookRegistry {
     /**
      * Danger danger don't call this unless you really mean it.
      */
-    @Override
     public void clear() {
         books.clear();
     }

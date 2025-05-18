@@ -1,12 +1,17 @@
 package net.favouriteless.modopedia.api.books;
 
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A BookScreenFactory represents a single "type" of book by providing the methods used to open its GUIs. e.g
- * "modopedia:classic".
+ * <p>
+ *     A BookScreenFactory represents a single "type" of book by providing the methods used to open its Screens.
+ * </p>
+ * <p>
+ *     See {@link ClassicLandingScreen} for an example.
+ * </p>
  */
 public interface BookType {
 

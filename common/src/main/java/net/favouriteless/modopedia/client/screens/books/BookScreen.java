@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookRegistry;
-import net.favouriteless.modopedia.api.BookScreenCache;
-import net.favouriteless.modopedia.api.BookTextureRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.api.ScreenCache;
+import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
@@ -37,7 +37,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         this.content = content;
         this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
         this.lastScreen = lastScreen;
-        BookScreenCache.get().setLastScreen(bookId, langCode, this);
+        ScreenCache.get().setLastScreen(bookId, langCode, this);
     }
 
     @Override

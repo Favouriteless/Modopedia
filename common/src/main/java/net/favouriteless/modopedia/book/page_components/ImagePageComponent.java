@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.book.page_components;
 
-import net.favouriteless.modopedia.api.Variable.Lookup;
+import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;

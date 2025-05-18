@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.book.variables;
 
+import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.Variable.MutableLookup;
 
 import java.util.Collection;
 import java.util.HashMap;

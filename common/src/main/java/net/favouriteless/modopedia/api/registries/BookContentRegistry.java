@@ -1,11 +1,11 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.api.registries;
 
 import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.client.BookContentRegistryImpl;
+import net.favouriteless.modopedia.book.registries.BookContentRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * BookContentManager maps all existing {@link BookContent}s to their book ID. Will only be populated client side.
+ * Maps all existing {@link BookContent}s to their book ID. Will only be populated client-side.
  */
 public interface BookContentRegistry {
 
@@ -24,14 +24,9 @@ public interface BookContentRegistry {
     ResourceLocation getBookId(BookContent content);
 
     /**
-     * Register (or overwrite) the content of a book.
+     * Register (or overwrite) the content of a book. Will also re-register item associations for the book.
      */
     void register(ResourceLocation id, BookContent content);
-
-    /**
-     * Remove all BookContents from the manager.
-     */
-    void clear();
 
     /**
      * Remove the contents of a specific book from the manager.

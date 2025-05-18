@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.client;
+package net.favouriteless.modopedia.book.registries;
 
 import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.minecraft.resources.ResourceLocation;

@@ -1,10 +1,13 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.api.registries;
 
 import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.client.BookTypeRegistryImpl;
+import net.favouriteless.modopedia.book.registries.BookTypeRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Maps {@link BookType}s to their IDs.
+ */
 public interface BookTypeRegistry {
 
     static BookTypeRegistry get() {

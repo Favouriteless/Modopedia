@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Style;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents a stack of styles for rendering text. See {@link PoseStack} for a similar concept.
+ * A stack of styles for rendering text. See {@link PoseStack} for a similar concept.
  */
 public interface StyleStack {
 

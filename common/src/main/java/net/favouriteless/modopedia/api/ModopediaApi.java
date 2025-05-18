@@ -2,7 +2,6 @@ package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.ModopediaApiImpl;
 import net.favouriteless.modopedia.api.books.Entry;
-import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -14,17 +13,7 @@ public interface ModopediaApi {
     }
 
     /**
-     * Register a processor for a template. This should be called during mod initialisation, but anywhere is fine as
-     * long as it's before books start loading.
-     *
-     * @param id The template ID to register a processor for.
-     * @param processor
-     */
-    void registerTemplateProcessor(ResourceLocation id, TemplateProcessor processor);
-
-    /**
-     * Register a new text formatting tag. This should be called during mod initialisation, but anywhere is fine as
-     * long as it's before books start loading.
+     * Register a new text formatting tag. This should be called during mod initialisation.
      */
     void registerTextFormatter(TextFormatter formatter);
 

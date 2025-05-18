@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.api;
+package net.favouriteless.modopedia.api.registries;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.common.BookRegistryImpl;
@@ -9,7 +9,7 @@ import java.util.Collection;
 
 /**
  * <p>
- *     BookRegistry maps book IDs to their {@link Book} objects. This will be populated on both the client and server.
+ *     Maps book IDs to their {@link Book} objects. This will be populated on both the client and server.
  * </p>
  * <p>
  *     Modopedia will repopulate the registry when datapacks reload.
@@ -30,7 +30,7 @@ public interface BookRegistry {
     void register(ResourceLocation id, Book book);
 
     /**
-     * @return Book registered under id, otherwise null if none were found.
+     * @return {@link Book} registered under id, or null if none were found.
      */
     @Nullable Book getBook(ResourceLocation id);
 
@@ -48,10 +48,5 @@ public interface BookRegistry {
      * @return A collection containing all registered book IDs
      */
     Collection<ResourceLocation> getBookIds();
-
-    /**
-     * Removes all registered books. <b>DANGER:</b> do not call unless you really mean it.
-     */
-    void clear();
 
 }

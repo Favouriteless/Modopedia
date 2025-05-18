@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.client.book_types;
+package net.favouriteless.modopedia.book.book_types;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;

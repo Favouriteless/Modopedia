@@ -5,6 +5,9 @@ import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.network.chat.Style;
 
+/**
+ * Provides rendering and input handling context for {@link PageRenderable}s and {@link PageEventListener}s.
+ */
 public interface BookRenderContext {
 
     /**

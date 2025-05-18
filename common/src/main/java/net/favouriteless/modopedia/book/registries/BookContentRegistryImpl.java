@@ -1,8 +1,8 @@
-package net.favouriteless.modopedia.client;
+package net.favouriteless.modopedia.book.registries;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.favouriteless.modopedia.api.BookContentRegistry;
+import net.favouriteless.modopedia.api.registries.BookContentRegistry;
 import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BookContentRegistryImpl implements BookContentRegistry {
 
-    public static final BookContentRegistry INSTANCE = new BookContentRegistryImpl();
+    public static final BookContentRegistryImpl INSTANCE = new BookContentRegistryImpl();
 
     private final BiMap<ResourceLocation, BookContent> bookContents = HashBiMap.create();
 
@@ -41,11 +41,6 @@ public class BookContentRegistryImpl implements BookContentRegistry {
                     ItemAssociationRegistry.register(lang, item, new EntryAssociation(id, entryId, entry));
             }
         }
-    }
-
-    @Override
-    public void clear() {
-        bookContents.clear();
     }
 
     @Override

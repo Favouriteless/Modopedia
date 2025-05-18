@@ -2,25 +2,29 @@ package net.favouriteless.modopedia.api.books;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.favouriteless.modopedia.api.BookRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.book.BookImpl;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Interface representing an entire book-- can be obtained with {@link BookRegistry#getBook(ResourceLocation)}
+ * <p>
+ *     The highest level object of a book, and the only part of it which exists server-side.
+ * </p>
+ * <p>
+ *     Can be obtained via {@link BookRegistry#getBook(ResourceLocation)}.
+ * </p>
  */
 public interface Book {
 
     /**
-     * @return Type of this book (e.g. "modopedia:classic")
+     * @return ID for this book's {@link BookType}.
      */
     ResourceLocation getType();
 
     /**
-     * @return Title of this book-- this will be the item's name and showed at the top of the landing page.
+     * @return Title of this book-- this will be the item's name and rendered at the top of the landing page.
      */
     String getTitle();
 
@@ -30,12 +34,12 @@ public interface Book {
     @Nullable String getSubtitle();
 
     /**
-     * @return The raw, unformatted landing text (containing formatting tags etc.)
+     * @return The raw, unformatted landing text on this book (containing formatting tags etc.)
      */
     @Nullable String getRawLandingText();
 
     /**
-     * @return {@link ResourceLocation} pointing to the default texture used for this book's {@link Screen}.
+     * @return ID for this book's {@link BookTexture}.
      */
     ResourceLocation getTexture();
 

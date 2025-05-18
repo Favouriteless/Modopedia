@@ -28,11 +28,6 @@ public class BookContentImpl implements BookContent {
     }
 
     @Override
-    public Collection<LocalisedBookContent> getAllContents() {
-        return content.values();
-    }
-
-    @Override
     public Collection<String> getLanguages() {
         return content.keySet();
     }
@@ -62,16 +57,6 @@ public class BookContentImpl implements BookContent {
         @Override
         public boolean hasEntry(String id) {
             return entries.containsKey(id);
-        }
-
-        @Override
-        public Collection<Entry> getEntries() {
-            return entries.values();
-        }
-
-        @Override
-        public Collection<Category> getCategories() {
-            return categories.values();
         }
 
         @Override

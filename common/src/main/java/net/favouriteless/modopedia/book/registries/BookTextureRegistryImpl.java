@@ -1,17 +1,16 @@
-package net.favouriteless.modopedia.client;
+package net.favouriteless.modopedia.book.registries;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.BookTextureRegistry;
+import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
 import net.favouriteless.modopedia.api.books.BookTexture;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class BookTextureRegistryImpl implements BookTextureRegistry {
 
-    public static final BookTextureRegistry INSTANCE = new BookTextureRegistryImpl();
+    public static final BookTextureRegistryImpl INSTANCE = new BookTextureRegistryImpl();
 
     private final Map<ResourceLocation, BookTexture> textures = new HashMap<>();
 
@@ -30,7 +29,6 @@ public class BookTextureRegistryImpl implements BookTextureRegistry {
         return textures.get(id);
     }
 
-    @Override
     public void clear() {
         textures.clear();
     }

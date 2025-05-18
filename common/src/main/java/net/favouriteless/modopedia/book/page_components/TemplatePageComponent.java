@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.book.page_components;
 
-import net.favouriteless.modopedia.api.Variable.Lookup;
+import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.registries.TemplateRegistry;
 import net.favouriteless.modopedia.book.PageComponentHolder;
-import net.favouriteless.modopedia.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ public class TemplatePageComponent extends PageComponent {
             if(!passthroughExempt.contains(key))
                 holder.set(key, RemoteVariable.of(key, lookup));
         }
-        TemplateProcessor processor = TemplateRegistry.getProcessor(lookup.get("template").as(ResourceLocation.class)); // Run processor before the components load
+        TemplateProcessor processor = TemplateRegistry.get().getProcessor(lookup.get("template").as(ResourceLocation.class)); // Run processor before the components load
         if(processor != null)
             processor.init(holder, level);
 

@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.client;
 
-import net.favouriteless.modopedia.api.BookContentRegistry;
-import net.favouriteless.modopedia.api.BookRegistry;
-import net.favouriteless.modopedia.api.BookScreenCache;
-import net.favouriteless.modopedia.api.BookTypeRegistry;
+import net.favouriteless.modopedia.api.registries.BookContentRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.api.ScreenCache;
+import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
@@ -36,7 +36,7 @@ public class ModopediaClient {
         if(localContent == null)
             return;
 
-        Screen screen = BookScreenCache.get().getLastScreen(id, lang);
+        Screen screen = ScreenCache.get().getLastScreen(id, lang);
         if(screen == null)
             screen = type.openLandingScreen(book, lang, localContent);
 

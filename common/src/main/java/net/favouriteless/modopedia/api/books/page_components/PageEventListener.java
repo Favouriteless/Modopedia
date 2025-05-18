@@ -1,8 +1,10 @@
 package net.favouriteless.modopedia.api.books.page_components;
 
+import net.minecraft.client.gui.components.events.GuiEventListener;
+
 /**
- * Base interface for {@link PageComponent} widgets-- these differ to regular ones as they get {@link BookRenderContext}
- * passed in!
+ * An alternative to {@link GuiEventListener} which allows the object to have access to the current
+ * {@link BookRenderContext}.
  */
 public interface PageEventListener {
 

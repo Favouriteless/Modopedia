@@ -2,9 +2,9 @@ package net.favouriteless.modopedia.book.text;
 
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
-import net.favouriteless.modopedia.book.text.formatters.*;
+import net.favouriteless.modopedia.book.text.formatters.ColorFormatter;
+import net.favouriteless.modopedia.book.text.formatters.SimpleFormatter;
 import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.ClickEvent.Action;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;

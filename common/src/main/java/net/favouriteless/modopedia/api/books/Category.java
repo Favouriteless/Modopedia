@@ -7,12 +7,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * Interface representing a category or chapter within a book.
+ * Second-highest level object of a book, acts as a way to organise {@link Entry}. Only exists client-side.
  */
 public interface Category {
 
     /**
-     * @return Title of the category-- this will at the top of the landing page.
+     * @return Title of the category-- shown at the top of the landing page.
      */
     String getTitle();
 
