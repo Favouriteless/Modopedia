@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.book.page_components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
@@ -40,15 +41,20 @@ public class TemplatePageComponent extends PageComponent {
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
+        PoseStack poseStack = graphics.pose();
+
+        poseStack.pushPose();
+        poseStack.translate(x, y, 0);
         for(PageComponent component : holder.getComponents()) {
-            component.render(graphics, context, mouseX, mouseY, partialTick);
+            component.render(graphics, context, mouseX - x, mouseY - y, partialTick);
         }
+        poseStack.popPose();
     }
 
     @Override
     public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
         for(PageComponent component : holder.getComponents()) {
-            if(component.mouseClicked(context, mouseX, mouseY, button))
+            if(component.mouseClicked(context, mouseX - x, mouseY - y, button))
                 return true;
         }
         return false;
@@ -57,7 +63,7 @@ public class TemplatePageComponent extends PageComponent {
     @Override
     public boolean mouseReleased(BookRenderContext context, double mouseX, double mouseY, int button) {
         for(PageComponent component : holder.getComponents()) {
-            if(component.mouseReleased(context, mouseX, mouseY, button))
+            if(component.mouseReleased(context, mouseX - x, mouseY - y, button))
                 return true;
         }
         return false;
@@ -66,7 +72,7 @@ public class TemplatePageComponent extends PageComponent {
     @Override
     public boolean mouseDragged(BookRenderContext context, double mouseX, double mouseY, int button, double dragX, double dragY) {
         for(PageComponent component : holder.getComponents()) {
-            if(component.mouseDragged(context, mouseX, mouseY, button, dragX, dragY))
+            if(component.mouseDragged(context, mouseX - x, mouseY - y, button, dragX, dragY))
                 return true;
         }
         return false;
@@ -75,7 +81,7 @@ public class TemplatePageComponent extends PageComponent {
     @Override
     public boolean mouseScrolled(BookRenderContext context, double mouseX, double mouseY, double scrollX, double scrollY) {
         for(PageComponent component : holder.getComponents()) {
-            if(component.mouseScrolled(context, mouseX, mouseY, scrollX, scrollY))
+            if(component.mouseScrolled(context, mouseX - x, mouseY - y, scrollX, scrollY))
                 return true;
         }
         return false;
@@ -111,7 +117,7 @@ public class TemplatePageComponent extends PageComponent {
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
         for(PageComponent component : holder.getComponents()) {
-            if(component.isMouseOver(mouseX, mouseY))
+            if(component.isMouseOver(mouseX - x, mouseY - y))
                 return true;
         }
         return false;
