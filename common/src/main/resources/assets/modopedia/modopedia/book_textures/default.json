@@ -51,12 +51,12 @@
     "v": 183
   },
   "refresh_button": {
-    "x": 0,
-    "y": 0,
-    "width": 16,
-    "height": 16,
+    "x": 26,
+    "y": 159,
+    "width": 15,
+    "height": 14,
     "u": 38,
-    "v": 182
+    "v": 183
   },
   "separator": {
     "x": 0,

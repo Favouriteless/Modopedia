@@ -1,0 +1,29 @@
+{
+  "type": "modopedia:simple",
+  "pattern": [
+    [
+      "     ",
+      "     ",
+      "  G  ",
+      "     ",
+      "     "
+    ],
+    [
+      "     ",
+      " GGG ",
+      " GGG ",
+      " GGG ",
+      "     "
+    ],
+    [
+      "GGGGG",
+      "GGGGG",
+      "GGGGG",
+      "GGGGG",
+      "GGGGG"
+    ]
+  ],
+  "key": {
+    "G": "minecraft:gold_block"
+  }
+}

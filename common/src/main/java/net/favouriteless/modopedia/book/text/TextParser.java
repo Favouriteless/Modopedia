@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.book.text;
 
 import com.mojang.datafixers.util.Pair;
+import net.favouriteless.modopedia.book.registries.TextFormatterRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;

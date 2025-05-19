@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ScreenCacheImpl implements ScreenCache {
 
-    public static final ScreenCache INSTANCE = new ScreenCacheImpl();
+    public static final ScreenCacheImpl INSTANCE = new ScreenCacheImpl();
 
     private final Map<ResourceLocation, Map<String, Screen>> screenCache = new HashMap<>();
 

@@ -3,7 +3,7 @@ package net.favouriteless.modopedia;
 import net.favouriteless.modopedia.api.ModopediaApi;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.favouriteless.modopedia.book.registries.ItemAssociationRegistry;
-import net.favouriteless.modopedia.book.text.TextFormatterRegistry;
+import net.favouriteless.modopedia.book.registries.TextFormatterRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 public class ModopediaApiImpl implements ModopediaApi {

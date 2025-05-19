@@ -1,24 +1,25 @@
-package net.favouriteless.modopedia.book;
+package net.favouriteless.modopedia.book.loading;
 
 import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.*;
+import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Page;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.api.registries.*;
+import net.favouriteless.modopedia.api.registries.BookContentRegistry;
+import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
+import net.favouriteless.modopedia.api.registries.TemplateRegistry;
+import net.favouriteless.modopedia.book.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
 import net.favouriteless.modopedia.book.page_components.TemplatePageComponent;
-import net.favouriteless.modopedia.book.registries.BookTextureRegistryImpl;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
 import net.favouriteless.modopedia.book.variables.VariableLookup;
 import net.favouriteless.modopedia.client.ScreenCacheImpl;
-import net.favouriteless.modopedia.client.TemplateRegistryImpl;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.FileToIdConverter;
@@ -40,36 +41,45 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 /**
- * Responsible for loading the content of all books (categories, entries etc.). Do not attempt to use this on server side.
+ * Responsible for loading the content of all books (categories, entries etc.). Do not attempt to use this server-side.
  */
 public class BookContentLoader {
 
-    private static final Gson gson = new Gson();
-    
-    public static final String BOOK_DIR = "books";
-    public static final String TEMPLATE_DIR = "templates";
-    public static final String BOOK_TEX_DIR = "book_textures";
+    public static final String BOOK_DIR = Modopedia.MOD_ID + "/books";
+    public static final String TEMPLATE_DIR = Modopedia.MOD_ID + "/templates";
+    public static final String BOOK_TEX_DIR = Modopedia.MOD_ID + "/book_textures";
+    public static final String MULTIBLOCK_DIR = Modopedia.MOD_ID + "/multiblocks";
+
+
+    private static final Gson GSON = new Gson();
+    private static final TemplateLoader templateLoader = new TemplateLoader(GSON, TEMPLATE_DIR);
+    private static final BookTextureLoader textureLoader = new BookTextureLoader(GSON, BOOK_TEX_DIR);
+    private static final MultiblockLoader multiblockLoader = new MultiblockLoader(GSON, MULTIBLOCK_DIR);
 
     public static void reloadAll() {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
-        ((ScreenCacheImpl) ScreenCache.get()).clear();
+        ScreenCacheImpl.INSTANCE.clear();
 
+        Modopedia.LOG.info("Started reloading all books");
         if(mc.level != null)
-            reloadTemplates(manager)
-                    .thenRun(() -> reloadBookTextures(manager))
-                    .thenRun(() -> BookRegistry.get().getBookIds().forEach(id -> reloadInternal(id, manager, mc.level)));
+            preReload(manager).thenRun(() -> BookRegistry.get().getBookIds().forEach(id -> reloadInternal(id, manager, mc.level)));
     }
 
     public static void reload(ResourceLocation id) {
         Minecraft mc = Minecraft.getInstance();
         ResourceManager manager = mc.getResourceManager();
-        ((ScreenCacheImpl) ScreenCache.get()).remove(id);
+        ScreenCacheImpl.INSTANCE.remove(id);
 
+        Modopedia.LOG.info("Started reloading book: {}", id);
         if(mc.level != null)
-            reloadTemplates(manager)
-                    .thenRun(() -> reloadBookTextures(manager))
-                    .thenRun(() -> reloadInternal(id, manager, mc.level));
+            preReload(manager).thenRun(() -> reloadInternal(id, manager, mc.level));
+    }
+
+    private static CompletableFuture<Void> preReload(ResourceManager manager) {
+        return multiblockLoader.reload(manager)
+                .thenRun(() -> templateLoader.reload(manager))
+                .thenRun(() -> textureLoader.reload(manager));
     }
 
     private static void reloadInternal(ResourceLocation id, ResourceManager manager, Level level) {
@@ -78,69 +88,56 @@ public class BookContentLoader {
         if(book != null) { // If book is null we don't really want to load the content anyway.
             CompletableFuture
                     .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
-                    .thenApply(map -> parseBookResources(map, book, level))
+                    .thenApplyAsync(map -> parseBookResources(map, book, level))
                     .thenAcceptAsync(content -> BookContentRegistry.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
                     .thenRunAsync(() -> Modopedia.LOG.info("Reloaded book: {}", id), Minecraft.getInstance());
         }
     }
 
-    private static CompletableFuture<Void> reloadTemplates(ResourceManager manager) {
-        return CompletableFuture
-                .supplyAsync(() -> getTemplateResources(manager), Util.backgroundExecutor())
-                .thenAcceptAsync(BookContentLoader::loadTemplates, Minecraft.getInstance());
-    }
-
-    private static CompletableFuture<Void> reloadBookTextures(ResourceManager manager) {
-        return CompletableFuture
-                .supplyAsync(() -> getBookTextureResources(manager), Util.backgroundExecutor())
-                .thenAcceptAsync(BookContentLoader::loadBookTextures, Minecraft.getInstance());
-    }
-
     private static Map<ResourceLocation, JsonElement> getBookResources(ResourceLocation bookId, ResourceManager manager) {
-        FileToIdConverter converter = FileToIdConverter.json(String.format("%s/%s/%s", Modopedia.MOD_ID, BOOK_DIR, bookId.getPath()));
-
         Map<ResourceLocation, JsonElement> out = new HashMap<>();
+
+        FileToIdConverter converter = FileToIdConverter.json(BOOK_DIR + "/" + bookId.getPath());
         for(Entry<ResourceLocation, Resource> entry : converter.listMatchingResources(manager).entrySet()) {
             try (Reader reader = entry.getValue().openAsReader()) {
-                JsonElement json = GsonHelper.fromJson(gson, reader, JsonElement.class);
-                ResourceLocation nonFile = converter.fileToId(entry.getKey());
-                out.put(nonFile, json);
+                out.put(converter.fileToId(entry.getKey()), GsonHelper.fromJson(GSON, reader, JsonElement.class));
             } catch (IllegalArgumentException | IOException | JsonParseException exception) {
-                Modopedia.LOG.error("Error trying to fetch book resources for {}: {}", entry.getKey(), exception);
+                Modopedia.LOG.error("Error trying to fetch resource {}: {}", entry.getKey(), exception);
             }
         }
-
         return out;
     }
 
     private static Map<String, LocalisedBookContent> parseBookResources(Map<ResourceLocation, JsonElement> jsonMap,
                                                                         Book book, Level level) {
         Map<String, LocalisedBookContentImpl> content = new HashMap<>();
-        jsonMap.forEach((location, element) -> {
-            String[] splitPath = location.getPath().split("/", 3);
-            if(splitPath.length < 3)
-                return;
+        for(Entry<ResourceLocation, JsonElement> entry : jsonMap.entrySet()) {
+            String[] splitPath = entry.getKey().getPath().split("/", 3);
+            if(splitPath.length < 3) {
+                Modopedia.LOG.error("Invalid book resource found: {}", entry.getKey());
+                continue;
+            }
             String langCode = splitPath[0];
             String type = splitPath[1];
             String id = splitPath[2];
 
             if(type.equals("categories"))
-                loadCategoryJson(element, book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).categories());
+                loadCategory(entry.getValue(), book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).categories());
             else if(type.equals("entries"))
-                loadEntryJson(element, book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).entries());
-        });
+                loadEntry(entry.getValue(), book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).entries());
+        }
         return new HashMap<>(content); // Convert map to the "immutable" LocalisedBookContent type after loading.
     }
 
-    private static void loadEntryJson(JsonElement json, Book book, String id, Level level,
-                                      Map<String, net.favouriteless.modopedia.api.books.Entry> entries) {
+    private static void loadEntry(JsonElement json, Book book, String id, Level level,
+                                  Map<String, net.favouriteless.modopedia.api.books.Entry> entries) {
         EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                 .ifSuccess(p -> entries.put(id, p.getFirst().addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
                 .ifError(e -> Modopedia.LOG.error("Error loading entry json {}: {}", id, e.message()));
     }
 
-    private static void loadCategoryJson(JsonElement json, Book book, String id, Level level,
-                                         Map<String, Category> categories) {
+    private static void loadCategory(JsonElement json, Book book, String id, Level level,
+                                     Map<String, Category> categories) {
         CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                 .ifSuccess(p -> categories.put(id, p.getFirst().init(book))) // Init just parses the landing text
                 .ifError(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e.message()));
@@ -171,12 +168,13 @@ public class BookContentLoader {
     private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, int pageNum) {
         PageComponentHolder holder = new PageComponentHolder();
 
+        holder.set("page_num", Variable.of(pageNum));
+        holder.set("entry", Variable.of(entry));
+
         json.keySet().forEach(key -> {
             if(!key.equals("components"))
                 holder.set(key, JsonVariable.of(json.get(key)));
         });
-        holder.set("page_num", Variable.of(pageNum));
-        holder.set("entry", Variable.of(entry));
 
         if(!json.has("components"))
             return holder;
@@ -188,6 +186,8 @@ public class BookContentLoader {
         for(JsonElement element : components) {
             if(element.isJsonObject())
                 loadComponent(entry, holder, element.getAsJsonObject(), pageNum);
+            else
+                Modopedia.LOG.error("Invalid component found in {}", entry);
         }
         return holder;
     }
@@ -242,54 +242,6 @@ public class BookContentLoader {
             lookup.set(key, JsonVariable.of(element));
         }
         holder.addComponent(component, lookup);
-    }
-
-    private static Map<ResourceLocation, JsonElement> getTemplateResources(ResourceManager manager) {
-        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.MOD_ID + "/" + TEMPLATE_DIR);
-
-        Map<ResourceLocation, JsonElement> out = new HashMap<>();
-        for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
-            try (Reader reader = entry.getValue().openAsReader()) {
-                out.put(filetoidconverter.fileToId(entry.getKey()), GsonHelper.fromJson(gson, reader, JsonElement.class));
-            } catch (IllegalArgumentException | IOException | JsonParseException exception) {
-                Modopedia.LOG.error("Error trying to fetch template resources for {}: {}", entry.getKey(), exception);
-            }
-        }
-        return out;
-    }
-
-    private static void loadTemplates(Map<ResourceLocation, JsonElement> jsonMap) {
-        TemplateRegistryImpl.INSTANCE.clear();
-        jsonMap.forEach((location, element) -> {
-            try {
-                TemplateRegistry.get().registerTemplate(location, element.getAsJsonObject());
-            }
-            catch (JsonParseException e) {
-                Modopedia.LOG.error("Could not load template {}: {}", location, e);
-            }
-        });
-    }
-
-    private static Map<ResourceLocation, JsonElement> getBookTextureResources(ResourceManager manager) {
-        FileToIdConverter filetoidconverter = FileToIdConverter.json(Modopedia.MOD_ID + "/" + BOOK_TEX_DIR);
-
-        Map<ResourceLocation, JsonElement> out = new HashMap<>();
-        for(Entry<ResourceLocation, Resource> entry : filetoidconverter.listMatchingResources(manager).entrySet()) {
-            try(Reader reader = entry.getValue().openAsReader()) {
-                out.put(filetoidconverter.fileToId(entry.getKey()), GsonHelper.fromJson(gson, reader, JsonElement.class));
-            } catch (IllegalArgumentException | IOException | JsonParseException e) {
-                Modopedia.LOG.error("Error trying to fetch book texture resources for {}: {}", entry.getKey(), e.getMessage());
-            }
-        }
-        return out;
-    }
-
-    private static void loadBookTextures(Map<ResourceLocation, JsonElement> jsonMap) {
-        BookTextureRegistryImpl.INSTANCE.clear();
-        jsonMap.forEach((location, element) -> BookTexture.CODEC.decode(JsonOps.INSTANCE, element)
-                .ifSuccess(p -> BookTextureRegistry.get().register(location, p.getFirst()))
-                .ifError(e -> Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.message()))
-        );
     }
 
 }

@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.book.text;
+package net.favouriteless.modopedia.book.registries;
 
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
