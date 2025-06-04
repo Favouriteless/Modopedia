@@ -24,6 +24,6 @@
     ]
   ],
   "key": {
-    "G": "minecraft:gold_block"
+    "G": { "type": "modopedia:simple", "states": ["minecraft:gold_block"] }
   }
 }

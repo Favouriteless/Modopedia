@@ -50,7 +50,6 @@ public class BookContentLoader {
     public static final String BOOK_TEX_DIR = Modopedia.MOD_ID + "/book_textures";
     public static final String MULTIBLOCK_DIR = Modopedia.MOD_ID + "/multiblocks";
 
-
     private static final Gson GSON = new Gson();
     private static final TemplateLoader templateLoader = new TemplateLoader(GSON, TEMPLATE_DIR);
     private static final BookTextureLoader textureLoader = new BookTextureLoader(GSON, BOOK_TEX_DIR);
@@ -78,8 +77,8 @@ public class BookContentLoader {
 
     private static CompletableFuture<Void> preReload(ResourceManager manager) {
         return multiblockLoader.reload(manager)
-                .thenRun(() -> templateLoader.reload(manager))
-                .thenRun(() -> textureLoader.reload(manager));
+                .thenRun(() -> textureLoader.reload(manager))
+                .thenRun(() -> templateLoader.reload(manager));
     }
 
     private static void reloadInternal(ResourceLocation id, ResourceManager manager, Level level) {
