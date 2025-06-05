@@ -7,6 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
+import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +36,7 @@ public class JsonVariable implements Variable {
         registerCodec(new TypeToken<>() {}, ResourceLocation.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, CompoundTag.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, ItemStack.CODEC.listOf());
+        registerCodec(Multiblock.class, Multiblock.codec());
     }
 
     private JsonVariable(JsonElement internal) {

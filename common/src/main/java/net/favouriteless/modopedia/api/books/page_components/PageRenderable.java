@@ -14,4 +14,6 @@ public interface PageRenderable {
 
     void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick);
 
+    default void tick(BookRenderContext context) {}
+
 }

@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Page;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -56,5 +57,7 @@ public abstract class ScreenPage {
     public Set<AbstractWidget> getWidgets() {
         return widgets;
     }
+
+    public void tick(BookRenderContext context) {}
 
 }

@@ -31,12 +31,13 @@ public class SimpleMultiblock implements Multiblock {
         this.key = key;
 
         int xSize = pattern.getFirst().getFirst().length();
+        int ySize = pattern.size();
         int zSize = pattern.getFirst().size();
 
-        dimensions = new Vec3i(xSize, pattern.size(), zSize);
-        states = new StateMatcher[xSize * pattern.size() * zSize];
+        dimensions = new Vec3i(xSize, ySize, zSize);
+        states = new StateMatcher[xSize * ySize * zSize];
 
-        for(int y = 0; y < pattern.size(); y++) {
+        for(int y = 0; y < ySize; y++) {
             List<String> layer = pattern.get(y);
 
             if(layer.size() != zSize)
@@ -48,8 +49,9 @@ public class SimpleMultiblock implements Multiblock {
                 if(row.length() != xSize)
                     throw new IllegalArgumentException("SimpleMultiblock must have a rectangle footprint.");
 
-                for(int x = 0; x < row.length(); x++)
-                    states[PosUtils.posToIndex(x, y, z, xSize, zSize)] = key.get(row.charAt(x));
+                for(int x = 0; x < row.length(); x++) {
+                    states[PosUtils.posToIndex(x, y, z, xSize, ySize)] = key.get(row.charAt(x));
+                }
             }
         }
     }

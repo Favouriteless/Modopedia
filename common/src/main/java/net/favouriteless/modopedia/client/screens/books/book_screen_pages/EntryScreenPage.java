@@ -38,6 +38,13 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     }
 
     @Override
+    public void tick(BookRenderContext context) {
+        for(PageRenderable renderable : renderables) {
+            renderable.tick(context);
+        }
+    }
+
+    @Override
     public <T extends PageRenderable> T addRenderable(T renderable) {
         renderables.add(renderable);
         return renderable;

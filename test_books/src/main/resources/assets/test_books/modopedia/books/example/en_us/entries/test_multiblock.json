@@ -1,19 +1,11 @@
 {
-  "title": "Test Entry",
+  "title": "Test Multiblock",
   "pages": [
     {
       "components": [
         {
-          "type": "modopedia:text",
-          "x": 0,
-          "y": 33,
-          "text": "This is a very cool $(c:gold)gold$(/c) entry.",
-
-
-          "multiblock": [
-
-          ]
-
+          "type": "modopedia:multiblock",
+          "multiblock_id": "test_books:simple"
         }
       ]
     }

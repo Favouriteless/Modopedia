@@ -1,0 +1,158 @@
+package net.favouriteless.modopedia.book.page_components;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
+import net.favouriteless.modopedia.api.Lookup;
+import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
+import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.multiblock.Multiblock;
+import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
+import net.favouriteless.modopedia.api.registries.MultiblockRegistry;
+import net.favouriteless.modopedia.multiblock.PlacedMultiblock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class MultiblockPageComponent extends PageComponent {
+
+    private static final RandomSource RANDOM = RandomSource.createNewThreadLocalInstance();
+
+    private MultiblockInstance multiblock;
+    private int width;
+    private int height;
+
+    private float offsetX;
+    private float offsetY;
+    private float offsetZ;
+
+    @Override
+    public void init(Book book, Lookup lookup, Level level) {
+        super.init(book, lookup, level);
+
+        Multiblock multiblock = null;
+
+        if(lookup.has("multiblock_id")) {
+            ResourceLocation id = lookup.get("multiblock_id").as(ResourceLocation.class);
+            multiblock = MultiblockRegistry.get().get(id);
+
+            if(multiblock == null)
+                throw new IllegalArgumentException(id + " is not a registered multiblock");
+        }
+
+
+        if(multiblock == null && lookup.has("multiblock"))
+            multiblock = lookup.get("multiblock").as(Multiblock.class);
+
+        if(multiblock == null)
+            throw new NullPointerException("Lookup is missing a \"multiblock_id\" or \"multiblock\" key");
+
+        this.multiblock = new PlacedMultiblock(multiblock, level);
+        width = lookup.getOrDefault("width", 100).asInt();
+        height = lookup.getOrDefault("height", 100).asInt();
+
+        offsetX = lookup.getOrDefault("offsetX", 0.0F).asFloat();
+        offsetY = lookup.getOrDefault("offsetY", 0.0F).asFloat();
+        offsetZ = lookup.getOrDefault("offsetZ", 0.0F).asFloat();
+    }
+
+    @Override
+    public void tick(BookRenderContext context) {
+        multiblock.tick();
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
+        renderMultiblock(graphics, context, Minecraft.getInstance().renderBuffers().bufferSource(), partialTick);
+    }
+
+    protected void renderMultiblock(GuiGraphics graphics, BookRenderContext context, MultiBufferSource bufferSource, float partialTicks) {
+        Minecraft mc = Minecraft.getInstance();
+
+        if(multiblock.getLevel() != mc.level)
+            multiblock = new PlacedMultiblock(multiblock.getMultiblock(), mc.level, multiblock.getPos());
+
+        PoseStack pose = graphics.pose();
+
+        Multiblock m = multiblock.getMultiblock();
+        Vec3i dims = m.getDimensions();
+
+        float scale = -height / Mth.sqrt(dims.getX() * dims.getX() + dims.getY() * dims.getY() + dims.getZ() * dims.getZ());
+
+        pose.pushPose();
+        pose.translate(offsetX, offsetY, offsetZ);
+
+        pose.translate(x + width/2, y + height/2, 100);
+        pose.scale(scale, scale, scale);
+        pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, 0);
+
+        pose.mulPose(Axis.XN.rotationDegrees(30));
+
+        pose.translate(dims.getX() / 2.0F, 0, dims.getX() / 2.0F);
+        pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTicks));
+        pose.translate(-dims.getX() / 2.0F, 0, -dims.getX() / 2.0F);
+
+        renderBlocks(pose, bufferSource, dims, partialTicks);
+        renderBlockEntities(pose, bufferSource, dims, partialTicks);
+
+        pose.popPose();
+    }
+
+    protected void renderBlocks(PoseStack pose, MultiBufferSource bufferSource, Vec3i dims, float partialTicks) {
+        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+        for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
+            pose.pushPose();
+            pose.translate(pos.getX(), pos.getY(), pos.getZ());
+
+            BlockState state = multiblock.getBlockState(pos);
+            if(state.getRenderShape() != RenderShape.INVISIBLE) {
+                VertexConsumer buffer = bufferSource.getBuffer(ItemBlockRenderTypes.getChunkRenderType(state));
+                dispatcher.renderBatched(state, pos, multiblock, pose, buffer, false, RANDOM);
+            }
+
+            pose.popPose();
+        }
+    }
+
+    protected void renderBlockEntities(PoseStack pose, MultiBufferSource bufferSource, Vec3i dims, float partialTicks) {
+        Minecraft mc = Minecraft.getInstance();
+
+        for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
+            BlockEntity be = multiblock.getBlockEntity(pos);
+
+            if(be == null)
+                continue;
+
+            be.setLevel(mc.level);
+
+            pose.pushPose();
+            pose.translate(pos.getX(), pos.getY(), pos.getZ());
+
+            try {
+                BlockEntityRenderer<BlockEntity> renderer = mc.getBlockEntityRenderDispatcher().getRenderer(be);
+                if(renderer != null)
+                    renderer.render(be, partialTicks, pose, bufferSource, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            }
+            catch(Exception ignored) {
+
+            }
+
+            pose.popPose();
+        }
+    }
+
+}

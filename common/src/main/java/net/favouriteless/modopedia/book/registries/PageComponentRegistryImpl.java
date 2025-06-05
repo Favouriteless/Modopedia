@@ -23,8 +23,9 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("header"), HeaderPageComponent::new);
         register(Modopedia.id("separator"), SeparatorPageComponent::new);
         register(Modopedia.id("item"), ItemPageComponent::new);
+        register(Modopedia.id("multiblock"), MultiblockPageComponent::new);
 
-        // TODO: Multiblock, Entity display, Block display?
+        // TODO: Entity display, Block display?
         // TODO: Frames for items and images.
     }
 

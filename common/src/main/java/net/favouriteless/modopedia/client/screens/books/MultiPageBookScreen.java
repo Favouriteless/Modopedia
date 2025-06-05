@@ -76,6 +76,14 @@ public abstract class MultiPageBookScreen extends BookScreen {
         }
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        for(ScreenPage page : pages) {
+            page.tick(this);
+        }
+    }
+
     protected void turnPageRight(int by) {
         int pageCount = texture.pages().size();
         if(leftPage + pageCount >= pages.size())
