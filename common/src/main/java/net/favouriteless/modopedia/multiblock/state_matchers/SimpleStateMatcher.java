@@ -35,8 +35,8 @@ public class SimpleStateMatcher implements StateMatcher {
     }
 
     @Override
-    public MapCodec<? extends StateMatcher> codec() {
-        return codec();
+    public MapCodec<? extends StateMatcher> typeCodec() {
+        return typeCodec();
     }
 
     public List<BlockState> getStates() {

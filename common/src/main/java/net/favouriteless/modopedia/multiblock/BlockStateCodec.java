@@ -74,7 +74,7 @@ public class BlockStateCodec {
         // No closing bracket
         if (propertiesEnd == -1) return DataResult.error(() -> "Missing closing ']'");
         // Closing bracket is not the last character
-        if (propertiesEnd == string.length() - 1) {
+        if (propertiesEnd != string.length() - 1) {
             return DataResult.error(() -> "No characters allowed after closing ']'");
         }
 

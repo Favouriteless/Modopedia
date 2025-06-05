@@ -20,10 +20,9 @@ public class BookTextureLoader extends JsonResourceLoader {
     @Override
     protected void load(Map<ResourceLocation, JsonElement> jsonMap) {
         BookTextureRegistryImpl.INSTANCE.clear();
-        jsonMap.forEach((location, element) ->
-                BookTexture.CODEC.decode(JsonOps.INSTANCE, element)
-                        .ifSuccess(p -> BookTextureRegistry.get().register(location, p.getFirst()))
-                        .ifError(e -> Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.message()))
+        jsonMap.forEach((location, element) -> BookTexture.CODEC.decode(JsonOps.INSTANCE, element)
+                .ifSuccess(p -> BookTextureRegistry.get().register(location, p.getFirst()))
+                .ifError(e -> Modopedia.LOG.error("Error loading book texture {}: {}", location.toString(), e.message()))
         );
     }
 

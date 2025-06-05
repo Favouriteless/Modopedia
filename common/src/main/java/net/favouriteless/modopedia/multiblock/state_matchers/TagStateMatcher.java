@@ -40,7 +40,7 @@ public class TagStateMatcher implements StateMatcher {
     }
 
     @Override
-    public MapCodec<? extends StateMatcher> codec() {
+    public MapCodec<? extends StateMatcher> typeCodec() {
         return CODEC;
     }
 

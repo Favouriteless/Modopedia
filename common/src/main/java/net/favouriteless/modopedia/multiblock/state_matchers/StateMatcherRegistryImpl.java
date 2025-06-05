@@ -18,6 +18,19 @@ public class StateMatcherRegistryImpl implements StateMatcherRegistry {
 
     private final BiMap<ResourceLocation, MapCodec<? extends StateMatcher>> codecs = HashBiMap.create();
 
+    private final Codec<MapCodec<? extends StateMatcher>> typeCodec = ResourceLocation.CODEC.flatXmap(
+            r -> {
+                MapCodec<? extends StateMatcher> c = get(r);
+                return c != null ? DataResult.success(c) : DataResult.error(() -> "Unknown type " + r);
+            },
+            c -> {
+                ResourceLocation location = codecs.inverse().get(c);
+                return c != null ? DataResult.success(location) : DataResult.error(() -> "Unknown type " + location);
+            }
+    );
+    private final Codec<StateMatcher> codec = typeCodec.dispatch("type", StateMatcher::typeCodec, Function.identity());
+
+
     private StateMatcherRegistryImpl() {
         register(Modopedia.id("air"), AirStateMatcher.CODEC);
         register(Modopedia.id("simple"), SimpleStateMatcher.CODEC);
@@ -29,7 +42,7 @@ public class StateMatcherRegistryImpl implements StateMatcherRegistry {
     @Override
     public void register(ResourceLocation id, MapCodec<? extends StateMatcher> codec) {
         if(codecs.containsKey(id))
-            Modopedia.LOG.error("Attempted to register duplicate BlockStateMatcher codec: {}", id);
+            Modopedia.LOG.error("Attempted to register duplicate BlockStateMatcher type: {}", id);
         else
             codecs.put(id, codec);
     }
@@ -39,17 +52,9 @@ public class StateMatcherRegistryImpl implements StateMatcherRegistry {
         return codecs.get(id);
     }
 
-    private static final Codec<MapCodec<? extends StateMatcher>> TYPE_CODEC = ResourceLocation.CODEC.flatXmap(
-            r -> {
-                MapCodec<? extends StateMatcher> c = StateMatcherRegistry.get().get(r);
-                return c != null ? DataResult.success(c) : DataResult.error(() -> "Unknown type " + r);
-            },
-            c -> {
-                ResourceLocation location = INSTANCE.codecs.inverse().get(c);
-                return c != null ? DataResult.success(location) : DataResult.error(() -> "Unknown type " + location);
-            }
-    );
-
-    public static final Codec<StateMatcher> CODEC = TYPE_CODEC.dispatch("type", StateMatcher::codec, Function.identity());
+    @Override
+    public Codec<StateMatcher> codec() {
+        return codec;
+    }
 
 }

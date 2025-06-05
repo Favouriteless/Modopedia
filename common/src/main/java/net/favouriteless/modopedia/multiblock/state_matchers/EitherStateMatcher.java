@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.multiblock.state_matchers;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.favouriteless.modopedia.api.registries.StateMatcherRegistry;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ import java.util.List;
 public class EitherStateMatcher implements StateMatcher {
 
     public static final MapCodec<EitherStateMatcher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            StateMatcherRegistry.codec().fieldOf("a").forGetter(m -> m.a),
-            StateMatcherRegistry.codec().fieldOf("b").forGetter(m -> m.b)
+            Codec.lazyInitialized(StateMatcher::codec).fieldOf("a").forGetter(m -> m.a),
+            Codec.lazyInitialized(StateMatcher::codec).fieldOf("b").forGetter(m -> m.b)
     ).apply(instance, EitherStateMatcher::new));
 
     private final StateMatcher a;
@@ -41,7 +41,7 @@ public class EitherStateMatcher implements StateMatcher {
     }
 
     @Override
-    public MapCodec<? extends StateMatcher> codec() {
+    public MapCodec<? extends StateMatcher> typeCodec() {
         return CODEC;
     }
 

@@ -1,48 +1,72 @@
 package net.favouriteless.modopedia.multiblock;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.api.multiblock.Multiblock;
+import net.favouriteless.modopedia.api.multiblock.StateMatcher;
+import net.favouriteless.modopedia.util.MExtraCodecs;
 import net.favouriteless.modopedia.util.PosUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
 import java.util.Map;
 
-public class SimpleMultiblock extends AbstractMultiblock {
+public class SimpleMultiblock implements Multiblock {
 
-    protected BlockState[] states;
-    protected Vec3i dimensions;
+    public static final MapCodec<SimpleMultiblock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.STRING.listOf().listOf().fieldOf("pattern").forGetter(m -> m.pattern),
+            Codec.unboundedMap(MExtraCodecs.CHAR, StateMatcher.codec()).fieldOf("key").forGetter(m -> m.key)
+    ).apply(instance, SimpleMultiblock::new));
 
-    public SimpleMultiblock(String[][] pattern, Map<Character, BlockState> key) {
-        int xSize = pattern[0][0].length();
-        int zSize = pattern[0].length;
+    protected final List<List<String>> pattern;
+    protected final Map<Character, StateMatcher> key;
 
-        dimensions = new Vec3i(xSize, pattern.length, zSize);
-        states = new BlockState[xSize * pattern.length * zSize];
+    protected final StateMatcher[] states;
+    protected final Vec3i dimensions;
 
-        for(int y = 0; y < pattern.length; y++) {
-            String[] layer = pattern[y];
+    public SimpleMultiblock(List<List<String>> pattern, Map<Character, StateMatcher> key) {
+        this.pattern = pattern;
+        this.key = key;
 
-            if(layer.length != zSize)
-                throw new IllegalArgumentException("SimpleMultiblocks must have a rectangle footprint.");
+        int xSize = pattern.getFirst().getFirst().length();
+        int zSize = pattern.getFirst().size();
 
-            for(int z = 0; z < layer.length; z++) {
-                String row = layer[z];
+        dimensions = new Vec3i(xSize, pattern.size(), zSize);
+        states = new StateMatcher[xSize * pattern.size() * zSize];
+
+        for(int y = 0; y < pattern.size(); y++) {
+            List<String> layer = pattern.get(y);
+
+            if(layer.size() != zSize)
+                throw new IllegalArgumentException("SimpleMultiblock must have a rectangle footprint.");
+
+            for(int z = 0; z < layer.size(); z++) {
+                String row = layer.get(z);
 
                 if(row.length() != xSize)
-                    throw new IllegalArgumentException("SimpleMultiblocks must have a rectangle footprint.");
+                    throw new IllegalArgumentException("SimpleMultiblock must have a rectangle footprint.");
 
                 for(int x = 0; x < row.length(); x++)
                     states[PosUtils.posToIndex(x, y, z, xSize, zSize)] = key.get(row.charAt(x));
             }
         }
-
-        dimensions = new Vec3i(xSize, pattern.length, zSize);
     }
-
 
     @Override
-    public BlockState getBlockState(BlockPos pos) {
+    public Vec3i getDimensions() {
+        return dimensions;
+    }
+
+    @Override
+    public StateMatcher getStateMatcher(BlockPos pos) {
         return states[PosUtils.posToIndex(pos, dimensions)];
     }
-    
+
+    @Override
+    public MapCodec<? extends Multiblock> typeCodec() {
+        return CODEC;
+    }
+
 }

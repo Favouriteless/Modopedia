@@ -24,7 +24,7 @@ public class AirStateMatcher implements StateMatcher {
     }
 
     @Override
-    public MapCodec<? extends StateMatcher> codec() {
+    public MapCodec<? extends StateMatcher> typeCodec() {
         return CODEC;
     }
 

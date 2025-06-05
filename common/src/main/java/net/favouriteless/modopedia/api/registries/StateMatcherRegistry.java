@@ -16,15 +16,16 @@ public interface StateMatcherRegistry {
         return StateMatcherRegistryImpl.INSTANCE;
     }
 
-    static Codec<StateMatcher> codec() {
-        return StateMatcherRegistryImpl.CODEC;
-    }
-
     /**
      * Register a new {@link StateMatcher} codec. Duplicates not allowed.
      */
     void register(ResourceLocation id, MapCodec<? extends StateMatcher> codec);
 
     @Nullable MapCodec<? extends StateMatcher> get(ResourceLocation id);
+
+    /**
+     * @return The main {@link StateMatcher} dispatch codec.
+     */
+    Codec<StateMatcher> codec();
 
 }

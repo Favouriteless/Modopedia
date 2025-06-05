@@ -30,7 +30,7 @@ public class PageImageButton extends AbstractPageWidget {
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
         int v = context.isHovered(mouseX, mouseY, x, y, width, height) ? this.v + height : this.v;
-        graphics.blit(texture, getX(), getY(), u, v, width, height, texWidth, texHeight);
+        graphics.blit(texture, x, y, u, v, width, height, texWidth, texHeight);
     }
 
     @Override

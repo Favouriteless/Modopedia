@@ -9,10 +9,10 @@ import net.minecraft.client.gui.components.AbstractWidget;
  */
 public abstract class AbstractPageWidget implements PageEventListener, PageRenderable {
 
-    protected final int x;
-    protected final int y;
-    protected final int width;
-    protected final int height;
+    public final int x;
+    public final int y;
+    public final int width;
+    public final int height;
 
     public boolean active = true;
 
@@ -21,22 +21,6 @@ public abstract class AbstractPageWidget implements PageEventListener, PageRende
         this.y = y;
         this.width = width;
         this.height = height;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     @Override
