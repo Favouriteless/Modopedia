@@ -45,7 +45,10 @@
           "y": 0,
           "width": 64,
           "height": 64,
-          "images": ["test_books:textures/gui/test_image_0.png", "test_books:textures/gui/test_image_1.png"]
+          "images": [
+            "test_books:textures/gui/test_image_0.png",
+            "test_books:textures/gui/test_image_1.png"
+          ]
         },
         {
           "type": "modopedia:text",

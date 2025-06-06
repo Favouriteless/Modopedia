@@ -60,7 +60,6 @@ public class BookContentLoader {
         ResourceManager manager = mc.getResourceManager();
         ScreenCacheImpl.INSTANCE.clear();
 
-        Modopedia.LOG.info("Started reloading all books");
         if(mc.level != null)
             preReload(manager).thenRun(() -> BookRegistry.get().getBookIds().forEach(id -> reloadInternal(id, manager, mc.level)));
     }
@@ -70,15 +69,16 @@ public class BookContentLoader {
         ResourceManager manager = mc.getResourceManager();
         ScreenCacheImpl.INSTANCE.remove(id);
 
-        Modopedia.LOG.info("Started reloading book: {}", id);
         if(mc.level != null)
             preReload(manager).thenRun(() -> reloadInternal(id, manager, mc.level));
     }
 
     private static CompletableFuture<Void> preReload(ResourceManager manager) {
-        return multiblockLoader.reload(manager)
-                .thenRun(() -> textureLoader.reload(manager))
-                .thenRun(() -> templateLoader.reload(manager));
+        return CompletableFuture.allOf(
+                CompletableFuture.runAsync(() -> templateLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded templates")), Util.backgroundExecutor()),
+                CompletableFuture.runAsync(() -> textureLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded book textures")), Util.backgroundExecutor()),
+                CompletableFuture.runAsync(() -> multiblockLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded multiblocks")), Util.backgroundExecutor())
+        );
     }
 
     private static void reloadInternal(ResourceLocation id, ResourceManager manager, Level level) {
@@ -88,8 +88,10 @@ public class BookContentLoader {
             CompletableFuture
                     .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
                     .thenApplyAsync(map -> parseBookResources(map, book, level))
-                    .thenAcceptAsync(content -> BookContentRegistry.get().register(id, new BookContentImpl(content)), Minecraft.getInstance())
-                    .thenRunAsync(() -> Modopedia.LOG.info("Reloaded book: {}", id), Minecraft.getInstance());
+                    .thenAcceptAsync(content -> {
+                        BookContentRegistry.get().register(id, new BookContentImpl(content));
+                        Modopedia.LOG.info("Reloaded book: {}", id);
+                    }, Util.backgroundExecutor());
         }
     }
 
