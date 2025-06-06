@@ -11,10 +11,11 @@ import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
 import net.favouriteless.modopedia.api.registries.MultiblockRegistry;
 import net.favouriteless.modopedia.multiblock.PlacedMultiblock;
+import net.favouriteless.modopedia.platform.ClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -119,9 +120,11 @@ public class MultiblockPageComponent extends PageComponent {
             pose.translate(pos.getX(), pos.getY(), pos.getZ());
 
             BlockState state = multiblock.getBlockState(pos);
-            if(state.getRenderShape() != RenderShape.INVISIBLE) {
-                VertexConsumer buffer = bufferSource.getBuffer(ItemBlockRenderTypes.getChunkRenderType(state));
-                dispatcher.renderBatched(state, pos, multiblock, pose, buffer, false, RANDOM);
+            if(state.getRenderShape() == RenderShape.MODEL) {
+                for(RenderType type : ClientServices.PLATFORM.getRenderTypes(multiblock, pos, state)) {
+                    VertexConsumer buffer = bufferSource.getBuffer(type);
+                    dispatcher.renderBatched(state, pos, multiblock, pose, buffer, false, RANDOM);
+                }
             }
 
             pose.popPose();

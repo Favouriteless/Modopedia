@@ -6,7 +6,7 @@ import net.minecraft.world.MenuProvider;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 
-public class NeoPlatformHelper implements IPlatformHelper {
+public class NeoCommonPlatformHelper implements ICommonPlatformHelper {
 
     @Override
     public String getPlatformName() {

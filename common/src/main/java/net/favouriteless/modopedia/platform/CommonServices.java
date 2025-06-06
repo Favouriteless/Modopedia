@@ -3,13 +3,13 @@ package net.favouriteless.modopedia.platform;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.platform.services.ICommonRegistryHelper;
 import net.favouriteless.modopedia.platform.services.INetworkHelper;
-import net.favouriteless.modopedia.platform.services.IPlatformHelper;
+import net.favouriteless.modopedia.platform.services.ICommonPlatformHelper;
 
 import java.util.ServiceLoader;
 
 public class CommonServices {
 
-    public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    public static final ICommonPlatformHelper PLATFORM = load(ICommonPlatformHelper.class);
     public static final ICommonRegistryHelper COMMON_REGISTRY = load(ICommonRegistryHelper.class);
     public static final INetworkHelper NETWORK = load(INetworkHelper.class);
 

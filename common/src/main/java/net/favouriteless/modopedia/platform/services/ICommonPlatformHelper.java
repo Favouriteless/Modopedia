@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public interface IPlatformHelper {
+public interface ICommonPlatformHelper {
 
     String getPlatformName();
 

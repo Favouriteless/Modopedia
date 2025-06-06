@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 
-public class FabricPlatformHelper implements IPlatformHelper {
+public class FabricCommonPlatformHelper implements ICommonPlatformHelper {
 
     @Override
     public String getPlatformName() {
