@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -56,22 +57,22 @@ public class BookContentLoader {
     private static final MultiblockLoader multiblockLoader = new MultiblockLoader(GSON, MULTIBLOCK_DIR);
 
     public static void reloadAll() {
-        Minecraft mc = Minecraft.getInstance();
-        ResourceManager manager = mc.getResourceManager();
         ScreenCacheImpl.INSTANCE.clear();
-
-        if(mc.level != null)
-            preReload(manager).thenRun(() -> BookRegistry.get().getBookIds().forEach(id -> reloadInternal(id, manager, mc.level)));
+        reload((manager, level) -> BookRegistry.get().getBookIds().forEach(id -> reloadBook(id, manager, level)));
     }
 
     public static void reload(ResourceLocation id) {
-        Minecraft mc = Minecraft.getInstance();
-        ResourceManager manager = mc.getResourceManager();
         ScreenCacheImpl.INSTANCE.remove(id);
-
-        if(mc.level != null)
-            preReload(manager).thenRun(() -> reloadInternal(id, manager, mc.level));
+        reload((manager, level) -> reloadBook(id, manager, level));
     }
+
+    private static void reload(BiConsumer<ResourceManager, Level> reloader) {
+        Minecraft mc = Minecraft.getInstance();
+        ResourceManager rm = mc.getResourceManager();
+        if(mc.level != null)
+            preReload(rm).thenRun(() -> reloader.accept(rm, mc.level));
+    }
+
 
     private static CompletableFuture<Void> preReload(ResourceManager manager) {
         return CompletableFuture.allOf(
@@ -81,18 +82,18 @@ public class BookContentLoader {
         );
     }
 
-    private static void reloadInternal(ResourceLocation id, ResourceManager manager, Level level) {
+    private static CompletableFuture<Void> reloadBook(ResourceLocation id, ResourceManager manager, Level level) {
         Book book = BookRegistry.get().getBook(id);
+        if(book == null)
+            return CompletableFuture.completedFuture(null);
 
-        if(book != null) { // If book is null we don't really want to load the content anyway.
-            CompletableFuture
-                    .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
-                    .thenApplyAsync(map -> parseBookResources(map, book, level))
-                    .thenAcceptAsync(content -> {
-                        BookContentRegistry.get().register(id, new BookContentImpl(content));
-                        Modopedia.LOG.info("Reloaded book: {}", id);
-                    }, Util.backgroundExecutor());
-        }
+        return CompletableFuture
+                .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
+                .thenApplyAsync(map -> parseBookResources(map, book, level), Util.backgroundExecutor())
+                .thenAccept(content -> {
+                    BookContentRegistry.get().register(id, new BookContentImpl(content));
+                    Modopedia.LOG.info("Reloaded book: {}", id);
+                });
     }
 
     private static Map<ResourceLocation, JsonElement> getBookResources(ResourceLocation bookId, ResourceManager manager) {
