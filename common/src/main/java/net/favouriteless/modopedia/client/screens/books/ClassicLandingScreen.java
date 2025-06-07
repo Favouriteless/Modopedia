@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Category;
+import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.BlankScreenPage;
@@ -42,7 +43,7 @@ public class ClassicLandingScreen extends MultiPageBookScreen {
             rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
 
         List<TextChunk> landingText = TextParser.parse(rawLandingText, texture.pages().getFirst().width(), mc.font.lineHeight,
-                Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())
+                Justify.LEFT, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())
         );
 
         pageConsumer.accept(new LandingScreenPage(this, title, subtitle, 37, 7, 10, landingText, 0, 0));

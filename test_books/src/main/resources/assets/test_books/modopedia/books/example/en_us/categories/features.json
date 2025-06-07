@@ -3,9 +3,10 @@
   "icon": { "id": "minecraft:music_disc_blocks" },
   "landing_text": "This is a test description for a category.",
   "entries": [
-    "test_entry",
-    "test_entry_templated",
+    "test_entry_text",
     "test_entry_image",
-    "test_header_text"
+    "test_entry_templated",
+    "test_header_text",
+    "test_multiblock"
   ]
 }

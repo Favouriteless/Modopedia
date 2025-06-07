@@ -3,9 +3,7 @@
   "icon": { "id":  "modopedia:book" },
   "landing_text": "This is a test description for a category2.",
   "entries": [
-    "test_entry"
   ],
   "children": [
-    "test_category"
   ]
 }

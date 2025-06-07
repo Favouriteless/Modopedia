@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.Category;
+import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.client.Minecraft;
@@ -76,7 +77,7 @@ public class CategoryImpl implements Category {
 
     public CategoryImpl init(Book book) {
         landingText = TextParser.parse(rawLandingText, book.getLineWidth(), Minecraft.getInstance().font.lineHeight,
-                Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+                Justify.LEFT, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
         return this;
     }
 

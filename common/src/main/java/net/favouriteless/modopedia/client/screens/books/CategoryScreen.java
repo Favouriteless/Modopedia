@@ -6,16 +6,13 @@ import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.api.books.Entry;
 import net.favouriteless.modopedia.book.text.TextChunk;
-import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.BlankScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
 import net.minecraft.client.Minecraft;
-import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -37,13 +34,7 @@ public class CategoryScreen extends MultiPageBookScreen {
     protected void initPages(Consumer<ScreenPage> pageConsumer) {
         Minecraft mc = Minecraft.getInstance();
 
-        String rawLandingText = category.getRawLandingText();
-        if(rawLandingText != null)
-            rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
-
-        List<TextChunk> landingText = TextParser.parse(rawLandingText, texture.pages().getFirst().width(), mc.font.lineHeight,
-                Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour())
-        );
+        List<TextChunk> landingText = category.getLandingText();
 
         int titleX = texture.pages().getFirst().width()/2 - mc.font.width(title)/2;
         int textY = minecraft.font.lineHeight + texture.separator().height() + 3;

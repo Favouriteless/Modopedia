@@ -4,6 +4,7 @@ import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.client.Minecraft;
@@ -23,9 +24,11 @@ public class TextPageComponent extends PageComponent {
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
+        Justify justify = lookup.getOrDefault("justify", Justify.LEFT).as(Justify.class);
+
         width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
         lineHeight = lookup.getOrDefault("line_height", Minecraft.getInstance().font.lineHeight).asInt();
-        textChunks = TextParser.parse(lookup.get("text").asString(), width, lineHeight, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+        textChunks = TextParser.parse(lookup.get("text").asString(), width, lineHeight, justify, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
     }
 
     @Override

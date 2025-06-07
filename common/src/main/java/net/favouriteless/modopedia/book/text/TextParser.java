@@ -3,7 +3,6 @@ package net.favouriteless.modopedia.book.text;
 import com.mojang.datafixers.util.Pair;
 import net.favouriteless.modopedia.book.registries.TextFormatterRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -15,7 +14,7 @@ public class TextParser {
 
     public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
 
-    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Style baseStyle) {
+    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Justify justify, Style baseStyle) {
         if(rawText == null || rawText.isBlank())
             return List.of();
 
@@ -41,36 +40,48 @@ public class TextParser {
             }
         }
 
-        return getChunksFrom(paragraph, lineWidth, lineHeight);
+        return getChunksFrom(paragraph, lineWidth, lineHeight, justify);
     }
 
-    private static List<TextChunk> getChunksFrom(List<Component> sections, int lineWidth, int lineHeight) {
+    private static List<TextChunk> getChunksFrom(List<Component> sections, int maxWidth, int lineHeight, Justify justify) {
         Font font = Minecraft.getInstance().font;
+
+        List<TextChunk> out = new ArrayList<>();
+        List<TextChunk> line = new ArrayList<>();
+
         int x = 0;
-        int line = 0;
+        int y = 0;
 
-        List<TextChunk> chunks = new ArrayList<>();
-        for(Component section : sections) {
-            while(true) {
-                Pair<Component, Component> pair = tryWrapComponent(section, lineWidth-x, lineWidth);
+        for(int i = 0; i < sections.size(); i++) {
+            Component section = sections.get(i);
+            while(section != null) {
+                Pair<Component, Component> pair = tryWrapComponent(section, maxWidth-x, maxWidth);
 
-                if(pair.getFirst() != null && !pair.getFirst().getString().isEmpty()) {
-                    int width = font.width(pair.getFirst()); // First add component to current line-- we know this one is pre-linebreak
-                    chunks.add(new TextChunk(pair.getFirst(), x, line*lineHeight, width, lineHeight));
+                if(pair.getFirst() != null && !pair.getFirst().getString().isEmpty()) { // Add first component to current line
+                    int width = font.width(pair.getFirst());
+                    line.add(new TextChunk(pair.getFirst(), x, y, width, lineHeight));
                     x += width;
                 }
 
-                if(pair.getSecond() == null) // If no linebreak is present we've reached the end of the section.
+                if(i < sections.size()-1 && pair.getSecond() == null) // The last section gets counted as a break regardless
                     break;
-                else {
-                    line++; // If linebreak present, start new line and attempt another wrap.
-                    x = 0;
-                    section = pair.getSecond();
-                }
+
+                // If linebreak present: justify, start new line and re-wrap the section.
+                tryJustify(line, maxWidth, justify);
+                x = 0;
+                y += lineHeight;
+
+                section = pair.getSecond();
+                out.addAll(line);
+                line.clear();
             }
+        }
+
+        for(Component section : sections) {
 
         }
-        return chunks;
+        out.addAll(line); // Ensure final line actually gets added-- there is no break so it normally wouldn't be.
+        return out;
     }
 
     /**
@@ -78,10 +89,9 @@ public class TextParser {
      */
     private static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth) {
         Font font = Minecraft.getInstance().font;
-        StringSplitter splitter = font.getSplitter();
-
         String rawString = text.getString();
-        int lineBreak = splitter.findLineBreak(text.getString(), maxWidth, text.getStyle());
+
+        int lineBreak = font.getSplitter().findLineBreak(text.getString(), maxWidth, text.getStyle());
         if(lineBreak == rawString.length()) // If break is end of section, we don't need to wrap.
             return Pair.of(text, null);
 
@@ -99,6 +109,25 @@ public class TextParser {
                 Component.literal(rawString.substring(0, lineBreak)).withStyle(text.getStyle()),
                 Component.literal(rawString.substring(lineBreak+1)).withStyle(text.getStyle())
         );
+    }
+
+    private static int getWidth(List<TextChunk> chunks) {
+        if(chunks.isEmpty())
+            return 0;
+        if(chunks.size() == 1)
+            return chunks.getFirst().width;
+
+        TextChunk last = chunks.getLast();
+        return (last.x + last.width) - chunks.getFirst().x;
+    }
+
+    private static void tryJustify(List<TextChunk> line, int maxWidth, Justify justify) {
+        if(justify == Justify.LEFT)
+            return; // Chunks are already left-justified by default
+
+        int width = getWidth(line);
+        int offset = justify == Justify.RIGHT ? maxWidth - width : maxWidth/2 - width/2;
+        line.forEach(c -> c.x += offset);
     }
 
 }

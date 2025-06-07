@@ -1,0 +1,16 @@
+{
+  "components": [
+    {
+      "type": "modopedia:multiblock",
+      "multiblock_id": "#multiblock_id",
+      "multiblock": "#multiblock"
+    },
+    {
+      "type": "modopedia:text",
+      "x": 0,
+      "y": 105,
+      "text": "#text",
+      "justify": "center"
+    }
+  ]
+}

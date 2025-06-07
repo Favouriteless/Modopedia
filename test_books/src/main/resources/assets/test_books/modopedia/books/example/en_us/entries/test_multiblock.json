@@ -8,6 +8,15 @@
           "multiblock_id": "test_books:simple"
         }
       ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:multiblock_with_text",
+          "multiblock_id": "test_books:simple",
+          "text": "Testing $(b)description$() justified to the center."
+        }
+      ]
     }
   ]
 }

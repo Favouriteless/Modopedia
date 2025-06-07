@@ -102,7 +102,6 @@ public class MultiblockPageComponent extends PageComponent {
         pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, 0);
 
         pose.mulPose(Axis.XN.rotationDegrees(30));
-
         pose.translate(dims.getX() / 2.0F, 0, dims.getX() / 2.0F);
         pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTicks));
         pose.translate(-dims.getX() / 2.0F, 0, -dims.getX() / 2.0F);
