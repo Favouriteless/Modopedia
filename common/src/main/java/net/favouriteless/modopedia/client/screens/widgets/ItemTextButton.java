@@ -8,10 +8,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class ItemTextButton extends Button {
 
     public static final int SIZE = Minecraft.getInstance().font.lineHeight + 2;
@@ -45,23 +41,6 @@ public class ItemTextButton extends Button {
         poseStack.popPose();
 
         graphics.drawString(Minecraft.getInstance().font, getMessage(), x + height, y+1, 0x000000, false);
-    }
-
-    public static List<ItemTextButton> createItemTextButtons(Collection<String> ids, int x, int y, Factory factory) {
-        int spacing = SIZE + 1;
-
-        List<ItemTextButton> out = new ArrayList<>();
-        for(String id : ids)
-            out.add(factory.create(id, x, y + spacing*out.size()));
-
-        return out;
-    }
-
-    @FunctionalInterface
-    public interface Factory {
-
-        ItemTextButton create(String id, int x, int y);
-
     }
 
 }

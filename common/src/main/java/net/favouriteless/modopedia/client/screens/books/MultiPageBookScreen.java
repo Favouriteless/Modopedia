@@ -1,10 +1,11 @@
 package net.favouriteless.modopedia.client.screens.books;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;
 import net.minecraft.client.gui.GuiGraphics;
@@ -52,7 +53,10 @@ public abstract class MultiPageBookScreen extends BookScreen {
 
         leftButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + left.x(), topPos + left.y(), left.width(), left.height(), left.u(), left.v(), texWidth, texHeight, b -> turnPageLeft(1)));
         rightButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + right.x(), topPos + right.y(), right.width(), right.height(), right.u(), right.v(), texWidth, texHeight, b -> turnPageRight(1)));
-        backButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + back.x(), topPos + back.y(), back.width(), back.height(), back.u(), back.v(), texWidth, texHeight, b -> minecraft.setScreen(lastScreen)));
+        backButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + back.x(), topPos + back.y(), back.width(), back.height(), back.u(), back.v(), texWidth, texHeight, b -> {
+            minecraft.setScreen(lastScreen);
+            ScreenCache.get().setLastScreen(bookId, langCode, lastScreen);
+        }));
 
         updateHiddenWidgets();
     }

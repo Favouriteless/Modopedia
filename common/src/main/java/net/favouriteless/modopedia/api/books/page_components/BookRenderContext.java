@@ -23,7 +23,7 @@ public interface BookRenderContext {
     /**
      * @return Default style for the current book.
      */
-    Style getStyle();
+    Style getDefaultStyle();
 
     /**
      * @return The {@link BookTexture} being used by the current Screen.

@@ -91,7 +91,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     }
 
     @Override
-    public Style getStyle() {
+    public Style getDefaultStyle() {
         return Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
     }
 

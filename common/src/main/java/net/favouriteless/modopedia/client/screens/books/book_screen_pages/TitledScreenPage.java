@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
@@ -12,26 +13,28 @@ import net.minecraft.network.chat.TextColor;
 public class TitledScreenPage extends ScreenPage {
 
     protected final Component title;
-    protected final int titleX;
-    protected final int titleY;
+    protected final Rectangle page;
 
-    public TitledScreenPage(BookScreen parent, Component title, int titleX, int titleY) {
+    public TitledScreenPage(BookScreen parent, Component title, Rectangle page) {
         super(parent);
         this.title = title;
-        this.titleX = titleX;
-        this.titleY = titleY;
+        this.page = page;
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY,
+                       float partialTick) {
+        Font font = Minecraft.getInstance().font;
         TextColor color = title.getStyle().getColor();
-        graphics.drawString(Minecraft.getInstance().font, title, titleX, titleY, color != null ? color.getValue() : 0, false);
+
+        int x = page.width()/2 - font.width(title)/2;
+        graphics.drawString(font, title, x, 0, color != null ? color.getValue() : 0, false);
 
         BookTexture texture = parent.getBookTexture();
         Rectangle separator = texture.separator();
-        int x = parent.getBook().getLineWidth() / 2 - separator.width()/2;
 
-        graphics.blit(texture.location(), x, titleY + 10, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
+        x = page.width() / 2 - separator.width() / 2;
+        graphics.blit(texture.location(), x, 10, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
     }
 
 }
