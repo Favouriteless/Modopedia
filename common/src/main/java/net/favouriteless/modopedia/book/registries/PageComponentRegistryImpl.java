@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.book.registries;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.book.page_components.*;
@@ -24,9 +25,12 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("separator"), SeparatorPageComponent::new);
         register(Modopedia.id("item"), ItemPageComponent::new);
         register(Modopedia.id("multiblock"), MultiblockPageComponent::new);
+        register(Modopedia.id("item_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::itemFrame));
+        register(Modopedia.id("small_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::smallFrame));
+        register(Modopedia.id("large_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::largeFrame));
+        register(Modopedia.id("crafting_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::craftingFrame));
 
         // TODO: Entity display, Block display?
-        // TODO: Frames for items and images.
     }
 
     @Override

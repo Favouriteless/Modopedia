@@ -1,0 +1,15 @@
+{
+  "components": [
+    {
+      "type": "modopedia:image",
+      "width": 50,
+      "height": 50,
+      "images": "#images"
+    },
+    {
+      "type": "modopedia:small_frame",
+      "x": -2,
+      "y": -2
+    }
+  ]
+}

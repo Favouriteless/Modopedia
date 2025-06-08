@@ -12,20 +12,19 @@ import net.minecraft.world.level.Level;
 
 public class ItemPageComponent extends PageComponent {
 
-    protected ItemStack[] items;
+    protected ItemStack[][] items;
     protected int rowMax;
     protected int padding;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
-
-        items = lookup.get("items").as(ItemStack[].class);
+        items = lookup.get("items").asStream().map(v -> v.as(ItemStack[].class)).filter(a -> a.length > 0).toArray(ItemStack[][]::new);
+        if(items.length == 0)
+            throw new IllegalArgumentException("Item gallery cannot have zero items in it.");
         rowMax = lookup.getOrDefault("row_max", Integer.MAX_VALUE).asInt();
         padding = lookup.getOrDefault("padding", 16).asInt();
 
-        if(items.length == 0)
-            throw new IllegalArgumentException("Item gallery cannot have zero items in it.");
     }
 
     @Override
@@ -41,11 +40,14 @@ public class ItemPageComponent extends PageComponent {
             int x = this.x + (i % rowMax) * padding;
             int y = this.y + yOff;
 
-            graphics.renderItem(items[i], x, y);
-            graphics.renderItemDecorations(font, items[i], x, y);
+            ItemStack[] itemArray = items[i];
+            ItemStack stack = itemArray[(context.getTicks() / 20) % itemArray.length];
+
+            graphics.renderItem(stack, x, y);
+            graphics.renderItemDecorations(font, stack, x, y);
 
             if(context.isHovered(mouseX, mouseY, x, y, 16, 16))
-                graphics.renderTooltip(font, items[i], mouseX, mouseY);
+                graphics.renderTooltip(font, stack, mouseX, mouseY);
         }
     }
 

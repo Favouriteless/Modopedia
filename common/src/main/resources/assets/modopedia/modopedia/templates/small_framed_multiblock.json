@@ -1,0 +1,19 @@
+{
+  "components": [
+    {
+      "type": "modopedia:multiblock",
+      "width": 50,
+      "height": 50,
+      "multiblock_id": "#multiblock_id",
+      "multiblock": "#multiblock",
+      "offset_x": "#offset_x",
+      "offset_y": "#offset_y",
+      "offset_z": "#offset_z"
+    },
+    {
+      "type": "modopedia:small_frame",
+      "x": -2,
+      "y": -2
+    }
+  ]
+}

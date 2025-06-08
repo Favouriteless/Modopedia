@@ -7,6 +7,7 @@
     "image_galleries",
     "multiblocks",
     "templates",
-    "headers"
+    "headers",
+    "frames"
   ]
 }

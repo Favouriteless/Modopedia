@@ -66,9 +66,9 @@ public class MultiblockPageComponent extends PageComponent {
         width = lookup.getOrDefault("width", 100).asInt();
         height = lookup.getOrDefault("height", 100).asInt();
 
-        offsetX = lookup.getOrDefault("offsetX", 0.0F).asFloat();
-        offsetY = lookup.getOrDefault("offsetY", 0.0F).asFloat();
-        offsetZ = lookup.getOrDefault("offsetZ", 0.0F).asFloat();
+        offsetX = lookup.getOrDefault("offset_x", 0.0F).asFloat();
+        offsetY = lookup.getOrDefault("offset_y", 0.0F).asFloat();
+        offsetZ = lookup.getOrDefault("offset_z", 0.0F).asFloat();
     }
 
     @Override

@@ -4,11 +4,35 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
+import net.minecraft.core.HolderSet.Named;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
+import java.util.Optional;
 
 public class MExtraCodecs {
+
+    public static Codec<List<ItemStack>> ITEM_LIST = Codec.withAlternative(
+            TagKey.codec(Registries.ITEM).flatXmap(
+                    tag -> {
+                        Optional<Named<Item>> optional = BuiltInRegistries.ITEM.getTag(tag);
+                        return optional.map(holders -> DataResult.success(holders.stream().map(h -> h.value().getDefaultInstance()).toList()))
+                                .orElseGet(() -> DataResult.error(() -> tag + " is not a valid item tag"));
+                    },
+                    list -> {
+                        TagKey<Item> key = TagUtils.findItemTag(list);
+                        return key != null ? DataResult.success(key) : DataResult.error(() -> "");
+                    }
+            ),
+            ItemStack.CODEC.listOf()
+    );
 
     public static final Codec<Character> CHAR = Codec.STRING.comapFlatMap(
             s -> s.length() == 1 ? DataResult.success(s.charAt(0)) : DataResult.error(() -> (s + " is not a valid character")),

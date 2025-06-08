@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "type": "modopedia:multiblock",
+      "template": "modopedia:large_framed_multiblock",
       "multiblock_id": "#multiblock_id",
       "multiblock": "#multiblock"
     },

@@ -81,7 +81,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
     protected static ItemTextButton createCategoryButton(ButtonListScreen screen, String id, int x, int y, int width) {
         Category cat = screen.content.getCategory(id);
         return new ItemTextButton(x, y, width, cat.getIcon(),
-                Component.literal(cat.getTitle()).withStyle(screen.getStyle().withItalic(true)),
+                Component.literal(cat.getTitle()).withStyle(screen.getStyle()),
                 b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.langCode, screen.content, cat, screen))
         );
     }

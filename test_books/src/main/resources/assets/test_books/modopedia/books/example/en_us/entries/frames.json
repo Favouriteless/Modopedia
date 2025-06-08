@@ -1,0 +1,46 @@
+{
+  "title": "Frames",
+  "icon": { "id": "minecraft:player_head" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:framed_item",
+          "items": ["minecraft:small_flowers"]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:small_framed_image",
+          "images": ["test_books:textures/gui/test_image_3.png"]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_image",
+          "images": ["test_books:textures/gui/test_image_3.png"]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:small_framed_multiblock",
+          "multiblock_id": "test_books:simple"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_multiblock",
+          "multiblock_id": "test_books:simple"
+        }
+      ]
+    }
+  ]
+}

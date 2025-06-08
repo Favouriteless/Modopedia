@@ -9,6 +9,7 @@ import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
+import net.favouriteless.modopedia.util.MExtraCodecs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -33,10 +34,11 @@ public class JsonVariable implements Variable {
         registerCodec(ItemStack.class, ItemStack.CODEC);
         registerCodec(ResourceLocation[].class, ResourceLocation.CODEC.listOf().xmap(l -> l.toArray(new ResourceLocation[0]), Arrays::asList));
         registerCodec(CompoundTag[].class, CompoundTag.CODEC.listOf().xmap(l -> l.toArray(new CompoundTag[0]), Arrays::asList));
-        registerCodec(ItemStack[].class, ItemStack.CODEC.listOf().xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList));
+        registerCodec(ItemStack[].class, MExtraCodecs.ITEM_LIST.xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList));
         registerCodec(new TypeToken<>() {}, ResourceLocation.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, CompoundTag.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, ItemStack.CODEC.listOf());
+        registerCodec(new TypeToken<>() {}, MExtraCodecs.ITEM_LIST.listOf());
         registerCodec(Multiblock.class, Multiblock.codec());
         registerCodec(Justify.class, Justify.CODEC);
     }

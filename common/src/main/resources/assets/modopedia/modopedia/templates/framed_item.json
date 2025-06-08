@@ -1,0 +1,13 @@
+{
+  "components": [
+    {
+      "type": "modopedia:item_frame",
+      "x": -2,
+      "y": -2
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#items"
+    }
+  ]
+}
