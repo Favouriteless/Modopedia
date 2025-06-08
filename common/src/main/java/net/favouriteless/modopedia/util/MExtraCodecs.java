@@ -46,7 +46,8 @@ public class MExtraCodecs {
             RECTANGLE.optionalFieldOf("separator", Rectangle.ZERO).forGetter(BookTexture::separator),
             RECTANGLE.optionalFieldOf("item_frame", Rectangle.ZERO).forGetter(BookTexture::itemFrame),
             RECTANGLE.optionalFieldOf("small_frame", Rectangle.ZERO).forGetter(BookTexture::smallFrame),
-            RECTANGLE.optionalFieldOf("large_frame", Rectangle.ZERO).forGetter(BookTexture::largeFrame)
+            RECTANGLE.optionalFieldOf("large_frame", Rectangle.ZERO).forGetter(BookTexture::largeFrame),
+            RECTANGLE.optionalFieldOf("crafting_frame", Rectangle.ZERO).forGetter(BookTexture::craftingFrame)
     ).apply(instance, BookTexture::new));
 
 }

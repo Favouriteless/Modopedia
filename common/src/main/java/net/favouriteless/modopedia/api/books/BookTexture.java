@@ -12,7 +12,7 @@ public record BookTexture(ResourceLocation location, int width, int height, int 
                           List<Rectangle> pages, FixedRectangle titleBacker, // Common elements
                           FixedRectangle left, FixedRectangle right, FixedRectangle back, FixedRectangle refresh,// Navigation buttons
                           Rectangle separator, Rectangle itemFrame, Rectangle smallFrame, // Dynamic elements
-                          Rectangle largeFrame) {
+                          Rectangle largeFrame, Rectangle craftingFrame) {
 
 
     /**
