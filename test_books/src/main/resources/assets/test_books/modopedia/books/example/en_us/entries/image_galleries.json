@@ -1,5 +1,6 @@
 {
-  "title": "Test Image",
+  "title": "Image Galleries",
+  "icon": { "id": "minecraft:painting" },
   "pages": [
     {
       "components": [

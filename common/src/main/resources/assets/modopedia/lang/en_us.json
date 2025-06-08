@@ -1,6 +1,7 @@
 {
-  "screen.modopedia.chapters": "Chapters",
   "screen.modopedia.error": "ERROR",
   "tooltip.modopedia.book_id": "Book ID: %1$s",
-  "item.modopedia.book": "Book (No ID)"
+  "item.modopedia.book": "Book (No ID)",
+  "screen.modopedia.categories": "Chapters",
+  "screen.modopedia.entries": "Entries"
 }

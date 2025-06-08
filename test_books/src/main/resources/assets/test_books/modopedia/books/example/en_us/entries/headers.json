@@ -1,0 +1,14 @@
+{
+  "title": "Headers",
+  "icon": { "id": "minecraft:player_head" },
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:header",
+          "text": "The Header"
+        }
+      ]
+    }
+  ]
+}

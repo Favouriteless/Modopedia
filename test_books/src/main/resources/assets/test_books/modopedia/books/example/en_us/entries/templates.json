@@ -1,5 +1,6 @@
 {
-  "title": "Templated Test Entry",
+  "title": "Templates",
+  "icon": { "id": "minecraft:blaze_powder" },
   "pages": [
     {
       "components": [

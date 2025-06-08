@@ -20,12 +20,14 @@ import java.util.function.Supplier;
 
 public abstract class ButtonListScreen extends MultiPageBookScreen {
 
+    private final Component listTitle;
     private final List<Supplier<List<String>>> idSuppliers;
     private final List<Factory> buttonFactories;
 
-    public ButtonListScreen(Book book, String langCode, LocalisedBookContent content, Component title, BookScreen lastScreen,
+    public ButtonListScreen(Book book, String langCode, LocalisedBookContent content, Component title, BookScreen lastScreen, Component listTitle,
                             List<Supplier<List<String>>> idSuppliers, List<Factory> buttonFactories) {
         super(book, langCode, content, lastScreen, title);
+        this.listTitle = listTitle;
         this.idSuppliers = idSuppliers;
         this.buttonFactories = buttonFactories;
 
@@ -50,7 +52,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         final int spacing = ItemTextButton.SIZE+1;
 
         Rectangle rectangle = texture.pages().get(getPageCount() % texture.pages().size());
-        ScreenPage page = new TitledScreenPage(this, Component.translatable("screen.modopedia.chapters"), rectangle);
+        ScreenPage page = new TitledScreenPage(this, listTitle, rectangle);
         int y = rectangle.v() + minecraft.font.lineHeight + texture.separator().height() + 3;
 
         for(int i = 0; i < idLists.size(); i++) {
@@ -79,7 +81,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
     protected static ItemTextButton createCategoryButton(ButtonListScreen screen, String id, int x, int y, int width) {
         Category cat = screen.content.getCategory(id);
         return new ItemTextButton(x, y, width, cat.getIcon(),
-                Component.literal(cat.getTitle()).withStyle(screen.getDefaultStyle()),
+                Component.literal(cat.getTitle()).withStyle(screen.getStyle().withItalic(true)),
                 b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.langCode, screen.content, cat, screen))
         );
     }
@@ -87,7 +89,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
     protected static ItemTextButton createEntryButton(ButtonListScreen screen, String id, int x, int y, int width) {
         Entry entry = screen.content.getEntry(id);
         return new ItemTextButton(x, y, width, entry.getIcon(),
-                Component.literal(entry.getTitle()).withStyle(screen.getDefaultStyle()),
+                Component.literal(entry.getTitle()).withStyle(screen.getStyle()),
                 b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.langCode, screen.content, entry, screen))
         );
     }

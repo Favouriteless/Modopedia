@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.screens.books;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
@@ -15,27 +16,31 @@ import net.minecraft.network.chat.Style;
 
 import java.util.List;
 
-public class ClassicLandingScreen extends ButtonListScreen {
+public class PamphletLandingScreen extends ButtonListScreen {
 
     public static final int TITLE_COLOUR = 0xEFE732;
 
+    protected final Category category;
     protected final Component subtitle;
 
-    public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
+    public PamphletLandingScreen(Book book, String langCode, LocalisedBookContent content, Category category, BookScreen lastScreen) {
         super(book, langCode, content, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR)), lastScreen,
-                Component.translatable("screen.modopedia.categories").withStyle(Style.EMPTY.withColor(book.getHeaderColour())),
+                Component.translatable("screen.modopedia.entries").withStyle(Style.EMPTY.withColor(book.getHeaderColour())),
                 List.of(
-                        () -> content.getCategoryIds().stream().filter(c -> content.hasCategory(c) && content.getCategory(c).getDisplayOnFrontPage()).toList()
+                        () -> category.getChildren().stream().filter(content::hasCategory).toList(),
+                        () -> category.getEntries().stream().filter(content::hasEntry).toList()
                 ),
                 List.of(
-                        ClassicLandingScreen::createCategoryButton
+                        CategoryScreen::createCategoryButton,
+                        CategoryScreen::createEntryButton
                 )
         );
+        this.category = category;
         this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR).withFont(Modopedia.id("default"))) : null;
     }
 
-    public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content) {
-        this(book, langCode, content, null);
+    public PamphletLandingScreen(Book book, String langCode, LocalisedBookContent content, Category category) {
+        this(book, langCode, content, category, null);
     }
 
     @Override

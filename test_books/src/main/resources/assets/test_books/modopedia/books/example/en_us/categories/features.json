@@ -1,12 +1,12 @@
 {
   "title": "Features",
   "icon": { "id": "minecraft:music_disc_blocks" },
-  "landing_text": "This is a test description for a category.",
+  "landing_text": "$(b)$(c:#B8A349)Modopedia$() provides a variety of features to build your $(b)$(c:green)guidebooks$() with. Check them out!",
   "entries": [
-    "test_entry_text",
-    "test_entry_image",
-    "test_entry_templated",
-    "test_header_text",
-    "test_multiblock"
+    "text_boxes",
+    "image_galleries",
+    "multiblocks",
+    "templates",
+    "headers"
   ]
 }

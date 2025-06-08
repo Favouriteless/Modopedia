@@ -1,5 +1,6 @@
 {
-  "title": "Test Text",
+  "title": "Text Boxes",
+  "icon": { "id": "minecraft:writable_book" },
   "pages": [
     {
       "components": [

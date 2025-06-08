@@ -1,0 +1,24 @@
+{
+  "title": "Special Page",
+  "icon": { "id": "minecraft:diamond" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:text_with_header",
+          "header": "Modopedia",
+          "text": "Welcome to $(b)$(c:#B8A349)Modopedia$()! The best way to make high quality in-game $(b)$(c:green)guidebooks$() and $(b)$(c:red)documentation$()."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:multiblock_with_text",
+          "multiblock_id": "test_books:simple",
+          "text": "This is a $(c:blue)multiblock$() page, it displays this cool pyramid thingy."
+        }
+      ]
+    }
+  ]
+}
