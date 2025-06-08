@@ -6,7 +6,7 @@ import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
@@ -58,7 +58,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         if(minecraft.player == null || !minecraft.player.isCreative())
             return;
 
-        WidgetDetails w = texture.refresh();
+        FixedRectangle w = texture.refresh();
         addRenderableWidget(new HoverableImageButton(texture.location(), leftPos + w.x(), topPos + w.y(), w.width(),
                 w.height(), w.u(), w.v(), texture.texWidth(), texture.texHeight(), b -> reloadBook()));
     }

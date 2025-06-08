@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.BookTexture;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.Minecraft;
@@ -34,13 +34,13 @@ public class LandingScreenPage extends FormattedTextPage {
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle rectangle, int mouseX, int mouseY, float partialTick) {
         Font font = Minecraft.getInstance().font;
         BookTexture texture = parent.getBookTexture();
-        WidgetDetails backer = texture.titleBacker();
+        FixedRectangle backer = texture.titleBacker();
 
-        int backerX = backer.x() - dimensions.x();
-        int backerY = backer.y() - dimensions.y();
+        int backerX = backer.x() - rectangle.u();
+        int backerY = backer.y() - rectangle.v();
         graphics.blit(texture.location(), backerX, backerY, backer.u(), backer.v(), backer.width(), backer.height(), texture.texWidth(), texture.texHeight());
 
 
@@ -56,9 +56,9 @@ public class LandingScreenPage extends FormattedTextPage {
         graphics.drawString(font, subtitle, subtitleX, subtitleY, color != null ? color.getValue() : 0, false);
 
         poseStack.pushPose();
-        poseStack.translate(0, (backer.y() + backer.height()) - dimensions.y(), 0);
+        poseStack.translate(0, (backer.y() + backer.height()) - rectangle.v(), 0);
 
-        super.render(graphics, poseStack, dimensions, mouseX, mouseY, partialTick);
+        super.render(graphics, poseStack, rectangle, mouseX, mouseY, partialTick);
 
         poseStack.popPose();
 

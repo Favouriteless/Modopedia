@@ -31,7 +31,7 @@ public class TitledScreenPage extends ScreenPage {
         Rectangle separator = texture.separator();
         int x = parent.getBook().getLineWidth() / 2 - separator.width()/2;
 
-        graphics.blit(texture.location(), x, titleY + 10, separator.x(), separator.y(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
+        graphics.blit(texture.location(), x, titleY + 10, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
     }
 
 }

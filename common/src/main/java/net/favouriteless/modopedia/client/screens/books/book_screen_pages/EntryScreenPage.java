@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, PageEventListener {
 
-    protected final Rectangle details;
+    protected final Rectangle rectangle;
 
     protected final List<PageRenderable> renderables = new ArrayList<>();
     protected final List<PageEventListener> widgets = new ArrayList<>();
@@ -20,9 +20,9 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     protected boolean dragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreenPage(BookScreen parent, Rectangle details, Page page) {
+    public EntryScreenPage(BookScreen parent, Rectangle rectangle, Page page) {
         super(parent);
-        this.details = details;
+        this.rectangle = rectangle;
         for(PageComponent component : page.getComponents()) {
             renderables.add(component);
             component.initWidgets(this, parent);
@@ -30,7 +30,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     }
 
     @Override
-    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle details, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle rectangle, int mouseX, int mouseY, float partialTick) {
         for(PageRenderable renderable : renderables) {
             if(renderable.shouldRender())
                 renderable.render(graphics, parent, mouseX, mouseY, partialTick);
@@ -66,7 +66,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     @Override
     public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
         for(PageEventListener widget : widgets) {
-            if(widget.mouseClicked(context, mouseX - details.x(), mouseY - details.y(), button)) {
+            if(widget.mouseClicked(context, mouseX - rectangle.u(), mouseY - rectangle.v(), button)) {
                 focused = widget;
                 if(button == 0)
                     dragging = true;
@@ -82,11 +82,11 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
         if(button == 0 && dragging) { // On release, first we check if there was a focused widget.
             dragging = false;
             if(focused != null)
-                return focused.mouseReleased(context, mouseX - details.x(), mouseY - details.y(), button);
+                return focused.mouseReleased(context, mouseX - rectangle.u(), mouseY - rectangle.v(), button);
         }
 
         for(PageEventListener widget : widgets) {
-            if(widget.mouseReleased(context, mouseX - details.x(), mouseY - details.y(), button))
+            if(widget.mouseReleased(context, mouseX - rectangle.u(), mouseY - rectangle.v(), button))
                 return true;
         }
 
@@ -95,13 +95,13 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
 
     @Override
     public boolean mouseDragged(BookRenderContext context, double mouseX, double mouseY, int button, double dragX, double dragY) {
-        return focused != null && dragging && button == 0 && focused.mouseDragged(context, mouseX - details.x(), mouseY - details.y(), button, dragX, dragY);
+        return focused != null && dragging && button == 0 && focused.mouseDragged(context, mouseX - rectangle.u(), mouseY - rectangle.v(), button, dragX, dragY);
     }
 
     @Override
     public boolean mouseScrolled(BookRenderContext context, double mouseX, double mouseY, double scrollX, double scrollY) {
         for(PageEventListener widget : widgets) {
-            if(widget.mouseScrolled(context, mouseX - details.x(), mouseY - details.y(), scrollX, scrollY))
+            if(widget.mouseScrolled(context, mouseX - rectangle.u(), mouseY - rectangle.v(), scrollX, scrollY))
                 return true;
         }
         return false;

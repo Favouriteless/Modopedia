@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;
 import net.minecraft.client.gui.GuiGraphics;
@@ -46,9 +46,9 @@ public abstract class MultiPageBookScreen extends BookScreen {
         int texWidth = texture.texWidth();
         int texHeight = texture.texHeight();
 
-        WidgetDetails left = texture.left();
-        WidgetDetails right = texture.right();
-        WidgetDetails back = texture.back();
+        FixedRectangle left = texture.left();
+        FixedRectangle right = texture.right();
+        FixedRectangle back = texture.back();
 
         leftButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + left.x(), topPos + left.y(), left.width(), left.height(), left.u(), left.v(), texWidth, texHeight, b -> turnPageLeft(1)));
         rightButton = addRenderableWidget(new HoverableImageButton(tex, leftPos + right.x(), topPos + right.y(), right.width(), right.height(), right.u(), right.v(), texWidth, texHeight, b -> turnPageRight(1)));
@@ -66,8 +66,8 @@ public abstract class MultiPageBookScreen extends BookScreen {
             ScreenPage page = pages.get(leftPage + i);
             Rectangle details = texture.pages().get(i);
 
-            int xShift = leftPos + details.x();
-            int yShift = topPos + details.y();
+            int xShift = leftPos + details.u();
+            int yShift = topPos + details.v();
 
             poseStack.pushPose();
             poseStack.translate(xShift, yShift, 0);

@@ -49,28 +49,28 @@ public class CategoryScreen extends MultiPageBookScreen {
         int startIndex = 0;
         while(startIndex < categories.size() + entries.size()) {
             int pageCount = getPageCount();
-            Rectangle details = texture.pages().get(pageCount % texture.pages().size());
+            Rectangle rectangle = texture.pages().get(pageCount % texture.pages().size());
 
             ScreenPage page;
-            int yStart = details.y();
+            int yStart = rectangle.v();
 
             if(pageCount == 1) {
                 yStart += textY;
-                page = new TitledScreenPage(this, header, details.width()/2 - minecraft.font.width(header)/2, 0);
+                page = new TitledScreenPage(this, header, rectangle.width()/2 - minecraft.font.width(header)/2, 0);
             }
             else {
                 page = new BlankScreenPage(this);
             }
 
-            int onPage = (details.height() - yStart) / spacing;
+            int onPage = (rectangle.height() - yStart) / spacing;
 
             if(startIndex < categories.size()) {
                 int endIndex = Math.min(startIndex + onPage, categories.size());
                 int diff = endIndex - startIndex;
 
-                ItemTextButton.createItemTextButtons(categories.subList(startIndex, endIndex), details.x(), yStart, (id, x, y) -> {
+                ItemTextButton.createItemTextButtons(categories.subList(startIndex, endIndex), rectangle.u(), yStart, (id, x, y) -> {
                     Category cat = content.getCategory(id);
-                    return new ItemTextButton(leftPos + x, topPos + y, details.width(), cat.getIcon(),
+                    return new ItemTextButton(leftPos + x, topPos + y, rectangle.width(), cat.getIcon(),
                             Component.literal(cat.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new CategoryScreen(book, langCode, content, cat, this)));
                 }).forEach(page::addWidget);
 
@@ -81,9 +81,9 @@ public class CategoryScreen extends MultiPageBookScreen {
 
             int entriesStart = startIndex - categories.size();
             if(entriesStart < entries.size() && onPage > 0) {
-                ItemTextButton.createItemTextButtons(entries.subList(entriesStart, Math.min(entriesStart+onPage, entries.size())), details.x(), yStart, (id, x, y) -> {
+                ItemTextButton.createItemTextButtons(entries.subList(entriesStart, Math.min(entriesStart+onPage, entries.size())), rectangle.u(), yStart, (id, x, y) -> {
                     Entry entry = content.getEntry(id);
-                    return new ItemTextButton(leftPos + x, topPos + y, details.width(), entry.getIcon(),
+                    return new ItemTextButton(leftPos + x, topPos + y, rectangle.width(), entry.getIcon(),
                             Component.literal(entry.getTitle()).withStyle(getStyle()), b -> minecraft.setScreen(new EntryScreen(book, langCode, content, entry, this)));
                 }).forEach(page::addWidget);
                 startIndex += onPage;

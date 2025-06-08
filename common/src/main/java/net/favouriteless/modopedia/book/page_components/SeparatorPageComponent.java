@@ -22,7 +22,7 @@ public class SeparatorPageComponent extends PageComponent {
         Rectangle separator = texture.separator();
         int x = context.getBook().getLineWidth() / 2 - separator.width()/2;
 
-        graphics.blit(texture.location(), x, y, separator.x(), separator.y(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
+        graphics.blit(texture.location(), x, y, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
     }
 
 }

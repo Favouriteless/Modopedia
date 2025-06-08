@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.book.page_components;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.WidgetDetails;
+import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.books.page_components.PageWidgetHolder;
@@ -47,8 +47,8 @@ public class ImagePageComponent extends PageComponent {
 
         BookTexture bookTex = context.getBookTexture();
         ResourceLocation tex = bookTex.location();
-        WidgetDetails left = bookTex.left();
-        WidgetDetails right = bookTex.right();
+        FixedRectangle left = bookTex.left();
+        FixedRectangle right = bookTex.right();
 
         leftButton = holder.addRenderableWidget(
                 new PageImageButton(tex, x, y + height - left.height(), left.width(), left.height(),
