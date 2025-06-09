@@ -3,6 +3,9 @@
   "icon": { "id": "minecraft:blaze_powder" },
   "landing_text": "This is a test description for a category2.",
   "entries": [
+    "templates/headered_text",
+    "templates/shaped_recipe",
+    "templates/shapeless_recipe"
   ],
   "children": [
   ]

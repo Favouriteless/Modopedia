@@ -1,4 +1,5 @@
 {
+  "processor": "modopedia:headered_text",
   "components": [
     {
       "type": "modopedia:header",
@@ -16,8 +17,10 @@
     {
       "type": "modopedia:text",
       "x": 0,
-      "y": 18,
-      "text": "#text"
+      "y": "#text_y",
+      "text": "#text",
+      "width": "#width",
+      "line_height": "#line_height"
     }
   ]
 }

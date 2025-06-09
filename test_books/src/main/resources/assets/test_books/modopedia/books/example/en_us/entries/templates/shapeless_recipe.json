@@ -1,0 +1,14 @@
+{
+  "title": "Shapeless Recipe",
+  "icon": { "id": "minecraft:crafting_table" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:shapeless_recipe",
+          "recipe": "minecraft:purple_dye"
+        }
+      ]
+    }
+  ]
+}

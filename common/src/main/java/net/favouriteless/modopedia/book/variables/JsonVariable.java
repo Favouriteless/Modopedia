@@ -38,7 +38,7 @@ public class JsonVariable implements Variable {
         registerCodec(new TypeToken<>() {}, ResourceLocation.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, CompoundTag.CODEC.listOf());
         registerCodec(new TypeToken<>() {}, ItemStack.CODEC.listOf());
-        registerCodec(new TypeToken<>() {}, MExtraCodecs.ITEM_LIST.listOf());
+        registerCodec(new TypeToken<>() {}, MExtraCodecs.ITEM_LIST);
         registerCodec(Multiblock.class, Multiblock.codec());
         registerCodec(Justify.class, Justify.CODEC);
     }

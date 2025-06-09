@@ -19,7 +19,7 @@ public class ItemPageComponent extends PageComponent {
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
-        items = lookup.get("items").asStream().map(v -> v.as(ItemStack[].class)).filter(a -> a.length > 0).toArray(ItemStack[][]::new);
+        items = lookup.get("items").asStream().map(v -> v.as(ItemStack[].class)).toArray(ItemStack[][]::new);
         if(items.length == 0)
             throw new IllegalArgumentException("Item gallery cannot have zero items in it.");
         rowMax = lookup.getOrDefault("row_max", Integer.MAX_VALUE).asInt();
@@ -37,10 +37,13 @@ public class ItemPageComponent extends PageComponent {
             if(i % rowMax == 0)
                 yOff += padding;
 
+            ItemStack[] itemArray = items[i];
+            if(itemArray.length == 0)
+                continue;
+
             int x = this.x + (i % rowMax) * padding;
             int y = this.y + yOff;
 
-            ItemStack[] itemArray = items[i];
             ItemStack stack = itemArray[(context.getTicks() / 20) % itemArray.length];
 
             graphics.renderItem(stack, x, y);

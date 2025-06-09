@@ -1,0 +1,16 @@
+{
+  "processor": "modopedia:shapeless_recipe",
+  "components": [
+    {
+      "type": "modopedia:crafting_frame",
+      "x": -2,
+      "y": -2
+    },
+    {
+      "type": "modopedia:item",
+      "items": "#inputs",
+      "padding": 17,
+      "row_max": 3
+    }
+  ]
+}

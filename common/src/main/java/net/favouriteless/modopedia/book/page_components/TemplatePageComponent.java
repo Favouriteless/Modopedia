@@ -34,7 +34,7 @@ public class TemplatePageComponent extends PageComponent {
         }
         TemplateProcessor processor = TemplateRegistry.get().getProcessor(lookup.get("template").as(ResourceLocation.class)); // Run processor before the components load
         if(processor != null)
-            processor.init(holder, level);
+            processor.init(book, holder, level);
 
         holder.initComponents(book, lookup.get("entry").asString(), level);
     }

@@ -1,9 +1,13 @@
 package net.favouriteless.modopedia.client;
 
 import com.google.gson.JsonObject;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.TemplateRegistry;
 import net.favouriteless.modopedia.book.Template;
+import net.favouriteless.modopedia.book.template_processors.HeaderedTextProcessor;
+import net.favouriteless.modopedia.book.template_processors.ShapedRecipeProcessor;
+import net.favouriteless.modopedia.book.template_processors.ShapelessRecipeProcessor;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -14,6 +18,12 @@ public class TemplateRegistryImpl implements TemplateRegistry {
 
     private final HashMap<ResourceLocation, Template> templates = new HashMap<>();
     private final HashMap<ResourceLocation, TemplateProcessor> processors = new HashMap<>();
+
+    private TemplateRegistryImpl() {
+        registerProcessor(Modopedia.id("headered_text"), new HeaderedTextProcessor());
+        registerProcessor(Modopedia.id("shaped_recipe"), new ShapedRecipeProcessor());
+        registerProcessor(Modopedia.id("shapeless_recipe"), new ShapelessRecipeProcessor());
+    }
 
     @Override
     public void registerTemplate(ResourceLocation id, JsonObject obj) {

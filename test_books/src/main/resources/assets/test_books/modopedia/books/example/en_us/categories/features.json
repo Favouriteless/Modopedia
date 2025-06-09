@@ -3,11 +3,11 @@
   "icon": { "id": "minecraft:music_disc_blocks" },
   "landing_text": "$(b)$(c:#B8A349)Modopedia$() provides a variety of features to build your $(b)$(c:green)guidebooks$() with. Check them out!",
   "entries": [
-    "text_boxes",
-    "image_galleries",
-    "multiblocks",
-    "templates",
-    "headers",
-    "frames"
+    "components/text_boxes",
+    "components/image_galleries",
+    "components/multiblocks",
+    "components/templates",
+    "components/headers",
+    "components/frames"
   ]
 }
