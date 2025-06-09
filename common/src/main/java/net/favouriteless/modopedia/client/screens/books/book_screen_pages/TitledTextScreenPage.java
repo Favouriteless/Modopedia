@@ -18,8 +18,8 @@ public class TitledTextScreenPage extends FormattedTextPage {
     protected final Component title;
     protected final Rectangle page;
 
-    public TitledTextScreenPage(BookScreen parent, Component title, List<TextChunk> text, Rectangle page) {
-        super(parent, text, 0, Minecraft.getInstance().font.lineHeight + parent.getBookTexture().separator().height() + 3);
+    public TitledTextScreenPage(BookScreen parent, Component title, List<TextChunk> text, int textY, Rectangle page) {
+        super(parent, text, 0, textY);
         this.title = title;
         this.page = page;
     }
@@ -34,7 +34,9 @@ public class TitledTextScreenPage extends FormattedTextPage {
         graphics.drawString(font, title, x, 0, color != null ? color.getValue() : 0, false);
 
         BookTexture texture = parent.getBookTexture();
-        Rectangle separator = texture.separator();
+        Rectangle separator = texture.widgets().get("separator");
+        if(separator == null)
+            return;
 
         x = page.width() / 2 - separator.width() / 2;
         graphics.blit(texture.location(), x, 10, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());

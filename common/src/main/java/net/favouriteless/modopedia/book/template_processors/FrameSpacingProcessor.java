@@ -9,15 +9,27 @@ import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
 import net.minecraft.world.level.Level;
 
-public class HeaderedTextProcessor implements TemplateProcessor {
+public class FrameSpacingProcessor implements TemplateProcessor {
+
+    protected final String widgetId;
+
+    public FrameSpacingProcessor(String widgetId) {
+        this.widgetId = widgetId;
+    }
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
-        Rectangle sep = tex.widgets().get("separator");
+        if(tex == null)
+            throw new IllegalStateException("Book is missing a valid BookTexture");
 
-        int offset = sep != null ? sep.height() + 12 : 12;
-        lookup.set("text_y", Variable.of(offset));
+        Rectangle rect = tex.widgets().get(widgetId);
+        if(rect == null)
+            throw new IllegalStateException("Frame spacing processor cannot find widget: " + widgetId);
+
+
+        int width = lookup.get("width").asInt();
+        lookup.set("frame_offset", Variable.of(-(rect.width() - width) / 2));
     }
 
 }

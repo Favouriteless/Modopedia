@@ -1,15 +1,17 @@
 {
+  "processor": "modopedia:large_frame_spacing",
+  "width": 100,
   "components": [
     {
       "type": "modopedia:image",
-      "width": 100,
-      "height": 100,
+      "width": "#width",
+      "height": "#width",
       "images": "#images"
     },
     {
       "type": "modopedia:large_frame",
-      "x": -2,
-      "y": -2
+      "x": "#frame_offset",
+      "y": "#frame_offset"
     }
   ]
 }

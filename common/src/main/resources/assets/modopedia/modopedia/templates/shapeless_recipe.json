@@ -2,15 +2,29 @@
   "processor": "modopedia:shapeless_recipe",
   "components": [
     {
-      "type": "modopedia:crafting_frame",
-      "x": -2,
-      "y": -2
+      "template": "modopedia:framed_crafting_grid",
+      "items": "#inputs"
     },
     {
-      "type": "modopedia:item",
-      "items": "#inputs",
-      "padding": 17,
-      "row_max": 3
+      "type": "modopedia:crafting_arrow",
+      "x": "#arrow_x",
+      "y": "#arrow_y"
+    },
+    {
+      "type": "modopedia:tooltip",
+      "x": "#arrow_x",
+      "y": "#arrow_y",
+      "width": "#arrow_width",
+      "height": "#arrow_height",
+      "tooltip": [
+        "template.modopedia.shaped_recipe"
+      ]
+    },
+    {
+      "template": "modopedia:framed_item",
+      "items": "#output",
+      "x": "#output_x",
+      "y": 17
     }
   ]
 }

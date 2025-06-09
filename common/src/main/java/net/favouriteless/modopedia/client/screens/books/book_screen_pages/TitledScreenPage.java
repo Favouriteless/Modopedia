@@ -31,7 +31,9 @@ public class TitledScreenPage extends ScreenPage {
         graphics.drawString(font, title, x, 0, color != null ? color.getValue() : 0, false);
 
         BookTexture texture = parent.getBookTexture();
-        Rectangle separator = texture.separator();
+        Rectangle separator = texture.widgets().get("separator");
+        if(separator == null)
+            return;
 
         x = page.width() / 2 - separator.width() / 2;
         graphics.blit(texture.location(), x, 10, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());

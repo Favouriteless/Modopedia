@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class MExtraCodecs {
@@ -67,11 +68,7 @@ public class MExtraCodecs {
             FIXED_RECTANGLE.fieldOf("right_button").forGetter(BookTexture::right),
             FIXED_RECTANGLE.fieldOf("back_button").forGetter(BookTexture::back),
             FIXED_RECTANGLE.fieldOf("refresh_button").forGetter(BookTexture::refresh),
-            RECTANGLE.optionalFieldOf("separator", Rectangle.ZERO).forGetter(BookTexture::separator),
-            RECTANGLE.optionalFieldOf("small_frame", Rectangle.ZERO).forGetter(BookTexture::smallFrame),
-            RECTANGLE.optionalFieldOf("medium_frame", Rectangle.ZERO).forGetter(BookTexture::mediumFrame),
-            RECTANGLE.optionalFieldOf("large_frame", Rectangle.ZERO).forGetter(BookTexture::largeFrame),
-            RECTANGLE.optionalFieldOf("crafting_frame", Rectangle.ZERO).forGetter(BookTexture::craftingFrame)
+            Codec.unboundedMap(Codec.STRING, RECTANGLE).optionalFieldOf("widgets", Map.of()).forGetter(BookTexture::widgets)
     ).apply(instance, BookTexture::new));
 
 }

@@ -19,9 +19,12 @@ public class SeparatorPageComponent extends PageComponent {
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
         BookTexture texture = context.getBookTexture();
-        Rectangle separator = texture.separator();
-        int x = context.getBook().getLineWidth() / 2 - separator.width()/2;
+        Rectangle separator = texture.widgets().get("separator");
 
+        if(separator == null)
+            return;
+
+        int x = context.getBook().getLineWidth() / 2 - separator.width()/2;
         graphics.blit(texture.location(), x, y, separator.u(), separator.v(), separator.width(), separator.height(), texture.texWidth(), texture.texHeight());
     }
 

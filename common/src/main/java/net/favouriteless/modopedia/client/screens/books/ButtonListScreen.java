@@ -53,7 +53,11 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
 
         Rectangle rectangle = texture.pages().get(getPageCount() % texture.pages().size());
         ScreenPage page = new TitledScreenPage(this, listTitle, rectangle);
-        int y = rectangle.v() + minecraft.font.lineHeight + texture.separator().height() + 3;
+        int y = rectangle.v() + minecraft.font.lineHeight + 3;
+
+        final Rectangle sep = texture.widgets().get("separator");
+        if(sep != null)
+            y += sep.height();
 
         for(int i = 0; i < idLists.size(); i++) {
             final List<String> ids = idLists.get(i);

@@ -204,7 +204,7 @@ public class BookContentLoader {
      */
     private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, int pageNum) {
         PageComponent component;
-        if(json.has("type")) {
+         if(json.has("type")) {
             ResourceLocation id = ResourceLocation.parse(json.get("type").getAsString());
             Supplier<PageComponent> type = PageComponentRegistry.get().get(id);
 

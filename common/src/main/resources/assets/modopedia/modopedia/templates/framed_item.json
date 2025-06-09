@@ -1,9 +1,11 @@
 {
+  "processor": "modopedia:small_frame_spacing",
+  "width": 16,
   "components": [
     {
       "type": "modopedia:small_frame",
-      "x": -2,
-      "y": -2
+      "x": "#frame_offset",
+      "y": "#frame_offset"
     },
     {
       "type": "modopedia:item",

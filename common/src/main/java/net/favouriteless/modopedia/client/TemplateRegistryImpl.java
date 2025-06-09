@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.TemplateRegistry;
 import net.favouriteless.modopedia.book.Template;
+import net.favouriteless.modopedia.book.template_processors.FrameSpacingProcessor;
 import net.favouriteless.modopedia.book.template_processors.HeaderedTextProcessor;
 import net.favouriteless.modopedia.book.template_processors.ShapedRecipeProcessor;
 import net.favouriteless.modopedia.book.template_processors.ShapelessRecipeProcessor;
@@ -23,6 +24,11 @@ public class TemplateRegistryImpl implements TemplateRegistry {
         registerProcessor(Modopedia.id("headered_text"), new HeaderedTextProcessor());
         registerProcessor(Modopedia.id("shaped_recipe"), new ShapedRecipeProcessor());
         registerProcessor(Modopedia.id("shapeless_recipe"), new ShapelessRecipeProcessor());
+
+        registerProcessor(Modopedia.id("small_frame_spacing"), new FrameSpacingProcessor("small_frame"));
+        registerProcessor(Modopedia.id("medium_frame_spacing"), new FrameSpacingProcessor("medium_frame"));
+        registerProcessor(Modopedia.id("large_frame_spacing"), new FrameSpacingProcessor("large_frame"));
+        registerProcessor(Modopedia.id("crafting_frame_spacing"), new FrameSpacingProcessor("crafting_frame"));
     }
 
     @Override

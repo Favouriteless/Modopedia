@@ -2,9 +2,11 @@ package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextScreenPage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
@@ -34,7 +36,13 @@ public class CategoryScreen extends ButtonListScreen {
 
     @Override
     protected ScreenPage initFirstPage() {
-        return new TitledTextScreenPage(this, title, category.getLandingText(), texture.pages().getFirst());
+        int y = Minecraft.getInstance().font.lineHeight + 3;
+
+        Rectangle sep = getBookTexture().widgets().get("separator");
+        if(sep != null)
+            y += sep.height();
+
+        return new TitledTextScreenPage(this, title, category.getLandingText(), y, texture.pages().getFirst());
     }
 
 }

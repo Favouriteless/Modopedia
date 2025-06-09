@@ -3,9 +3,8 @@ package net.favouriteless.modopedia.book.registries;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
 import net.favouriteless.modopedia.book.page_components.*;
 import net.minecraft.resources.ResourceLocation;
 
@@ -25,10 +24,11 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("separator"), SeparatorPageComponent::new);
         register(Modopedia.id("item"), ItemPageComponent::new);
         register(Modopedia.id("multiblock"), MultiblockPageComponent::new);
-        register(Modopedia.id("small_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::smallFrame));
-        register(Modopedia.id("medium_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::mediumFrame));
-        register(Modopedia.id("large_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::largeFrame));
-        register(Modopedia.id("crafting_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::craftingFrame));
+        register(Modopedia.id("small_frame"), () -> new WidgetPageComponent("small_frame"));
+        register(Modopedia.id("medium_frame"), () -> new WidgetPageComponent("medium_frame"));
+        register(Modopedia.id("large_frame"), () -> new WidgetPageComponent("large_frame"));
+        register(Modopedia.id("crafting_frame"), () -> new WidgetPageComponent("crafting_frame"));
+        register(Modopedia.id("crafting_arrow"), () -> new WidgetPageComponent("crafting_arrow"));
 
         // TODO: Entity display, Block display?
     }

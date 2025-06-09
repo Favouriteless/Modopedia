@@ -32,9 +32,14 @@ public class TemplatePageComponent extends PageComponent {
             if(!passthroughExempt.contains(key))
                 holder.set(key, RemoteVariable.of(key, lookup));
         }
-        TemplateProcessor processor = TemplateRegistry.get().getProcessor(lookup.get("template").as(ResourceLocation.class)); // Run processor before the components load
-        if(processor != null)
+
+        if(holder.has("processor")) {
+            ResourceLocation processorId = holder.get("processor").as(ResourceLocation.class);
+            TemplateProcessor processor = TemplateRegistry.get().getProcessor(processorId); // Run processor before the components load
+            if(processor == null)
+                throw new IllegalArgumentException(processorId + " is not a valid template processor");
             processor.init(book, holder, level);
+        }
 
         holder.initComponents(book, lookup.get("entry").asString(), level);
     }

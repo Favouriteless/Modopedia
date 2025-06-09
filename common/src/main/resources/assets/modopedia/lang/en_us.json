@@ -3,5 +3,7 @@
   "tooltip.modopedia.book_id": "Book ID: %1$s",
   "item.modopedia.book": "Book (No ID)",
   "screen.modopedia.categories": "Chapters",
-  "screen.modopedia.entries": "Entries"
+  "screen.modopedia.entries": "Entries",
+  "template.modopedia.shaped_recipe": "Shaped Recipe",
+  "template.modopedia.shapeless_recipe": "Shapeless Recipe"
 }
