@@ -1,0 +1,22 @@
+{
+  "title": "Framed Multiblocks",
+  "icon": { "id": "minecraft:beacon" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_multiblock",
+          "multiblock_id": "test_books:simple"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_multiblock",
+          "multiblock_id": "test_books:simple"
+        }
+      ]
+    }
+  ]
+}

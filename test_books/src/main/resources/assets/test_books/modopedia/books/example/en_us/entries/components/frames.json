@@ -6,15 +6,15 @@
       "components": [
         {
           "template": "modopedia:framed_item",
-          "items": ["minecraft:small_flowers"]
+          "items": [ "minecraft:small_flowers" ]
         }
       ]
     },
     {
       "components": [
         {
-          "template": "modopedia:small_framed_image",
-          "images": ["test_books:textures/gui/test_image_3.png"]
+          "template": "modopedia:medium_framed_image",
+          "images": [ "test_books:textures/gui/test_image_3.png" ]
         }
       ]
     },
@@ -22,14 +22,14 @@
       "components": [
         {
           "template": "modopedia:large_framed_image",
-          "images": ["test_books:textures/gui/test_image_3.png"]
+          "images": [ "test_books:textures/gui/test_image_3.png" ]
         }
       ]
     },
     {
       "components": [
         {
-          "template": "modopedia:small_framed_multiblock",
+          "template": "modopedia:medium_framed_multiblock",
           "multiblock_id": "test_books:simple"
         }
       ]

@@ -5,7 +5,8 @@
   "entries": [
     "templates/headered_text",
     "templates/shaped_recipe",
-    "templates/shapeless_recipe"
+    "templates/shapeless_recipe",
+    "templates/framed_multiblocks"
   ],
   "children": [
   ]

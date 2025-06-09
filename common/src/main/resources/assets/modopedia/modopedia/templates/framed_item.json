@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "type": "modopedia:item_frame",
+      "type": "modopedia:small_frame",
       "x": -2,
       "y": -2
     },

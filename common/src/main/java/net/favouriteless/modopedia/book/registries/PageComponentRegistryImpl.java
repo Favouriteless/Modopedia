@@ -25,8 +25,8 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("separator"), SeparatorPageComponent::new);
         register(Modopedia.id("item"), ItemPageComponent::new);
         register(Modopedia.id("multiblock"), MultiblockPageComponent::new);
-        register(Modopedia.id("item_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::itemFrame));
         register(Modopedia.id("small_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::smallFrame));
+        register(Modopedia.id("medium_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::mediumFrame));
         register(Modopedia.id("large_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::largeFrame));
         register(Modopedia.id("crafting_frame"), () -> new BookTextureWidgetPageComponent(BookTexture::craftingFrame));
 

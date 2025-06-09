@@ -68,8 +68,8 @@ public class MExtraCodecs {
             FIXED_RECTANGLE.fieldOf("back_button").forGetter(BookTexture::back),
             FIXED_RECTANGLE.fieldOf("refresh_button").forGetter(BookTexture::refresh),
             RECTANGLE.optionalFieldOf("separator", Rectangle.ZERO).forGetter(BookTexture::separator),
-            RECTANGLE.optionalFieldOf("item_frame", Rectangle.ZERO).forGetter(BookTexture::itemFrame),
             RECTANGLE.optionalFieldOf("small_frame", Rectangle.ZERO).forGetter(BookTexture::smallFrame),
+            RECTANGLE.optionalFieldOf("medium_frame", Rectangle.ZERO).forGetter(BookTexture::mediumFrame),
             RECTANGLE.optionalFieldOf("large_frame", Rectangle.ZERO).forGetter(BookTexture::largeFrame),
             RECTANGLE.optionalFieldOf("crafting_frame", Rectangle.ZERO).forGetter(BookTexture::craftingFrame)
     ).apply(instance, BookTexture::new));

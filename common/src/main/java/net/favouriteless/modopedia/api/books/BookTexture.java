@@ -11,7 +11,7 @@ import java.util.List;
 public record BookTexture(ResourceLocation location, int width, int height, int texWidth, int texHeight, // Texture info
                           List<Rectangle> pages, FixedRectangle titleBacker, // Common elements
                           FixedRectangle left, FixedRectangle right, FixedRectangle back, FixedRectangle refresh,// Navigation buttons
-                          Rectangle separator, Rectangle itemFrame, Rectangle smallFrame, // Dynamic elements
+                          Rectangle separator, Rectangle smallFrame, Rectangle mediumFrame, // Dynamic elements
                           Rectangle largeFrame, Rectangle craftingFrame) {
 
 
