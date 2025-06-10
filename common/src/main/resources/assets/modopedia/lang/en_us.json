@@ -5,5 +5,8 @@
   "screen.modopedia.categories": "Chapters",
   "screen.modopedia.entries": "Entries",
   "template.modopedia.shaped_recipe": "Shaped Recipe",
-  "template.modopedia.shapeless_recipe": "Shapeless Recipe"
+  "template.modopedia.shapeless_recipe": "Shapeless Recipe",
+  "template.modopedia.smelting_recipe": "Smelting Recipe",
+  "template.modopedia.blasting_recipe": "Blasting Recipe",
+  "template.modopedia.smoking_recipe": "Smoking Recipe"
 }

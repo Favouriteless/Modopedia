@@ -1,9 +1,9 @@
 {
-  "processor": "modopedia:crafting_frame_spacing",
+  "processor": "modopedia:crafting_grid_spacing",
   "width": 50,
   "components": [
     {
-      "type": "modopedia:crafting_frame",
+      "type": "modopedia:crafting_grid",
       "x": "#frame_offset",
       "y": "#frame_offset"
     },

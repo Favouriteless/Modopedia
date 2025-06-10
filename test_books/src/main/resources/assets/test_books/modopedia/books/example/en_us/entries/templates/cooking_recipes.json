@@ -1,0 +1,24 @@
+{
+  "title": "Cooking Recipe",
+  "icon": { "id": "minecraft:furnace" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:smelting_recipe",
+          "recipe": "minecraft:iron_ingot_from_smelting_iron_ore"
+        },
+        {
+          "template": "modopedia:blasting_recipe",
+          "recipe": "minecraft:iron_ingot_from_blasting_iron_ore",
+          "y": 25
+        },
+        {
+          "template": "modopedia:smoking_recipe",
+          "recipe": "minecraft:cooked_beef_from_smoking",
+          "y": 50
+        }
+      ]
+    }
+  ]
+}

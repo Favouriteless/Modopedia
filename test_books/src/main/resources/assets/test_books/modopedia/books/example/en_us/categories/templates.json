@@ -6,7 +6,8 @@
     "templates/headered_text",
     "templates/shaped_recipe",
     "templates/shapeless_recipe",
-    "templates/framed_multiblocks"
+    "templates/framed_multiblocks",
+    "templates/cooking_recipes"
   ],
   "children": [
   ]

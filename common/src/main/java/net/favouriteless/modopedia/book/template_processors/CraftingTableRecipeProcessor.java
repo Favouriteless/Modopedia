@@ -19,12 +19,12 @@ public abstract class CraftingTableRecipeProcessor implements TemplateProcessor 
         if(tex == null)
             throw new IllegalStateException("Crafting grid templates require the book to have a valid BookTexture");
 
-        Rectangle grid = tex.widgets().get("crafting_frame");
+        Rectangle grid = tex.widgets().get("crafting_grid");
         Rectangle arrow = tex.widgets().get("crafting_arrow");
         Rectangle frame = tex.widgets().get("small_frame");
 
         if(grid == null || arrow == null || frame == null)
-            throw new IllegalStateException("Crafting grid templates require the BookTexture to have crafting_frame, crafting_arrow and small_frame widgets");
+            throw new IllegalStateException("Crafting grid templates require the BookTexture to have crafting_grid, crafting_arrow and small_frame widgets");
 
         int arrowX = GRID_WIDTH + ((grid.width() - GRID_WIDTH) / 2) + 2;
 

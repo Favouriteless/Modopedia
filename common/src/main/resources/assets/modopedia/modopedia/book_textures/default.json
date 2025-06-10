@@ -18,7 +18,8 @@
     "small_frame": { "u": 54, "v": 255, "width": 20, "height": 20 },
     "medium_frame": { "u": 0, "v": 255, "width": 54, "height": 54 },
     "large_frame": { "u": 140, "v": 182, "width": 104, "height": 104 },
-    "crafting_frame": { "u": 74, "v": 255, "width": 54, "height": 54 },
-    "crafting_arrow": { "u": 73, "v": 183, "width": 16, "height": 13 }
+    "crafting_grid": { "u": 74, "v": 255, "width": 54, "height": 54 },
+    "crafting_arrow": { "u": 73, "v": 183, "width": 16, "height": 13 },
+    "crafting_flame": { "u": 89, "v": 183, "width": 14, "height": 14 }
   }
 }

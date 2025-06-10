@@ -1,9 +1,9 @@
 {
-  "processor": "modopedia:shapeless_recipe",
+  "processor": "modopedia:cooking_recipe",
   "components": [
     {
-      "template": "modopedia:framed_crafting_grid",
-      "items": "#inputs"
+      "template": "modopedia:framed_item",
+      "items": "#input"
     },
     {
       "type": "modopedia:crafting_arrow",
@@ -11,20 +11,22 @@
       "y": "#arrow_y"
     },
     {
+      "type": "modopedia:crafting_flame",
+      "x": "#flame_x",
+      "y": "#flame_y"
+    },
+    {
       "type": "modopedia:tooltip",
       "x": "#arrow_x",
       "y": "#arrow_y",
       "width": "#arrow_width",
       "height": "#arrow_height",
-      "tooltip": [
-        "template.modopedia.shapeless_recipe"
-      ]
+      "tooltip": "#tooltip_key"
     },
     {
       "template": "modopedia:framed_item",
       "items": "#output",
-      "x": "#output_x",
-      "y": 17
+      "x": "#output_x"
     }
   ]
 }
