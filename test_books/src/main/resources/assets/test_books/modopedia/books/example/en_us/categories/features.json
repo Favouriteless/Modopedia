@@ -8,6 +8,7 @@
     "components/multiblocks",
     "components/templates",
     "components/headers",
+    "components/entities",
     "components/frames"
   ]
 }

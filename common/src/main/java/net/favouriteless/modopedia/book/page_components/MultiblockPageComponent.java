@@ -78,11 +78,8 @@ public class MultiblockPageComponent extends PageComponent {
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
-        renderMultiblock(graphics, context, Minecraft.getInstance().renderBuffers().bufferSource(), partialTick);
-    }
-
-    protected void renderMultiblock(GuiGraphics graphics, BookRenderContext context, MultiBufferSource bufferSource, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
+        MultiBufferSource bufferSource = mc.renderBuffers().bufferSource();
 
         if(multiblock.getLevel() != mc.level)
             multiblock = new PlacedMultiblock(multiblock.getMultiblock(), mc.level, multiblock.getPos());
@@ -92,7 +89,7 @@ public class MultiblockPageComponent extends PageComponent {
         Multiblock m = multiblock.getMultiblock();
         Vec3i dims = m.getDimensions();
 
-        float scale = -height / Mth.sqrt(dims.getX() * dims.getX() + dims.getY() * dims.getY() + dims.getZ() * dims.getZ());
+        float scale = -Math.min(width, height) / Mth.sqrt(dims.getX() * dims.getX() + dims.getY() * dims.getY() + dims.getZ() * dims.getZ());
 
         pose.pushPose();
         pose.translate(offsetX, offsetY, offsetZ);
@@ -103,11 +100,11 @@ public class MultiblockPageComponent extends PageComponent {
 
         pose.mulPose(Axis.XN.rotationDegrees(30));
         pose.translate(dims.getX() / 2.0F, 0, dims.getX() / 2.0F);
-        pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTicks));
+        pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTick));
         pose.translate(-dims.getX() / 2.0F, 0, -dims.getX() / 2.0F);
 
-        renderBlocks(pose, bufferSource, dims, partialTicks);
-        renderBlockEntities(pose, bufferSource, dims, partialTicks);
+        renderBlocks(pose, bufferSource, dims, partialTick);
+        renderBlockEntities(pose, bufferSource, dims, partialTick);
 
         pose.popPose();
     }

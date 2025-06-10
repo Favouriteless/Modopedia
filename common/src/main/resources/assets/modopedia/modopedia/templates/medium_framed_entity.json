@@ -1,0 +1,18 @@
+{
+  "processor": "modopedia:medium_frame_spacing",
+  "width": 50,
+  "components": [
+    {
+      "type": "modopedia:entity",
+      "width": "#width",
+      "height": "#width",
+      "entity": "#entity",
+      "tag": "#tag"
+    },
+    {
+      "type": "modopedia:medium_frame",
+      "x": "#frame_offset",
+      "y": "#frame_offset"
+    }
+  ]
+}

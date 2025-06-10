@@ -1,0 +1,54 @@
+{
+  "title": "Framed Entities",
+  "icon": { "id": "minecraft:creeper_head" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_entity",
+          "entity": "minecraft:enderman"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_entity",
+          "entity": "minecraft:spider"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_entity",
+          "entity": "minecraft:chicken"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_entity",
+          "entity": "minecraft:enderman"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_entity",
+          "entity": "minecraft:spider"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_entity",
+          "entity": "minecraft:chicken"
+        }
+      ]
+    }
+  ]
+}

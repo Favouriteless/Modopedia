@@ -1,0 +1,32 @@
+{
+  "title": "Entity Displays",
+  "icon": { "id": "minecraft:egg" },
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:large_frame",
+          "x": -2,
+          "y": -2
+        },
+        {
+          "type": "modopedia:entity",
+          "entity": "minecraft:enderman"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "type": "modopedia:large_frame",
+          "x": -2,
+          "y": -2
+        },
+        {
+          "type": "modopedia:entity",
+          "entity": "minecraft:spider"
+        }
+      ]
+    }
+  ]
+}

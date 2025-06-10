@@ -30,6 +30,7 @@ public class PageComponentRegistryImpl implements PageComponentRegistry {
         register(Modopedia.id("crafting_grid"), () -> new WidgetPageComponent("crafting_grid"));
         register(Modopedia.id("crafting_arrow"), () -> new WidgetPageComponent("crafting_arrow"));
         register(Modopedia.id("crafting_flame"), () -> new WidgetPageComponent("crafting_flame"));
+        register(Modopedia.id("entity"), EntityPageComponent::new);
 
         // TODO: Entity display, Block display?
     }

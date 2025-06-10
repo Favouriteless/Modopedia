@@ -41,6 +41,7 @@ public class JsonVariable implements Variable {
         registerCodec(new TypeToken<>() {}, MExtraCodecs.ITEM_LIST);
         registerCodec(Multiblock.class, Multiblock.codec());
         registerCodec(Justify.class, Justify.CODEC);
+        registerCodec(CompoundTag.class, CompoundTag.CODEC);
     }
 
     private JsonVariable(JsonElement internal) {
