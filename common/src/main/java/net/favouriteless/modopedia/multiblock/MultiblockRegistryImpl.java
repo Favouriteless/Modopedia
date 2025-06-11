@@ -36,7 +36,7 @@ public class MultiblockRegistryImpl implements MultiblockRegistry {
 
 
     private MultiblockRegistryImpl() {
-        registerType(Modopedia.id("simple"), SimpleMultiblock.CODEC);
+        registerType(Modopedia.id("dense"), DenseMultiblock.CODEC);
     }
 
     @Override

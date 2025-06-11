@@ -13,12 +13,12 @@ import net.minecraft.core.Vec3i;
 import java.util.List;
 import java.util.Map;
 
-public class SimpleMultiblock implements Multiblock {
+public class DenseMultiblock implements Multiblock {
 
-    public static final MapCodec<SimpleMultiblock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<DenseMultiblock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.listOf().listOf().fieldOf("pattern").forGetter(m -> m.pattern),
             Codec.unboundedMap(MExtraCodecs.CHAR, StateMatcher.codec()).fieldOf("key").forGetter(m -> m.key)
-    ).apply(instance, SimpleMultiblock::new));
+    ).apply(instance, DenseMultiblock::new));
 
     protected final List<List<String>> pattern;
     protected final Map<Character, StateMatcher> key;
@@ -26,7 +26,7 @@ public class SimpleMultiblock implements Multiblock {
     protected final StateMatcher[] states;
     protected final Vec3i dimensions;
 
-    public SimpleMultiblock(List<List<String>> pattern, Map<Character, StateMatcher> key) {
+    public DenseMultiblock(List<List<String>> pattern, Map<Character, StateMatcher> key) {
         this.pattern = pattern;
         this.key = key;
 
@@ -41,13 +41,13 @@ public class SimpleMultiblock implements Multiblock {
             List<String> layer = pattern.get(y);
 
             if(layer.size() != zSize)
-                throw new IllegalArgumentException("SimpleMultiblock must have a rectangle footprint.");
+                throw new IllegalArgumentException("DenseMultiblock must have a rectangle footprint.");
 
             for(int z = 0; z < layer.size(); z++) {
                 String row = layer.get(z);
 
                 if(row.length() != xSize)
-                    throw new IllegalArgumentException("SimpleMultiblock must have a rectangle footprint.");
+                    throw new IllegalArgumentException("DenseMultiblock must have a rectangle footprint.");
 
                 for(int x = 0; x < row.length(); x++) {
                     states[PosUtils.posToIndex(x, y, z, xSize, ySize)] = key.get(row.charAt(x));

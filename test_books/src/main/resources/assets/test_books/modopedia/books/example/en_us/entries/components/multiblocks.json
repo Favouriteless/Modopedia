@@ -15,7 +15,7 @@
         {
           "type": "modopedia:multiblock",
           "multiblock": {
-            "type": "modopedia:simple",
+            "type": "modopedia:dense",
             "pattern": [
               [
                 "GGGGG",
