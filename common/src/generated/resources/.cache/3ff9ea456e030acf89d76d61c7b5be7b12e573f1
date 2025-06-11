@@ -1,15 +1,15 @@
-// 1.21.1	2025-06-11T10:16:17.3230704	Item Models: modopedia
+// 1.21.1	2025-06-11T10:34:53.0242257	Item Models: modopedia
 8383a37d224237fea4d0996a61acff67c8affa8c assets/modopedia/models/item/blue_brass.json
 d58790505b6a7ab7ef7adad41de3a692bd76a7fd assets/modopedia/models/item/blue_copper.json
 234362252f195976ca5aced6b07ad1e2bdc2ca4b assets/modopedia/models/item/blue_gold.json
 5c7bd6f82bf039f1d17169688f70845c95bc9a64 assets/modopedia/models/item/blue_iron.json
 4b58c10da6c4a8706ea535d2e3eb1629d0224e06 assets/modopedia/models/item/blue_silver.json
+557b6181bfa888d8be49eb6308539cf280707ebc assets/modopedia/models/item/book.json
 557b6181bfa888d8be49eb6308539cf280707ebc assets/modopedia/models/item/brown_brass.json
 325990455c9a113df630737b21ce8c5f00dda43b assets/modopedia/models/item/brown_copper.json
 23f29fc15a3aec624ce7767816c9505474cc3dae assets/modopedia/models/item/brown_gold.json
 ebb0ae0ab6760265a188b8fb9ca93a89d087ff64 assets/modopedia/models/item/brown_iron.json
 4ffa6ccb5ecb80aba99ea516b1d13f5239e47f86 assets/modopedia/models/item/brown_silver.json
-557b6181bfa888d8be49eb6308539cf280707ebc assets/modopedia/models/item/default.json
 bf9327b843cedbc8aed0474e6ae2440def370e85 assets/modopedia/models/item/green_brass.json
 af6291df41d8d0edbbe907020dc84c8184176d1c assets/modopedia/models/item/green_copper.json
 935232125241f28bbea3959b10d83eb078db0a11 assets/modopedia/models/item/green_gold.json

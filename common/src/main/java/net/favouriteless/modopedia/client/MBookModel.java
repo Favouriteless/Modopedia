@@ -22,12 +22,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-public class BookItemModel implements BakedModel {
+public class MBookModel implements BakedModel {
 
     private final BakedModel defaultModel;
     private final ItemOverrides overrides;
 
-    public BookItemModel(BakedModel defaultModel, Function<ResourceLocation, BakedModel> modelGetter) {
+    public MBookModel(BakedModel defaultModel, Function<ResourceLocation, BakedModel> modelGetter) {
         this.defaultModel = defaultModel;
 
         this.overrides = new ItemOverrides(FakeModelBaker.INSTANCE, null, Collections.emptyList()) {

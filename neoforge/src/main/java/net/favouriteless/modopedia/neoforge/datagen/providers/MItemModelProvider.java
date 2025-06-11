@@ -27,7 +27,7 @@ public class MItemModelProvider extends ItemModelProvider {
 				simpleItem(colour + "_" + metal);
 			}
 		}
-		simpleItem("default", "brown_brass");
+		simpleItem("book", "brown_brass");
 	}
 
 	private void simpleItem(String name) {

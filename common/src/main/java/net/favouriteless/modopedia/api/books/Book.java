@@ -5,7 +5,9 @@ import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.book.BookImpl;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -67,6 +69,11 @@ public interface Book {
      * @return The default line width for formatted text in this book.
      */
     int getLineWidth();
+
+    /**
+     * @return The ResourceKey of the creative mode tab this book should be in. Will also appear in the search tab.
+     */
+    @Nullable ResourceKey<CreativeModeTab> getCreativeTab();
 
     static Codec<Book> persistentCodec() {
         return BookImpl.PERSISTENT_CODEC;
