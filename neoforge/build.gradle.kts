@@ -42,6 +42,19 @@ neoForge {
             gameDirectory = file("runs/server")
             programArgument("--nogui")
         }
+
+        val output = project(":common").file("src/generated/resources/").absolutePath
+        val existing = project(":common").file("src/main/resources/").absolutePath
+
+        create("data") {
+            data()
+            gameDirectory = file("runs/data")
+            programArguments.addAll(
+                "--mod", "modopedia", "--all",
+                "--output", output,
+                "--existing", existing
+            )
+        }
     }
 
     mods.create("modopedia") {

@@ -101,7 +101,7 @@ public class BookImpl implements Book {
             ResourceLocation.CODEC.optionalFieldOf("type", Modopedia.id("classic")).forGetter(Book::getType),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(b -> Optional.ofNullable(b.getRawLandingText())),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
-            ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/book_default")).forGetter(Book::getItemModelLocation),
+            ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/default")).forGetter(Book::getItemModelLocation),
             ResourceLocation.CODEC.optionalFieldOf("font", Modopedia.id("default")).forGetter(Book::getFont),
             Codec.STRING.optionalFieldOf("text_colour", "000000").forGetter(b -> Integer.toHexString(b.getTextColour())),
             Codec.STRING.optionalFieldOf("header_colour", "000000").forGetter(b -> Integer.toHexString(b.getHeaderColour())),

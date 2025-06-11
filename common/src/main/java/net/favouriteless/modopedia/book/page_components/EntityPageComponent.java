@@ -71,7 +71,7 @@ public class EntityPageComponent extends PageComponent {
         pose.scale(-renderScale, -renderScale, -renderScale);
 
         pose.mulPose(Axis.XN.rotationDegrees(15));
-        pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTick));
+        pose.mulPose(Axis.YP.rotationDegrees(180 + context.getTicks() + partialTick));
 
         dispatcher.setRenderHitBoxes(false);
         dispatcher.render(entity, 0, 0, 0, 0, partialTick, pose, bufferSource, 0xF000F0);
