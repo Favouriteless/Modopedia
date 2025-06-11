@@ -24,7 +24,7 @@ public class MItemModelProvider extends ItemModelProvider {
 
 		for(String metal : METALS) {
 			for(String colour : COLOURS) {
-				simpleItem(colour + "_" + metal);
+				defaultBook(colour + "_" + metal);
 			}
 		}
 		simpleItem("book", "brown_brass");
@@ -32,6 +32,10 @@ public class MItemModelProvider extends ItemModelProvider {
 
 	private void simpleItem(String name) {
 		simpleItem(name, name);
+	}
+
+	private void defaultBook(String name) {
+		simpleItem(Modopedia.MOD_ID + "_books/" + name, name);
 	}
 
 	private void simpleItem(String modelName, String textureName) {

@@ -4,6 +4,6 @@
   "landing_text": "Welcome to $(b)$(c:#B8A349)Modopedia$()! The best way to make high quality in-game $(b)$(c:green)guidebooks$() and $(b)$(c:red)documentation$().",
   "texture": "modopedia:default",
   "type": "modopedia:classic",
-  "model": "modopedia:item/purple_gold",
+  "model": "modopedia:item/modopedia_books/purple_gold",
   "creative_tab": "minecraft:redstone_blocks"
 }
