@@ -1,3 +1,6 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import org.gradle.kotlin.dsl.register
+
 plugins {
     id("modopedia-convention")
 
@@ -100,3 +103,41 @@ publishing {
     }
 }
 
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN") ?: "Invalid/No API Token Found"
+
+    projectId.set("SYrakyVL")
+
+    versionName.set("NeoForge $mcVersion")
+    versionNumber.set(project.version.toString())
+    versionType.set(if(project.version.toString().endsWith("beta")) "beta" else "release")
+    uploadFile.set(tasks.jar)
+    changelog.set(rootProject.file("changelog.txt").readText(Charsets.UTF_8))
+
+    loaders.set(listOf("neoforge"))
+    gameVersions.set(listOf(mcVersion))
+
+    //debugMode = true
+    //https://github.com/modrinth/minotaur#available-properties
+}
+
+tasks.register<TaskPublishCurseForge>("publishToCurseForge") {
+    group = "publishing"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "Invalid/No API Token Found"
+
+    val mainFile = upload(1132038, tasks.jar)
+    mainFile.releaseType = if(project.version.toString().endsWith("beta")) "beta" else "release"
+    mainFile.changelog = rootProject.file("changelog.txt").readText(Charsets.UTF_8)
+
+    mainFile.addModLoader("NeoForge")
+    mainFile.addGameVersion(mcVersion)
+    mainFile.addJavaVersion("Java 21")
+
+    //debugMode = true
+    //https://github.com/Darkhax/CurseForgeGradle#available-properties
+}
+
+tasks.named<DefaultTask>("publish").configure {
+    finalizedBy("modrinth")
+    finalizedBy("publishToCurseForge")
+}

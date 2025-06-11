@@ -1,3 +1,6 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import net.fabricmc.loom.task.RemapJarTask
+
 plugins {
     id("modopedia-convention")
 
@@ -7,15 +10,11 @@ plugins {
 }
 
 version = libs.versions.modopedia.get()
-val minecraftVersion = libs.versions.minecraft.asProvider().get();
+var mcVersion = libs.versions.minecraft.asProvider().get()
 
 java {
     sourceCompatibility =  JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
-}
-
-base {
-    archivesName = "modopedia-fabric-${minecraftVersion}"
 }
 
 repositories {
@@ -92,4 +91,43 @@ publishing {
             artifactId = base.archivesName.get()
         }
     }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN") ?: "Invalid/No API Token Found"
+
+    projectId.set("SYrakyVL")
+
+    versionName.set("Fabric $mcVersion")
+    versionNumber.set(project.version.toString())
+    versionType.set(if(project.version.toString().endsWith("beta")) "beta" else "release")
+    uploadFile.set(tasks.named<RemapJarTask>("remapJar"))
+    changelog.set(rootProject.file("changelog.txt").readText(Charsets.UTF_8))
+
+    loaders.set(listOf("fabric"))
+    gameVersions.set(listOf(mcVersion))
+
+    //debugMode = true
+    //https://github.com/modrinth/minotaur#available-properties
+}
+
+tasks.register<TaskPublishCurseForge>("publishToCurseForge") {
+    group = "publishing"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "Invalid/No API Token Found"
+
+    val mainFile = upload(1132038, tasks.named<RemapJarTask>("remapJar"))
+    mainFile.releaseType = if(project.version.toString().endsWith("beta")) "beta" else "release"
+    mainFile.changelog = rootProject.file("changelog.txt").readText(Charsets.UTF_8)
+
+    mainFile.addModLoader("Fabric")
+    mainFile.addGameVersion(mcVersion)
+    mainFile.addJavaVersion("Java 21")
+
+    //debugMode = true
+    //https://github.com/Darkhax/CurseForgeGradle#available-properties
+}
+
+tasks.named<DefaultTask>("publish").configure {
+    finalizedBy("modrinth")
+    finalizedBy("publishToCurseForge")
 }

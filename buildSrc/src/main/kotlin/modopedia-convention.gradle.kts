@@ -5,6 +5,21 @@ plugins {
     eclipse
 }
 
+val libs = project.versionCatalogs.find("libs")
+
+val version = libs.get().findVersion("modopedia").get()
+val mcVersion = libs.get().findVersion("minecraft").get()
+val mcVersionRange = libs.get().findVersion("minecraft.range").get()
+val neoVersion = libs.get().findVersion("neoforge").get()
+val neoVersionRange = libs.get().findVersion("neoforge.range").get()
+val neoLoaderRange = libs.get().findVersion("neoforge.loader.range").get()
+val fapiVersion = libs.get().findVersion("fabric.api").get()
+val fabricVersion = libs.get().findVersion("fabric").get()
+
+base {
+    archivesName = "modopedia-${project.name}-${mcVersion}"
+}
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -19,18 +34,6 @@ idea {
     }
 }
 
-val libs = project.versionCatalogs.find("libs")
-val version = libs.get().findVersion("modopedia").get()
-val author: String by project
-
-val minecraft_version = libs.get().findVersion("minecraft").get()
-val minecraft_version_range = libs.get().findVersion("minecraft.range").get()
-val neoforge_version = libs.get().findVersion("neoforge").get()
-val neoforge_version_range = libs.get().findVersion("neoforge.range").get()
-val neoforge_loader_range = libs.get().findVersion("neoforge.loader.range").get()
-val fapi_version = libs.get().findVersion("fabric.api").get()
-val fabric_version = libs.get().findVersion("fabric").get()
-
 tasks.withType<Jar>().configureEach {
     from(rootProject.file("LICENSE")) {
         rename { "${it}_Modopedia" }
@@ -39,12 +42,12 @@ tasks.withType<Jar>().configureEach {
     manifest {
         attributes(mapOf(
             "Specification-Title"     to "Modopedia",
-            "Specification-Vendor"    to author,
+            "Specification-Vendor"    to "Favouriteless",
             "Specification-Version"   to version,
             "Implementation-Title"    to "Modopedia",
             "Implementation-Version"  to version,
-            "Implementation-Vendor"   to author,
-            "Built-On-Minecraft"      to minecraft_version
+            "Implementation-Vendor"   to "Favouriteless",
+            "Built-On-Minecraft"      to mcVersion
         ))
     }
 }
@@ -57,17 +60,17 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<ProcessResources>().configureEach {
     val expandProps = mapOf(
             "version" to version,
-            "minecraft_version" to minecraft_version,
-            "neoforge_version" to neoforge_version,
-            "neoforge_version_range" to neoforge_version_range,
-            "neoforge_loader_range" to neoforge_loader_range,
-            "minecraft_version_range" to minecraft_version_range,
-            "fabric_api_version" to fapi_version,
-            "fabric_loader_version" to fabric_version,
-            "author" to author
+            "minecraft_version" to mcVersion,
+            "neoforge_version" to neoVersion,
+            "neoforge_version_range" to neoVersionRange,
+            "neoforge_loader_range" to neoLoaderRange,
+            "minecraft_version_range" to mcVersionRange,
+            "fabric_api_version" to fapiVersion,
+            "fabric_loader_version" to fabricVersion,
+            "author" to "Favouriteless"
     )
 
-    filesMatching(listOf("pack.mcmeta", "fabric.mod.json", "META-INF/neoforge.mods.toml", "*.mixins.json")) {
+    filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
         expand(expandProps)
     }
 

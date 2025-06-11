@@ -9,7 +9,7 @@ license = "MIT"
     displayName = "Modopedia Test Books"
     displayURL= "https://github.com/Favouriteless/Modopedia"
     logoFile = "modopedia.png"
-    authors = "${author}"
+    authors = "Favouriteless"
     description = ''''''
 
 [[dependencies.test_books]]

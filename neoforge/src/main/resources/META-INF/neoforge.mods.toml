@@ -9,7 +9,7 @@ license = "MIT"
     displayName = "Modopedia"
     displayURL= "https://github.com/Favouriteless/Modopedia"
     logoFile = "modopedia.png"
-    authors = "${author}"
+    authors = "Favouriteless"
     description = '''Data-driven, user-friendly documentation.'''
 
 [[mixins]]
