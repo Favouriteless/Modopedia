@@ -10,7 +10,8 @@
       "multiblock": "#multiblock",
       "offset_x": "#offset_x",
       "offset_y": "#offset_y",
-      "offset_z": "#offset_z"
+      "scale": "#scale",
+      "no_offsets": "#no_offsets"
     },
     {
       "type": "modopedia:large_frame",

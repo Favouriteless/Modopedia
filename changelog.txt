@@ -1,2 +1,1 @@
-- FIXED: Button count on lists is incorrect.
-- FIXED: Buttons on subsequent pages are placed at an incorrect height.
+- ADDED: Multiblock no offsets option
