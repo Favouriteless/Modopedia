@@ -15,6 +15,8 @@ public class ItemPageComponent extends PageComponent {
     protected ItemStack[][] items;
     protected int rowMax;
     protected int padding;
+    protected boolean centered;
+    protected boolean reverseY;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
@@ -24,7 +26,8 @@ public class ItemPageComponent extends PageComponent {
             throw new IllegalArgumentException("Item gallery cannot have zero items in it.");
         rowMax = lookup.getOrDefault("row_max", Integer.MAX_VALUE).asInt();
         padding = lookup.getOrDefault("padding", 16).asInt();
-
+        centered = lookup.getOrDefault("centered", false).asBoolean();
+        reverseY = lookup.getOrDefault("reverse_y", false).asBoolean();
     }
 
     @Override
@@ -42,7 +45,12 @@ public class ItemPageComponent extends PageComponent {
                 continue;
 
             int x = this.x + (i % rowMax) * padding;
-            int y = this.y + yOff;
+            int y = this.y + (reverseY ? -yOff : yOff);
+
+            int row = (i-1 - (i % rowMax)) / rowMax;
+            int rowWidth = (Math.min(rowMax, items.length - row * rowMax)-1) * padding + 16;
+            if(centered)
+                x -= rowWidth/2;
 
             ItemStack stack = itemArray[(context.getTicks() / 20) % itemArray.length];
 
