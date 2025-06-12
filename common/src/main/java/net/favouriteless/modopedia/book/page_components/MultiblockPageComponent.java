@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class MultiblockPageComponent extends PageComponent {
 
@@ -39,7 +40,9 @@ public class MultiblockPageComponent extends PageComponent {
 
     private float offsetX;
     private float offsetY;
-    private float offsetZ;
+    private float scale;
+
+    private boolean noOffsets;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
@@ -68,7 +71,8 @@ public class MultiblockPageComponent extends PageComponent {
 
         offsetX = lookup.getOrDefault("offset_x", 0.0F).asFloat();
         offsetY = lookup.getOrDefault("offset_y", 0.0F).asFloat();
-        offsetZ = lookup.getOrDefault("offset_z", 0.0F).asFloat();
+        scale = lookup.getOrDefault("scale", 1.0F).asFloat();
+        noOffsets = lookup.getOrDefault("no_offsets", false).asBoolean();
     }
 
     @Override
@@ -92,7 +96,7 @@ public class MultiblockPageComponent extends PageComponent {
         float scale = -Math.min(width, height) / Mth.sqrt(dims.getX() * dims.getX() + dims.getY() * dims.getY() + dims.getZ() * dims.getZ());
 
         pose.pushPose();
-        pose.translate(offsetX, offsetY, offsetZ);
+        pose.translate(offsetX, offsetY, 0);
 
         pose.translate(x + width/2, y + height/2, 100);
         pose.scale(scale, scale, scale);
@@ -102,6 +106,8 @@ public class MultiblockPageComponent extends PageComponent {
         pose.translate(dims.getX() / 2.0F, 0, dims.getX() / 2.0F);
         pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTick));
         pose.translate(-dims.getX() / 2.0F, 0, -dims.getX() / 2.0F);
+
+        pose.scale(this.scale, this.scale, this.scale);
 
         renderBlocks(pose, bufferSource, dims, partialTick);
         renderBlockEntities(pose, bufferSource, dims, partialTick);
@@ -119,6 +125,12 @@ public class MultiblockPageComponent extends PageComponent {
             if(state.getRenderShape() == RenderShape.MODEL) {
                 for(RenderType type : ClientServices.PLATFORM.getRenderTypes(multiblock, pos, state)) {
                     VertexConsumer buffer = bufferSource.getBuffer(type);
+
+                    if(noOffsets) {
+                        Vec3 offset = state.getOffset(multiblock, pos);
+                        pose.translate(-offset.x, -offset.y, -offset.z);
+                    }
+
                     dispatcher.renderBatched(state, pos, multiblock, pose, buffer, false, RANDOM);
                 }
             }

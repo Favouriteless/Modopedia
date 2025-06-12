@@ -14,36 +14,14 @@
       "components": [
         {
           "type": "modopedia:multiblock",
+          "no_offsets": true,
           "multiblock": {
             "type": "modopedia:dense",
             "pattern": [
-              [
-                "GGGGG",
-                "GGGGG",
-                "GGGGG",
-                "GGGGG",
-                "GGGGG"
-              ],
-              [
-                "WWWWW",
-                "WGGGW",
-                "WGGGW",
-                "WGGGW",
-                "WWWWW"
-              ],
-              [
-                "     ",
-                " FFF ",
-                " FCF ",
-                " FFF ",
-                "     "
-              ]
+              [ "G" ]
             ],
             "key": {
-              "G": { "type": "modopedia:simple", "states": ["minecraft:gold_block", "minecraft:diamond_block", "minecraft:emerald_block", "minecraft:iron_block"] },
-              "F": { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
-              "W": { "type": "modopedia:tag", "tag": "minecraft:crops" },
-              "C": { "type": "modopedia:simple", "states": ["minecraft:chest"] }
+              "G": { "type": "modopedia:simple", "states": [ "minecraft:poppy" ] }
             }
           }
         }
