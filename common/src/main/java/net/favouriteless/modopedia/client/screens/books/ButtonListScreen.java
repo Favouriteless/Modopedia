@@ -63,7 +63,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
             final List<String> ids = idLists.get(i);
             final Factory factory = buttonFactories.get(i);
 
-            int onPage = (rectangle.height() - y) / spacing;
+            int onPage = (rectangle.height() - (y - rectangle.v())) / spacing;
 
             for(String id : ids) {
                 int count = page.getWidgets().size();
@@ -74,6 +74,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
                     page = new BlankScreenPage(this);
                     rectangle = texture.pages().get(getPageCount() % texture.pages().size());
                     y = rectangle.v();
+                    count = 0;
                 }
 
                 page.addWidget(factory.create(this, id, leftPos + rectangle.u(), topPos + y + spacing*count, rectangle.width()));

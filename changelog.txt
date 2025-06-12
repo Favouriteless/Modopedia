@@ -1,1 +1,2 @@
-- FIXED: Couple small loading bugs I missed.
+- FIXED: Button count on lists is incorrect.
+- FIXED: Buttons on subsequent pages are placed at an incorrect height.
