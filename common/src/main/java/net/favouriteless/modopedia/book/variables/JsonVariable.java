@@ -9,10 +9,12 @@ import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
+import net.favouriteless.modopedia.multiblock.BlockStateCodec;
 import net.favouriteless.modopedia.util.MExtraCodecs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class JsonVariable implements Variable {
         registerCodec(Multiblock.class, Multiblock.codec());
         registerCodec(Justify.class, Justify.CODEC);
         registerCodec(CompoundTag.class, CompoundTag.CODEC);
+        registerCodec(BlockState.class, BlockStateCodec.CODEC);
     }
 
     private JsonVariable(JsonElement internal) {

@@ -33,7 +33,7 @@ configurations.get("runtimeClasspath").extendsFrom(localRuntimeOnly)
 dependencies {
     compileOnly( project(":common") )
     minecraft( libs.minecraft )
-    mappings(loom.layered() {
+    mappings(loom.layered {
         officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.minecraft.get()}:${libs.versions.parchment.asProvider().get()}@zip")
     })
@@ -107,7 +107,8 @@ modrinth {
     loaders.set(listOf("fabric"))
     gameVersions.set(listOf(mcVersion))
 
-    //debugMode = true
+    val debug_publish: String by project
+    debugMode = debug_publish.toBoolean()
     //https://github.com/modrinth/minotaur#available-properties
 }
 
@@ -123,7 +124,8 @@ tasks.register<TaskPublishCurseForge>("publishToCurseForge") {
     mainFile.addGameVersion(mcVersion)
     mainFile.addJavaVersion("Java 21")
 
-    //debugMode = true
+    val debug_publish: String by project
+    debugMode = debug_publish.toBoolean()
     //https://github.com/Darkhax/CurseForgeGradle#available-properties
 }
 

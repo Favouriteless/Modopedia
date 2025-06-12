@@ -42,7 +42,9 @@ tasks.create("postDiscord") {
     group = "publishing"
     doLast {
         try {
-            if(System.getenv("MODOPEDIA_RELEASE_WEBHOOK") != null) {
+            val debug_publish: String by project
+
+            if(!debug_publish.toBoolean() && System.getenv("MODOPEDIA_RELEASE_WEBHOOK") != null) {
                 val webhook = Webhook(System.getenv("MODOPEDIA_RELEASE_WEBHOOK"), "Modopedia Gradle Upload")
 
                 val message = Message()

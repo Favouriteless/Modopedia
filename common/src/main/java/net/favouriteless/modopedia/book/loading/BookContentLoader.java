@@ -158,7 +158,7 @@ public class BookContentLoader {
                 out.add(page);
             }
             catch(Exception e) {
-                Modopedia.LOG.info("Error loading page for entry {}: {}", entry, e.getMessage());
+                Modopedia.LOG.error("Error loading page for entry {}: {}", entry, e.getMessage());
             }
         }
         return out;

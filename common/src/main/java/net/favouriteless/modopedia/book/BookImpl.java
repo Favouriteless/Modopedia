@@ -119,7 +119,7 @@ public class BookImpl implements Book {
             Codec.INT.optionalFieldOf("line_width", 100).forGetter(Book::getLineWidth)
     ).apply(instance, (title, subtitle, type, landingText, texture, model, tab, font, textColour, headerColour, lineWidth) ->
             new BookImpl(title, subtitle.orElse(null), type, landingText.orElse(null), texture,
-                    model, tab.get(), font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
+                    model, tab.orElse(null), font, Integer.parseInt(textColour, 16), Integer.parseInt(headerColour, 16),
                     lineWidth))
     );
 
@@ -134,7 +134,7 @@ public class BookImpl implements Book {
                     ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ResourceLocation.STREAM_CODEC.decode(buf),
-                    ResourceKey.streamCodec(Registries.CREATIVE_MODE_TAB).decode(buf),
+                    ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.CREATIVE_MODE_TAB)).decode(buf).orElse(null),
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
                     ByteBufCodecs.INT.decode(buf),
@@ -150,7 +150,7 @@ public class BookImpl implements Book {
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getRawLandingText()));
             ResourceLocation.STREAM_CODEC.encode(buf, book.getTexture());
             ResourceLocation.STREAM_CODEC.encode(buf, book.getItemModelLocation());
-            ResourceKey.streamCodec(Registries.CREATIVE_MODE_TAB).encode(buf, book.getCreativeTab());
+            ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.CREATIVE_MODE_TAB)).encode(buf, Optional.ofNullable(book.getCreativeTab()));
             ResourceLocation.STREAM_CODEC.encode(buf, book.getFont());
             ByteBufCodecs.INT.encode(buf, book.getTextColour());
             ByteBufCodecs.INT.encode(buf, book.getHeaderColour());

@@ -66,8 +66,7 @@ tasks.withType<ProcessResources>().configureEach {
             "neoforge_loader_range" to neoLoaderRange,
             "minecraft_version_range" to mcVersionRange,
             "fabric_api_version" to fapiVersion,
-            "fabric_loader_version" to fabricVersion,
-            "author" to "Favouriteless"
+            "fabric_loader_version" to fabricVersion
     )
 
     filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
@@ -83,7 +82,7 @@ tasks.withType<GenerateModuleMetadata>().configureEach {
 
 publishing {
     repositories {
-        if (System.getenv("FAVOURITELESS_MAVEN_USER") == null && System.getenv("FAVOURITELESS_MAVEN_PASS") == null) {
+        if(System.getenv("FAVOURITELESS_MAVEN_USER") == null || System.getenv("FAVOURITELESS_MAVEN_PASS") == null) {
             mavenLocal()
         }
         else maven {
