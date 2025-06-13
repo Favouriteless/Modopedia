@@ -27,7 +27,7 @@ public class StudyManager {
         String langCode = Minecraft.getInstance().options.languageCode;
         EntryAssociation association = ItemAssociationRegistry.getAssociation(langCode, BuiltInRegistries.ITEM.getKey(item));
 
-        if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), ModopediaClient.KEY_STUDY.getDefaultKey().getValue())) {
+        if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), ModopediaClient.KEY_STUDY.key.getValue())) {
             if(++studyTicks < STUDY_TICKS_MAX)
                 return;
             stopStudying();
