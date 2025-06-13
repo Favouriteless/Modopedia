@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  *     See {@link ClassicBookType} for an example.
  * </p>
  */
-public interface BookScreenFactory<T extends BookType> {
+public interface  BookScreenFactory<T extends BookType> {
 
     /**
      * @return The "Landing Screen" of a book of this type. The first page viewed when a book is opened for the first

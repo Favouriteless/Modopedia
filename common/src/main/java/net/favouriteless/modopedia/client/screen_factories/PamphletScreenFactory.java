@@ -10,24 +10,23 @@ import net.favouriteless.modopedia.client.screens.books.CategoryScreen;
 import net.favouriteless.modopedia.client.screens.books.EntryScreen;
 import net.favouriteless.modopedia.client.screens.books.PamphletLandingScreen;
 import net.favouriteless.modopedia.common.book_types.PamphletBookType;
-import org.jetbrains.annotations.Nullable;
 
 public class PamphletScreenFactory implements BookScreenFactory<PamphletBookType> {
 
     @Override
-    public @Nullable BookScreen openLandingScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
+    public BookScreen openLandingScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
         Category cat = getCategory(content);
         return cat != null ? new PamphletLandingScreen(book, langCode, content, cat, lastScreen) : null;
     }
 
     @Override
-    public @Nullable BookScreen openCategoryScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
+    public BookScreen openCategoryScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
         return cat != null ? new CategoryScreen(book, langCode, content, cat, lastScreen) : lastScreen;
     }
 
     @Override
-    public @Nullable BookScreen openEntryScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, String entry, BookScreen lastScreen) {
+    public BookScreen openEntryScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, String entry, BookScreen lastScreen) {
         Entry ent = content.getEntry(entry);
         return ent != null ? new EntryScreen(book, langCode, content, ent, lastScreen) : null;
     }

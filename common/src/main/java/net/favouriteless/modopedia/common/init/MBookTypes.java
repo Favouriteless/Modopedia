@@ -16,7 +16,6 @@ public class MBookTypes {
 
     public static void load() {
         BookTypeRegistry registry = BookTypeRegistry.get();
-
         registry.register(CLASSIC);
         registry.register(PAMPHLET);
         registry.register(PAGE);

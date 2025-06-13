@@ -1,0 +1,62 @@
+name: Bug Report
+description: File a bug report.
+title: "[BUG]: "
+labels: ["type:bug"]
+assignees:
+  - Favouriteless
+body:
+  - type: checkboxes
+    id: unique-issue
+    attributes:
+      label: Please confirm the following
+      options:
+        - label: This bug is not in another [current issue](https://github.com/Favouriteless/Modopedia/issues)
+          required: true
+        - label: This report is not a general support request. If it is, join the [Discord](https://discord.gg/UkVgJ9nb5y)
+          required: true
+  - type: dropdown
+    id: minecraft-version
+    attributes:
+      label: Minecraft version
+      description: What minecraft version did the bug occur on?
+      options:
+        - 1.21.1
+    validations:
+      required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod version
+      description: Which version of Modopedia did the bug occur on?
+      placeholder: (e.g. 1.0.6)
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: What happened? How? Give as much detail as you can about the bug.
+    validations:
+      required: true
+  - type: input
+    id: log
+    attributes:
+      label: Game Log
+      description: Provide a link to your log on a paste site such as [Gist](https://gist.github.com/) or [mclo.gs](https://mclo.gs/).
+    validations:
+      required: true
+  - type: dropdown
+    id: additional-mods
+    attributes:
+      label: Additional mods
+      description: Did you have any mods installed other than Modopedia?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: additional-modlist
+    attributes:
+      label: Mod List or Modpack
+      description: If you answered yes on the question above, provide a link to your modpack or list of all other mods you had installed.
