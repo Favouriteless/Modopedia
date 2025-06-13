@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
-import net.favouriteless.modopedia.book.registries.BookTextureRegistryImpl;
+import net.favouriteless.modopedia.book.registries.client.BookTextureRegistryImpl;
 import net.favouriteless.modopedia.util.MExtraCodecs;
 import net.minecraft.resources.ResourceLocation;
 

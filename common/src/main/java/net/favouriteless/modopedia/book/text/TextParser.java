@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.book.text;
 
 import com.mojang.datafixers.util.Pair;
-import net.favouriteless.modopedia.book.registries.TextFormatterRegistry;
+import net.favouriteless.modopedia.book.registries.client.TextFormatterRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;

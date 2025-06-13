@@ -1,31 +1,68 @@
 package net.favouriteless.modopedia.client;
 
-import com.mojang.datafixers.util.Function5;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.books.BookScreenFactory;
 import net.favouriteless.modopedia.api.books.BookType;
 import net.favouriteless.modopedia.api.registries.BookContentRegistry;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
+import net.favouriteless.modopedia.api.registries.BookScreenFactoryRegistry;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.Function;
 
 public class BookOpenHandler {
 
     public static void tryOpenBook(ResourceLocation id) {
-        tryOpenInternal(id, (type, book, lang, content, screen) -> screen != null ? screen : type.openLandingScreen(book, lang, content, null));
+        Book book = BookRegistry.get().getBook(id);
+        if(book == null)
+            return;
+
+        String lang = Minecraft.getInstance().options.languageCode;
+        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+
+        LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
+        if(content == null)
+            return;
+
+        BookType type = book.getType();
+        openBookScreen(tryUseFactory(type, f -> last != null ? last : f.openLandingScreen(type, book, lang, content, null)));
     }
 
-    public static void tryOpenCategory(ResourceLocation id, String categoryId) {
-        tryOpenInternal(id, (type, book, lang, content, lastScreen) -> type.openCategoryScreen(book, lang, content, categoryId, lastScreen));
+    public static void tryOpenCategory(ResourceLocation id, String category) {
+        Book book = BookRegistry.get().getBook(id);
+        if(book == null)
+            return;
+
+        String lang = Minecraft.getInstance().options.languageCode;
+        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+
+        LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
+        if(content == null)
+            return;
+
+        BookType type = book.getType();
+        openBookScreen(tryUseFactory(type, f -> f.openCategoryScreen(type, book, lang, content, category, last)));
     }
 
-    public static void tryOpenEntry(ResourceLocation id, String entryId) {
-        tryOpenInternal(id, (type, book, lang, content, lastScreen) -> type.openEntryScreen(book, lang, content, entryId, lastScreen));
+    public static void tryOpenEntry(ResourceLocation id, String entry) {
+        Book book = BookRegistry.get().getBook(id);
+        if(book == null)
+            return;
+
+        String lang = Minecraft.getInstance().options.languageCode;
+        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+
+        LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
+        if(content == null)
+            return;
+
+        BookType type = book.getType();
+        openBookScreen(tryUseFactory(type, f -> f.openEntryScreen(type, book, lang, content, entry, last)));
     }
 
     public static void tryOpenCategory(String category) {
@@ -38,28 +75,16 @@ public class BookOpenHandler {
             tryOpenEntry(BookRegistry.get().getId(screen.getBook()), entry);
     }
 
-    private static void tryOpenInternal(ResourceLocation id, Function5<BookType, Book, String, LocalisedBookContent, BookScreen, BookScreen> opener) {
-        Book book = BookRegistry.get().getBook(id);
-        if(book == null)
-            return;
-
-        BookType type = BookTypeRegistry.get().getType(book.getType());
-        if(type == null)
-            return;
-
-        BookContent content = BookContentRegistry.get().getContent(id);
-        if(content == null)
-            return;
-
-        String lang = Minecraft.getInstance().options.languageCode;
-        LocalisedBookContent localContent = content.getContent(lang);
-        if(localContent == null)
-            return;
-
-        Screen screen = opener.apply(type, book, lang, localContent, ScreenCache.get().getLastScreen(id, lang));
-
+    private static void openBookScreen(BookScreen screen) {
         if(screen != null)
             Minecraft.getInstance().setScreen(screen);
+    }
+
+    private static <T extends BookType> BookScreen tryUseFactory(T type, Function<BookScreenFactory<T>, BookScreen> user) {
+        BookScreenFactory<T> factory = BookScreenFactoryRegistry.get().get(type);
+        if(factory == null)
+            Modopedia.LOG.error("Could not find a BookScreenFactory for {}", type.type().id());
+        return factory != null ? user.apply(factory) : null;
     }
 
 }

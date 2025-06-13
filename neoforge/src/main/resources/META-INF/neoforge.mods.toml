@@ -15,6 +15,9 @@ license = "MIT"
 [[mixins]]
     config="modopedia.neoforge.mixins.json"
 
+[[mixins]]
+    config="modopedia.mixins.json"
+
 [[dependencies.modopedia]]
     modId = "neoforge"
     type="required" #mandatory

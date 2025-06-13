@@ -3,7 +3,6 @@ package net.favouriteless.modopedia.book.text.formatters;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
@@ -29,7 +28,7 @@ public class InternalLinkFormatter implements TextFormatter {
         String command = String.format("/modopedia open %s \"%s\"", type, id);
 
         stack.modify(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command)));
-        stack.modify(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(Modopedia.translation("tooltip", type + "_link")).withStyle(ChatFormatting.DARK_GRAY))));
+        stack.modify(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(Modopedia.translation("tooltip", type + "_link")))));
     }
 
 }

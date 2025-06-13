@@ -58,7 +58,7 @@ public class EntryImpl implements Entry {
     public static final Codec<EntryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Entry::getTitle),
             ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(EntryImpl::getIcon),
-            ResourceLocation.CODEC.listOf().optionalFieldOf("assigned_item").forGetter(e -> Optional.ofNullable(e.getAssignedItems()))
+            ResourceLocation.CODEC.listOf().optionalFieldOf("assigned_items").forGetter(e -> Optional.ofNullable(e.getAssignedItems()))
     ).apply(instance, (title, icon, assignedItem) -> new EntryImpl(title, icon, assignedItem.orElse(List.of()))));
     
 }

@@ -5,7 +5,10 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.TemplateRegistry;
 import net.favouriteless.modopedia.book.Template;
-import net.favouriteless.modopedia.book.template_processors.*;
+import net.favouriteless.modopedia.client.template_processors.CookingRecipeProcessor;
+import net.favouriteless.modopedia.client.template_processors.CraftingTableProcessor;
+import net.favouriteless.modopedia.client.template_processors.FrameSpacingProcessor;
+import net.favouriteless.modopedia.client.template_processors.HeaderedTextProcessor;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;

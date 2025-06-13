@@ -21,9 +21,9 @@ import org.jetbrains.annotations.Nullable;
 public interface Book {
 
     /**
-     * @return ID for this book's {@link BookType}.
+     * @return {@link BookType} instance belonging to this book.
      */
-    ResourceLocation getType();
+    BookType getType();
 
     /**
      * @return Title of this book-- this will be the item's name and rendered at the top of the landing page.

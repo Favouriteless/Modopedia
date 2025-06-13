@@ -7,7 +7,7 @@ import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.page_components.PageComponent;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.book.page_components.ErrorPageComponent;
+import net.favouriteless.modopedia.client.page_components.ErrorPageComponent;
 import net.favouriteless.modopedia.book.variables.VariableLookup;
 import net.minecraft.world.level.Level;
 

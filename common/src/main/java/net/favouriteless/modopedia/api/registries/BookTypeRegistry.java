@@ -1,7 +1,8 @@
 package net.favouriteless.modopedia.api.registries;
 
+import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.book.registries.BookTypeRegistryImpl;
+import net.favouriteless.modopedia.book.registries.common.BookTypeRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,8 +18,13 @@ public interface BookTypeRegistry {
     /**
      * Register a new {@link BookType}. Duplicates are not allowed.
      */
-    void register(ResourceLocation id, BookType factory);
+    void register(BookType.Type<?> type);
 
-    @Nullable BookType getType(ResourceLocation id);
+    @Nullable BookType.Type<?> getType(ResourceLocation id);
+
+    /**
+     * @return The main {@link BookType} dispatch codec.
+     */
+    Codec<BookType> codec();
 
 }

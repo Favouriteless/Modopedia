@@ -5,6 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.books.BookType;
+import net.favouriteless.modopedia.common.book_types.ClassicBookType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -17,7 +19,7 @@ import java.util.Optional;
 
 public class BookImpl implements Book {
 
-    private final ResourceLocation type;
+    private final BookType type;
     private final String title;
     private final String subtitle;
     private final String rawLandingText;
@@ -30,9 +32,9 @@ public class BookImpl implements Book {
     private final int headerColour;
     private final int lineWidth;
 
-    public BookImpl(String title, String subtitle, ResourceLocation type, String rawLandingText,
-                    ResourceLocation texture, ResourceLocation itemModel, ResourceKey<CreativeModeTab> tab,
-                    ResourceLocation font, int textColour, int headerColour, int lineWidth) {
+    public BookImpl(String title, String subtitle, BookType type, String rawLandingText, ResourceLocation texture,
+                    ResourceLocation itemModel, ResourceKey<CreativeModeTab> tab, ResourceLocation font, int textColour,
+                    int headerColour, int lineWidth) {
         this.type = type;
         this.title = title;
         this.subtitle = subtitle;
@@ -47,7 +49,7 @@ public class BookImpl implements Book {
     }
 
     @Override
-    public ResourceLocation getType() {
+    public BookType getType() {
         return type;
     }
 
@@ -108,7 +110,7 @@ public class BookImpl implements Book {
     public static final Codec<Book> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Book::getTitle),
             Codec.STRING.optionalFieldOf("subtitle").forGetter(b -> Optional.ofNullable(b.getSubtitle())),
-            ResourceLocation.CODEC.optionalFieldOf("type", Modopedia.id("classic")).forGetter(Book::getType),
+            BookType.codec().optionalFieldOf("type", new ClassicBookType()).forGetter(Book::getType),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(b -> Optional.ofNullable(b.getRawLandingText())),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/default")).forGetter(Book::getItemModelLocation),
@@ -126,11 +128,12 @@ public class BookImpl implements Book {
     public static final StreamCodec<ByteBuf, Book> STREAM_CODEC = new StreamCodec<>() { // StreamCodec.composite overloads were too small :(
 
         @Override
+        @SuppressWarnings("rawtypes")
         public Book decode(ByteBuf buf) {
             return new BookImpl(
                     ByteBufCodecs.STRING_UTF8.decode(buf),
                     ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
-                    ResourceLocation.STREAM_CODEC.decode(buf),
+                    ByteBufCodecs.fromCodec(BookType.codec()).decode(buf),
                     ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).decode(buf).orElse(null),
                     ResourceLocation.STREAM_CODEC.decode(buf),
                     ResourceLocation.STREAM_CODEC.decode(buf),
@@ -146,7 +149,7 @@ public class BookImpl implements Book {
         public void encode(ByteBuf buf, Book book) {
             ByteBufCodecs.STRING_UTF8.encode(buf, book.getTitle());
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getSubtitle()));
-            ResourceLocation.STREAM_CODEC.encode(buf, book.getType());
+            ByteBufCodecs.fromCodec(BookType.codec()).encode(buf, book.getType());
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8).encode(buf, Optional.ofNullable(book.getRawLandingText()));
             ResourceLocation.STREAM_CODEC.encode(buf, book.getTexture());
             ResourceLocation.STREAM_CODEC.encode(buf, book.getItemModelLocation());

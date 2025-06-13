@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api.registries;
 
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.book.registries.BookTextureRegistryImpl;
+import net.favouriteless.modopedia.book.registries.client.BookTextureRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

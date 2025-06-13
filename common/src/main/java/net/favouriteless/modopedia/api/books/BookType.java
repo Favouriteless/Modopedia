@@ -1,10 +1,10 @@
 package net.favouriteless.modopedia.api.books;
 
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.client.screens.books.BookScreen;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
 import net.favouriteless.modopedia.client.screens.books.ClassicLandingScreen;
-import net.minecraft.client.gui.screens.Screen;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * <p>
@@ -17,21 +17,18 @@ import org.jetbrains.annotations.Nullable;
 public interface BookType {
 
     /**
-     * @return The "Landing Screen" of a book of this type. The first page viewed when a book is opened for the first
-     * time. It acts as the "home page" of a book.
+     * @return The main {@link BookType} dispatch codec.
      */
-    @Nullable BookScreen openLandingScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen);
+    static Codec<BookType> codec() {
+        return BookTypeRegistry.get().codec();
+    }
 
     /**
-     * @return A "entry" screen for a given entry location. Traditionally this shows a list of entries in the
-     * entry.
+     * @return {@link Type} for this type of BookType.
      */
-    @Nullable BookScreen openCategoryScreen(Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen);
+    Type<?> type();
 
-    /**
-     * @return An "entry" screen for a given entry location. Traditionally this just renders each of the pages with
-     * the components on them.
-     */
-    @Nullable BookScreen openEntryScreen(Book book, String langCode, LocalisedBookContent content, String entry, BookScreen lastScreen);
+
+    record Type<T extends BookType>(ResourceLocation id, MapCodec<T> codec) {}
 
 }

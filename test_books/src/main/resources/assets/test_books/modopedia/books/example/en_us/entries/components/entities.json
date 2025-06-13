@@ -1,6 +1,7 @@
 {
   "title": "Entity Displays",
   "icon": { "id": "minecraft:egg" },
+  "assigned_items": [ "minecraft:egg" ],
   "pages": [
     {
       "components": [

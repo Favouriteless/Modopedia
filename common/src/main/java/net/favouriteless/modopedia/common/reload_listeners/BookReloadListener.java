@@ -7,7 +7,7 @@ import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.common.BookRegistryImpl;
+import net.favouriteless.modopedia.book.registries.common.BookRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;

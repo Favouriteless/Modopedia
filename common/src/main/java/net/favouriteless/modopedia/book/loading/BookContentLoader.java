@@ -15,7 +15,7 @@ import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
 import net.favouriteless.modopedia.api.registries.TemplateRegistry;
 import net.favouriteless.modopedia.book.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
-import net.favouriteless.modopedia.book.page_components.TemplatePageComponent;
+import net.favouriteless.modopedia.client.page_components.TemplatePageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
 import net.favouriteless.modopedia.book.variables.VariableLookup;
