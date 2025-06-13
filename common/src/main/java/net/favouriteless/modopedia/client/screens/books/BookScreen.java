@@ -5,8 +5,8 @@ import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
@@ -31,6 +31,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int ticks = 0;
     protected int leftPos = 0;
     protected int topPos = 0;
+    protected boolean shiftDown;
 
     public BookScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen, Component title) {
         super(title);

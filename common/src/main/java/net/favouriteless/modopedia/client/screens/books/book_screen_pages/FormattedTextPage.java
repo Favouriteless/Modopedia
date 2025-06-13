@@ -24,8 +24,10 @@ public class FormattedTextPage extends ScreenPage {
     @Override
     public void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick) {
         for(TextChunk chunk : landingText) {
-            chunk.render(graphics, textX, textY, mouseX, mouseY);
+            chunk.render(graphics, textX, textY, mouseX - textX, mouseY - textY);
         }
     }
+
+
 
 }

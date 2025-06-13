@@ -34,14 +34,14 @@ public class TextPageComponent extends PageComponent {
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
         for(TextChunk word : textChunks) {
-            word.render(graphics, x, y, mouseX, mouseY);
+            word.render(graphics, x, y, mouseX - x, mouseY - y);
         }
     }
 
     @Override
     public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
         for(TextChunk chunk : textChunks) {
-            if(chunk.mouseClicked(context, mouseX, mouseY, button))
+            if(chunk.mouseClicked(context, mouseX - x, mouseY - y, button))
                 return true;
         }
         return false;

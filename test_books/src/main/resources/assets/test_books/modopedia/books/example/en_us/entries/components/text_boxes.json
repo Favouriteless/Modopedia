@@ -6,23 +6,8 @@
       "components": [
         {
           "type": "modopedia:text",
-          "x": 0,
-          "y": 0,
-          "text": "This is very cool $(c:red)left justified$(/c) text."
-        },
-        {
-          "type": "modopedia:text",
-          "x": 0,
-          "y": 25,
-          "text": "This is very cool $(c:green)center justified$(/c) text.",
-          "justify": "center"
-        },
-        {
-          "type": "modopedia:text",
-          "x": 0,
-          "y": 50,
-          "text": "This is very cool $(c:blue)right justified$(/c) text.",
-          "justify": "right"
+          "y": 70,
+          "text": "$(cl:templates)Category$(/cl) and $(el:templates/headered_text)Entry$(/el)"
         }
       ]
     }

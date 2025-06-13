@@ -25,6 +25,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
         this.rectangle = rectangle;
         for(PageComponent component : page.getComponents()) {
             renderables.add(component);
+            widgets.add(component);
             component.initWidgets(this, parent);
         }
     }

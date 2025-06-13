@@ -12,28 +12,28 @@ public class ColorFormatter implements TextFormatter {
     }
 
     @Override
-    public void apply(StyleStack styleStack, String tag) {
+    public void apply(StyleStack stack, String tag) {
         String colour = tag.substring(2);
 
         if(colour.matches("#[a-fA-F0-9]{6}")) { // Hex colour with #
-            styleStack.modify(style -> style.withColor(Integer.decode(colour)));
+            stack.modify(style -> style.withColor(Integer.decode(colour)));
             return;
         }
         else if(colour.matches("\\d{1,2}")) { // ChatFormatting ID (1 or 2 digit int)
             ChatFormatting formatting = ChatFormatting.getById(Integer.parseUnsignedInt(colour));
             if(formatting != null) {
-                styleStack.modify(style -> style.withColor(formatting));
+                stack.modify(style -> style.withColor(formatting));
                 return;
             }
         }
         else if(colour.matches("[a-zA-Z]+")){ // ChatFormatting name (word)
             ChatFormatting formatting = ChatFormatting.getByName(colour.toUpperCase());
             if(formatting != null) {
-                styleStack.modify(style -> style.withColor(formatting));
+                stack.modify(style -> style.withColor(formatting));
                 return;
             }
         }
-        styleStack.pop();
+        stack.pop();
         throw new IllegalArgumentException(colour + " is not a valid colour ID, name or hex value.");
     }
 

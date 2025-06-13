@@ -1,12 +1,11 @@
 package net.favouriteless.modopedia.client.screens.books;
 
-import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.books.Category;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
-import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextScreenPage;
+import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextPage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -29,9 +28,6 @@ public class CategoryScreen extends ButtonListScreen {
                     CategoryScreen::createEntryButton
                 ));
         this.category = category;
-
-        if(lastScreen == null)
-            ScreenCache.get().setLastScreen(bookId, langCode, null); // You could get stuck in the cat screen if we didn't do this.
     }
 
     public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category) {
@@ -46,7 +42,7 @@ public class CategoryScreen extends ButtonListScreen {
         if(sep != null)
             y += sep.height();
 
-        return new TitledTextScreenPage(this, title, category.getLandingText(), y, texture.pages().getFirst());
+        return new TitledTextPage(this, title, category.getLandingText(), y, texture.pages().getFirst());
     }
 
 }

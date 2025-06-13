@@ -4,6 +4,7 @@ import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.favouriteless.modopedia.book.text.formatters.ColorFormatter;
 import net.favouriteless.modopedia.book.text.formatters.HoverItemFormatter;
+import net.favouriteless.modopedia.book.text.formatters.InternalLinkFormatter;
 import net.favouriteless.modopedia.book.text.formatters.SimpleFormatter;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -31,18 +32,19 @@ public class TextFormatterRegistry {
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, tag.substring(2)))), "l:https?://.*"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, tag.substring(4)))), "cmd:/.+"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, tag.substring(5)))), "clip:.+"));
-        register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withClickEvent(null)), "/l", "/cmd", "/clip"));
+        register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withClickEvent(null)), "/l", "/cmd", "/clip", "/cl", "/el"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(tag.substring(2))))), "t:.+"));
-        register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withHoverEvent(null)), "/t"));
+        register(new SimpleFormatter((stack, tag) -> stack.modify(s -> s.withHoverEvent(null)), "/t", "/hi", "/cl", "/el"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withColor(stack.getBaseStyle().getColor())), "/c"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> stack.getBaseStyle()), "^$")); // this matches an empty string
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withFont(ResourceLocation.parse(tag.substring(2)))), "f:.+"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withFont(stack.getBaseStyle().getFont())), "/f"));
-        register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withHoverEvent(null)), "/hi"));
 
 //        register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withClickEvent(ClickEvent.Action.))));
 
         // These formatters needed special handling.
+        register(new InternalLinkFormatter("cl:", "category"));
+        register(new InternalLinkFormatter("el:", "entry"));
         register(new ColorFormatter());
         register(new HoverItemFormatter());
     }

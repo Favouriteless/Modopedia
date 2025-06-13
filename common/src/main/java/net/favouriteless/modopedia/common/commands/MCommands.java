@@ -3,7 +3,6 @@ package net.favouriteless.modopedia.common.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.sun.jdi.connect.Connector.StringArgument;
 import net.favouriteless.modopedia.common.network.packets.client.OpenBookPayload;
 import net.favouriteless.modopedia.common.network.packets.client.OpenCategoryPayload;
 import net.favouriteless.modopedia.common.network.packets.client.OpenEntryPayload;
@@ -15,6 +14,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Optional;
 
 public class MCommands {
 
@@ -29,13 +30,21 @@ public class MCommands {
                                 .then(Commands.literal("category")
                                         .then(Commands.argument("book_id", ResourceLocationArgument.id())
                                                 .then(Commands.argument("category_id", StringArgumentType.string())
-                                                        .executes(MCommands::openCategory))
+                                                        .executes(ctx -> openCategory(ctx, ResourceLocationArgument.getId(ctx, "book_id")))
+                                                )
+                                        )
+                                        .then(Commands.argument("category_id", StringArgumentType.string())
+                                                .executes(ctx -> openCategory(ctx, null))
                                         )
                                 )
                                 .then(Commands.literal("entry")
                                         .then(Commands.argument("book_id", ResourceLocationArgument.id())
                                                 .then(Commands.argument("entry_id", StringArgumentType.string())
-                                                        .executes(MCommands::openEntry))
+                                                        .executes(ctx -> openEntry(ctx, ResourceLocationArgument.getId(ctx, "book_id")))
+                                                )
+                                        )
+                                        .then(Commands.argument("entry_id", StringArgumentType.string())
+                                                .executes(ctx -> openEntry(ctx, null))
                                         )
                                 )
                         )
@@ -61,25 +70,25 @@ public class MCommands {
         return 1;
     }
 
-    public static int openCategory(CommandContext<CommandSourceStack> context) {
+    public static int openCategory(CommandContext<CommandSourceStack> context, ResourceLocation id) {
         ServerPlayer player = context.getSource().getPlayer();
         if(player == null)
             return 0;
 
         CommonServices.NETWORK.sendToPlayer(new OpenCategoryPayload(
-                ResourceLocationArgument.getId(context, "book_id"),
+                Optional.ofNullable(id),
                 StringArgumentType.getString(context, "category_id")
         ), player);
         return 1;
     }
 
-    public static int openEntry(CommandContext<CommandSourceStack> context) {
+    public static int openEntry(CommandContext<CommandSourceStack> context, ResourceLocation id) {
         ServerPlayer player = context.getSource().getPlayer();
         if(player == null)
             return 0;
 
         CommonServices.NETWORK.sendToPlayer(new OpenEntryPayload(
-                ResourceLocationArgument.getId(context, "book_id"),
+                Optional.ofNullable(id),
                 StringArgumentType.getString(context, "entry_id")
         ), player);
         return 1;

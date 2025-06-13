@@ -1,4 +1,8 @@
-- ADDED: Multiblock page components now have a `view_angle` key to change the viewing perspective. Default is 30 degrees (isometric)
+- ADDED: Multiblock page components now have a `view_angle` key to change the viewing perspective. Default is 30 degrees (isometric).
+- ADDED: Commands for opening books, categories and entries. Start with /modopedia.
+- ADDED: Item hover text formatting tag.
+- ADDED: Internal link text formatting tags.
+- ADDED: Holding shift while pressing the back button will take you to the landing page.
 
 - CHANGED: `modopedia:shapeless_recipe` and `modopedia:shaped_recipe` templates have been merged into `modopedia:crafting_table_recipe`.
 

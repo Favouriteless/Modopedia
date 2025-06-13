@@ -9,12 +9,14 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 
-public record OpenCategoryPayload(ResourceLocation book, String category) implements CustomPacketPayload {
+import java.util.Optional;
+
+public record OpenCategoryPayload(Optional<ResourceLocation> book, String category) implements CustomPacketPayload {
 
 	public static final Type<OpenCategoryPayload> TYPE = new Type<>(Modopedia.id("open_category"));
 
 	public static final StreamCodec<ByteBuf, OpenCategoryPayload> STREAM_CODEC = StreamCodec.composite(
-			ResourceLocation.STREAM_CODEC, OpenCategoryPayload::book,
+			ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), OpenCategoryPayload::book,
 			ByteBufCodecs.STRING_UTF8, OpenCategoryPayload::category,
 			OpenCategoryPayload::new
 	);
@@ -25,7 +27,7 @@ public record OpenCategoryPayload(ResourceLocation book, String category) implem
 	}
 
 	public void handle() {
-		BookOpenHandler.tryOpenCategory(book, category);
+		book.ifPresentOrElse(id -> BookOpenHandler.tryOpenCategory(id, category), () -> BookOpenHandler.tryOpenCategory(category));
 	}
 
 }

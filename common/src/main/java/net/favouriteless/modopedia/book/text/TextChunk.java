@@ -28,12 +28,13 @@ public class TextChunk implements PageEventListener {
         this.height = height;
     }
 
+    // CHUNK DOESN'T KNOW WHERE IT IS ON A SCREEN, ONLY WHERE IT IS RELATIVE TO IT'S TEXTBOX. MOUSE POSITIONS MUST BE TRANSFORMED FIRST.
     public void render(GuiGraphics graphics, int x, int y, int mouseX, int mouseY) {
         Font font = Minecraft.getInstance().font;
         graphics.drawString(font, text, this.x + x, this.y + y, 0x000000, false); // Defaults to black if no colour is present.
 
         if(isMouseOver(mouseX, mouseY))
-            graphics.renderComponentHoverEffect(font, text.getStyle(), mouseX, mouseY);
+            graphics.renderComponentHoverEffect(font, text.getStyle(), mouseX + x, mouseY + y);
     }
 
     @Override

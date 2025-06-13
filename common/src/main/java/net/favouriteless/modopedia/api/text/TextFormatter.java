@@ -15,6 +15,6 @@ public interface TextFormatter {
     /**
      * Perform changes on the stack where this tag is relevant.
      */
-    void apply(StyleStack styleStack, String tag);
+    void apply(StyleStack stack, String tag);
 
 }

@@ -28,6 +28,16 @@ public class BookOpenHandler {
         tryOpenInternal(id, (type, book, lang, content, lastScreen) -> type.openEntryScreen(book, lang, content, entryId, lastScreen));
     }
 
+    public static void tryOpenCategory(String category) {
+        if(Minecraft.getInstance().screen instanceof BookScreen screen)
+            tryOpenCategory(BookRegistry.get().getId(screen.getBook()), category);
+    }
+
+    public static void tryOpenEntry(String entry) {
+        if(Minecraft.getInstance().screen instanceof BookScreen screen)
+            tryOpenEntry(BookRegistry.get().getId(screen.getBook()), entry);
+    }
+
     private static void tryOpenInternal(ResourceLocation id, Function5<BookType, Book, String, LocalisedBookContent, BookScreen, BookScreen> opener) {
         Book book = BookRegistry.get().getBook(id);
         if(book == null)

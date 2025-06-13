@@ -25,8 +25,8 @@ public class SimpleFormatter implements TextFormatter {
     }
 
     @Override
-    public void apply(StyleStack styleStack, String tag) {
-        applyConsumer.accept(styleStack, tag);
+    public void apply(StyleStack stack, String tag) {
+        applyConsumer.accept(stack, tag);
     }
 
 }
