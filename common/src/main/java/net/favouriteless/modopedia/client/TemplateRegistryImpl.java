@@ -23,8 +23,7 @@ public class TemplateRegistryImpl implements TemplateRegistry {
         registerProcessor(Modopedia.id("medium_frame_spacing"), new FrameSpacingProcessor("medium_frame"));
         registerProcessor(Modopedia.id("large_frame_spacing"), new FrameSpacingProcessor("large_frame"));
         registerProcessor(Modopedia.id("crafting_grid_spacing"), new FrameSpacingProcessor("crafting_grid"));
-        registerProcessor(Modopedia.id("shaped_recipe"), new ShapedRecipeProcessor());
-        registerProcessor(Modopedia.id("shapeless_recipe"), new ShapelessRecipeProcessor());
+        registerProcessor(Modopedia.id("crafting_table_recipe"), new CraftingTableProcessor());
         registerProcessor(Modopedia.id("cooking_recipe"), new CookingRecipeProcessor());
     }
 

@@ -98,7 +98,7 @@ public class MultiblockPageComponent extends PageComponent {
         pose.pushPose();
         pose.translate(offsetX, offsetY, 0);
 
-        pose.translate(x + width/2, y + height/2, 100);
+        pose.translate(x + width / 2.0F, y + height / 2.0F, 100);
         pose.scale(scale, scale, scale);
         pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, 0);
 

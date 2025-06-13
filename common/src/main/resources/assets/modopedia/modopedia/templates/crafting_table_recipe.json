@@ -1,5 +1,5 @@
 {
-  "processor": "modopedia:shaped_recipe",
+  "processor": "modopedia:crafting_table_recipe",
   "components": [
     {
       "template": "modopedia:framed_crafting_grid",
@@ -16,9 +16,7 @@
       "y": "#arrow_y",
       "width": "#arrow_width",
       "height": "#arrow_height",
-      "tooltip": [
-        "template.modopedia.shaped_recipe"
-      ]
+      "tooltip": "#tooltip"
     },
     {
       "template": "modopedia:framed_item",

@@ -5,7 +5,7 @@
     {
       "components": [
         {
-          "template": "modopedia:shapeless_recipe",
+          "template": "modopedia:crafting_table_recipe",
           "recipe": "minecraft:purple_dye"
         }
       ]
