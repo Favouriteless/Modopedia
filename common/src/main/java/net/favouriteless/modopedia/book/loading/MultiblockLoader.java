@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
-import net.favouriteless.modopedia.api.registries.MultiblockRegistry;
+import net.favouriteless.modopedia.api.registries.client.MultiblockRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;

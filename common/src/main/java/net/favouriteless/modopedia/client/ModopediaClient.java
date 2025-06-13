@@ -6,6 +6,7 @@ import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
 import net.favouriteless.modopedia.client.init.MBookScreenFactories;
 import net.favouriteless.modopedia.client.init.MPageComponents;
+import net.favouriteless.modopedia.client.init.MTextFormatters;
 import net.favouriteless.modopedia.platform.ClientServices;
 import net.favouriteless.modopedia.platform.services.IClientRegistryHelper.KeyConflictContext;
 import net.minecraft.ChatFormatting;
@@ -29,6 +30,7 @@ public class ModopediaClient {
             KeyMapping.CATEGORY_INVENTORY, KeyConflictContext.GUI);
 
     public static void init() {
+        MTextFormatters.load();
         MPageComponents.load();
         MBookScreenFactories.load();
     }

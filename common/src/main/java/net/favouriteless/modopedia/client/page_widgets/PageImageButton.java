@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.page_widgets;
 
-import net.favouriteless.modopedia.api.books.page_components.AbstractPageWidget;
-import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
+import net.favouriteless.modopedia.api.book.page_components.AbstractPageWidget;
+import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;

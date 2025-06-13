@@ -1,11 +1,11 @@
 package net.favouriteless.modopedia.client.screens.books;
 
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.Entry;
-import net.favouriteless.modopedia.api.books.Page;
-import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.Entry;
+import net.favouriteless.modopedia.api.book.Page;
+import net.favouriteless.modopedia.api.book.page_components.PageEventListener;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.EntryScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.minecraft.network.chat.Component;

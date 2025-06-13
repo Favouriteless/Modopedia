@@ -3,10 +3,10 @@ package net.favouriteless.modopedia.book.registries.client;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
-import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.Entry;
-import net.favouriteless.modopedia.api.registries.BookContentRegistry;
+import net.favouriteless.modopedia.api.book.BookContent;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.Entry;
+import net.favouriteless.modopedia.api.registries.client.BookContentRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 public class BookContentRegistryImpl implements BookContentRegistry {

@@ -4,15 +4,15 @@ import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.Category;
-import net.favouriteless.modopedia.api.books.Page;
-import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.api.registries.BookContentRegistry;
-import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
-import net.favouriteless.modopedia.api.registries.TemplateRegistry;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.book.Page;
+import net.favouriteless.modopedia.api.book.page_components.PageComponent;
+import net.favouriteless.modopedia.api.registries.client.BookContentRegistry;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
+import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
 import net.favouriteless.modopedia.client.page_components.TemplatePageComponent;
@@ -132,7 +132,7 @@ public class BookContentLoader {
     }
 
     private static void loadEntry(JsonElement json, Book book, String id, Level level,
-                                  Map<String, net.favouriteless.modopedia.api.books.Entry> entries) {
+                                  Map<String, net.favouriteless.modopedia.api.book.Entry> entries) {
         EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                 .ifSuccess(p -> entries.put(id, p.getFirst().addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
                 .ifError(e -> Modopedia.LOG.error("Error loading entry json {}: {}", id, e.message()));

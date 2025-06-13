@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.client.init;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.registries.PageComponentRegistry;
+import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
 import net.favouriteless.modopedia.client.page_components.*;
 
 public class MPageComponents {

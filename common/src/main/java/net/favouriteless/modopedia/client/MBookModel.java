@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.client;
 
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.common.items.MBookItem;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.common.MBookItem;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;

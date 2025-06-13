@@ -1,10 +1,10 @@
 package net.favouriteless.modopedia.client.screen_factories;
 
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookScreenFactory;
-import net.favouriteless.modopedia.api.books.Category;
-import net.favouriteless.modopedia.api.books.Entry;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.BookScreenFactory;
+import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.common.book_types.ClassicBookType;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.favouriteless.modopedia.client.screens.books.CategoryScreen;

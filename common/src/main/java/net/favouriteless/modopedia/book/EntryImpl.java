@@ -2,8 +2,8 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.favouriteless.modopedia.api.books.Entry;
-import net.favouriteless.modopedia.api.books.Page;
+import net.favouriteless.modopedia.api.book.Entry;
+import net.favouriteless.modopedia.api.book.Page;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

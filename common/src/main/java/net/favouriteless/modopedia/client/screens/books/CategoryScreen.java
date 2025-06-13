@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.client.screens.books;
 
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.Category;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextPage;
 import net.minecraft.client.Minecraft;

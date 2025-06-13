@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.registries.TemplateRegistry;
-import net.favouriteless.modopedia.client.TemplateRegistryImpl;
+import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
+import net.favouriteless.modopedia.book.registries.client.TemplateRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;

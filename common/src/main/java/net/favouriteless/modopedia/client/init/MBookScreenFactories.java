@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.client.init;
 
-import net.favouriteless.modopedia.api.registries.BookScreenFactoryRegistry;
+import net.favouriteless.modopedia.api.registries.client.BookScreenFactoryRegistry;
 import net.favouriteless.modopedia.client.screen_factories.ClassicScreenFactory;
 import net.favouriteless.modopedia.client.screen_factories.PageScreenFactory;
 import net.favouriteless.modopedia.client.screen_factories.PamphletScreenFactory;

@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.book.text;
 
-import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
-import net.favouriteless.modopedia.api.books.page_components.PageEventListener;
+import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
+import net.favouriteless.modopedia.api.book.page_components.PageEventListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

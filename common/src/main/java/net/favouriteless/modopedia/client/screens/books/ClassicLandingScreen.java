@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.client.screens.books;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;

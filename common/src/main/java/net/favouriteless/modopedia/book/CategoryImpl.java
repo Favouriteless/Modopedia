@@ -2,8 +2,8 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.Category;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;

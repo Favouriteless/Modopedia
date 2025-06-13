@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.book.registries.client;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
-import net.favouriteless.modopedia.api.books.BookTexture;
+import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.api.book.BookTexture;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;

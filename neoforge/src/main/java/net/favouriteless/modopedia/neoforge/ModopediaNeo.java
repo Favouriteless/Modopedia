@@ -1,10 +1,10 @@
 package net.favouriteless.modopedia.neoforge;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.common.data_components.MDataComponents;
-import net.favouriteless.modopedia.common.items.MItems;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.common.init.MDataComponents;
+import net.favouriteless.modopedia.common.init.MItems;
 import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.resources.ResourceKey;

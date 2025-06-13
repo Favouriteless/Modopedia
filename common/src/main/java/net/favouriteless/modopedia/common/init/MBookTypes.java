@@ -2,8 +2,8 @@ package net.favouriteless.modopedia.common.init;
 
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.BookType.Type;
-import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
+import net.favouriteless.modopedia.api.book.BookType.Type;
+import net.favouriteless.modopedia.api.registries.common.BookTypeRegistry;
 import net.favouriteless.modopedia.common.book_types.ClassicBookType;
 import net.favouriteless.modopedia.common.book_types.PageBookType;
 import net.favouriteless.modopedia.common.book_types.PamphletBookType;

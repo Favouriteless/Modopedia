@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.common;
 
-import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.common.network.packets.client.ClearBooksPayload;
 import net.favouriteless.modopedia.common.network.packets.client.ReloadBookContentPayload;
 import net.favouriteless.modopedia.common.network.packets.client.SyncBookPayload;

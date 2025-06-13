@@ -2,11 +2,11 @@ package net.favouriteless.modopedia.client.template_processors;
 
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.TemplateProcessor;
-import net.favouriteless.modopedia.api.registries.BookTextureRegistry;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookTexture;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.TemplateProcessor;
+import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.minecraft.world.level.Level;
 
 public class FrameSpacingProcessor implements TemplateProcessor {

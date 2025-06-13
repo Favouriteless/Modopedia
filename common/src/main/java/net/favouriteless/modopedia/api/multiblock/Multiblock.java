@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.api.multiblock;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.favouriteless.modopedia.api.registries.MultiblockRegistry;
+import net.favouriteless.modopedia.api.registries.client.MultiblockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import org.jetbrains.annotations.Nullable;

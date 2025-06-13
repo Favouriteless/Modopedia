@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia;
 
-import net.favouriteless.modopedia.common.data_components.MDataComponents;
+import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MBookTypes;
-import net.favouriteless.modopedia.common.items.MItems;
-import net.favouriteless.modopedia.common.reload_listeners.BookReloadListener;
+import net.favouriteless.modopedia.common.init.MItems;
+import net.favouriteless.modopedia.common.BookReloadListener;
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package net.favouriteless.modopedia.api;
 
-import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.client.ScreenCacheImpl;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.screens.Screen;

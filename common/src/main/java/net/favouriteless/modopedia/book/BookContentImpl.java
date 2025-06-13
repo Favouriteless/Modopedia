@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.book;
 
-import net.favouriteless.modopedia.api.books.BookContent;
-import net.favouriteless.modopedia.api.books.Category;
-import net.favouriteless.modopedia.api.books.Entry;
+import net.favouriteless.modopedia.api.book.BookContent;
+import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.book.Entry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;

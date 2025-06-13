@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.client.page_components;
 
-import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
-import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
-import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.BookTexture;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
+import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.minecraft.client.gui.GuiGraphics;
 
 public class WidgetPageComponent extends PageComponent {

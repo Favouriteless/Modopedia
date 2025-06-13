@@ -2,8 +2,8 @@ package net.favouriteless.modopedia.book.registries.common;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;

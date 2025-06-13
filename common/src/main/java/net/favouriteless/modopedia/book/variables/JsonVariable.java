@@ -9,7 +9,7 @@ import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
-import net.favouriteless.modopedia.multiblock.BlockStateCodec;
+import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
 import net.favouriteless.modopedia.util.MExtraCodecs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

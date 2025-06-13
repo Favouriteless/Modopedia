@@ -1,8 +1,8 @@
 package net.favouriteless.modopedia.book;
 
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.Page;
-import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.Page;
+import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.minecraft.world.level.Level;
 
 import java.util.Collection;

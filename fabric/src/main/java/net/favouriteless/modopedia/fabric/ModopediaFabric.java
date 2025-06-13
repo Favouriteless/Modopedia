@@ -1,17 +1,16 @@
 package net.favouriteless.modopedia.fabric;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.registries.BookRegistry;
-import net.favouriteless.modopedia.common.commands.MCommands;
-import net.favouriteless.modopedia.common.data_components.MDataComponents;
-import net.favouriteless.modopedia.common.items.MItems;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.common.init.MCommands;
+import net.favouriteless.modopedia.common.init.MDataComponents;
+import net.favouriteless.modopedia.common.init.MItems;
 import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.fabric.common.FabricCommonEvents;
 import net.minecraft.core.registries.BuiltInRegistries;

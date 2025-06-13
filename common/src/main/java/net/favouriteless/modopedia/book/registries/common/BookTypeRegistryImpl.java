@@ -5,9 +5,9 @@ import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.api.books.BookType.Type;
-import net.favouriteless.modopedia.api.registries.BookTypeRegistry;
+import net.favouriteless.modopedia.api.book.BookType;
+import net.favouriteless.modopedia.api.book.BookType.Type;
+import net.favouriteless.modopedia.api.registries.common.BookTypeRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 public class BookTypeRegistryImpl implements BookTypeRegistry {

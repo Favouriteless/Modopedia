@@ -1,5 +1,5 @@
 BREAKING CHANGES:
-- CHANGED: BookTypes now use a dispatch codec. The `type` field in your book.json needs to be updated accordingly, check the documentation.
+- CHANGED: BookTypes now use a dispatch codec and the screen factory is separate. The `type` field in your book.json needs to be updated accordingly, check the documentation.
 - CHANGED: `modopedia:shapeless_recipe` and `modopedia:shaped_recipe` templates have been merged into `modopedia:crafting_table_recipe`.
 - I hope there will be no more breaking changes needed from now on :)
 

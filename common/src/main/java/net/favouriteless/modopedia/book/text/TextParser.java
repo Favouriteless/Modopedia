@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.book.text;
 
 import com.mojang.datafixers.util.Pair;
-import net.favouriteless.modopedia.book.registries.client.TextFormatterRegistry;
+import net.favouriteless.modopedia.book.registries.client.TextFormatterRegistryImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ public class TextParser {
             if(section.matches(FORMATTER_REGEX)) {
                 if(!lastFormat)
                     styleStack.push();
-                TextFormatterRegistry.tryApply(styleStack, section.substring(2, section.length()-1));
+                TextFormatterRegistryImpl.INSTANCE.tryApply(styleStack, section.substring(2, section.length()-1));
                 lastFormat = true;
             }
             else {

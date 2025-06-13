@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.neoforge.common;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.common.CommonEvents;
-import net.favouriteless.modopedia.common.commands.MCommands;
+import net.favouriteless.modopedia.common.init.MCommands;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.neoforged.bus.api.SubscribeEvent;

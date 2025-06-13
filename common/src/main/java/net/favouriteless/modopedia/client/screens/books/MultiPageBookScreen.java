@@ -2,10 +2,10 @@ package net.favouriteless.modopedia.client.screens.books;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.api.ScreenCache;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
-import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
+import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;

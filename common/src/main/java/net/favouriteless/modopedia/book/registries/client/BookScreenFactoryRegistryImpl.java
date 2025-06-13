@@ -1,10 +1,10 @@
 package net.favouriteless.modopedia.book.registries.client;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.books.BookScreenFactory;
-import net.favouriteless.modopedia.api.books.BookType;
-import net.favouriteless.modopedia.api.books.BookType.Type;
-import net.favouriteless.modopedia.api.registries.BookScreenFactoryRegistry;
+import net.favouriteless.modopedia.api.book.BookScreenFactory;
+import net.favouriteless.modopedia.api.book.BookType;
+import net.favouriteless.modopedia.api.book.BookType.Type;
+import net.favouriteless.modopedia.api.registries.client.BookScreenFactoryRegistry;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
-import net.favouriteless.modopedia.api.books.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.ObjectVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;

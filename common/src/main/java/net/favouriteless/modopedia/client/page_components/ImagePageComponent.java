@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.client.page_components;
 
 import net.favouriteless.modopedia.api.Lookup;
-import net.favouriteless.modopedia.api.books.Book;
-import net.favouriteless.modopedia.api.books.BookTexture;
-import net.favouriteless.modopedia.api.books.BookTexture.FixedRectangle;
-import net.favouriteless.modopedia.api.books.page_components.BookRenderContext;
-import net.favouriteless.modopedia.api.books.page_components.PageComponent;
-import net.favouriteless.modopedia.api.books.page_components.PageWidgetHolder;
+import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookTexture;
+import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
+import net.favouriteless.modopedia.api.book.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.client.page_widgets.PageImageButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
