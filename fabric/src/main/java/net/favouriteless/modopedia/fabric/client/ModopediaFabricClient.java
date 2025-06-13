@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.book.StudyManager;
 import net.favouriteless.modopedia.client.MBookModel;
 import net.favouriteless.modopedia.client.ModopediaClient;
 import net.favouriteless.modopedia.util.ResourceUtils;
@@ -28,9 +29,7 @@ public class ModopediaFabricClient implements ClientModInitializer {
             );
         });
 
-        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
-            lines.addAll(ModopediaClient.getStudyTooltips(stack));
-        });
+        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> lines.addAll(StudyManager.getTooltips(stack.getItem())));
     }
 
 }

@@ -2,7 +2,7 @@ package net.favouriteless.modopedia.neoforge.client;
 
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.client.ModopediaClient;
+import net.favouriteless.modopedia.book.StudyManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,7 +14,7 @@ public class NeoClientEvents {
 
     @SubscribeEvent
     public static void gatherTooltips(RenderTooltipEvent.GatherComponents event) {
-        ModopediaClient.getStudyTooltips(event.getItemStack()).forEach(c -> event.getTooltipElements().add(Either.left(c)));
+        StudyManager.getTooltips(event.getItemStack().getItem()).forEach(c -> event.getTooltipElements().add(Either.left(c)));
     }
 
 }
