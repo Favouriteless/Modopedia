@@ -1,1 +1,5 @@
-- ADDED: Multiblock no offsets option
+- ADDED: Multiblock page components now have a `view_angle` key to change the viewing perspective. Default is 30 degrees (isometric)
+
+- CHANGED: `modopedia:shapeless_recipe` and `modopedia:shaped_recipe` templates have been merged into `modopedia:crafting_table_recipe`.
+
+- FIXED: Multiblock page components pivot around the wrong point.

@@ -40,9 +40,10 @@ public class MultiblockPageComponent extends PageComponent {
 
     private float offsetX;
     private float offsetY;
-    private float scale;
 
+    private float scale;
     private boolean noOffsets;
+    private float viewAngle;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
@@ -71,8 +72,10 @@ public class MultiblockPageComponent extends PageComponent {
 
         offsetX = lookup.getOrDefault("offset_x", 0.0F).asFloat();
         offsetY = lookup.getOrDefault("offset_y", 0.0F).asFloat();
+
         scale = lookup.getOrDefault("scale", 1.0F).asFloat();
         noOffsets = lookup.getOrDefault("no_offsets", false).asBoolean();
+        viewAngle = lookup.getOrDefault("view_angle", 30.0F).asFloat();
     }
 
     @Override
@@ -102,8 +105,7 @@ public class MultiblockPageComponent extends PageComponent {
         pose.scale(scale, scale, scale);
         pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, 0);
 
-        pose.mulPose(Axis.XN.rotationDegrees(30));
-        
+        pose.mulPose(Axis.XN.rotationDegrees(viewAngle));
         pose.translate(dims.getX() / 2.0F, 0, dims.getZ() / 2.0F);
         pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTick));
         pose.translate(-dims.getX() / 2.0F, 0, -dims.getZ() / 2.0F);

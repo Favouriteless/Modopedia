@@ -12,16 +12,20 @@ public class MLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add("screen.enchanted.error", "Error");
-        add("tooltip.modopedia.book_id", "Book ID: %1$s");
-        add("item.modopedia.book", "Book (No ID)");
-        add("screen.modopedia.categories", "Chapters");
-        add("screen.modopedia.entries", "Entries");
-        add("template.modopedia.shaped_recipe", "Shaped Recipe");
-        add("template.modopedia.shapeless_recipe", "Shapeless Recipe");
-        add("template.modopedia.smelting_recipe", "Smelting Recipe");
-        add("template.modopedia.blasting_recipe", "Blasting Recipe");
-        add("template.modopedia.smoking_recipe", "Smoking Recipe");
+        add(Modopedia.translation("item", "book"), "Book (No ID)");
+
+        add(Modopedia.translation("tooltip", "book_id"), "Book ID: %1$s");
+        add(Modopedia.translation("tooltip", "study"), "Shift");
+
+        add(Modopedia.translation("screen", "error"), "Error");
+        add(Modopedia.translation("screen", "categories"), "Chapters");
+        add(Modopedia.translation("screen", "entries"), "Entries");
+
+        add(Modopedia.translation("template", "shaped_recipe"), "Shaped Recipe");
+        add(Modopedia.translation("template", "shapeless_recipe"), "Shapeless Recipe");
+        add(Modopedia.translation("template", "smelting_recipe"), "Smelting Recipe");
+        add(Modopedia.translation("template", "blasting_recipe"), "Blasting Recipe");
+        add(Modopedia.translation("template", "smoking_recipe"), "Smoking Recipe");
     }
 
 }
