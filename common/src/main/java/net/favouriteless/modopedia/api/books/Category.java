@@ -12,7 +12,7 @@ import java.util.List;
 public interface Category {
 
     /**
-     * @return Title of the category-- shown at the top of the landing page.
+     * @return Title of the entry-- shown at the top of the landing page.
      */
     String getTitle();
 
@@ -27,23 +27,23 @@ public interface Category {
     @Nullable String getRawLandingText();
 
     /**
-     * @return The {@link ItemStack} which is rendered as an icon for this category.
+     * @return The {@link ItemStack} which is rendered as an icon for this entry.
      */
     ItemStack getIcon();
 
     /**
-     * @return {@link List} of every Entry ID in this category.
+     * @return {@link List} of every Entry ID in this entry.
      */
     List<String> getEntries();
 
     /**
-     * @return {@link List} of Category IDs which are inside this category. These will be shown in the same
+     * @return {@link List} of Category IDs which are inside this entry. These will be shown in the same
      * manner as entries, but always at the start of the list.
      */
     List<String> getChildren();
 
     /**
-     * @return True if this category is part of the front page of a book. Sub-categories generally set this to false.
+     * @return True if this entry is part of the front page of a book. Sub-categories generally set this to false.
      */
     boolean getDisplayOnFrontPage();
 

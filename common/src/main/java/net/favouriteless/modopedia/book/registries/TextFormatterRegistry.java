@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.book.registries;
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
 import net.favouriteless.modopedia.book.text.formatters.ColorFormatter;
+import net.favouriteless.modopedia.book.text.formatters.HoverItemFormatter;
 import net.favouriteless.modopedia.book.text.formatters.SimpleFormatter;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -37,9 +38,13 @@ public class TextFormatterRegistry {
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> stack.getBaseStyle()), "^$")); // this matches an empty string
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withFont(ResourceLocation.parse(tag.substring(2)))), "f:.+"));
         register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withFont(stack.getBaseStyle().getFont())), "/f"));
+        register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withHoverEvent(null)), "/hi"));
+
+//        register(new SimpleFormatter((stack, tag) -> stack.modify(style -> style.withClickEvent(ClickEvent.Action.))));
 
         // These formatters needed special handling.
         register(new ColorFormatter());
+        register(new HoverItemFormatter());
     }
 
     public static void register(TextFormatter formatter) {

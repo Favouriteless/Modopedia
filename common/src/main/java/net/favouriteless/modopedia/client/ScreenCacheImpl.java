@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.client;
 
 import net.favouriteless.modopedia.api.ScreenCache;
+import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
@@ -11,15 +12,15 @@ public class ScreenCacheImpl implements ScreenCache {
 
     public static final ScreenCacheImpl INSTANCE = new ScreenCacheImpl();
 
-    private final Map<ResourceLocation, Map<String, Screen>> screenCache = new HashMap<>();
+    private final Map<ResourceLocation, Map<String, BookScreen>> screenCache = new HashMap<>();
 
     @Override
-    public void setLastScreen(ResourceLocation book, String language, Screen screen) {
+    public void setLastScreen(ResourceLocation book, String language, BookScreen screen) {
         screenCache.computeIfAbsent(book, k -> new HashMap<>()).put(language, screen);
     }
 
     @Override
-    public Screen getLastScreen(ResourceLocation book, String language) {
+    public BookScreen getLastScreen(ResourceLocation book, String language) {
         return screenCache.containsKey(book) ? screenCache.get(book).get(language) : null;
     }
 

@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.api;
 
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.client.ScreenCacheImpl;
+import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
@@ -15,8 +16,8 @@ public interface ScreenCache {
         return ScreenCacheImpl.INSTANCE;
     }
 
-    void setLastScreen(ResourceLocation book, String language, Screen screen);
+    void setLastScreen(ResourceLocation book, String language, BookScreen screen);
 
-    Screen getLastScreen(ResourceLocation book, String language);
+    BookScreen getLastScreen(ResourceLocation book, String language);
 
 }

@@ -1,17 +1,18 @@
 package net.favouriteless.modopedia.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
+import net.favouriteless.modopedia.common.commands.MCommands;
 import net.favouriteless.modopedia.common.data_components.MDataComponents;
 import net.favouriteless.modopedia.common.items.MItems;
-import net.favouriteless.modopedia.common.network.packets.client.ClearBooksPayload;
-import net.favouriteless.modopedia.common.network.packets.client.ReloadBookContentPayload;
-import net.favouriteless.modopedia.common.network.packets.client.SyncBookPayload;
+import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.fabric.common.FabricCommonEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +26,8 @@ public class ModopediaFabric implements ModInitializer {
         Modopedia.init();
         registerPackets();
         FabricCommonEvents.register();
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) -> MCommands.load(dispatcher, context));
 
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) -> {
             for(Book book : BookRegistry.get().getBooks()) {
@@ -42,12 +45,17 @@ public class ModopediaFabric implements ModInitializer {
     public void registerPackets() {
         PayloadTypeRegistry.playS2C().register(ClearBooksPayload.TYPE, ClearBooksPayload.STREAM_CODEC);
         ClientPlayNetworking.registerGlobalReceiver(ClearBooksPayload.TYPE, (payload, context) -> payload.handle());
-
         PayloadTypeRegistry.playS2C().register(SyncBookPayload.TYPE, SyncBookPayload.STREAM_CODEC);
         ClientPlayNetworking.registerGlobalReceiver(SyncBookPayload.TYPE, (payload, context) -> payload.handle());
-
         PayloadTypeRegistry.playS2C().register(ReloadBookContentPayload.TYPE, ReloadBookContentPayload.STREAM_CODEC);
         ClientPlayNetworking.registerGlobalReceiver(ReloadBookContentPayload.TYPE, (payload, context) -> payload.handle());
+
+        PayloadTypeRegistry.playS2C().register(OpenBookPayload.TYPE, OpenBookPayload.STREAM_CODEC);
+        ClientPlayNetworking.registerGlobalReceiver(OpenBookPayload.TYPE, (payload, context) -> payload.handle());
+        PayloadTypeRegistry.playS2C().register(OpenCategoryPayload.TYPE, OpenCategoryPayload.STREAM_CODEC);
+        ClientPlayNetworking.registerGlobalReceiver(OpenCategoryPayload.TYPE, (payload, context) -> payload.handle());
+        PayloadTypeRegistry.playS2C().register(OpenEntryPayload.TYPE, OpenEntryPayload.STREAM_CODEC);
+        ClientPlayNetworking.registerGlobalReceiver(OpenEntryPayload.TYPE, (payload, context) -> payload.handle());
     }
 
 }

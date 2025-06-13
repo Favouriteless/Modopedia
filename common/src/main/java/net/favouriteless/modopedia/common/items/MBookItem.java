@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.common.items;
 
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.api.books.Book;
+import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.client.ModopediaClient;
 import net.favouriteless.modopedia.common.data_components.MDataComponents;
 import net.minecraft.ChatFormatting;
@@ -28,7 +29,7 @@ public class MBookItem extends Item {
         if(level.isClientSide()) {
             ItemStack stack = player.getItemInHand(hand);
             if(stack.has(MDataComponents.BOOK.get()))
-                ModopediaClient.tryOpenBook(getBookId(stack));
+                BookOpenHandler.tryOpenBook(getBookId(stack));
         }
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }

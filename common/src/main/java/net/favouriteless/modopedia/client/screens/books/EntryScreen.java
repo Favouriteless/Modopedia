@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
+import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
@@ -25,6 +26,8 @@ public class EntryScreen extends MultiPageBookScreen {
     public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
         super(book, langCode, content, lastScreen, Component.literal(entry.getTitle()));
         this.entry = entry;
+        if(lastScreen == null)
+            ScreenCache.get().setLastScreen(bookId, langCode, null); // You could get stuck in the entry screen if we didn't do this.
     }
 
     public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry) {

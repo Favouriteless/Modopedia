@@ -30,7 +30,7 @@ public interface BookRegistry {
     void register(ResourceLocation id, Book book);
 
     /**
-     * @return {@link Book} registered under id, or null if none were found.
+     * @return {@link Book} registered under book, or null if none were found.
      */
     @Nullable Book getBook(ResourceLocation id);
 

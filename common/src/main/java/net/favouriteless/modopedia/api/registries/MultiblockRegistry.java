@@ -24,7 +24,7 @@ public interface MultiblockRegistry {
     void register(ResourceLocation id, Multiblock multiblock);
 
     /**
-     * @return The {@link Multiblock} registered under id, otherwise null.
+     * @return The {@link Multiblock} registered under book, otherwise null.
      */
     @Nullable Multiblock get(ResourceLocation id);
 
@@ -34,7 +34,7 @@ public interface MultiblockRegistry {
     void registerType(ResourceLocation id, MapCodec<? extends Multiblock> codec);
 
     /**
-     * @return The {@link Multiblock} codec registered under id, otherwise null.
+     * @return The {@link Multiblock} codec registered under book, otherwise null.
      */
     @Nullable MapCodec<? extends Multiblock> getType(ResourceLocation id);
 

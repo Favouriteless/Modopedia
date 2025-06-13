@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
+import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.books.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.books.BookTexture.Rectangle;
@@ -28,6 +29,9 @@ public class CategoryScreen extends ButtonListScreen {
                     CategoryScreen::createEntryButton
                 ));
         this.category = category;
+
+        if(lastScreen == null)
+            ScreenCache.get().setLastScreen(bookId, langCode, null); // You could get stuck in the cat screen if we didn't do this.
     }
 
     public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category) {

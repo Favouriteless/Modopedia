@@ -5,9 +5,7 @@ import net.favouriteless.modopedia.api.books.Book;
 import net.favouriteless.modopedia.api.registries.BookRegistry;
 import net.favouriteless.modopedia.common.data_components.MDataComponents;
 import net.favouriteless.modopedia.common.items.MItems;
-import net.favouriteless.modopedia.common.network.packets.client.ClearBooksPayload;
-import net.favouriteless.modopedia.common.network.packets.client.ReloadBookContentPayload;
-import net.favouriteless.modopedia.common.network.packets.client.SyncBookPayload;
+import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -39,8 +37,10 @@ public class ModopediaNeo {
         registrar.playToClient(ClearBooksPayload.TYPE, ClearBooksPayload.STREAM_CODEC, (payload, context) -> payload.handle());
         registrar.playToClient(SyncBookPayload.TYPE, SyncBookPayload.STREAM_CODEC, (payload, context) -> payload.handle());
         registrar.playToClient(ReloadBookContentPayload.TYPE, ReloadBookContentPayload.STREAM_CODEC, (payload, context) -> payload.handle());
+        registrar.playToClient(OpenBookPayload.TYPE, OpenBookPayload.STREAM_CODEC, (payload, context) -> payload.handle());
+        registrar.playToClient(OpenCategoryPayload.TYPE, OpenCategoryPayload.STREAM_CODEC, (payload, context) -> payload.handle());
+        registrar.playToClient(OpenEntryPayload.TYPE, OpenEntryPayload.STREAM_CODEC, (payload, context) -> payload.handle());
     }
-
 
     @SubscribeEvent
     public static void onTabContents(final BuildCreativeModeTabContentsEvent event) {

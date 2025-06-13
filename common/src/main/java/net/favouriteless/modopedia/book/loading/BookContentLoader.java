@@ -142,7 +142,7 @@ public class BookContentLoader {
                                      Map<String, Category> categories) {
         CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
                 .ifSuccess(p -> categories.put(id, p.getFirst().init(book))) // Init just parses the landing text
-                .ifError(e -> Modopedia.LOG.error("Error loading category {}: {}", id, e.message()));
+                .ifError(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e.message()));
     }
 
     /**
