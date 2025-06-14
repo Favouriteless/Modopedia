@@ -8,6 +8,7 @@
     "templates/shapeless_recipe",
     "templates/framed_multiblocks",
     "templates/framed_entities",
+    "templates/framed_showcases",
     "templates/cooking_recipes"
   ],
   "children": [

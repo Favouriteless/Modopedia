@@ -1,0 +1,22 @@
+{
+  "title": "Framed Entities",
+  "icon": { "id": "minecraft:creeper_head" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_showcase",
+          "items": [ { "id": "minecraft:diamond" }]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_showcase",
+          "items": [ { "id": "minecraft:diamond" }]
+        }
+      ]
+    }
+  ]
+}

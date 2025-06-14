@@ -1,7 +1,4 @@
-- ADDED: Books now have `open_sound` and `flip_sound` keys. These should be a ResourceLocation pointing to a SoundEvent. Default sound included, no changes need to be made to use it.
+- ADDED: Showcase component. Displays a large rotating item in 3D.
+- ADDED: `large_framed_showcase` and `medium_framed_showcase` templates to go with the component.
 
-- CHANGED: Navigational buttons within books will now use the `flip_sound` button, rather than the standard clicking sound.
-
-- FIXED: Rebinding study does not work.
-- FIXED: Multiblock rendering can crash if a StateMatcher has no states.
-- FIXED: Fabric servers crash on startup.
+- FIXED: Study mixin fails to target on fabric.

@@ -1,0 +1,17 @@
+{
+  "processor": "modopedia:large_frame_spacing",
+  "width": 100,
+  "components": [
+    {
+      "type": "modopedia:showcase",
+      "width": "#width",
+      "height": "#width",
+      "items": "#items"
+    },
+    {
+      "type": "modopedia:large_frame",
+      "x": "#frame_offset",
+      "y": "#frame_offset"
+    }
+  ]
+}

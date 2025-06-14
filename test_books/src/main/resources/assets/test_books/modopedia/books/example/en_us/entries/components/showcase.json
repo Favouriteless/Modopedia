@@ -1,0 +1,23 @@
+{
+  "title": "Showcases",
+  "icon": { "id": "minecraft:diamond" },
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:showcase",
+          "items": [ { "id": "minecraft:diamond" }],
+          "width": 100,
+          "height": 100
+        },
+        {
+          "type": "modopedia:showcase",
+          "y": 100,
+          "items": [ { "id": "minecraft:diamond" }],
+          "width": 50,
+          "height": 50
+        }
+      ]
+    }
+  ]
+}

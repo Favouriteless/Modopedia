@@ -9,6 +9,7 @@
     "components/templates",
     "components/headers",
     "components/entities",
+    "components/showcase",
     "components/frames"
   ]
 }

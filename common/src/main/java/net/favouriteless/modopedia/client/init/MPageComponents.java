@@ -23,6 +23,7 @@ public class MPageComponents {
         registry.register(Modopedia.id("crafting_arrow"), () -> new WidgetPageComponent("crafting_arrow"));
         registry.register(Modopedia.id("crafting_flame"), () -> new WidgetPageComponent("crafting_flame"));
         registry.register(Modopedia.id("entity"), EntityPageComponent::new);
+        registry.register(Modopedia.id("showcase"), ShowcasePageComponent::new);
     }
 
 }

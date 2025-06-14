@@ -65,6 +65,10 @@ loom {
             runDir("runs/$name")
         }
     }
+
+    mixin {
+        defaultRefmapName.convention("modopedia.refmap.json")
+    }
 }
 
 tasks.withType<JavaCompile>().configureEach {
