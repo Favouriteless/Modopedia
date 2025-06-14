@@ -43,18 +43,12 @@ public class ModopediaFabric implements ModInitializer {
 
     public void registerPackets() {
         PayloadTypeRegistry.playS2C().register(ClearBooksPayload.TYPE, ClearBooksPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(ClearBooksPayload.TYPE, (payload, context) -> payload.handle());
         PayloadTypeRegistry.playS2C().register(SyncBookPayload.TYPE, SyncBookPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(SyncBookPayload.TYPE, (payload, context) -> payload.handle());
         PayloadTypeRegistry.playS2C().register(ReloadBookContentPayload.TYPE, ReloadBookContentPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(ReloadBookContentPayload.TYPE, (payload, context) -> payload.handle());
 
         PayloadTypeRegistry.playS2C().register(OpenBookPayload.TYPE, OpenBookPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(OpenBookPayload.TYPE, (payload, context) -> payload.handle());
         PayloadTypeRegistry.playS2C().register(OpenCategoryPayload.TYPE, OpenCategoryPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(OpenCategoryPayload.TYPE, (payload, context) -> payload.handle());
         PayloadTypeRegistry.playS2C().register(OpenEntryPayload.TYPE, OpenEntryPayload.STREAM_CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(OpenEntryPayload.TYPE, (payload, context) -> payload.handle());
     }
 
 }

@@ -1,12 +1,14 @@
 package net.favouriteless.modopedia.api.book;
 
 import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.book.BookImpl;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.CreativeModeTab;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +53,16 @@ public interface Book {
     ResourceLocation getItemModelLocation();
 
     /**
+     * @return ID of this book's open SoundEvent.
+     */
+    Holder<SoundEvent> getOpenSound();
+
+    /**
+     * @return ID of this book's flip SoundEvent.
+     */
+    Holder<SoundEvent> getFlipSound();
+
+    /**
      * @return The default font for all formatted text in this book.
      */
     ResourceLocation getFont();
@@ -79,7 +91,7 @@ public interface Book {
         return BookImpl.PERSISTENT_CODEC;
     }
     
-    static StreamCodec<ByteBuf, Book> streamCodec() {
+    static StreamCodec<RegistryFriendlyByteBuf, Book> streamCodec() {
         return BookImpl.STREAM_CODEC;
     }
 

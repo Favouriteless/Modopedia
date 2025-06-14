@@ -5,17 +5,24 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 
-public class ItemTextButton extends Button {
+public class BookItemTextButton extends Button {
 
     public static final int SIZE = Minecraft.getInstance().font.lineHeight + 2;
+
+    private final Holder<SoundEvent> sound;
     private final ItemStack stack;
 
-    public ItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress) {
+    public BookItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress, Holder<SoundEvent> sound) {
         super(x, y, width, SIZE, message, onPress, DEFAULT_NARRATION);
         this.stack = stack;
+        this.sound = sound;
     }
 
     @Override
@@ -41,6 +48,11 @@ public class ItemTextButton extends Button {
         poseStack.popPose();
 
         graphics.drawString(Minecraft.getInstance().font, getMessage(), x + height, y+1, 0x000000, false);
+    }
+
+    @Override
+    public void playDownSound(SoundManager handler) {
+        handler.play(SimpleSoundInstance.forUI(sound, 1.0F));
     }
 
 }

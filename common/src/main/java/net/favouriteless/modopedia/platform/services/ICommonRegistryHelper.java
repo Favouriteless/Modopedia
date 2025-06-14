@@ -4,6 +4,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
@@ -29,6 +30,16 @@ public interface ICommonRegistryHelper {
      * @return A {@link Supplier} providing the registered object.
      */
     <T extends DataComponentType<C>, C> Supplier<T> registerDataComponent(String name, Supplier<T> entry);
+
+    /**
+     * Register a SoundEvent into either A.) A vanilla registry (fabric) or B.) A deferred registry (neoforge).
+     *
+     * @param name The name of the object. This will automatically use Modopedia's namespace.
+     * @param entry A supplier providing a *new* instance of the SoundEvent.
+     *
+     * @return A {@link Supplier} providing the registered object.
+     */
+    <T extends SoundEvent> Supplier<T> registerSound(String name, Supplier<T> entry);
 
     /**
      * Register a {@link PreparableReloadListener}, necessary because Fabric requires ReloadListeners to provide

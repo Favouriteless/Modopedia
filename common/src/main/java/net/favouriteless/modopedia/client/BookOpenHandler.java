@@ -7,11 +7,14 @@ import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookScreenFactory;
 import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.api.registries.client.BookContentRegistry;
-import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.api.registries.client.BookScreenFactoryRegistry;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 
 import java.util.function.Function;
 
@@ -76,8 +79,16 @@ public class BookOpenHandler {
     }
 
     private static void openBookScreen(BookScreen screen) {
-        if(screen != null)
+        if(screen != null) {
+            Minecraft mc = Minecraft.getInstance();
+
+            Book book = screen.getBook();
+            Holder<SoundEvent> sound = mc.screen instanceof BookScreen s && s.getBook() == book ? book.getFlipSound() : book.getOpenSound();
+            if(sound != null)
+                mc.level.playSound(mc.player, mc.player.getX(), mc.player.getY(), mc.player.getZ(), sound, SoundSource.MASTER, 1.0F, (float)Math.random() * 0.5F + 0.5F);
+
             Minecraft.getInstance().setScreen(screen);
+        }
     }
 
     private static <T extends BookType> BookScreen tryUseFactory(T type, Function<BookScreenFactory<T>, BookScreen> user) {

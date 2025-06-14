@@ -93,6 +93,9 @@ public class PlacedMultiblock implements MultiblockInstance {
 
         List<BlockState> states = matcher.getDisplayStates();
 
+        if(states.isEmpty())
+            return Blocks.AIR.defaultBlockState();
+
         return states.get((ticks / TICKS_PER_STATE) % states.size());
     }
 

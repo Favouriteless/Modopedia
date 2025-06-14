@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
@@ -28,6 +29,12 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Modopedia.id(name), value);
 		return () -> value;
 	}
+
+	@Override
+	public <T extends SoundEvent> Supplier<T> registerSound(String name, Supplier<T> entry) {
+		T value = entry.get();
+		Registry.register(BuiltInRegistries.SOUND_EVENT, Modopedia.id(name), value);
+		return () -> value;	}
 
 	@Override
 	public PreparableReloadListener registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {

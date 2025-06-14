@@ -14,11 +14,16 @@
 
 Modopedia is a resource-driven guidebook and in-game documentation mod for Minecraft available on Neoforge and Fabric featuring an extensive API and a wide range of out-of-the-box content. The keen eyed among you may be thinking "Well, isn't this just Patchouli?". No! Modopedia sports numerous API improvements for mod developers and gives much more freedom in creating customised content, such as:
 
-* Customisable textures, including the dimensions and number of pages.
-* A JSON format supporting circular dependencies and multiple categories per entry.
-* Multiple templates on a single page.
-* Full input handling support for custom Components.
+* Customisable textures, including the dimensions and number of pages. You control almost everything about how the book renders.
+
+* Ability to quickly find the page for a specific item using the "Study" key with no extra setup.
+
+* JSON format supporting circular dependencies and multiple categories per entry.
+
 * Clear error handling on a per-component level. No more nuking the entire entry!
+
+* Multiple templates on a single page.
+
 * And much, much more!
 
 

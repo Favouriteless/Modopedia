@@ -27,6 +27,7 @@ public class ModopediaNeo {
     public ModopediaNeo(IEventBus bus, ModContainer container) {
         NeoCommonRegistryHelper.ITEM_REGISTRY.register(bus);
         NeoCommonRegistryHelper.DATA_COMPONENT_REGISTRY.register(bus);
+        NeoCommonRegistryHelper.SOUND_EVENT_REGISTRY.register(bus);
         Modopedia.init();
     }
 

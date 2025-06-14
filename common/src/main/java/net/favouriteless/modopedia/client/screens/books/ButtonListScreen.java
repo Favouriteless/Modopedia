@@ -8,7 +8,7 @@ import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.BlankScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledScreenPage;
-import net.favouriteless.modopedia.client.screens.widgets.ItemTextButton;
+import net.favouriteless.modopedia.client.screens.widgets.BookItemTextButton;
 import net.favouriteless.modopedia.util.ListUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -49,7 +49,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         if(ListUtils.size(idLists) == 0)
             return;
 
-        final int spacing = ItemTextButton.SIZE+1;
+        final int spacing = BookItemTextButton.SIZE+1;
 
         Rectangle rectangle = texture.pages().get(getPageCount() % texture.pages().size());
         ScreenPage page = new TitledScreenPage(this, listTitle, rectangle);
@@ -83,26 +83,28 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         pageConsumer.accept(page);
     }
 
-    protected static ItemTextButton createCategoryButton(ButtonListScreen screen, String id, int x, int y, int width) {
+    protected static BookItemTextButton createCategoryButton(ButtonListScreen screen, String id, int x, int y, int width) {
         Category cat = screen.content.getCategory(id);
-        return new ItemTextButton(x, y, width, cat.getIcon(),
+        return new BookItemTextButton(x, y, width, cat.getIcon(),
                 Component.literal(cat.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.langCode, screen.content, cat, screen))
+                b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.langCode, screen.content, cat, screen)),
+                screen.book.getFlipSound()
         );
     }
 
-    protected static ItemTextButton createEntryButton(ButtonListScreen screen, String id, int x, int y, int width) {
+    protected static BookItemTextButton createEntryButton(ButtonListScreen screen, String id, int x, int y, int width) {
         Entry entry = screen.content.getEntry(id);
-        return new ItemTextButton(x, y, width, entry.getIcon(),
+        return new BookItemTextButton(x, y, width, entry.getIcon(),
                 Component.literal(entry.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.langCode, screen.content, entry, screen))
+                b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.langCode, screen.content, entry, screen)),
+                screen.book.getFlipSound()
         );
     }
 
     @FunctionalInterface
     public interface Factory {
 
-        ItemTextButton create(ButtonListScreen screen, String id, int x, int y, int width);
+        BookItemTextButton create(ButtonListScreen screen, String id, int x, int y, int width);
 
     }
 

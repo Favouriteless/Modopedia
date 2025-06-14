@@ -1,1 +1,7 @@
+- ADDED: Books now have `open_sound` and `flip_sound` keys. These should be a ResourceLocation pointing to a SoundEvent. Default sound included, no changes need to be made to use it.
+
+- CHANGED: Navigational buttons within books will now use the `flip_sound` button, rather than the standard clicking sound.
+
 - FIXED: Rebinding study does not work.
+- FIXED: Multiblock rendering can crash if a StateMatcher has no states.
+- FIXED: Fabric servers crash on startup.

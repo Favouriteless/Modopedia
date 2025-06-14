@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.multiblock.state_matchers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
+import net.minecraft.core.HolderSet.Named;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TagStateMatcher implements StateMatcher {
 
@@ -22,9 +24,18 @@ public class TagStateMatcher implements StateMatcher {
 
     public TagStateMatcher(TagKey<Block> tag) {
         this.tag = tag;
-        this.displayStates = BuiltInRegistries.BLOCK.getTag(tag)
+
+        Optional<Named<Block>> optional = BuiltInRegistries.BLOCK.getTag(tag);
+
+        if(optional.isEmpty())
+            throw new IllegalArgumentException(tag + " is not a valid tag");
+
+        this.displayStates = optional
                 .map(holders -> holders.stream().map(h -> h.value().defaultBlockState()).toList())
                 .orElseGet(List::of);
+
+        if(displayStates.isEmpty())
+            throw new IllegalArgumentException("TagStateMatcher cannot be used with an empty tag");
     }
 
     @Override

@@ -50,5 +50,9 @@ public class ClassicLandingScreen extends ButtonListScreen {
         return new LandingScreenPage(this, title, subtitle, 37, 7, 10, landingText, 0, 0);
     }
 
+    @Override
+    protected boolean isTopLevel() {
+        return true;
+    }
 
 }

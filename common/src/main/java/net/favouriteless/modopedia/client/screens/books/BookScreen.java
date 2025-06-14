@@ -6,18 +6,19 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
-import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
-import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.book.loading.BookContentLoader;
-import net.favouriteless.modopedia.client.screens.widgets.HoverableImageButton;
+import net.favouriteless.modopedia.client.BookOpenHandler;
+import net.favouriteless.modopedia.client.screens.widgets.BookImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
@@ -31,7 +32,6 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int ticks = 0;
     protected int leftPos = 0;
     protected int topPos = 0;
-    protected boolean shiftDown;
 
     public BookScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen, Component title) {
         super(title);
@@ -60,8 +60,8 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
             return;
 
         FixedRectangle w = texture.refresh();
-        addRenderableWidget(new HoverableImageButton(texture.location(), leftPos + w.x(), topPos + w.y(), w.width(),
-                w.height(), w.u(), w.v(), texture.texWidth(), texture.texHeight(), b -> reloadBook()));
+        addRenderableWidget(new BookImageButton(texture.location(), leftPos + w.x(), topPos + w.y(), w.width(), w.height(), w.u(), w.v(),
+                texture.texWidth(), texture.texHeight(), b -> reloadBook(), SoundEvents.UI_BUTTON_CLICK));
     }
 
     protected void reloadBook() {
@@ -74,6 +74,17 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         super.renderTransparentBackground(graphics);
         graphics.blit(texture.location(), leftPos, topPos, 0, 0,
                 texture.width(), texture.height(), texture.texWidth(), texture.texHeight());
+    }
+
+    protected void tryBackButton() {
+        if(hasShiftDown() || lastScreen == null) {
+            ScreenCache.get().setLastScreen(bookId, langCode, null);
+            BookOpenHandler.tryOpenBook(bookId);
+        }
+        else {
+            minecraft.setScreen(lastScreen);
+            ScreenCache.get().setLastScreen(bookId, langCode, lastScreen);
+        }
     }
 
     @Override
@@ -110,37 +121,17 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     public boolean isHovered(double mouseX, double mouseY, int x, int y, int width, int height) {
         return mouseX > x && mouseY > y && mouseX < x+width && mouseY < y+height;
     }
+
     @Override
     public int getTicks() {
         return ticks;
     }
 
     /**
-     * @return The height of the shortest page on this screen's BookTexture, not including the first page. Relevant for
-     * side scrolling behaviour.
+     * @return True if this screen is the "top level" of a book, e.g a landing screen
      */
-    protected int getShortestHeight(int startIndex) {
-        int smallest = Integer.MAX_VALUE;
-        for(int i = startIndex; i < texture.pages().size(); i++) {
-            Rectangle page = texture.pages().get(i);
-            if(page.height() < smallest)
-                smallest = page.height();
-        }
-        return smallest;
-    }
-
-    /**
-     * @return The width of the thinnest page on this screen's BookTexture, not including the first page. Relevant for
-     * side scrolling behaviour.
-     */
-    protected int getThinnestWidth(int startIndex) {
-        int smallest = Integer.MAX_VALUE;
-        for(int i = startIndex; i < texture.pages().size(); i++) {
-            Rectangle page = texture.pages().get(i);
-            if(page.height() < smallest)
-                smallest = page.height();
-        }
-        return smallest;
+    protected boolean isTopLevel() {
+        return false;
     }
 
 }
