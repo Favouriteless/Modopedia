@@ -53,7 +53,7 @@ public class ShowcasePageComponent extends PageComponent {
         ItemRenderer renderer = mc.getItemRenderer();
         MultiBufferSource source = mc.renderBuffers().bufferSource();
 
-        ItemStack item = items[0];
+        ItemStack item = items[(context.getTicks() / 20) % items.length];
 
         float scale = -Math.max(width, height) * 0.9F * this.scale;
 

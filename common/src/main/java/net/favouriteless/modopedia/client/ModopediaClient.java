@@ -10,8 +10,7 @@ import net.minecraft.client.KeyMapping;
 
 public class ModopediaClient {
 
-    public static final KeyMapping KEY_STUDY = ClientServices.CLIENT_REGISTRY.register("study", InputConstants.KEY_LCONTROL,
-            KeyMapping.CATEGORY_INVENTORY, KeyConflictContext.GUI);
+    public static final KeyMapping KEY_STUDY = ClientServices.CLIENT_REGISTRY.register("study", InputConstants.KEY_LCONTROL, KeyMapping.CATEGORY_INVENTORY, KeyConflictContext.GUI);
 
     public static void init() {
         MTextFormatters.load();

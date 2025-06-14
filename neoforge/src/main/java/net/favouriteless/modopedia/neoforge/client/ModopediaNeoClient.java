@@ -16,6 +16,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
@@ -25,8 +26,13 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 public class ModopediaNeoClient {
 
     public ModopediaNeoClient(IEventBus bus, ModContainer container) {
+    }
+
+    @SubscribeEvent
+    public static void onClientSetup(final FMLClientSetupEvent event) {
         ModopediaClient.init();
     }
+
 
     @SubscribeEvent
     public static void registerClientReloadListeners(final RegisterClientReloadListenersEvent event) {
