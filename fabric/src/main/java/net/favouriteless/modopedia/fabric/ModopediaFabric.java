@@ -1,13 +1,14 @@
 package net.favouriteless.modopedia.fabric;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.favouriteless.modopedia.common.init.MCommands;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
@@ -24,6 +25,7 @@ public class ModopediaFabric implements ModInitializer {
     public void onInitialize() {
         Modopedia.init();
         registerPackets();
+        registerKeyMappings();
         FabricCommonEvents.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) -> MCommands.load(dispatcher, context));
@@ -39,6 +41,10 @@ public class ModopediaFabric implements ModInitializer {
                 entries.accept(item);
             }
         });
+    }
+
+    public void registerKeyMappings() {
+        KeyBindingHelper.registerKeyBinding(MKeyMappings.KEY_STUDY);
     }
 
     public void registerPackets() {

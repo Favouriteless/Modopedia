@@ -13,7 +13,6 @@ import java.util.List;
 
 public class NeoClientRegistryHelper implements IClientRegistryHelper {
 
-	public static final List<KeyMapping> KEY_MAPPINGS = new ArrayList<>();
 	public static final List<PreparableReloadListener> RELOAD_LISTENERS = new ArrayList<>();
 
 	@Override
@@ -28,10 +27,8 @@ public class NeoClientRegistryHelper implements IClientRegistryHelper {
 	}
 
 	@Override
-	public KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext) {
-		KeyMapping mapping = new KeyMapping(name, net.neoforged.neoforge.client.settings.KeyConflictContext.values()[conflictContext.ordinal()], Type.KEYSYM, keyCode, category);
-		KEY_MAPPINGS.add(mapping);
-		return mapping;
+	public KeyMapping createKeyMapping(String name, int keyCode, String category, KeyConflictContext conflictContext) {
+		return new KeyMapping(name, net.neoforged.neoforge.client.settings.KeyConflictContext.values()[conflictContext.ordinal()], Type.KEYSYM, keyCode, category);
 	}
 
 }

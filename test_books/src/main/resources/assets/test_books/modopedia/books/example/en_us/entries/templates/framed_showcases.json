@@ -1,6 +1,6 @@
 {
-  "title": "Framed Entities",
-  "icon": { "id": "minecraft:creeper_head" },
+  "title": "Framed Showcases",
+  "icon": { "id": "minecraft:diamond" },
   "pages": [
     {
       "components": [

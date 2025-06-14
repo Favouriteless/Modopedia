@@ -5,7 +5,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
 import net.favouriteless.modopedia.client.BookOpenHandler;
-import net.favouriteless.modopedia.client.ModopediaClient;
+import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -27,7 +27,7 @@ public class StudyManager {
         String langCode = Minecraft.getInstance().options.languageCode;
         EntryAssociation association = ItemAssociationRegistry.getAssociation(langCode, BuiltInRegistries.ITEM.getKey(item));
 
-        if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), ModopediaClient.KEY_STUDY.key.getValue())) {
+        if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue())) {
             if(++studyTicks < STUDY_TICKS_MAX)
                 return;
             stopStudying();
@@ -60,7 +60,7 @@ public class StudyManager {
 
         Component study = Component.translatable(
                 Modopedia.translation("tooltip", "study"),
-                ModopediaClient.KEY_STUDY.getTranslatedKeyMessage().getString()
+                MKeyMappings.KEY_STUDY.getTranslatedKeyMessage().getString()
         ).withStyle(ChatFormatting.DARK_GRAY);
 
         out.add(study);

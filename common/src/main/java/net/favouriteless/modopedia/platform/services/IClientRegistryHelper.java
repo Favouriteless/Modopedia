@@ -37,7 +37,7 @@ public interface IClientRegistryHelper {
      *
      * @return The {@link KeyMapping} after it has been registered.
      */
-    KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext);
+    KeyMapping createKeyMapping(String name, int keyCode, String category, KeyConflictContext conflictContext);
 
     /**
      * Represents NeoForge's enum of the same name, so this can actually compile. NeoForge implementation will grab the ordinal

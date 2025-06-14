@@ -1,6 +1,5 @@
 package net.favouriteless.modopedia.platform.services;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.favouriteless.modopedia.platform.JsonDataLoaderWrapper;
 import net.minecraft.client.KeyMapping;
@@ -25,8 +24,8 @@ public class FabricClientRegistryHelper implements IClientRegistryHelper {
 	}
 
 	@Override
-	public KeyMapping register(String name, int keyCode, String category, KeyConflictContext conflictContext) {
-		return KeyBindingHelper.registerKeyBinding(new KeyMapping(name, keyCode, category));
+	public KeyMapping createKeyMapping(String name, int keyCode, String category, KeyConflictContext conflictContext) {
+		return new KeyMapping(name, keyCode, category);
 	}
 
 }

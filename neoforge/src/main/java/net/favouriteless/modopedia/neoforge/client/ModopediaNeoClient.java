@@ -3,9 +3,9 @@ package net.favouriteless.modopedia.neoforge.client;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.client.MBookModel;
 import net.favouriteless.modopedia.client.ModopediaClient;
+import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.favouriteless.modopedia.platform.services.NeoClientRegistryHelper;
 import net.favouriteless.modopedia.util.ResourceUtils;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
@@ -59,9 +59,7 @@ public class ModopediaNeoClient {
 
     @SubscribeEvent
     public static void registerKeybinds(final RegisterKeyMappingsEvent event) {
-        for(KeyMapping mapping : NeoClientRegistryHelper.KEY_MAPPINGS)
-            event.register(mapping);
-        NeoClientRegistryHelper.KEY_MAPPINGS.clear();
+        event.register(MKeyMappings.KEY_STUDY);
     }
 
 }
