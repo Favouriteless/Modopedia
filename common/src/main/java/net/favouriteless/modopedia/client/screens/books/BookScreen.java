@@ -15,6 +15,7 @@ import net.favouriteless.modopedia.client.screens.widgets.BookImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -78,6 +79,8 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected void tryBackButton() {
         if(hasShiftDown() || lastScreen == null) {
+            if(isTopLevel())
+                return;
             ScreenCache.get().setLastScreen(bookId, langCode, null);
             BookOpenHandler.tryOpenBook(bookId);
         }
@@ -85,6 +88,15 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
             minecraft.setScreen(lastScreen);
             ScreenCache.get().setLastScreen(bookId, langCode, lastScreen);
         }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if(super.mouseClicked(mouseX, mouseY, button))
+            return true;
+
+        tryBackButton();
+        return true;
     }
 
     @Override

@@ -73,9 +73,10 @@ public class EntityPageComponent extends PageComponent {
         pose.mulPose(Axis.XN.rotationDegrees(15));
         pose.mulPose(Axis.YP.rotationDegrees(180 + context.getTicks() + partialTick));
 
+        boolean renderBoxes = dispatcher.shouldRenderHitBoxes();
         dispatcher.setRenderHitBoxes(false);
         dispatcher.render(entity, 0, 0, 0, 0, partialTick, pose, bufferSource, 0xF000F0);
-        dispatcher.setRenderHitBoxes(true);
+        dispatcher.setRenderHitBoxes(renderBoxes);
 
         pose.popPose();
     }

@@ -1,4 +1,1 @@
-- ADDED: Showcase component. Displays a large rotating item in 3D.
-- ADDED: `large_framed_showcase` and `medium_framed_showcase` templates to go with the component.
-
-- FIXED: Study mixin fails to target on fabric.
+- FIXED: Entity page components turn on the hitbox debug renderer.

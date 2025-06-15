@@ -85,7 +85,7 @@ public class BookOpenHandler {
             Book book = screen.getBook();
             Holder<SoundEvent> sound = mc.screen instanceof BookScreen s && s.getBook() == book ? book.getFlipSound() : book.getOpenSound();
             if(sound != null)
-                mc.level.playSound(mc.player, mc.player.getX(), mc.player.getY(), mc.player.getZ(), sound, SoundSource.MASTER, 1.0F, (float)Math.random() * 0.5F + 0.5F);
+                mc.level.playSound(mc.player, mc.player.getX(), mc.player.getY(), mc.player.getZ(), sound, SoundSource.MASTER, 0.3F, 1.0F);
 
             Minecraft.getInstance().setScreen(screen);
         }
