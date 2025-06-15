@@ -94,9 +94,11 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if(super.mouseClicked(mouseX, mouseY, button))
             return true;
-
-        tryBackButton();
-        return true;
+        if(button == 1) {
+            tryBackButton();
+            return true;
+        }
+        return false;
     }
 
     @Override

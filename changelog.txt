@@ -1,1 +1,3 @@
+- ADDED: Item page components now support Study.
+
 - FIXED: Entity page components turn on the hitbox debug renderer.

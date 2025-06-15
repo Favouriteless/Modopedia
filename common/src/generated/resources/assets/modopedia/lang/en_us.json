@@ -1,8 +1,11 @@
 {
   "item.modopedia.book": "Book (No ID)",
+  "modopedia.study": "Study",
   "screen.modopedia.categories": "Chapters",
   "screen.modopedia.entries": "Entries",
   "screen.modopedia.error": "Error",
+  "subtitle.modopedia.book_flip": "Page Turning",
+  "subtitle.modopedia.book_open": "Book Opening",
   "template.modopedia.blasting_recipe": "Blasting Recipe",
   "template.modopedia.shaped_recipe": "Shaped Recipe",
   "template.modopedia.shapeless_recipe": "Shapeless Recipe",

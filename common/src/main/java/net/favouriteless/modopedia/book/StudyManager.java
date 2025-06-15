@@ -6,6 +6,7 @@ import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
 import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.client.init.MKeyMappings;
+import net.favouriteless.modopedia.client.screens.books.BookScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -48,7 +49,7 @@ public class StudyManager {
 
     public static List<Component> getTooltips(Item item) {
         Minecraft mc = Minecraft.getInstance();
-        if(!(mc.screen instanceof AbstractContainerScreen<?>))
+        if(!(mc.screen instanceof AbstractContainerScreen<?>) && !(mc.screen instanceof BookScreen))
             return List.of();
 
         EntryAssociation association = ItemAssociationRegistry.getAssociation(mc.options.languageCode, BuiltInRegistries.ITEM.getKey(item));

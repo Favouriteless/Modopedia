@@ -31,6 +31,8 @@ public class MLanguageProvider extends LanguageProvider {
 
         add(Modopedia.translation("subtitle", "book_flip"), "Page Turning");
         add(Modopedia.translation("subtitle", "book_open"), "Book Opening");
+
+        add("modopedia.study", "Study");
     }
 
 }

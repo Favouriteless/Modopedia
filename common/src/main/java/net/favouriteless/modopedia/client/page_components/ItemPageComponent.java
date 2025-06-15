@@ -1,12 +1,19 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.favouriteless.modopedia.api.Lookup;
+import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
+import net.favouriteless.modopedia.book.StudyManager;
+import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
+import net.favouriteless.modopedia.client.BookOpenHandler;
+import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -17,6 +24,8 @@ public class ItemPageComponent extends PageComponent {
     protected int padding;
     protected boolean centered;
     protected boolean reverseY;
+
+    private boolean isHovered = false;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
@@ -57,9 +66,14 @@ public class ItemPageComponent extends PageComponent {
             graphics.renderItem(stack, x, y);
             graphics.renderItemDecorations(font, stack, x, y);
 
-            if(context.isHovered(mouseX, mouseY, x, y, 16, 16))
+            if(context.isHovered(mouseX, mouseY, x, y, 16, 16)) {
                 graphics.renderTooltip(font, stack, mouseX, mouseY);
+
+                String langCode = Minecraft.getInstance().options.languageCode;
+                EntryAssociation association = ItemAssociationRegistry.getAssociation(langCode, BuiltInRegistries.ITEM.getKey(stack.getItem()));
+                if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue()))
+                    BookOpenHandler.tryOpenEntry(association.book(), association.entryId());
+            }
         }
     }
-
 }

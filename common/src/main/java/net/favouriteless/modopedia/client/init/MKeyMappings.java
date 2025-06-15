@@ -7,6 +7,6 @@ import net.minecraft.client.KeyMapping;
 
 public class MKeyMappings {
 
-    public static KeyMapping KEY_STUDY = ClientServices.CLIENT_REGISTRY.createKeyMapping("study", InputConstants.KEY_LCONTROL, KeyMapping.CATEGORY_INVENTORY, KeyConflictContext.GUI);
+    public static KeyMapping KEY_STUDY = ClientServices.CLIENT_REGISTRY.createKeyMapping("modopedia.study", InputConstants.KEY_LCONTROL, KeyMapping.CATEGORY_INVENTORY, KeyConflictContext.GUI);
 
 }

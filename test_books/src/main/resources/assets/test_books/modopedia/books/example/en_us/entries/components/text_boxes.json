@@ -1,6 +1,7 @@
 {
   "title": "Text Boxes",
   "icon": { "id": "minecraft:writable_book" },
+  "assigned_items": [ "minecraft:diamond" ],
   "pages": [
     {
       "components": [
