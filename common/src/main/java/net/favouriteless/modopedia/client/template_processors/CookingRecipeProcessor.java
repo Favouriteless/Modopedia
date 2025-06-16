@@ -14,13 +14,19 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CookingRecipeProcessor implements TemplateProcessor {
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
-        RecipeHolder<?> holder = level.getRecipeManager().byKey(id).orElseThrow();
+
+        Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
+        if(optional.isEmpty())
+            throw new IllegalArgumentException(id + " is not a valid recipe.");
+
+        RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof AbstractCookingRecipe recipe) {
             lookup.set("input", Variable.of(List.<ItemStack[]>of(recipe.getIngredients().getFirst().getItems())));

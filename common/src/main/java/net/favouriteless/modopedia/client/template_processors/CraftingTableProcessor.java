@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CraftingTableProcessor implements TemplateProcessor {
 
@@ -30,7 +31,12 @@ public class CraftingTableProcessor implements TemplateProcessor {
 
     protected void initRecipe(Book book, MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
-        RecipeHolder<?> holder = level.getRecipeManager().byKey(id).orElseThrow();
+
+        Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
+        if(optional.isEmpty())
+            throw new IllegalArgumentException(id + " is not a valid recipe.");
+
+        RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof ShapelessRecipe recipe) {
             List<ItemStack[]> inputs = new ArrayList<>();
