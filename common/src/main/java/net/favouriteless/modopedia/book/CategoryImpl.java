@@ -9,6 +9,7 @@ import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
@@ -25,17 +26,19 @@ public class CategoryImpl implements Category {
     private final List<String> entries;
     private final List<String> children;
     private final boolean displayFrontPage;
+    private final ResourceLocation advancement;
 
     private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
-    public CategoryImpl(String title, String rawLandingText, ItemStack iconStack,
-                        List<String> entries, List<String> children, boolean displayFrontPage) {
+    public CategoryImpl(String title, String rawLandingText, ItemStack iconStack, List<String> entries,
+                        List<String> children, boolean displayFrontPage, ResourceLocation advancement) {
         this.title = title;
         this.rawLandingText = rawLandingText;
         this.iconStack = iconStack;
         this.entries = entries;
         this.children = children;
         this.displayFrontPage = displayFrontPage;
+        this.advancement = advancement;
     }
 
     @Override
@@ -75,6 +78,11 @@ public class CategoryImpl implements Category {
         return displayFrontPage;
     }
 
+    @Override
+    public ResourceLocation getAdvancement() {
+        return advancement;
+    }
+
     public CategoryImpl init(Book book) {
         landingText = TextParser.parse(rawLandingText, book.getLineWidth(), Minecraft.getInstance().font.lineHeight,
                 Justify.LEFT, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
@@ -87,9 +95,10 @@ public class CategoryImpl implements Category {
             ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(CategoryImpl::getIcon),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren),
-            Codec.BOOL.optionalFieldOf("display_on_front_page", true).forGetter(Category::getDisplayOnFrontPage)
-    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront) ->
-            new CategoryImpl(title, landingText.orElse(null), iconStack, entries, children, displayFront))
+            Codec.BOOL.optionalFieldOf("display_on_front_page", true).forGetter(Category::getDisplayOnFrontPage),
+            ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement()))
+    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront, advancement) ->
+            new CategoryImpl(title, landingText.orElse(null), iconStack, entries, children, displayFront, advancement.orElse(null)))
     );
 
 }

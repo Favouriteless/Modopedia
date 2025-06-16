@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.api.book;
 
 import net.favouriteless.modopedia.book.text.TextChunk;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,5 +47,10 @@ public interface Category {
      * @return True if this entry is part of the front page of a book. Sub-categories generally set this to false.
      */
     boolean getDisplayOnFrontPage();
+
+    /**
+     * @return ID of the advancement needed to unlock this category.
+     */
+    ResourceLocation getAdvancement();
 
 }

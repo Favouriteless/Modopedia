@@ -31,5 +31,10 @@ public interface Entry {
      * @return The item IDs "assigned" to this entry. For the ponder feature.
      */
     List<ResourceLocation> getAssignedItems();
-    
+
+    /**
+     * @return ID of the advancement needed to unlock this entry.
+     */
+    ResourceLocation getAdvancement();
+
 }

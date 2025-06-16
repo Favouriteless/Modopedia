@@ -19,5 +19,6 @@
         }
       ]
     }
-  ]
+  ],
+  "advancement": "minecraft:adventure/kill_mob_near_sculk_catalyst"
 }

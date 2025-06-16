@@ -16,13 +16,13 @@ public class PamphletScreenFactory implements BookScreenFactory<PamphletBookType
     @Override
     public BookScreen openLandingScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
         Category cat = getCategory(content);
-        return cat != null ? new PamphletLandingScreen(book, langCode, content, cat, lastScreen) : null;
+        return cat != null ? new PamphletLandingScreen(book, langCode, content, cat, type.lockedViewType(), lastScreen) : null;
     }
 
     @Override
     public BookScreen openCategoryScreen(PamphletBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, langCode, content, cat, lastScreen) : lastScreen;
+        return cat != null ? new CategoryScreen(book, langCode, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
     }
 
     @Override

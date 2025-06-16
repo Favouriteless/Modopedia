@@ -6,6 +6,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.common.book_types.ClassicBookType;
+import net.favouriteless.modopedia.common.book_types.LockedViewType;
 import net.favouriteless.modopedia.common.init.MSounds;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -127,7 +128,7 @@ public class BookImpl implements Book {
     public static final Codec<Book> PERSISTENT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Book::getTitle),
             Codec.STRING.optionalFieldOf("subtitle").forGetter(b -> Optional.ofNullable(b.getSubtitle())),
-            BookType.codec().optionalFieldOf("type", new ClassicBookType()).forGetter(Book::getType),
+            BookType.codec().optionalFieldOf("type", new ClassicBookType(LockedViewType.HIDDEN)).forGetter(Book::getType),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(b -> Optional.ofNullable(b.getRawLandingText())),
             ResourceLocation.CODEC.optionalFieldOf("texture", Modopedia.id("default")).forGetter(Book::getTexture),
             ResourceLocation.CODEC.optionalFieldOf("model", Modopedia.id("item/default")).forGetter(Book::getItemModelLocation),

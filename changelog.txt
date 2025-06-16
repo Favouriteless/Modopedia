@@ -1,3 +1,7 @@
-- ADDED: Item page components now support Study.
+- ADDED: Categories and entries now have an `advancement` key to specify an advancement required to unlock content. This will not prevent the content from being accessed directly via a command or code.
+- ADDED: `modopedia:classic`, `modopedia:pamphlet` and `modopedia:page` book types now have a `locked_view_type` field to specify how they render locked categories and entries. This can be:
+  - ``"hidden"` do not render the locked content
+  - `"translucent"` render the content grayed out and inaccessible
 
-- FIXED: Entity page components turn on the hitbox debug renderer.
+- FIXED: Study can take you to the entry you're already on infinitely.
+- FIXED: Studying an item with no association inside a book will crash.

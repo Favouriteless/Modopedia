@@ -15,13 +15,13 @@ public class ClassicScreenFactory implements BookScreenFactory<ClassicBookType> 
 
     @Override
     public BookScreen openLandingScreen(ClassicBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
-        return new ClassicLandingScreen(book, langCode, content);
+        return new ClassicLandingScreen(book, langCode, content, type.lockedViewType(), lastScreen);
     }
 
     @Override
     public BookScreen openCategoryScreen(ClassicBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, langCode, content, cat, lastScreen) : lastScreen;
+        return cat != null ? new CategoryScreen(book, langCode, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
     }
 
     @Override

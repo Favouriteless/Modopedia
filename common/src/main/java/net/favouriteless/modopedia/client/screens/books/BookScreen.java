@@ -15,7 +15,6 @@ import net.favouriteless.modopedia.client.screens.widgets.BookImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +24,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected final ResourceLocation bookId;
     protected final Book book;
-    protected final String langCode;
+    protected final String lang;
     protected final LocalisedBookContent content;
     protected final BookTexture texture;
     protected final BookScreen lastScreen;
@@ -34,15 +33,15 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen, Component title) {
+    public BookScreen(Book book, String lang, LocalisedBookContent content, BookScreen lastScreen, Component title) {
         super(title);
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
-        this.langCode = langCode;
+        this.lang = lang;
         this.content = content;
         this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
         this.lastScreen = lastScreen;
-        ScreenCache.get().setLastScreen(bookId, langCode, this);
+        ScreenCache.get().setLastScreen(bookId, this.lang, this);
     }
 
     @Override
@@ -81,12 +80,12 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         if(hasShiftDown() || lastScreen == null) {
             if(isTopLevel())
                 return;
-            ScreenCache.get().setLastScreen(bookId, langCode, null);
+            ScreenCache.get().setLastScreen(bookId, lang, null);
             BookOpenHandler.tryOpenBook(bookId);
         }
         else {
             minecraft.setScreen(lastScreen);
-            ScreenCache.get().setLastScreen(bookId, langCode, lastScreen);
+            ScreenCache.get().setLastScreen(bookId, lang, lastScreen);
         }
     }
 

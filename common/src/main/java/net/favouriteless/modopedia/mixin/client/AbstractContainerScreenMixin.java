@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.mixin;
+package net.favouriteless.modopedia.mixin.client;
 
 import net.favouriteless.modopedia.book.StudyManager;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

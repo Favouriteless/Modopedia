@@ -6,7 +6,6 @@ import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
-import net.favouriteless.modopedia.book.StudyManager;
 import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
 import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.client.init.MKeyMappings;
@@ -71,8 +70,11 @@ public class ItemPageComponent extends PageComponent {
 
                 String langCode = Minecraft.getInstance().options.languageCode;
                 EntryAssociation association = ItemAssociationRegistry.getAssociation(langCode, BuiltInRegistries.ITEM.getKey(stack.getItem()));
-                if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue()))
+                if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue())) {
+                    if(association.entryId().equals(entryId))
+                        return;
                     BookOpenHandler.tryOpenEntry(association.book(), association.entryId());
+                }
             }
         }
     }

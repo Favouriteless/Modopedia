@@ -18,12 +18,14 @@ public class EntryImpl implements Entry {
     private final String title;
     private final ItemStack iconStack;
     private final List<ResourceLocation> assignedItems;
+    private final ResourceLocation advancement;
     private final List<Page> pages = new ArrayList<>();
 
-    public EntryImpl(String title, ItemStack iconStack, List<ResourceLocation> assignedItems) {
+    public EntryImpl(String title, ItemStack iconStack, List<ResourceLocation> assignedItems, ResourceLocation advancement) {
         this.title = title;
         this.iconStack = iconStack;
         this.assignedItems = assignedItems;
+        this.advancement = advancement;
     }
 
     @Override
@@ -47,6 +49,11 @@ public class EntryImpl implements Entry {
         return assignedItems;
     }
 
+    @Override
+    public ResourceLocation getAdvancement() {
+        return advancement;
+    }
+
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
     public Entry addPages(List<Page> pages) {
@@ -58,7 +65,10 @@ public class EntryImpl implements Entry {
     public static final Codec<EntryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Entry::getTitle),
             ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(EntryImpl::getIcon),
-            ResourceLocation.CODEC.listOf().optionalFieldOf("assigned_items").forGetter(e -> Optional.ofNullable(e.getAssignedItems()))
-    ).apply(instance, (title, icon, assignedItem) -> new EntryImpl(title, icon, assignedItem.orElse(List.of()))));
+            ResourceLocation.CODEC.listOf().optionalFieldOf("assigned_items").forGetter(e -> Optional.ofNullable(e.getAssignedItems())),
+            ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement()))
+    ).apply(instance, (title, icon, assignedItem, advancement) -> new EntryImpl(
+            title, icon, assignedItem.orElse(List.of()), advancement.orElse(null)))
+    );
     
 }

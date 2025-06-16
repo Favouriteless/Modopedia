@@ -18,11 +18,14 @@ public class BookItemTextButton extends Button {
 
     private final Holder<SoundEvent> sound;
     private final ItemStack stack;
+    private final boolean isLocked;
 
-    public BookItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress, Holder<SoundEvent> sound) {
+    public BookItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress,
+                              Holder<SoundEvent> sound, boolean isLocked) {
         super(x, y, width, SIZE, message, onPress, DEFAULT_NARRATION);
         this.stack = stack;
         this.sound = sound;
+        this.isLocked = isLocked;
     }
 
     @Override
@@ -33,11 +36,11 @@ public class BookItemTextButton extends Button {
         int x = getX();
         int y = getY();
 
-        if(isHovered()) {
-            RenderSystem.enableBlend();
+        RenderSystem.enableBlend();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, isLocked ? 0.2F : 1.0F);
+
+        if(!isLocked && isHovered())
             graphics.fill(x, y, x + width, y + height, 0x33000000);
-            RenderSystem.disableBlend();
-        }
 
         poseStack.pushPose();
 
@@ -48,11 +51,21 @@ public class BookItemTextButton extends Button {
         poseStack.popPose();
 
         graphics.drawString(Minecraft.getInstance().font, getMessage(), x + height, y+1, 0x000000, false);
+
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.disableBlend();
+    }
+
+    @Override
+    public void onClick(double mouseX, double mouseY) {
+        if(!isLocked)
+            super.onClick(mouseX, mouseY);
     }
 
     @Override
     public void playDownSound(SoundManager handler) {
-        handler.play(SimpleSoundInstance.forUI(sound, 1.0F));
+        if(!isLocked)
+            handler.play(SimpleSoundInstance.forUI(sound, 1.0F));
     }
 
 }
