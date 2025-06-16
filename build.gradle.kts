@@ -5,3 +5,11 @@ plugins {
     // Required for NeoGradle
     alias(libs.plugins.ideaext)
 }
+
+subprojects {
+
+    repositories {
+        maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") { name = "Fuzs Mod Resources" }
+    }
+
+}

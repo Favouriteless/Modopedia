@@ -1,16 +1,9 @@
-package net.favouriteless.modopedia.util;
+package net.favouriteless.modopedia.util.client;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.server.packs.resources.ResourceManager;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 public class ResourceUtils {

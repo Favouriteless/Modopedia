@@ -1,11 +1,10 @@
 [versions]
-    modopedia = "1.0.11"
+    modopedia = "1.0.12"
 
 # Common
     minecraft = "1.21.1"
     minecraft-range = "[1.21.1,)"
-    parchment-minecraft = "1.21"
-    parchment = "2024.07.28"
+    forgeconfigapi = "21.1.1"
     neoform = "1.21-20240613.152323"
 
 # Fabric
@@ -22,6 +21,8 @@
     mixin = "0.8.7"
     mixinextras = "0.3.5"
     schoomp = "1.2.6"
+    parchment-minecraft = "1.21"
+    parchment = "2024.07.28"
 
 # Plugins
     plugin-mod-dev-gradle = "2.0.31-beta"
@@ -32,6 +33,12 @@
     plugin-mixin = "0.7.+"
 
 [libraries]
+# Common
+    forgeconfigapi-common = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-common-neoforgeapi", version.ref = "forgeconfigapi" }
+
+# Fabric
+    forgeconfigapi-fabric = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-fabric", version.ref = "forgeconfigapi" }
+
 # Mixin
     mixin = { group = "org.spongepowered", name = "mixin", version.ref = "mixin" }
     mixinextras-common = { group = "io.github.llamalad7", name = "mixinextras-common", version.ref = "mixinextras" }

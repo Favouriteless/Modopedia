@@ -1,17 +1,19 @@
 package net.favouriteless.modopedia.fabric.client;
 
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.book.StudyManager;
+import net.favouriteless.modopedia.client.ClientConfig;
 import net.favouriteless.modopedia.client.MBookModel;
 import net.favouriteless.modopedia.client.ModopediaClient;
 import net.favouriteless.modopedia.common.network.packets.client.*;
-import net.favouriteless.modopedia.util.ResourceUtils;
+import net.favouriteless.modopedia.util.client.ResourceUtils;
 import net.minecraft.client.Minecraft;
+import net.neoforged.fml.config.ModConfig.Type;
 
 public class ModopediaFabricClient implements ClientModInitializer {
 
@@ -34,6 +36,8 @@ public class ModopediaFabricClient implements ClientModInitializer {
         });
 
         ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> lines.addAll(StudyManager.getTooltips(stack.getItem())));
+
+        NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.CLIENT, ClientConfig.SPEC, "modopedia-client.toml");
     }
 
     public void registerPackets() {

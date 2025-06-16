@@ -5,8 +5,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.favouriteless.modopedia.util.MExtraCodecs;
-import net.favouriteless.modopedia.util.PosUtils;
+import net.favouriteless.modopedia.util.common.MExtraCodecs;
+import net.favouriteless.modopedia.util.common.PosUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 

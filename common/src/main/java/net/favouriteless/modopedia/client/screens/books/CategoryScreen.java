@@ -8,7 +8,7 @@ import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextPage;
 import net.favouriteless.modopedia.common.book_types.LockedViewType;
-import net.favouriteless.modopedia.util.ClientAdvancementHelper;
+import net.favouriteless.modopedia.util.client.AdvancementHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -24,11 +24,11 @@ public class CategoryScreen extends ButtonListScreen {
                 List.of(
                         () -> category.getChildren().stream().filter(c -> {
                             Category cat = content.getCategory(c);
-                            return cat != null && (cat.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || ClientAdvancementHelper.hasAdvancement(cat.getAdvancement()));
+                            return cat != null && (cat.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(cat.getAdvancement()));
                         }).toList(),
                         () -> category.getEntries().stream().filter(e -> {
                             Entry entry = content.getEntry(e);
-                            return entry != null && (entry.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || ClientAdvancementHelper.hasAdvancement(entry.getAdvancement()));
+                            return entry != null && (entry.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(entry.getAdvancement()));
                         }).toList()
                 ),
                 List.of(

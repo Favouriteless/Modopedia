@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.util;
+package net.favouriteless.modopedia.util.common;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

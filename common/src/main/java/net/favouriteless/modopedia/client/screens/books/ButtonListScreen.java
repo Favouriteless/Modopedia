@@ -10,8 +10,8 @@ import net.favouriteless.modopedia.client.screens.books.book_screen_pages.Screen
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.BookItemTextButton;
 import net.favouriteless.modopedia.common.book_types.LockedViewType;
-import net.favouriteless.modopedia.util.ClientAdvancementHelper;
-import net.favouriteless.modopedia.util.ListUtils;
+import net.favouriteless.modopedia.util.client.AdvancementHelper;
+import net.favouriteless.modopedia.util.common.ListUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -95,7 +95,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         return new BookItemTextButton(x, y, width, cat.getIcon(),
                 Component.literal(cat.getTitle()).withStyle(screen.getStyle()),
                 b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.lang, screen.content, cat, screen.lockedType, screen)),
-                screen.book.getFlipSound(), advancement != null && !ClientAdvancementHelper.hasAdvancement(cat.getAdvancement())
+                screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(cat.getAdvancement())
         );
     }
 
@@ -106,7 +106,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         return new BookItemTextButton(x, y, width, entry.getIcon(),
                 Component.literal(entry.getTitle()).withStyle(screen.getStyle()),
                 b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.lang, screen.content, entry, screen)),
-                screen.book.getFlipSound(), advancement != null && !ClientAdvancementHelper.hasAdvancement(entry.getAdvancement())
+                screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(entry.getAdvancement())
         );
     }
 

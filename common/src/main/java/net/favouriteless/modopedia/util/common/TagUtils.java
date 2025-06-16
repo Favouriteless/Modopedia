@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.util;
+package net.favouriteless.modopedia.util.common;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderSet.Named;

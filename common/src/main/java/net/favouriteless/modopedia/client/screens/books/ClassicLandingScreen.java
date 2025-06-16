@@ -10,7 +10,7 @@ import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.LandingScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.common.book_types.LockedViewType;
-import net.favouriteless.modopedia.util.ClientAdvancementHelper;
+import net.favouriteless.modopedia.util.client.AdvancementHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -30,7 +30,7 @@ public class ClassicLandingScreen extends ButtonListScreen {
                 List.of(
                         () -> content.getCategoryIds().stream().filter(c -> {
                             Category cat = content.getCategory(c);
-                            return cat != null && cat.getDisplayOnFrontPage() && (cat.getAdvancement() == null || viewType == LockedViewType.TRANSLUCENT || ClientAdvancementHelper.hasAdvancement(cat.getAdvancement()));
+                            return cat != null && cat.getDisplayOnFrontPage() && (cat.getAdvancement() == null || viewType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(cat.getAdvancement()));
                         }).toList()
                 ),
                 List.of(

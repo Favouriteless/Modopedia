@@ -2,15 +2,16 @@ package net.favouriteless.modopedia.book;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
 import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry;
+import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry.EntryAssociation;
 import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
+import net.favouriteless.modopedia.common.ServerConfig;
+import net.favouriteless.modopedia.util.common.InventoryUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
@@ -25,8 +26,8 @@ public class StudyManager {
     private static int studyTicks = 0;
 
     public static void study(Item item) {
-        String langCode = Minecraft.getInstance().options.languageCode;
-        EntryAssociation association = ItemAssociationRegistry.getAssociation(langCode, BuiltInRegistries.ITEM.getKey(item));
+        String lang = Minecraft.getInstance().options.languageCode;
+        EntryAssociation association = getAssociation(lang, item);
 
         if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue())) {
             if(++studyTicks < STUDY_TICKS_MAX)
@@ -52,7 +53,7 @@ public class StudyManager {
         if(!(mc.screen instanceof AbstractContainerScreen<?>) && !(mc.screen instanceof BookScreen))
             return List.of();
 
-        EntryAssociation association = ItemAssociationRegistry.getAssociation(mc.options.languageCode, BuiltInRegistries.ITEM.getKey(item));
+        EntryAssociation association = getAssociation(mc.options.languageCode, item);
 
         if(association == null)
             return List.of();
@@ -81,6 +82,16 @@ public class StudyManager {
         }
 
         return out;
+    }
+
+    public static EntryAssociation getAssociation(String lang, Item item) {
+        Minecraft mc = Minecraft.getInstance();
+
+        EntryAssociation association = ItemAssociationRegistry.getAssociation(mc.options.languageCode, item);
+        if(association == null || ServerConfig.INSTANCE.studyRequiresBooks.get() && !InventoryUtils.hasBook(mc.player, association.book()))
+            return null;
+
+        return association;
     }
 
 }

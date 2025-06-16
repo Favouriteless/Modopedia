@@ -1,7 +1,8 @@
 package net.favouriteless.modopedia.book.registries.client;
 
-import net.favouriteless.modopedia.api.ModopediaApi.EntryAssociation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,8 +13,8 @@ public class ItemAssociationRegistry {
 
     private static final Map<String, Map<ResourceLocation, EntryAssociation>> associations = new HashMap<>();
 
-    public static EntryAssociation getAssociation(String langCode, ResourceLocation itemId) {
-        return associations.containsKey(langCode) ? associations.get(langCode).get(itemId) : null;
+    public static EntryAssociation getAssociation(String langCode, Item item) {
+        return associations.containsKey(langCode) ? associations.get(langCode).get(BuiltInRegistries.ITEM.getKey(item)) : null;
     }
 
     public static void register(String langCode, ResourceLocation item, EntryAssociation association) {
@@ -31,5 +32,7 @@ public class ItemAssociationRegistry {
             }
         }
     }
+
+    public record EntryAssociation(ResourceLocation book, String entryId, net.favouriteless.modopedia.api.book.Entry entry) {}
 
 }

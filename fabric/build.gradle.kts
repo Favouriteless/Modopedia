@@ -40,6 +40,7 @@ dependencies {
 
     modImplementation( libs.fabric )
     modImplementation( libs.fabric.api )
+    modImplementation( libs.forgeconfigapi.fabric )
 
     localRuntimeOnly( project(":test_books") )
 }

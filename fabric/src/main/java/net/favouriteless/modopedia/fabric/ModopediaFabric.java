@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.fabric;
 
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -9,6 +10,8 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.client.init.MKeyMappings;
+import net.favouriteless.modopedia.common.CommonConfig;
+import net.favouriteless.modopedia.common.ServerConfig;
 import net.favouriteless.modopedia.common.init.MCommands;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
@@ -18,6 +21,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.config.ModConfig.Type;
 
 public class ModopediaFabric implements ModInitializer {
 
@@ -41,6 +45,8 @@ public class ModopediaFabric implements ModInitializer {
                 entries.accept(item);
             }
         });
+        NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.COMMON, CommonConfig.SPEC, "modopedia-common.toml");
+        NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.SERVER, ServerConfig.SPEC, "modopedia-server.toml");
     }
 
     public void registerKeyMappings() {

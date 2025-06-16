@@ -25,6 +25,7 @@ neoForge {
 dependencies {
     compileOnly( libs.mixin )
     compileOnly( libs.mixinextras.common )
+    compileOnly( libs.forgeconfigapi.common )
 }
 
 sourceSets.main.get().resources.srcDir(file("src/generated/resources"))

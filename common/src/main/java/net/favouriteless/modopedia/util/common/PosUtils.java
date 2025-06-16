@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.util;
+package net.favouriteless.modopedia.util.common;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;

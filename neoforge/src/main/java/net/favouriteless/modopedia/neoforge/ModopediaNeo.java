@@ -3,6 +3,8 @@ package net.favouriteless.modopedia.neoforge;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.common.CommonConfig;
+import net.favouriteless.modopedia.common.ServerConfig;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
 import net.favouriteless.modopedia.common.network.packets.client.*;
@@ -16,6 +18,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -29,6 +32,9 @@ public class ModopediaNeo {
         NeoCommonRegistryHelper.DATA_COMPONENT_REGISTRY.register(bus);
         NeoCommonRegistryHelper.SOUND_EVENT_REGISTRY.register(bus);
         Modopedia.init();
+
+        container.registerConfig(Type.COMMON, CommonConfig.SPEC, "modopedia-common.toml");
+        container.registerConfig(Type.SERVER, ServerConfig.SPEC, "modopedia-server.toml");
     }
 
     @SubscribeEvent
