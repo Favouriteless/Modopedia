@@ -8,7 +8,8 @@
   ],
   "client": [
     "client.AbstractContainerScreenMixin",
-    "client.ClientAdvancementsMixin"
+    "client.ClientAdvancementsMixin",
+    "client.ClientPacketListenerMixin"
   ],
   "server": [
   ],

@@ -1,5 +1,5 @@
 [versions]
-    modopedia = "1.0.12"
+    modopedia = "1.0.13"
 
 # Common
     minecraft = "1.21.1"
@@ -14,7 +14,7 @@
 # NeoForge
     neoforge-loader-range = "[4,)"
     neoforge-range = "[21.1.72,)"
-    neoforge = "21.1.79"
+    neoforge = "21.1.179"
 
 
 # Dependencies
