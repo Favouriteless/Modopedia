@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.template_processors;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
@@ -8,7 +9,6 @@ import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CookingRecipeProcessor implements TemplateProcessor {
+
+    public static final ResourceLocation ID = Modopedia.id("cooking_recipe");
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {

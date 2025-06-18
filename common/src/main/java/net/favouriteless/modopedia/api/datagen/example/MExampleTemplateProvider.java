@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api.datagen.example;
 import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.TextComponentBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -22,7 +22,7 @@ public class MExampleTemplateProvider extends TemplateProvider {
         TemplateBuilder.of("example")
                 .processor(Modopedia.id("example"))
                 .components(
-                        TextComponentBuilder.of("example text")
+                        TextBuilder.of("example text")
                                 .width("#width")
                                 .lineHeight(9)
                 )

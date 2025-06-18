@@ -2,8 +2,8 @@
   "components": [
     {
       "type": "modopedia:small_frame",
-      "x": "#frame_x",
-      "y": "#frame_y"
+      "x": "#frame_offset",
+      "y": "#frame_offset"
     },
     {
       "type": "modopedia:item",

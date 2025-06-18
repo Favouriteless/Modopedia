@@ -84,8 +84,8 @@
     },
     "medium_frame": {
       "height": 54,
-      "u": 140,
-      "v": 182,
+      "u": 0,
+      "v": 255,
       "width": 54
     },
     "separator": {

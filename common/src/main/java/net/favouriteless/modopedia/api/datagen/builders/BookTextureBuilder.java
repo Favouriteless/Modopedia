@@ -42,7 +42,11 @@ public class BookTextureBuilder {
     }
 
     public interface Stage7 {
-        FinalStage refreshButton(int x, int y, int u, int v, int width, int height);
+        Stage8 refreshButton(int x, int y, int u, int v, int width, int height);
+    }
+
+    public interface Stage8 {
+        FinalStage page(int u, int v, int width, int height);
     }
 
     public interface FinalStage {
@@ -55,7 +59,7 @@ public class BookTextureBuilder {
 
     }
 
-    public static class Builder implements Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Stage7, FinalStage {
+    public static class Builder implements Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Stage7, Stage8, FinalStage {
 
         private final String id;
         private ResourceLocation location;
@@ -116,7 +120,7 @@ public class BookTextureBuilder {
         }
 
         @Override
-        public FinalStage refreshButton(int x, int y, int u, int v, int width, int height) {
+        public Stage8 refreshButton(int x, int y, int u, int v, int width, int height) {
             this.refresh = FixedRectangle.of(x, y, u, v, width, height);
             return this;
         }

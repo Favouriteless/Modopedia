@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "modopedia:large_frame",
+      "x": "#frame_offset",
+      "y": "#frame_offset"
+    },
+    {
+      "type": "modopedia:multiblock",
+      "height": "#width",
+      "multiblock": "#multiblock",
+      "multiblock_id": "#multiblock_id",
+      "no_offsets": "#no_offsets",
+      "offset_x": "#offset_x",
+      "offset_y": "#offset_y",
+      "scale": "#scale",
+      "width": "#width"
+    }
+  ],
+  "processor": "modopedia:large_frame_spacing",
+  "width": 100
+}

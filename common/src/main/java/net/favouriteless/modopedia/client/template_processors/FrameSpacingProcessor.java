@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.template_processors;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
@@ -7,9 +8,15 @@ import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public class FrameSpacingProcessor implements TemplateProcessor {
+
+    public static final ResourceLocation ID_SMALL = Modopedia.id("small_frame_spacing");
+    public static final ResourceLocation ID_MEDIUM = Modopedia.id("medium_frame_spacing");
+    public static final ResourceLocation ID_LARGE = Modopedia.id("large_frame_spacing");
+    public static final ResourceLocation ID_CRAFTING = Modopedia.id("crafting_grid_spacing");
 
     protected final String widgetId;
 

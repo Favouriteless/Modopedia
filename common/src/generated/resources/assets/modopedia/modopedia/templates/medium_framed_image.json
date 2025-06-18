@@ -1,0 +1,17 @@
+{
+  "components": [
+    {
+      "type": "modopedia:medium_frame",
+      "x": "#frame_offset",
+      "y": "#frame_offset"
+    },
+    {
+      "type": "modopedia:image",
+      "height": "#width",
+      "images": "#images",
+      "width": "#width"
+    }
+  ],
+  "processor": "modopedia:medium_frame_spacing",
+  "width": 50
+}

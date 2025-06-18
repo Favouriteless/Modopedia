@@ -37,7 +37,7 @@ public class MBookTextureProvider extends BookTextureProvider {
                         .page(157, 16, 100, 150)
                         .widget("separator", 0, 249, 100, 6)
                         .widget("small_frame", 54, 255, 20, 20)
-                        .widget("medium_frame", 140, 182, 54, 54)
+                        .widget("medium_frame", 0, 255, 54, 54)
                         .widget("large_frame", 140, 182, 104, 104)
                         .widget("crafting_grid", 74, 255, 54, 54)
                         .widget("crafting_arrow", 73, 183, 16, 13)
