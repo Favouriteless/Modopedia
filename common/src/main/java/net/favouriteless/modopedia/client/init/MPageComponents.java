@@ -9,7 +9,7 @@ public class MPageComponents {
     public static void load() {
         PageComponentRegistry registry = PageComponentRegistry.get();
 
-        registry.register(Modopedia.id("text"), TextPageComponent::new);
+        registry.register(TextPageComponent.ID, TextPageComponent::new);
         registry.register(Modopedia.id("image"), ImagePageComponent::new);
         registry.register(Modopedia.id("tooltip"), TooltipPageComponent::new);
         registry.register(Modopedia.id("header"), HeaderPageComponent::new);

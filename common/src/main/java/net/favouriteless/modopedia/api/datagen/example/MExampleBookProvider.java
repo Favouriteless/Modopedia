@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.datagen.example;
+package net.favouriteless.modopedia.api.datagen.example;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 public class MExampleBookProvider extends BookProvider {
 
     public MExampleBookProvider(CompletableFuture<Provider> registries, PackOutput output) {
-        super(registries, output);
+        super("example", registries, output);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class MBookTextureProvider extends BookTextureProvider {
     public static final String[] COLOURS = { "brown", "red", "green", "blue", "purple" };
 
     public MBookTextureProvider(CompletableFuture<Provider> registries, PackOutput output) {
-        super(registries, output);
+        super(Modopedia.MOD_ID, registries, output);
     }
 
     @Override

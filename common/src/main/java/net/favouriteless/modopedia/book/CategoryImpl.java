@@ -12,7 +12,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class CategoryImpl implements Category {
     public static final boolean DEFAULT_DISPLAY_ON_FRONT_PAGE = true;
     public static final Supplier<ItemStack> DEFAULT_ICON = Items.GRASS_BLOCK::getDefaultInstance;
 
-    private final String title; // Fields here get set by the codec
+    private final String title;
     private final String rawLandingText;
     private final ItemStack iconStack;
     private final boolean displayFrontPage;
@@ -50,13 +49,11 @@ public class CategoryImpl implements Category {
         return title;
     }
 
-    @Nullable
     @Override
     public List<TextChunk> getLandingText() {
         return landingText;
     }
 
-    @Nullable
     @Override
     public String getRawLandingText() {
         return rawLandingText;
@@ -93,16 +90,16 @@ public class CategoryImpl implements Category {
         return this;
     }
 
-    public static final Codec<CategoryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final Codec<Category> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Category::getTitle),
             Codec.STRING.optionalFieldOf("landing_text").forGetter(c -> Optional.ofNullable(c.getRawLandingText())),
-            ItemStack.CODEC.optionalFieldOf("icon", DEFAULT_ICON.get()).forGetter(CategoryImpl::getIcon),
+            ItemStack.CODEC.optionalFieldOf("icon", DEFAULT_ICON.get()).forGetter(Category::getIcon),
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren),
             Codec.BOOL.optionalFieldOf("display_on_front_page", DEFAULT_DISPLAY_ON_FRONT_PAGE).forGetter(Category::getDisplayOnFrontPage),
             ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement()))
-    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront, advancement) ->
-            new CategoryImpl(title, landingText.orElse(null), iconStack, entries, children, displayFront, advancement.orElse(null)))
+    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront, advancement) -> new CategoryImpl(
+            title, landingText.orElse(null), iconStack, entries, children, displayFront, advancement.orElse(null)))
     );
 
 }

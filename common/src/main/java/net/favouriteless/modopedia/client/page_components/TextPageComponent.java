@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
@@ -10,12 +11,15 @@ import net.favouriteless.modopedia.book.text.TextParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TextPageComponent extends PageComponent {
+
+    public static final ResourceLocation ID = Modopedia.id("text");
 
     protected List<TextChunk> textChunks = new ArrayList<>();
     protected int width;

@@ -1,12 +1,14 @@
-package net.favouriteless.modopedia.datagen;
+package net.favouriteless.modopedia.api.datagen.providers;
 
 import com.google.common.collect.Sets;
-import com.mojang.serialization.Codec;
+import com.google.gson.JsonElement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.PackOutput.PathProvider;
+import net.minecraft.data.PackOutput.Target;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -15,19 +17,19 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public abstract class SimpleCodecProvider<T> implements DataProvider {
+public abstract class TemplateProvider implements DataProvider {
 
-    private final Codec<T> codec;
+    private final String modId;
     private final PathProvider pathProvider;
     private final CompletableFuture<Provider> registries;
 
-    protected SimpleCodecProvider(PathProvider pathProvider, CompletableFuture<Provider> registries, Codec<T> codec) {
-        this.pathProvider = pathProvider;
+    protected TemplateProvider(String modId, CompletableFuture<Provider> registries, PackOutput output) {
+        this.pathProvider = output.createPathProvider(Target.RESOURCE_PACK, "modopedia/templates");
         this.registries = registries;
-        this.codec = codec;
+        this.modId = modId;
     }
 
-    protected abstract void build(BiConsumer<ResourceLocation, T> output);
+    protected abstract void build(BiConsumer<ResourceLocation, JsonElement> output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
@@ -38,12 +40,17 @@ public abstract class SimpleCodecProvider<T> implements DataProvider {
         final Set<ResourceLocation> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
-        build((id, t) -> {
+        build((id, template) -> {
             if(!set.add(id))
                 throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-            generated.add(DataProvider.saveStable(output, registries, codec, t, pathProvider.json(id)));
+            generated.add(DataProvider.saveStable(output, template, pathProvider.json(id)));
         });
         return CompletableFuture.allOf(generated.toArray(CompletableFuture[]::new));
+    }
+
+    @Override
+    public String getName() {
+        return "Modopedia Templates[" + modId + "]";
     }
 
 }
