@@ -21,8 +21,8 @@ public class MExampleBookProvider extends BookProvider {
     }
 
     @Override
-    protected void build(BiConsumer<ResourceLocation, Book> output) {
-        BookBuilder.of(Modopedia.id("datagen_example"), "Datagen Example") // All fields except ID and title are optional.
+    protected void build(BiConsumer<String, Book> output) {
+        BookBuilder.of("datagen_example", "Datagen Example") // All fields except ID and title are optional.
                 .subtitle("Example Subtitle")
                 .type(new ClassicBookType(LockedViewType.TRANSLUCENT))
                 .landingText("Example $(b)Landing$() $(c:green)Text$()!")

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemPageComponentBuilder extends PageComponentBuilder {
+public class ItemBuilder extends PageComponentBuilder {
 
     private Either<List<List<ItemStack>>, String> items = Either.left(new ArrayList<>());
     private Either<Integer, String> rowMax;
@@ -18,24 +18,24 @@ public class ItemPageComponentBuilder extends PageComponentBuilder {
     private Either<Boolean, String> centered;
     private Either<Boolean, String> reverseY;
 
-    private ItemPageComponentBuilder() {
+    private ItemBuilder() {
         super(ItemPageComponent.ID);
     }
 
-    private ItemPageComponentBuilder(String items) {
+    private ItemBuilder(String items) {
         super(ItemPageComponent.ID);
         this.items = Either.right(items);
     }
 
-    public static ItemPageComponentBuilder of(ItemStack... items) {
-        return new ItemPageComponentBuilder().items(items);
+    public static ItemBuilder of(ItemStack... items) {
+        return new ItemBuilder().items(items);
     }
 
-    public static ItemPageComponentBuilder of(String items) {
-        return new ItemPageComponentBuilder(items);
+    public static ItemBuilder of(String items) {
+        return new ItemBuilder(items);
     }
 
-    public ItemPageComponentBuilder items(ItemStack... items) {
+    public ItemBuilder items(ItemStack... items) {
         if(this.items.left().isEmpty())
             this.items = Either.left(new ArrayList<>());
         this.items.left().ifPresent(l -> l.add(List.of(items)));
@@ -43,68 +43,68 @@ public class ItemPageComponentBuilder extends PageComponentBuilder {
     }
 
     @Override
-    public ItemPageComponentBuilder x(int x) {
-        return (ItemPageComponentBuilder)super.x(x);
+    public ItemBuilder x(int x) {
+        return (ItemBuilder)super.x(x);
     }
 
     @Override
-    public ItemPageComponentBuilder x(String x) {
-        return (ItemPageComponentBuilder)super.x(x);
+    public ItemBuilder x(String x) {
+        return (ItemBuilder)super.x(x);
     }
 
     @Override
-    public ItemPageComponentBuilder y(int y) {
-        return (ItemPageComponentBuilder)super.y(y);
+    public ItemBuilder y(int y) {
+        return (ItemBuilder)super.y(y);
     }
 
     @Override
-    public ItemPageComponentBuilder y(String y) {
-        return (ItemPageComponentBuilder)super.y(y);
+    public ItemBuilder y(String y) {
+        return (ItemBuilder)super.y(y);
     }
 
-    public ItemPageComponentBuilder rowMax(int rowMax) {
+    public ItemBuilder rowMax(int rowMax) {
         this.rowMax = Either.left(rowMax);
         return this;
     }
 
-    public ItemPageComponentBuilder rowMax(String rowMax) {
+    public ItemBuilder rowMax(String rowMax) {
         this.rowMax = Either.right(rowMax);
         return this;
     }
 
-    public ItemPageComponentBuilder padding(int padding) {
+    public ItemBuilder padding(int padding) {
         this.padding = Either.left(padding);
         return this;
     }
 
-    public ItemPageComponentBuilder padding(String padding) {
+    public ItemBuilder padding(String padding) {
         this.padding = Either.right(padding);
         return this;
     }
 
-    public ItemPageComponentBuilder centered(boolean centered) {
+    public ItemBuilder centered(boolean centered) {
         this.centered = Either.left(centered);
         return this;
     }
 
-    public ItemPageComponentBuilder centered(String centered) {
+    public ItemBuilder centered(String centered) {
         this.centered = Either.right(centered);
         return this;
     }
 
-    public ItemPageComponentBuilder reverseY(boolean reverseY) {
+    public ItemBuilder reverseY(boolean reverseY) {
         this.reverseY = Either.left(reverseY);
         return this;
     }
 
-    public ItemPageComponentBuilder reverseY(String reverseY) {
+    public ItemBuilder reverseY(String reverseY) {
         this.reverseY = Either.right(reverseY);
         return this;
     }
 
     @Override
     protected void build(JsonObject json) {
-        json.add("items", resolve(items).orElse(ItemStack.CODEC.listOf().listOf().encodeStart(JsonOps.INSTANCE, items.left().orElseThrow()).getOrThrow()));
+        json.add("items", resolve(items).orElseGet(() -> ItemStack.CODEC.listOf().listOf().encodeStart(JsonOps.INSTANCE, items.left().orElseThrow()).getOrThrow()));
 
         if(rowMax != null)
             resolveNum(rowMax).ifPresent(m -> json.add("row_max", m));

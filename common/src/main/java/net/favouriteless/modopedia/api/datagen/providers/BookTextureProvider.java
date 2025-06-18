@@ -11,11 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class BookTextureProvider extends SimpleCodecProvider<BookTexture> {
 
-    private final String modId;
-
     public BookTextureProvider(String modId, CompletableFuture<Provider> registries, PackOutput output) {
-        super(output.createPathProvider(Target.RESOURCE_PACK, "modopedia/book_textures"), registries, MExtraCodecs.BOOK_TEXTURE);
-        this.modId = modId;
+        super(modId, output.createPathProvider(Target.RESOURCE_PACK, "modopedia/book_textures"), registries, MExtraCodecs.BOOK_TEXTURE);
     }
 
     @Override

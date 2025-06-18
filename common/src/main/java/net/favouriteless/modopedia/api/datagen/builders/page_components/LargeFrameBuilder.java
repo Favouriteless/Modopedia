@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.WidgetPageComponent;
 
-public class LargeFramePageComponentBuilder extends PageComponentBuilder {
+public class LargeFrameBuilder extends PageComponentBuilder {
 
-    private LargeFramePageComponentBuilder() {
+    private LargeFrameBuilder() {
         super(WidgetPageComponent.ID_LARGE_FRAME);
     }
 
-    public static LargeFramePageComponentBuilder of() {
-        return new LargeFramePageComponentBuilder();
+    public static LargeFrameBuilder of() {
+        return new LargeFrameBuilder();
     }
 
     @Override

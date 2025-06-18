@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
@@ -10,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 
-public class EntityPageComponentBuilder extends PageComponentBuilder {
+public class EntityBuilder extends PageComponentBuilder {
 
     private final Either<EntityType<?>, String> entity;
     private Either<Float, String> offsetY;
@@ -18,80 +17,80 @@ public class EntityPageComponentBuilder extends PageComponentBuilder {
     private Either<Integer, String> width;
     private Either<Integer, String> height;
 
-    private EntityPageComponentBuilder(EntityType<?> type) {
+    private EntityBuilder(EntityType<?> type) {
         super(TextPageComponent.ID);
         this.entity = Either.left(type);
     }
 
-    private EntityPageComponentBuilder(String reference) {
+    private EntityBuilder(String reference) {
         super(TextPageComponent.ID);
         this.entity = Either.right(reference);
     }
 
-    public static EntityPageComponentBuilder of(EntityType<?> type) {
-        return new EntityPageComponentBuilder(type);
+    public static EntityBuilder of(EntityType<?> type) {
+        return new EntityBuilder(type);
     }
 
-    public static EntityPageComponentBuilder of(String type) {
-        return new EntityPageComponentBuilder(type);
-    }
-
-    @Override
-    public EntityPageComponentBuilder x(int x) {
-        return (EntityPageComponentBuilder)super.x(x);
+    public static EntityBuilder of(String type) {
+        return new EntityBuilder(type);
     }
 
     @Override
-    public EntityPageComponentBuilder x(String reference) {
-        return (EntityPageComponentBuilder)super.x(reference);
+    public EntityBuilder x(int x) {
+        return (EntityBuilder)super.x(x);
     }
 
     @Override
-    public EntityPageComponentBuilder y(int y) {
-        return (EntityPageComponentBuilder)super.y(y);
+    public EntityBuilder x(String x) {
+        return (EntityBuilder)super.x(x);
     }
 
     @Override
-    public EntityPageComponentBuilder y(String reference) {
-        return (EntityPageComponentBuilder)super.y(reference);
+    public EntityBuilder y(int y) {
+        return (EntityBuilder)super.y(y);
     }
 
-    public EntityPageComponentBuilder scale(float scale) {
+    @Override
+    public EntityBuilder y(String y) {
+        return (EntityBuilder)super.y(y);
+    }
+
+    public EntityBuilder scale(float scale) {
         this.scale = Either.left(scale);
         return this;
     }
 
-    public EntityPageComponentBuilder scale(String reference) {
+    public EntityBuilder scale(String reference) {
         this.scale = Either.right(reference);
         return this;
     }
 
-    public EntityPageComponentBuilder offsetY(float offsetY) {
+    public EntityBuilder offsetY(float offsetY) {
         this.offsetY = Either.left(offsetY);
         return this;
     }
 
-    public EntityPageComponentBuilder offsetY(String reference) {
+    public EntityBuilder offsetY(String reference) {
         this.offsetY = Either.right(reference);
         return this;
     }
 
-    public EntityPageComponentBuilder width(int width) {
+    public EntityBuilder width(int width) {
         this.width = Either.left(width);
         return this;
     }
 
-    public EntityPageComponentBuilder width(String reference) {
+    public EntityBuilder width(String reference) {
         this.width = Either.right(reference);
         return this;
     }
 
-    public EntityPageComponentBuilder height(int height) {
+    public EntityBuilder height(int height) {
         this.height = Either.left(height);
         return this;
     }
 
-    public EntityPageComponentBuilder height(String reference) {
+    public EntityBuilder height(String reference) {
         this.height = Either.right(reference);
         return this;
     }
@@ -99,7 +98,7 @@ public class EntityPageComponentBuilder extends PageComponentBuilder {
 
     @Override
     protected void build(JsonObject json) {
-        json.add("entity", resolve(entity).orElse(ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, BuiltInRegistries.ENTITY_TYPE.getKey(entity.left().orElseThrow())).getOrThrow()));
+        json.add("entity", resolve(entity).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, BuiltInRegistries.ENTITY_TYPE.getKey(entity.left().orElseThrow())).getOrThrow()));
 
         if(offsetY != null)
             resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));

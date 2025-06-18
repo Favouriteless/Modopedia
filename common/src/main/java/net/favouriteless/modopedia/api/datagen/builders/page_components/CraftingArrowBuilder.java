@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.WidgetPageComponent;
 
-public class MediumFramePageComponentBuilder extends PageComponentBuilder {
+public class CraftingArrowBuilder extends PageComponentBuilder {
 
-    private MediumFramePageComponentBuilder() {
-        super(WidgetPageComponent.ID_MEDIUM_FRAME);
+    private CraftingArrowBuilder() {
+        super(WidgetPageComponent.ID_CRAFTING_ARROW);
     }
 
-    public static MediumFramePageComponentBuilder of() {
-        return new MediumFramePageComponentBuilder();
+    public static CraftingArrowBuilder of() {
+        return new CraftingArrowBuilder();
     }
 
     @Override

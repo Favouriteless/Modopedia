@@ -8,7 +8,7 @@ import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.page_components.TextPageComponent;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 
-public class TextPageComponentBuilder extends PageComponentBuilder {
+public class TextComponentBuilder extends PageComponentBuilder {
 
     private final String text;
 
@@ -16,61 +16,61 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
     private Either<Integer, String> lineHeight;
     private Either<Justify, String> justify;
 
-    private TextPageComponentBuilder(String text) {
+    private TextComponentBuilder(String text) {
         super(TextPageComponent.ID, false);
         this.text = text;
     }
 
-    public static TextPageComponentBuilder of(String text) {
-        return new TextPageComponentBuilder(text);
+    public static TextComponentBuilder of(String text) {
+        return new TextComponentBuilder(text);
     }
 
     @Override
-    public TextPageComponentBuilder x(int x) {
-        return (TextPageComponentBuilder)super.x(x);
+    public TextComponentBuilder x(int x) {
+        return (TextComponentBuilder)super.x(x);
     }
 
     @Override
-    public TextPageComponentBuilder x(String x) {
-        return (TextPageComponentBuilder)super.x(x);
+    public TextComponentBuilder x(String x) {
+        return (TextComponentBuilder)super.x(x);
     }
 
     @Override
-    public TextPageComponentBuilder y(int y) {
-        return (TextPageComponentBuilder)super.y(y);
+    public TextComponentBuilder y(int y) {
+        return (TextComponentBuilder)super.y(y);
     }
 
     @Override
-    public TextPageComponentBuilder y(String y) {
-        return (TextPageComponentBuilder)super.y(y);
+    public TextComponentBuilder y(String y) {
+        return (TextComponentBuilder)super.y(y);
     }
 
-    public TextPageComponentBuilder width(int width) {
+    public TextComponentBuilder width(int width) {
         this.width = Either.left(width);
         return this;
     }
 
-    public TextPageComponentBuilder width(String width) {
+    public TextComponentBuilder width(String width) {
         this.width = Either.right(width);
         return this;
     }
 
-    public TextPageComponentBuilder lineHeight(int height) {
+    public TextComponentBuilder lineHeight(int height) {
         this.lineHeight = Either.left(height);
         return this;
     }
 
-    public TextPageComponentBuilder lineHeight(String height) {
+    public TextComponentBuilder lineHeight(String height) {
         this.lineHeight = Either.right(height);
         return this;
     }
 
-    public TextPageComponentBuilder justify(Justify justify) {
+    public TextComponentBuilder justify(Justify justify) {
         this.justify = Either.left(justify);
         return this;
     }
 
-    public TextPageComponentBuilder justify(String justify) {
+    public TextComponentBuilder justify(String justify) {
         this.justify = Either.right(justify);
         return this;
     }
@@ -84,7 +84,7 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
         if(lineHeight != null)
             resolveNum(lineHeight).ifPresent(j -> json.add("line_height", j));
         if(justify != null)
-            json.add("justify", resolve(justify).orElse(Justify.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(justify)).getOrThrow()));
+            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(justify)).getOrThrow()));
     }
 
 }

@@ -29,7 +29,7 @@ public abstract class TemplateProvider implements DataProvider {
         this.modId = modId;
     }
 
-    protected abstract void build(BiConsumer<ResourceLocation, JsonElement> output);
+    protected abstract void build(BiConsumer<String, JsonElement> output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
@@ -37,13 +37,13 @@ public abstract class TemplateProvider implements DataProvider {
     }
 
     private CompletableFuture<?> run(final CachedOutput output, final HolderLookup.Provider registries) {
-        final Set<ResourceLocation> set = Sets.newHashSet();
+        final Set<String> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
         build((id, template) -> {
             if(!set.add(id))
                 throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-            generated.add(DataProvider.saveStable(output, template, pathProvider.json(id)));
+            generated.add(DataProvider.saveStable(output, template, pathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
         });
         return CompletableFuture.allOf(generated.toArray(CompletableFuture[]::new));
     }

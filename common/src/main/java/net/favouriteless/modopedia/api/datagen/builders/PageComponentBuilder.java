@@ -34,8 +34,8 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         return this;
     }
 
-    public PageComponentBuilder x(String reference) {
-        this.x = Either.right(reference);
+    public PageComponentBuilder x(String x) {
+        this.x = Either.right(x);
         return this;
     }
 
@@ -44,8 +44,8 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         return this;
     }
 
-    public PageComponentBuilder y(String reference) {
-        this.y = Either.right(reference);
+    public PageComponentBuilder y(String y) {
+        this.y = Either.right(y);
         return this;
     }
 
@@ -54,8 +54,10 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         JsonObject json = new JsonObject();
 
         json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, type).getOrThrow());
-        resolveNum(x).ifPresent(j -> json.add("x", j));
-        resolveNum(y).ifPresent(j -> json.add("y", j));
+        if(x != null)
+            resolveNum(x).ifPresent(j -> json.add("x", j));
+        if(y != null)
+            resolveNum(y).ifPresent(j -> json.add("y", j));
         build(json);
 
         return json;

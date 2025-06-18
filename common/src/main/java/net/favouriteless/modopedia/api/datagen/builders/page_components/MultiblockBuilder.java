@@ -8,7 +8,7 @@ import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.client.page_components.MultiblockPageComponent;
 import net.minecraft.resources.ResourceLocation;
 
-public class MultiblockPageComponentBuilder extends PageComponentBuilder {
+public class MultiblockBuilder extends PageComponentBuilder {
 
     private Either<Multiblock, String> multiblock;
     private Either<ResourceLocation, String> multiblockId;
@@ -23,132 +23,132 @@ public class MultiblockPageComponentBuilder extends PageComponentBuilder {
     private Either<Float, String> viewAngle;
     private Either<Boolean, String> noOffsets;
 
-    private MultiblockPageComponentBuilder() {
+    private MultiblockBuilder() {
         super(MultiblockPageComponent.ID);
     }
 
-    private MultiblockPageComponentBuilder(Multiblock multiblock) {
+    private MultiblockBuilder(Multiblock multiblock) {
         this();
         this.multiblock = Either.left(multiblock);
     }
 
-    private MultiblockPageComponentBuilder(String multiblock) {
+    private MultiblockBuilder(String multiblock) {
         this();
         this.multiblock = Either.right(multiblock);
     }
 
-    public static MultiblockPageComponentBuilder of(Multiblock multiblock) {
-        return new MultiblockPageComponentBuilder(multiblock);
+    public static MultiblockBuilder of(Multiblock multiblock) {
+        return new MultiblockBuilder(multiblock);
     }
 
-    public static MultiblockPageComponentBuilder of(String multiblock) {
-        return new MultiblockPageComponentBuilder(multiblock);
+    public static MultiblockBuilder of(String multiblock) {
+        return new MultiblockBuilder(multiblock);
     }
 
-    public static MultiblockPageComponentBuilder ofId(ResourceLocation multiblock) {
-        return new MultiblockPageComponentBuilder().multiblockId(multiblock);
+    public static MultiblockBuilder ofId(ResourceLocation multiblock) {
+        return new MultiblockBuilder().multiblockId(multiblock);
     }
 
-    public static MultiblockPageComponentBuilder ofId(String multiblock) {
-        return new MultiblockPageComponentBuilder().multiblockId(multiblock);
+    public static MultiblockBuilder ofId(String multiblock) {
+        return new MultiblockBuilder().multiblockId(multiblock);
     }
 
-    public MultiblockPageComponentBuilder multiblockId(ResourceLocation multiblock) {
+    public MultiblockBuilder multiblockId(ResourceLocation multiblock) {
         this.multiblockId = Either.left(multiblock);
         return this;
     }
 
-    public MultiblockPageComponentBuilder multiblockId(String multiblock) {
+    public MultiblockBuilder multiblockId(String multiblock) {
         this.multiblockId = Either.right(multiblock);
         return this;
     }
 
     @Override
-    public MultiblockPageComponentBuilder x(int x) {
-        return (MultiblockPageComponentBuilder)super.x(x);
+    public MultiblockBuilder x(int x) {
+        return (MultiblockBuilder)super.x(x);
     }
 
     @Override
-    public MultiblockPageComponentBuilder x(String reference) {
-        return (MultiblockPageComponentBuilder)super.x(reference);
+    public MultiblockBuilder x(String x) {
+        return (MultiblockBuilder)super.x(x);
     }
 
     @Override
-    public MultiblockPageComponentBuilder y(int y) {
-        return (MultiblockPageComponentBuilder)super.y(y);
+    public MultiblockBuilder y(int y) {
+        return (MultiblockBuilder)super.y(y);
     }
 
     @Override
-    public MultiblockPageComponentBuilder y(String reference) {
-        return (MultiblockPageComponentBuilder)super.y(reference);
+    public MultiblockBuilder y(String y) {
+        return (MultiblockBuilder)super.y(y);
     }
 
-    public MultiblockPageComponentBuilder scale(float scale) {
+    public MultiblockBuilder scale(float scale) {
         this.scale = Either.left(scale);
         return this;
     }
 
-    public MultiblockPageComponentBuilder scale(String scale) {
+    public MultiblockBuilder scale(String scale) {
         this.scale = Either.right(scale);
         return this;
     }
 
-    public MultiblockPageComponentBuilder offsetX(float offsetX) {
+    public MultiblockBuilder offsetX(float offsetX) {
         this.offsetX = Either.left(offsetX);
         return this;
     }
 
-    public MultiblockPageComponentBuilder offsetX(String offsetX) {
+    public MultiblockBuilder offsetX(String offsetX) {
         this.offsetX = Either.right(offsetX);
         return this;
     }
 
-    public MultiblockPageComponentBuilder offsetY(float offsetY) {
+    public MultiblockBuilder offsetY(float offsetY) {
         this.offsetY = Either.left(offsetY);
         return this;
     }
 
-    public MultiblockPageComponentBuilder offsetY(String offsetY) {
+    public MultiblockBuilder offsetY(String offsetY) {
         this.offsetY = Either.right(offsetY);
         return this;
     }
 
-    public MultiblockPageComponentBuilder width(int width) {
+    public MultiblockBuilder width(int width) {
         this.width = Either.left(width);
         return this;
     }
 
-    public MultiblockPageComponentBuilder width(String width) {
+    public MultiblockBuilder width(String width) {
         this.width = Either.right(width);
         return this;
     }
 
-    public MultiblockPageComponentBuilder height(int height) {
+    public MultiblockBuilder height(int height) {
         this.height = Either.left(height);
         return this;
     }
 
-    public MultiblockPageComponentBuilder height(String height) {
+    public MultiblockBuilder height(String height) {
         this.height = Either.right(height);
         return this;
     }
 
-    public MultiblockPageComponentBuilder viewAngle(float viewAngle) {
+    public MultiblockBuilder viewAngle(float viewAngle) {
         this.viewAngle = Either.left(viewAngle);
         return this;
     }
 
-    public MultiblockPageComponentBuilder viewAngle(String viewAngle) {
+    public MultiblockBuilder viewAngle(String viewAngle) {
         this.viewAngle = Either.right(viewAngle);
         return this;
     }
 
-    public MultiblockPageComponentBuilder noOffsets(boolean noOffsets) {
+    public MultiblockBuilder noOffsets(boolean noOffsets) {
         this.noOffsets = Either.left(noOffsets);
         return this;
     }
 
-    public MultiblockPageComponentBuilder noOffsets(String noOffsets) {
+    public MultiblockBuilder noOffsets(String noOffsets) {
         this.noOffsets = Either.right(noOffsets);
         return this;
     }
@@ -156,9 +156,9 @@ public class MultiblockPageComponentBuilder extends PageComponentBuilder {
     @Override
     protected void build(JsonObject json) {
         if(multiblock != null)
-            json.add("multiblock", resolve(multiblock).orElse(Multiblock.codec().encodeStart(JsonOps.INSTANCE, multiblock.left().orElseThrow()).getOrThrow()));
+            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(JsonOps.INSTANCE, multiblock.left().orElseThrow()).getOrThrow()));
         if(multiblockId != null)
-            json.add("multiblock_id", resolve(multiblockId).orElse(ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, multiblockId.left().orElseThrow()).getOrThrow()));
+            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, multiblockId.left().orElseThrow()).getOrThrow()));
         if(width != null)
             resolveNum(width).ifPresent(w -> json.add("width", w));
         if(height != null)

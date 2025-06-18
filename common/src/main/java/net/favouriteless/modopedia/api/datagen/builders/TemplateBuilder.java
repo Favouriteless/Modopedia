@@ -14,15 +14,15 @@ import java.util.function.Supplier;
 
 public class TemplateBuilder extends PageBuilder {
 
-    private final ResourceLocation id;
+    private final String id;
     private final Map<String, Supplier<JsonElement>> defaults = new HashMap<>();
     private ResourceLocation processor;
 
-    private TemplateBuilder(ResourceLocation id) {
+    private TemplateBuilder(String id) {
         this.id = id;
     }
 
-    public static TemplateBuilder of(ResourceLocation id) {
+    public static TemplateBuilder of(String id) {
         return new TemplateBuilder(id);
     }
 
@@ -65,7 +65,7 @@ public class TemplateBuilder extends PageBuilder {
         return json;
     }
 
-    public void build(BiConsumer<ResourceLocation, JsonElement> output) {
+    public void build(BiConsumer<String, JsonElement> output) {
         output.accept(id, build());
     }
 

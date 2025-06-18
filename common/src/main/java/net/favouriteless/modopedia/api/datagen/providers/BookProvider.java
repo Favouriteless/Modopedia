@@ -10,11 +10,8 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class BookProvider extends SimpleCodecProvider<Book> {
 
-    private final String modId;
-
     public BookProvider(String modId, CompletableFuture<Provider> registries, PackOutput output) {
-        super(output.createPathProvider(Target.DATA_PACK, "modopedia/books"), registries, Book.persistentCodec());
-        this.modId = modId;
+        super(modId, output.createPathProvider(Target.DATA_PACK, "modopedia/books"), registries, Book.persistentCodec());
     }
 
     @Override

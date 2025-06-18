@@ -5,7 +5,7 @@ import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.TextPageComponentBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.TextComponentBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -26,7 +26,7 @@ public class MExampleContentSetProvider extends ContentSetProvider {
                 .icon(Items.DIAMOND.getDefaultInstance())
                 .assignedItems(Items.DIAMOND)
                 .page(
-                        TextPageComponentBuilder.of("Example Text").justify(Justify.CENTER)
+                        TextComponentBuilder.of("Example Text").justify(Justify.CENTER)
                 )
                 .build(output);
     }

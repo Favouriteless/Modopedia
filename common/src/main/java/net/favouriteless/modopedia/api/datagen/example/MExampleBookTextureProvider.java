@@ -6,7 +6,6 @@ import net.favouriteless.modopedia.api.datagen.builders.BookTextureBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.BookTextureProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -18,8 +17,8 @@ public class MExampleBookTextureProvider extends BookTextureProvider {
     }
 
     @Override
-    protected void build(BiConsumer<ResourceLocation, BookTexture> output) {
-        BookTextureBuilder.of(Modopedia.id("example"))
+    protected void build(BiConsumer<String, BookTexture> output) {
+        BookTextureBuilder.of("example")
                 .texture(Modopedia.id("textures/gui/books/brown_brass.png"), 290, 310)
                 .sized(290, 182)
                 .titleBacker(0, 12, 0, 213, 140, 35)

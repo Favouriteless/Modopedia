@@ -25,7 +25,6 @@ public abstract class ContentSetProvider implements DataProvider {
     private final PathProvider entryPathProvider;
     private final PathProvider categoryPathProvider;
 
-
     private final String book;
     private final String language;
 
