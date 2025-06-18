@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.platform.services;
 
 import net.favouriteless.modopedia.Modopedia;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -33,8 +34,9 @@ public class NeoCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public <T extends SoundEvent> Supplier<T> registerSound(String name, Supplier<T> entry) {
-		return SOUND_EVENT_REGISTRY.register(name, entry);
+	@SuppressWarnings("unchecked")
+	public <T extends SoundEvent> Holder<T> registerSound(String name, Supplier<T> entry) {
+		return (Holder<T>)SOUND_EVENT_REGISTRY.register(name, entry);
 	}
 
 	@Override

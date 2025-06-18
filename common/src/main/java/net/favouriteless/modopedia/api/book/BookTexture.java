@@ -13,14 +13,17 @@ public record BookTexture(ResourceLocation location, int width, int height, int 
                           List<Rectangle> pages, FixedRectangle titleBacker, // Common elements
                           FixedRectangle left, FixedRectangle right, FixedRectangle back, FixedRectangle refresh, // Navigation buttons
                           Map<String, Rectangle> widgets) {
-
-
+    
     /**
      * Represents a rectangle on a texture. Usually used for dynamic widgets such as separators.
      */
     public record Rectangle(int u, int v, int width, int height) {
 
-        public static final Rectangle ZERO = new Rectangle(0, 0, 0, 0);
+        public static final Rectangle ZERO = Rectangle.of(0, 0, 0, 0);
+
+        public static Rectangle of(int u, int v, int width, int height) {
+            return new Rectangle(u, v, width, height);
+        }
 
     }
 
@@ -30,7 +33,11 @@ public record BookTexture(ResourceLocation location, int width, int height, int 
      */
     public record FixedRectangle(int x, int y, int u, int v, int width, int height) {
 
-        public static final FixedRectangle ZERO = new FixedRectangle(0, 0, 0, 0, 0, 0);
+        public static final FixedRectangle ZERO = FixedRectangle.of(0, 0, 0, 0, 0, 0);
+
+        public static FixedRectangle of(int x, int y, int u, int v, int width, int height) {
+            return new FixedRectangle(x, y, u, v, width, height);
+        }
 
     }
 

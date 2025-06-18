@@ -4,7 +4,7 @@ import net.favouriteless.modopedia.common.BookReloadListener;
 import net.favouriteless.modopedia.common.init.MBookTypes;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
-import net.favouriteless.modopedia.common.init.MSounds;
+import net.favouriteless.modopedia.common.init.MSoundEvents;
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class Modopedia {
     public static void init() {
         MDataComponents.load();
         MItems.load();
-        MSounds.load();
+        MSoundEvents.load();
         MBookTypes.load();
 
         CommonServices.COMMON_REGISTRY.registerReloadListener(Modopedia.id("books"), new BookReloadListener(MOD_ID + "/books"));

@@ -1,6 +1,8 @@
 package net.favouriteless.modopedia.neoforge.datagen;
 
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.datagen.example.MExampleBookProvider;
+import net.favouriteless.modopedia.neoforge.datagen.providers.MBookTextureProvider;
 import net.favouriteless.modopedia.neoforge.datagen.providers.MItemModelProvider;
 import net.favouriteless.modopedia.neoforge.datagen.providers.MLanguageProvider;
 import net.minecraft.core.HolderLookup.Provider;
@@ -26,6 +28,10 @@ public class DataGenerators {
 
         gen.addProvider(true, new MItemModelProvider(output, fileHelper));
         gen.addProvider(true, new MLanguageProvider(output));
+        gen.addProvider(true, new MBookTextureProvider(provider, output));
+
+        // Example Providers
+        gen.addProvider(false, new MExampleBookProvider(provider, output));
     }
 
 }

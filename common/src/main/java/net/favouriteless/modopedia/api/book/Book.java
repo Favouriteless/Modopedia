@@ -83,7 +83,7 @@ public interface Book {
     int getLineWidth();
 
     /**
-     * @return The ResourceKey of the creative mode tab this book should be in. Will also appear in the search tab.
+     * @return The ID of the creative mode tab this book should be in. Will also appear in the search tab.
      */
     @Nullable ResourceKey<CreativeModeTab> getCreativeTab();
 

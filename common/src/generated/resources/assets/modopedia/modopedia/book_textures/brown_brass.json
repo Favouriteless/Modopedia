@@ -1,0 +1,105 @@
+{
+  "back_button": {
+    "height": 11,
+    "u": 54,
+    "v": 183,
+    "width": 18,
+    "x": 136,
+    "y": 183
+  },
+  "height": 182,
+  "left_button": {
+    "height": 10,
+    "u": 0,
+    "v": 183,
+    "width": 18,
+    "x": 0,
+    "y": 183
+  },
+  "pages": [
+    {
+      "height": 150,
+      "u": 33,
+      "v": 16,
+      "width": 100
+    },
+    {
+      "height": 150,
+      "u": 157,
+      "v": 16,
+      "width": 100
+    }
+  ],
+  "refresh_button": {
+    "height": 14,
+    "u": 38,
+    "v": 183,
+    "width": 15,
+    "x": 26,
+    "y": 159
+  },
+  "right_button": {
+    "height": 10,
+    "u": 19,
+    "v": 183,
+    "width": 18,
+    "x": 272,
+    "y": 183
+  },
+  "tex_height": 310,
+  "tex_width": 290,
+  "texture": "modopedia:textures/gui/books/brown_brass.png",
+  "title_backer": {
+    "height": 35,
+    "u": 0,
+    "v": 213,
+    "width": 140,
+    "x": 0,
+    "y": 12
+  },
+  "widgets": {
+    "crafting_arrow": {
+      "height": 13,
+      "u": 73,
+      "v": 183,
+      "width": 16
+    },
+    "crafting_flame": {
+      "height": 14,
+      "u": 89,
+      "v": 183,
+      "width": 14
+    },
+    "crafting_grid": {
+      "height": 54,
+      "u": 74,
+      "v": 255,
+      "width": 54
+    },
+    "large_frame": {
+      "height": 104,
+      "u": 140,
+      "v": 182,
+      "width": 104
+    },
+    "medium_frame": {
+      "height": 54,
+      "u": 140,
+      "v": 182,
+      "width": 54
+    },
+    "separator": {
+      "height": 6,
+      "u": 0,
+      "v": 249,
+      "width": 100
+    },
+    "small_frame": {
+      "height": 20,
+      "u": 54,
+      "v": 255,
+      "width": 20
+    }
+  },
+  "width": 290
+}

@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.platform.services;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.platform.JsonDataLoaderWrapper;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,10 +32,10 @@ public class FabricCommonRegistryHelper implements ICommonRegistryHelper {
 	}
 
 	@Override
-	public <T extends SoundEvent> Supplier<T> registerSound(String name, Supplier<T> entry) {
-		T value = entry.get();
-		Registry.register(BuiltInRegistries.SOUND_EVENT, Modopedia.id(name), value);
-		return () -> value;	}
+	@SuppressWarnings("unchecked")
+	public <T extends SoundEvent> Holder<T> registerSound(String name, Supplier<T> entry) {
+		return (Holder<T>)Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, Modopedia.id(name), entry.get());
+	}
 
 	@Override
 	public PreparableReloadListener registerReloadListener(ResourceLocation id, PreparableReloadListener loader) {
