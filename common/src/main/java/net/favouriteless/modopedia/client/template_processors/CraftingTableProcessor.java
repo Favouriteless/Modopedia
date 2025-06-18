@@ -39,26 +39,26 @@ public class CraftingTableProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof ShapelessRecipe recipe) {
-            List<ItemStack[]> inputs = new ArrayList<>();
-            recipe.getIngredients().forEach(i -> inputs.add(i.getItems()));
+            List<List<ItemStack>> inputs = new ArrayList<>();
+            recipe.getIngredients().forEach(i -> inputs.add(List.of(i.getItems())));
 
             lookup.set("inputs", Variable.of(inputs));
-            lookup.set("output", Variable.of(List.<ItemStack[]>of(new ItemStack[] { recipe.getResultItem(level.registryAccess()) })));
+            lookup.set("output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
             lookup.set("tooltip", Variable.of(List.of(Modopedia.translation("template", "shapeless_recipe"))));
         }
         else if(holder.value() instanceof ShapedRecipe recipe) {
-            List<ItemStack[]> inputs = new ArrayList<>();
-            recipe.getIngredients().forEach(i -> inputs.add(i.getItems()));
+            List<List<ItemStack>> inputs = new ArrayList<>();
+            recipe.getIngredients().forEach(i -> inputs.add(List.of(i.getItems())));
 
             if(recipe.getWidth() == 2) {
                 int rows = recipe.getHeight();
                 for(int i = 0; i < rows; i++) {
-                    inputs.add(i*3 + 2, new ItemStack[0]);
+                    inputs.add(i*3 + 2, new ArrayList<>());
                 }
             }
 
             lookup.set("inputs", Variable.of(inputs));
-            lookup.set("output", Variable.of(List.<ItemStack[]>of(new ItemStack[] { recipe.getResultItem(level.registryAccess()) })));
+            lookup.set("output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
             lookup.set("tooltip", Variable.of(List.of(Modopedia.translation("template", "shaped_recipe"))));
         }
 

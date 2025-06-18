@@ -1,0 +1,119 @@
+package net.favouriteless.modopedia.api.datagen.builders.page_components;
+
+import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.JsonOps;
+import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
+import net.favouriteless.modopedia.client.page_components.ItemPageComponent;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ItemPageComponentBuilder extends PageComponentBuilder {
+
+    private Either<List<List<ItemStack>>, String> items = Either.left(new ArrayList<>());
+    private Either<Integer, String> rowMax;
+    private Either<Integer, String> padding;
+    private Either<Boolean, String> centered;
+    private Either<Boolean, String> reverseY;
+
+    private ItemPageComponentBuilder() {
+        super(ItemPageComponent.ID);
+    }
+
+    private ItemPageComponentBuilder(String items) {
+        super(ItemPageComponent.ID);
+        this.items = Either.right(items);
+    }
+
+    public static ItemPageComponentBuilder of(ItemStack... items) {
+        return new ItemPageComponentBuilder().items(items);
+    }
+
+    public static ItemPageComponentBuilder of(String items) {
+        return new ItemPageComponentBuilder(items);
+    }
+
+    public ItemPageComponentBuilder items(ItemStack... items) {
+        if(this.items.left().isEmpty())
+            this.items = Either.left(new ArrayList<>());
+        this.items.left().ifPresent(l -> l.add(List.of(items)));
+        return this;
+    }
+
+    @Override
+    public ItemPageComponentBuilder x(int x) {
+        return (ItemPageComponentBuilder)super.x(x);
+    }
+
+    @Override
+    public ItemPageComponentBuilder x(String x) {
+        return (ItemPageComponentBuilder)super.x(x);
+    }
+
+    @Override
+    public ItemPageComponentBuilder y(int y) {
+        return (ItemPageComponentBuilder)super.y(y);
+    }
+
+    @Override
+    public ItemPageComponentBuilder y(String y) {
+        return (ItemPageComponentBuilder)super.y(y);
+    }
+
+    public ItemPageComponentBuilder rowMax(int rowMax) {
+        this.rowMax = Either.left(rowMax);
+        return this;
+    }
+
+    public ItemPageComponentBuilder rowMax(String rowMax) {
+        this.rowMax = Either.right(rowMax);
+        return this;
+    }
+
+    public ItemPageComponentBuilder padding(int padding) {
+        this.padding = Either.left(padding);
+        return this;
+    }
+
+    public ItemPageComponentBuilder padding(String padding) {
+        this.padding = Either.right(padding);
+        return this;
+    }
+
+    public ItemPageComponentBuilder centered(boolean centered) {
+        this.centered = Either.left(centered);
+        return this;
+    }
+
+    public ItemPageComponentBuilder centered(String centered) {
+        this.centered = Either.right(centered);
+        return this;
+    }
+
+    public ItemPageComponentBuilder reverseY(boolean reverseY) {
+        this.reverseY = Either.left(reverseY);
+        return this;
+    }
+
+    public ItemPageComponentBuilder reverseY(String reverseY) {
+        this.reverseY = Either.right(reverseY);
+        return this;
+    }
+
+    @Override
+    protected void build(JsonObject json) {
+        json.add("items", resolve(items).orElse(ItemStack.CODEC.listOf().listOf().encodeStart(JsonOps.INSTANCE, items.left().orElseThrow()).getOrThrow()));
+
+        if(rowMax != null)
+            resolveNum(rowMax).ifPresent(m -> json.add("row_max", m));
+        if(padding != null)
+            resolveNum(padding).ifPresent(p -> json.add("padding", p));
+        if(centered != null)
+            resolveBool(centered).ifPresent(c -> json.add("centered", c));
+        if(reverseY != null)
+            resolveBool(reverseY).ifPresent(r -> json.add("reverse_y", r));
+    }
+
+}

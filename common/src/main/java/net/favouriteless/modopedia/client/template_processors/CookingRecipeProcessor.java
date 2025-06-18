@@ -29,8 +29,8 @@ public class CookingRecipeProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof AbstractCookingRecipe recipe) {
-            lookup.set("input", Variable.of(List.<ItemStack[]>of(recipe.getIngredients().getFirst().getItems())));
-            lookup.set("output", Variable.of(List.<ItemStack[]>of(new ItemStack[] { recipe.getResultItem(level.registryAccess()) })));
+            lookup.set("input", Variable.of(List.of(List.of(recipe.getIngredients().getFirst().getItems()))));
+            lookup.set("output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
         }
         else {
             throw new IllegalArgumentException("Cooking recipe template must use a cooking recipe.");

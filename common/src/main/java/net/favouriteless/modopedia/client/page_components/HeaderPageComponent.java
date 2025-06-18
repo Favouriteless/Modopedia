@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
@@ -9,9 +10,12 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public class HeaderPageComponent extends PageComponent {
+
+    public static final ResourceLocation ID = Modopedia.id("header");
 
     protected Component header;
     protected boolean centered;

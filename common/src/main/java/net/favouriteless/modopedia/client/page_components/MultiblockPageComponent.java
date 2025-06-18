@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.page_components;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
@@ -32,6 +33,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class MultiblockPageComponent extends PageComponent {
 
+    public static final ResourceLocation ID = Modopedia.id("multiblock");
     private static final RandomSource RANDOM = RandomSource.createNewThreadLocalInstance();
 
     private MultiblockInstance multiblock;

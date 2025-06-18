@@ -23,6 +23,10 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         this.isTemplate = isTemplate;
     }
 
+    protected PageComponentBuilder(ResourceLocation type) {
+        this(type, false);
+    }
+
     protected abstract void build(JsonObject json);
 
     public PageComponentBuilder x(int x) {

@@ -31,8 +31,8 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
     }
 
     @Override
-    public TextPageComponentBuilder x(String reference) {
-        return (TextPageComponentBuilder)super.x(reference);
+    public TextPageComponentBuilder x(String x) {
+        return (TextPageComponentBuilder)super.x(x);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
     }
 
     @Override
-    public TextPageComponentBuilder y(String reference) {
-        return (TextPageComponentBuilder)super.y(reference);
+    public TextPageComponentBuilder y(String y) {
+        return (TextPageComponentBuilder)super.y(y);
     }
 
     public TextPageComponentBuilder width(int width) {
@@ -50,8 +50,8 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
         return this;
     }
 
-    public TextPageComponentBuilder width(String reference) {
-        this.width = Either.right(reference);
+    public TextPageComponentBuilder width(String width) {
+        this.width = Either.right(width);
         return this;
     }
 
@@ -60,8 +60,8 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
         return this;
     }
 
-    public TextPageComponentBuilder lineHeight(String reference) {
-        this.lineHeight = Either.right(reference);
+    public TextPageComponentBuilder lineHeight(String height) {
+        this.lineHeight = Either.right(height);
         return this;
     }
 
@@ -70,8 +70,8 @@ public class TextPageComponentBuilder extends PageComponentBuilder {
         return this;
     }
 
-    public TextPageComponentBuilder justify(String reference) {
-        this.justify = Either.right(reference);
+    public TextPageComponentBuilder justify(String justify) {
+        this.justify = Either.right(justify);
         return this;
     }
 
