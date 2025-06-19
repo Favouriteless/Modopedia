@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.api.datagen.example;
 import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
 import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
@@ -27,6 +28,13 @@ public class MExampleContentSetProvider extends ContentSetProvider {
                 .assignedItems(Items.DIAMOND)
                 .page(
                         TextBuilder.of("Example Text").justify(Justify.CENTER)
+                )
+                .page(
+                        GalleryBuilder.of(
+                                TextBuilder.of("$(c:red)Gallery component 1").justify(Justify.CENTER),
+                                TextBuilder.of("$(c:green)Gallery component 2").justify(Justify.CENTER),
+                                TextBuilder.of("$(c:blue)Gallery component 3").justify(Justify.CENTER)
+                        )
                 )
                 .build(output);
     }

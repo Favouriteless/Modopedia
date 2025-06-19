@@ -15,6 +15,7 @@ import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
 import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.*;
 import net.favouriteless.modopedia.book.BookContentImpl.LocalisedBookContentImpl;
+import net.favouriteless.modopedia.client.page_components.GalleryPageComponent;
 import net.favouriteless.modopedia.client.page_components.TemplatePageComponent;
 import net.favouriteless.modopedia.book.variables.JsonVariable;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
@@ -220,8 +221,11 @@ public class BookContentLoader {
                 throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered template", id));
             component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum));
         }
+        else if(json.has("components")) {
+            component = new GalleryPageComponent(loadPageComponentHolder(entry, json, pageNum));
+        }
         else {
-            throw new JsonParseException("Error creating PageComponent: component does not have a type or template");
+            throw new JsonParseException("Error creating PageComponent: component does not have a type, template or gallery");
         }
 
         VariableLookup lookup = new VariableLookup();

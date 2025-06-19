@@ -25,7 +25,7 @@ public class PageBuilder extends BookContentBuilder {
     }
 
     @Override
-    protected JsonElement build() {
+    public JsonElement build() {
         JsonObject json = new JsonObject();
         JsonArray components = new JsonArray();
         for(PageComponentBuilder builder : this.components) {

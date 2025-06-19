@@ -6,6 +6,6 @@ public abstract class BookContentBuilder {
 
     public BookContentBuilder() {}
 
-    protected abstract JsonElement build();
+    public abstract JsonElement build();
 
 }

@@ -54,7 +54,7 @@ public class CookingRecipeProcessor implements TemplateProcessor {
     protected void initComponents(Book book, MutableLookup lookup, Level level) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
         if(tex == null)
-            throw new IllegalStateException("Crafting grid templates require the book to have a valid BookTexture");
+            throw new IllegalStateException("CookingRecipe templates require the book to have a valid BookTexture");
 
         Rectangle page = tex.pages().get(lookup.get("page_num").asInt() % tex.pages().size());
         Rectangle frame = tex.widgets().get("small_frame");

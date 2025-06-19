@@ -1,3 +1,5 @@
+- ADDED: Partial chinese translations
+- ADDED: Gallery components (a gallery of page components)
 - ADDED: `page/crafting` template
 - ADDED: `page/double_crafting` template
 - ADDED: `page/cooking` template

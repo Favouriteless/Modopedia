@@ -58,7 +58,7 @@ public class TemplateBuilder extends PageBuilder {
 
 
     @Override
-    protected JsonElement build() {
+    public JsonElement build() {
         JsonObject json = super.build().getAsJsonObject();
 
         if(processor != null)

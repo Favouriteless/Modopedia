@@ -48,7 +48,7 @@ public class ImagePageComponent extends PageComponent {
 
     @Override
     public void initWidgets(PageWidgetHolder holder, BookRenderContext context) {
-        if(images.isEmpty())
+        if(images.size() < 2)
             return;
 
         BookTexture bookTex = context.getBookTexture();

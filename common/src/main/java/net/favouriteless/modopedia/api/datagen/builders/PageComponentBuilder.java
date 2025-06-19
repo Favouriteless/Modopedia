@@ -50,10 +50,11 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
     }
 
     @Override
-    protected final JsonElement build() {
+    public JsonElement build() {
         JsonObject json = new JsonObject();
 
-        json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, type).getOrThrow());
+        if(type != null)
+            json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, type).getOrThrow());
         if(x != null)
             resolveNum(x).ifPresent(j -> json.add("x", j));
         if(y != null)

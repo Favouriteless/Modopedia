@@ -11,6 +11,7 @@
     "templates/framed_showcases",
     "templates/recipe_pages",
     "templates/multiblock_page",
+    "templates/template_gallery",
     "templates/cooking_recipes"
   ],
   "children": [

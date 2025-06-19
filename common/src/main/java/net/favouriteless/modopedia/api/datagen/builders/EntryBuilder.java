@@ -63,7 +63,7 @@ public class EntryBuilder extends BookContentBuilder {
     }
 
     @Override
-    protected JsonElement build() {
+    public JsonElement build() {
         JsonObject json = Entry.codec().encodeStart(JsonOps.INSTANCE, new EntryImpl(title, iconStack, assignedItems, advancement)).getOrThrow().getAsJsonObject();
         JsonArray pages = new JsonArray();
         for(PageBuilder builder : this.pages) {

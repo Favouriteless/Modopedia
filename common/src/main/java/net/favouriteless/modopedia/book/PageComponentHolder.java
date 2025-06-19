@@ -11,15 +11,12 @@ import net.favouriteless.modopedia.client.page_components.ErrorPageComponent;
 import net.favouriteless.modopedia.book.variables.VariableLookup;
 import net.minecraft.world.level.Level;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class PageComponentHolder implements MutableLookup {
 
-    private final Map<PageComponent, Lookup> components = new HashMap<>();
+    private final Map<PageComponent, Lookup> components = new LinkedHashMap<>();
     private final VariableLookup lookup = new VariableLookup();
 
     public PageComponentHolder() {}
@@ -52,8 +49,12 @@ public class PageComponentHolder implements MutableLookup {
         });
     }
 
-    public Collection<PageComponent> getComponents() {
+    public Set<PageComponent> getComponents() {
         return components.keySet();
+    }
+
+    public PageComponent getComponent(int index) {
+        return components.keySet().toArray(PageComponent[]::new)[index];
     }
 
     @Override
