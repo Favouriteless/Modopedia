@@ -8,8 +8,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class MItemModelProvider extends ItemModelProvider {
 
-	private static ModelFile ITEM_GENERATED;
-
 	public static final String[] METALS = { "brass", "copper", "gold", "iron", "silver" };
 	public static final String[] COLOURS = { "brown", "red", "green", "blue", "purple" };
 
@@ -20,8 +18,6 @@ public class MItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		ITEM_GENERATED = getExistingFile(mcLoc("item/generated"));
-
 		for(String metal : METALS) {
 			for(String colour : COLOURS) {
 				defaultBook(colour + "_" + metal);

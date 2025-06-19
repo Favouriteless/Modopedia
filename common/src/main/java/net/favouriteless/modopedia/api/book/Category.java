@@ -1,5 +1,7 @@
 package net.favouriteless.modopedia.api.book;
 
+import com.mojang.serialization.Codec;
+import net.favouriteless.modopedia.book.CategoryImpl;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -52,5 +54,9 @@ public interface Category {
      * @return ID of the advancement needed to unlock this category.
      */
     ResourceLocation getAdvancement();
+
+    static Codec<Category> codec() {
+        return CategoryImpl.CODEC;
+    }
 
 }

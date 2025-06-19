@@ -7,13 +7,15 @@ import net.favouriteless.modopedia.api.book.Page;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class EntryImpl implements Entry {
+
+    public static final Supplier<ItemStack> DEFAULT_ICON = Items.GRASS_BLOCK::getDefaultInstance;
 
     private final String title;
     private final ItemStack iconStack;
@@ -34,7 +36,6 @@ public class EntryImpl implements Entry {
     }
 
     @Override
-    @Nullable
     public ItemStack getIcon() {
         return iconStack;
     }
@@ -62,9 +63,9 @@ public class EntryImpl implements Entry {
     }
 
     // This isn't the only deserialization done, but the rest is near impossible to do as a codec.
-    public static final Codec<EntryImpl> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("title").forGetter(Entry::getTitle),
-            ItemStack.CODEC.optionalFieldOf("icon", Items.GRASS_BLOCK.getDefaultInstance()).forGetter(EntryImpl::getIcon),
+            ItemStack.CODEC.optionalFieldOf("icon", DEFAULT_ICON.get()).forGetter(Entry::getIcon),
             ResourceLocation.CODEC.listOf().optionalFieldOf("assigned_items").forGetter(e -> Optional.ofNullable(e.getAssignedItems())),
             ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement()))
     ).apply(instance, (title, icon, assignedItem, advancement) -> new EntryImpl(

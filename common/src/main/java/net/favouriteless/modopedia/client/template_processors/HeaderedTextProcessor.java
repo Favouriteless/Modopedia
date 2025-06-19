@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.template_processors;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup.MutableLookup;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.book.Book;
@@ -7,9 +8,12 @@ import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public class HeaderedTextProcessor implements TemplateProcessor {
+
+    public static final ResourceLocation ID = Modopedia.id("headered_text");
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {

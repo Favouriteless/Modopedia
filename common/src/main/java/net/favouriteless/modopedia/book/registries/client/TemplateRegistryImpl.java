@@ -1,12 +1,11 @@
 package net.favouriteless.modopedia.book.registries.client;
 
 import com.google.gson.JsonObject;
-import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.Template;
 import net.favouriteless.modopedia.client.template_processors.CookingRecipeProcessor;
-import net.favouriteless.modopedia.client.template_processors.CraftingTableProcessor;
+import net.favouriteless.modopedia.client.template_processors.CraftingTableRecipeProcessor;
 import net.favouriteless.modopedia.client.template_processors.FrameSpacingProcessor;
 import net.favouriteless.modopedia.client.template_processors.HeaderedTextProcessor;
 import net.minecraft.resources.ResourceLocation;
@@ -21,13 +20,13 @@ public class TemplateRegistryImpl implements TemplateRegistry {
     private final HashMap<ResourceLocation, TemplateProcessor> processors = new HashMap<>();
 
     private TemplateRegistryImpl() {
-        registerProcessor(Modopedia.id("headered_text"), new HeaderedTextProcessor());
-        registerProcessor(Modopedia.id("small_frame_spacing"), new FrameSpacingProcessor("small_frame"));
-        registerProcessor(Modopedia.id("medium_frame_spacing"), new FrameSpacingProcessor("medium_frame"));
-        registerProcessor(Modopedia.id("large_frame_spacing"), new FrameSpacingProcessor("large_frame"));
-        registerProcessor(Modopedia.id("crafting_grid_spacing"), new FrameSpacingProcessor("crafting_grid"));
-        registerProcessor(Modopedia.id("crafting_table_recipe"), new CraftingTableProcessor());
-        registerProcessor(Modopedia.id("cooking_recipe"), new CookingRecipeProcessor());
+        registerProcessor(HeaderedTextProcessor.ID, new HeaderedTextProcessor());
+        registerProcessor(FrameSpacingProcessor.ID_SMALL, new FrameSpacingProcessor("small_frame"));
+        registerProcessor(FrameSpacingProcessor.ID_MEDIUM, new FrameSpacingProcessor("medium_frame"));
+        registerProcessor(FrameSpacingProcessor.ID_LARGE, new FrameSpacingProcessor("large_frame"));
+        registerProcessor(FrameSpacingProcessor.ID_CRAFTING, new FrameSpacingProcessor("crafting_grid"));
+        registerProcessor(CraftingTableRecipeProcessor.ID, new CraftingTableRecipeProcessor());
+        registerProcessor(CookingRecipeProcessor.ID, new CookingRecipeProcessor());
     }
 
     @Override

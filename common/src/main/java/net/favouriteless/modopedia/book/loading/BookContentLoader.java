@@ -134,14 +134,14 @@ public class BookContentLoader {
     private static void loadEntry(JsonElement json, Book book, String id, Level level,
                                   Map<String, net.favouriteless.modopedia.api.book.Entry> entries) {
         EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                .ifSuccess(p -> entries.put(id, p.getFirst().addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
+                .ifSuccess(p -> entries.put(id, ((EntryImpl)p.getFirst()).addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
                 .ifError(e -> Modopedia.LOG.error("Error loading entry json {}: {}", id, e.message()));
     }
 
     private static void loadCategory(JsonElement json, Book book, String id, Level level,
                                      Map<String, Category> categories) {
         CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                .ifSuccess(p -> categories.put(id, p.getFirst().init(book))) // Init just parses the landing text
+                .ifSuccess(p -> categories.put(id, ((CategoryImpl)p.getFirst()).init(book))) // Init just parses the landing text
                 .ifError(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e.message()));
     }
 

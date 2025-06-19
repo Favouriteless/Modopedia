@@ -1,9 +1,9 @@
 package net.favouriteless.modopedia.platform.services;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 
@@ -39,7 +39,7 @@ public interface ICommonRegistryHelper {
      *
      * @return A {@link Supplier} providing the registered object.
      */
-    <T extends SoundEvent> Supplier<T> registerSound(String name, Supplier<T> entry);
+    <T extends SoundEvent> Holder<T> registerSound(String name, Supplier<T> entry);
 
     /**
      * Register a {@link PreparableReloadListener}, necessary because Fabric requires ReloadListeners to provide

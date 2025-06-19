@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookTexture;
@@ -7,9 +8,12 @@ import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public class SeparatorPageComponent extends PageComponent {
+
+    public static final ResourceLocation ID = Modopedia.id("separator");
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {

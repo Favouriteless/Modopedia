@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.client.page_components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
@@ -19,6 +20,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 public class EntityPageComponent extends PageComponent {
+
+    public static final ResourceLocation ID = Modopedia.id("entity");
 
     protected Entity entity;
     protected float offsetY;

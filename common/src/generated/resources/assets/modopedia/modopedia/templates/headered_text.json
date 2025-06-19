@@ -1,0 +1,25 @@
+{
+  "components": [
+    {
+      "type": "modopedia:separator",
+      "y": 10
+    },
+    {
+      "type": "modopedia:header",
+      "bold": "#bold",
+      "centered": "#centered",
+      "colour": "#colour",
+      "text": "#header",
+      "underline": "#underline"
+    },
+    {
+      "type": "modopedia:text",
+      "justify": "#justify",
+      "line_height": "#line_height",
+      "text": "#text",
+      "width": "#width",
+      "y": "#text_y"
+    }
+  ],
+  "processor": "modopedia:headered_text"
+}

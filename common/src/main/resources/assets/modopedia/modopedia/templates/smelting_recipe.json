@@ -1,9 +1,0 @@
-{
-  "components": [
-    {
-      "template": "modopedia:cooking_recipe",
-      "recipe": "#recipe",
-      "tooltip_key": ["template.modopedia.smelting_recipe"]
-    }
-  ]
-}

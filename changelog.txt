@@ -1,1 +1,5 @@
+- ADDED: Datagen providers for all Modopedia resources.
+
 - FIXED: Books can be forced to reload before recipes have finished syncing.
+
+- CHANGED: Item and Image components now work with lists rather than arrays. This only impacts you if you have template processors.

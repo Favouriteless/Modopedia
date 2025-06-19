@@ -1,7 +1,10 @@
 package net.favouriteless.modopedia.api.book;
 
+import com.mojang.serialization.Codec;
+import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ public interface Entry {
      * @return The {@link ItemStack} icon for this entry, displayed in the entries list of Categories this entry is a
      * part of.
      */
-    ItemStack getIcon();
+    @Nullable ItemStack getIcon();
     
     /**
      * @return {@link List} of all {@link Page}s within this Entry, these are what actually get rendered when the entry
@@ -35,6 +38,10 @@ public interface Entry {
     /**
      * @return ID of the advancement needed to unlock this entry.
      */
-    ResourceLocation getAdvancement();
+    @Nullable ResourceLocation getAdvancement();
+
+    static Codec<Entry> codec() {
+        return EntryImpl.CODEC;
+    }
 
 }
