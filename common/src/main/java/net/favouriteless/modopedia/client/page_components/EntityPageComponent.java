@@ -73,7 +73,10 @@ public class EntityPageComponent extends PageComponent {
         pose.translate(width / 2.0F, yOff + height - offsetY, 0);
         pose.scale(-renderScale, -renderScale, -renderScale);
 
+        pose.translate(0, ySize / 2.0F, 0);
         pose.mulPose(Axis.XN.rotationDegrees(15));
+        pose.translate(0, -ySize / 2.0F, 0);
+
         pose.mulPose(Axis.YP.rotationDegrees(180 + context.getTicks() + partialTick));
 
         boolean renderBoxes = dispatcher.shouldRenderHitBoxes();

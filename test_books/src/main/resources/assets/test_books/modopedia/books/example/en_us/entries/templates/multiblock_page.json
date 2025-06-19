@@ -1,0 +1,24 @@
+{
+  "title": "Multiblock Page",
+  "icon": { "id": "minecraft:beacon" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:page/multiblock",
+          "multiblock_id": "test_books:simple",
+          "text": "This is a description for the simple multiblock"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:page/block",
+          "block": "minecraft:crafting_table",
+          "text": "This is a description for the simple block page"
+        }
+      ]
+    }
+  ]
+}

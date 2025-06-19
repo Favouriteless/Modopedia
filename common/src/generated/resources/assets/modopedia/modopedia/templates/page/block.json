@@ -1,0 +1,19 @@
+{
+  "components": [
+    {
+      "height": "#height",
+      "multiblock": "#p_multiblock",
+      "no_offsets": true,
+      "offset_x": "#offset_x",
+      "offset_y": "#offset_y",
+      "scale": "#scale",
+      "template": "modopedia:page/multiblock",
+      "text": "#text",
+      "view_angle": "#view_angle",
+      "width": "#width"
+    }
+  ],
+  "height": 100,
+  "processor": "modopedia:block_multiblock",
+  "width": 100
+}

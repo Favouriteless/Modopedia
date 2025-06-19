@@ -14,8 +14,8 @@
       "y": "#p_vertical_y1"
     }
   ],
-  "p_vertical_items": 1,
-  "p_vertical_size_widget": "crafting_grid",
-  "p_with_header": true,
-  "processor": "modopedia:vertical_spacing"
+  "processor": "modopedia:vertical_spacing",
+  "vertical_items": 1,
+  "vertical_size_widget": "crafting_grid",
+  "with_header": true
 }

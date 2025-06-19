@@ -12,7 +12,7 @@
       "width": "#width"
     }
   ],
-  "p_widget": "medium_frame",
-  "p_width": 50,
-  "processor": "modopedia:widget_spacing"
+  "processor": "modopedia:widget_spacing",
+  "widget": "medium_frame",
+  "width": 50
 }

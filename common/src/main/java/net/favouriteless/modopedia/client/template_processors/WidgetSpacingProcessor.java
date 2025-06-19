@@ -23,8 +23,8 @@ public class WidgetSpacingProcessor implements TemplateProcessor {
         if(tex == null)
             throw new IllegalStateException("Book is missing a valid BookTexture");
 
-        String widget = lookup.get("p_widget").asString();
-        int width = lookup.get("p_width").asInt();
+        String widget = lookup.get("widget").asString();
+        int width = lookup.get("width").asInt();
 
         Rectangle rect = tex.widgets().get(widget);
         if(rect == null)

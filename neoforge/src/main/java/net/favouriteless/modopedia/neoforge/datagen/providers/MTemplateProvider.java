@@ -6,8 +6,10 @@ import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
-import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.*;
+import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CookingRecipeBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.CraftingRecipeBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
+import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.template_processors.*;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -37,8 +39,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .y("#p_offset"),
                         ItemBuilder.of("#items")
                 )
-                .defaultValue("p_width", 16)
-                .defaultValue("p_widget", "small_frame")
+                .defaultValue("width", 16)
+                .defaultValue("widget", "small_frame")
                 .build(output);
 
         TemplateBuilder.of(MediumFramedImageBuilder.ID.getPath())
@@ -51,8 +53,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .width("#width")
                                 .height("#width")
                 )
-                .defaultValue("p_width", 50)
-                .defaultValue("p_widget", "medium_frame")
+                .defaultValue("width", 50)
+                .defaultValue("widget", "medium_frame")
                 .build(output);
 
         TemplateBuilder.of(LargeFramedImageBuilder.ID.getPath())
@@ -65,8 +67,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .width("#width")
                                 .height("#width")
                 )
-                .defaultValue("p_width", 100)
-                .defaultValue("p_widget", "large_frame")
+                .defaultValue("width", 100)
+                .defaultValue("widget", "large_frame")
                 .build(output);
 
         TemplateBuilder.of(MediumFramedMultiblockBuilder.ID.getPath())
@@ -84,9 +86,10 @@ public class MTemplateProvider extends TemplateProvider {
                                 .offsetY("#offset_y")
                                 .scale("#scale")
                                 .noOffsets("#no_offsets")
+                                .viewAngle("#view_angle")
                 )
-                .defaultValue("p_width", 50)
-                .defaultValue("p_widget", "medium_frame")
+                .defaultValue("width", 50)
+                .defaultValue("widget", "medium_frame")
                 .build(output);
 
         TemplateBuilder.of(LargeFramedMultiblockBuilder.ID.getPath())
@@ -104,9 +107,10 @@ public class MTemplateProvider extends TemplateProvider {
                                 .offsetY("#offset_y")
                                 .scale("#scale")
                                 .noOffsets("#no_offsets")
+                                .viewAngle("#view_angle")
                 )
-                .defaultValue("p_width", 100)
-                .defaultValue("p_widget", "large_frame")
+                .defaultValue("width", 100)
+                .defaultValue("widget", "large_frame")
                 .build(output);
 
         TemplateBuilder.of(FramedCraftingGridBuilder.ID.getPath())
@@ -119,8 +123,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .rowMax(3)
                                 .padding(17)
                 )
-                .defaultValue("p_width", 50)
-                .defaultValue("p_widget", "crafting_grid")
+                .defaultValue("width", 50)
+                .defaultValue("widget", "crafting_grid")
                 .build(output);
 
         TemplateBuilder.of(MediumFramedEntityBuilder.ID.getPath())
@@ -136,8 +140,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .offsetY("#offset_y")
                                 .scale("#scale")
                 )
-                .defaultValue("p_width", 50)
-                .defaultValue("p_widget", "medium_frame")
+                .defaultValue("width", 50)
+                .defaultValue("widget", "medium_frame")
                 .build(output);
 
         TemplateBuilder.of(LargeFramedEntityBuilder.ID.getPath())
@@ -153,8 +157,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .offsetY("#offset_y")
                                 .scale("#scale")
                 )
-                .defaultValue("p_width", 100)
-                .defaultValue("p_widget", "large_frame")
+                .defaultValue("width", 100)
+                .defaultValue("widget", "large_frame")
                 .build(output);
 
         TemplateBuilder.of(MediumFramedShowcaseBuilder.ID.getPath())
@@ -168,8 +172,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .height("#width")
                                 .scale("#scale")
                 )
-                .defaultValue("p_width", 50)
-                .defaultValue("p_widget", "medium_frame")
+                .defaultValue("width", 50)
+                .defaultValue("widget", "medium_frame")
                 .build(output);
 
         TemplateBuilder.of(LargeFramedShowcaseBuilder.ID.getPath())
@@ -183,8 +187,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .height("#width")
                                 .scale("#scale")
                 )
-                .defaultValue("p_width", 100)
-                .defaultValue("p_widget", "large_frame")
+                .defaultValue("width", 100)
+                .defaultValue("widget", "large_frame")
                 .build(output);
     }
 
@@ -256,9 +260,9 @@ public class MTemplateProvider extends TemplateProvider {
                         CraftingRecipeBuilder.of("#recipe")
                                 .y("#p_vertical_y1")
                 )
-                .defaultValue("p_with_header", true)
-                .defaultValue("p_vertical_items", 1)
-                .defaultValue("p_vertical_size_widget", "crafting_grid")
+                .defaultValue("with_header", true)
+                .defaultValue("vertical_items", 1)
+                .defaultValue("vertical_size_widget", "crafting_grid")
                 .build(output);
 
         TemplateBuilder.of(DoubleCraftingPageBuilder.ID.getPath())
@@ -271,9 +275,9 @@ public class MTemplateProvider extends TemplateProvider {
                         CraftingRecipeBuilder.of("#recipe2")
                                 .y("#p_vertical_y2")
                 )
-                .defaultValue("p_with_header", true)
-                .defaultValue("p_vertical_items", 2)
-                .defaultValue("p_vertical_size_widget", "crafting_grid")
+                .defaultValue("with_header", true)
+                .defaultValue("vertical_items", 2)
+                .defaultValue("vertical_size_widget", "crafting_grid")
                 .build(output);
 
         TemplateBuilder.of(CookingPageBuilder.ID.getPath())
@@ -284,9 +288,9 @@ public class MTemplateProvider extends TemplateProvider {
                         CookingRecipeBuilder.of("#recipe")
                                 .y("#p_vertical_y1")
                 )
-                .defaultValue("p_with_header", true)
-                .defaultValue("p_vertical_items", 1)
-                .defaultValue("p_vertical_size", 33)
+                .defaultValue("with_header", true)
+                .defaultValue("vertical_items", 1)
+                .defaultValue("vertical_size", 33)
                 .build(output);
 
         TemplateBuilder.of(DoubleCookingPageBuilder.ID.getPath())
@@ -299,9 +303,49 @@ public class MTemplateProvider extends TemplateProvider {
                         CookingRecipeBuilder.of("#recipe2")
                                 .y("#p_vertical_y2")
                 )
-                .defaultValue("p_with_header", true)
-                .defaultValue("p_vertical_items", 2)
-                .defaultValue("p_vertical_size", 33)
+                .defaultValue("with_header", true)
+                .defaultValue("vertical_items", 2)
+                .defaultValue("vertical_size", 33)
+                .build(output);
+
+        TemplateBuilder.of(MultiblockPageBuilder.ID.getPath())
+                .processor(DescriptionPageProcessor.ID)
+                .components(
+                        MultiblockBuilder.of()
+                                .x("#p_x")
+                                .multiblock("#multiblock")
+                                .multiblockId("#multiblock_id")
+                                .width("#width")
+                                .height("#height")
+                                .offsetX("#offset_x")
+                                .offsetY("#offset_y")
+                                .scale("#scale")
+                                .viewAngle("#view_angle")
+                                .noOffsets("#no_offsets"),
+                        TextBuilder.of("#text")
+                                .y("#p_text_y")
+                                .width("#width")
+                                .justify(Justify.CENTER)
+                )
+                .defaultValue("width", 100)
+                .defaultValue("height", 100)
+                .build(output);
+
+        TemplateBuilder.of(BlockPageBuilder.ID.getPath())
+                .processor(BlockMultiblockProcessor.ID)
+                .components(
+                        MultiblockPageBuilder.of("#text")
+                                .multiblock("#p_multiblock")
+                                .width("#width")
+                                .height("#height")
+                                .offsetX("#offset_x")
+                                .offsetY("#offset_y")
+                                .scale("#scale")
+                                .viewAngle("#view_angle")
+                                .noOffsets(true)
+                )
+                .defaultValue("width", 100)
+                .defaultValue("height", 100)
                 .build(output);
     }
 

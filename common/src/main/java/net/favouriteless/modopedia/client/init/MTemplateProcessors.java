@@ -13,6 +13,8 @@ public class MTemplateProcessors {
         registry.registerProcessor(CraftingRecipeProcessor.ID, new CraftingRecipeProcessor());
         registry.registerProcessor(CookingRecipeProcessor.ID, new CookingRecipeProcessor());
         registry.registerProcessor(VerticalSpacingProcessor.ID, new VerticalSpacingProcessor());
+        registry.registerProcessor(DescriptionPageProcessor.ID, new DescriptionPageProcessor());
+        registry.registerProcessor(BlockMultiblockProcessor.ID, new BlockMultiblockProcessor());
     }
     
 }

@@ -1,9 +1,16 @@
-- ADDED: `page/crafting` template.
-- ADDED: `page/double_crafting` template.
+- ADDED: `page/crafting` template
+- ADDED: `page/double_crafting` template
+- ADDED: `page/cooking` template
+- ADDED: `page/double_cooking` template
+- ADDED: `page/multiblock` template
+- ADDED: `page/block` template
 
-- CHANGED: A variety of templates have been moved into subfolders.
-- CHANGED: Breaking changes to template datagen. Please update your code, this will not happen again it was just cleanup.
-- CHANGED: Crafting table and smelting/blasting/smoking recipes are now horizontally self-centering.
+- CHANGED: `headered_text` template has been renamed to `page/headered_text`
+- CHANGED: `cooking_recipe`, `smelting_recipe`, `blasting_recipe` and `smoking_recipe` templates have been merged into one template and renamed as `recipe/cooking`
+- CHANGED: `crafting_table_recipe` template has been renamed to `recipe/crafting`
+- CHANGED: Breaking changes to template datagen. Please update your code, this will not happen again it was just cleanup
+- CHANGED: Crafting table and smelting/blasting/smoking recipes are now horizontally self-centering
 - CHANGED: Headers now support translation keys (for use in templates)
 
-- FIXED: Crafting recipes of 1 width do not display correctly.
+- FIXED: Crafting recipes of 1 width do not display correctly
+- FIXED: The view angle of a multiblock and entity displays rotates around the bottom left corner, causing it to go out of bounds.

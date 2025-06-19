@@ -15,8 +15,8 @@
       "y": "#p_vertical_y1"
     }
   ],
-  "p_vertical_items": 1,
-  "p_vertical_size": 33,
-  "p_with_header": true,
-  "processor": "modopedia:vertical_spacing"
+  "processor": "modopedia:vertical_spacing",
+  "vertical_items": 1,
+  "vertical_size": 33,
+  "with_header": true
 }

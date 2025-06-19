@@ -14,10 +14,11 @@
       "offset_x": "#offset_x",
       "offset_y": "#offset_y",
       "scale": "#scale",
+      "view_angle": "#view_angle",
       "width": "#width"
     }
   ],
-  "p_widget": "large_frame",
-  "p_width": 100,
-  "processor": "modopedia:widget_spacing"
+  "processor": "modopedia:widget_spacing",
+  "widget": "large_frame",
+  "width": 100
 }

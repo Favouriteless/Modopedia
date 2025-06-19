@@ -107,10 +107,11 @@ public class MultiblockPageComponent extends PageComponent {
         pose.scale(scale, scale, scale);
         pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, 0);
 
+
+        pose.translate(dims.getX() / 2.0F, dims.getY() / 2.0F, dims.getZ() / 2.0F);
         pose.mulPose(Axis.XN.rotationDegrees(viewAngle));
-        pose.translate(dims.getX() / 2.0F, 0, dims.getZ() / 2.0F);
-        pose.mulPose(Axis.YP.rotationDegrees(context.getTicks() + partialTick));
-        pose.translate(-dims.getX() / 2.0F, 0, -dims.getZ() / 2.0F);
+        pose.mulPose(Axis.YP.rotationDegrees(180 + context.getTicks() + partialTick));
+        pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, -dims.getZ() / 2.0F);
 
         pose.scale(this.scale, this.scale, this.scale);
 

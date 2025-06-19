@@ -15,7 +15,7 @@
       "width": "#width"
     }
   ],
-  "p_widget": "large_frame",
-  "p_width": 100,
-  "processor": "modopedia:widget_spacing"
+  "processor": "modopedia:widget_spacing",
+  "widget": "large_frame",
+  "width": 100
 }

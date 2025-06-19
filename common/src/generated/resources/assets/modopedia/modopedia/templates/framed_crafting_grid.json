@@ -12,7 +12,7 @@
       "row_max": 3
     }
   ],
-  "p_widget": "crafting_grid",
-  "p_width": 50,
-  "processor": "modopedia:widget_spacing"
+  "processor": "modopedia:widget_spacing",
+  "widget": "crafting_grid",
+  "width": 50
 }

@@ -10,7 +10,7 @@
       "items": "#items"
     }
   ],
-  "p_widget": "small_frame",
-  "p_width": 16,
-  "processor": "modopedia:widget_spacing"
+  "processor": "modopedia:widget_spacing",
+  "widget": "small_frame",
+  "width": 16
 }

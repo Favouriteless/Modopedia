@@ -25,11 +25,11 @@ public class VerticalSpacingProcessor implements TemplateProcessor {
 
         int headerSize = texture.widgets().containsKey("separator") ? 10 + texture.widgets().get("separator").height() : 10;
 
-        int padding = lookup.getOrDefault("p_with_header", false).asBoolean() ? headerSize : 0;
-        int items = lookup.get("p_vertical_items").asInt();
+        int padding = lookup.getOrDefault("with_header", false).asBoolean() ? headerSize : 0;
+        int items = lookup.get("vertical_items").asInt();
 
-        int size = lookup.has("p_vertical_size_widget") ? texture.widgets().get(lookup.get("p_vertical_size_widget").asString()).height() : lookup.get("p_vertical_size").asInt();
-        int spacing = lookup.getOrDefault("p_vertical_spacing", 5).asInt();
+        int size = lookup.has("vertical_size_widget") ? texture.widgets().get(lookup.get("vertical_size_widget").asString()).height() : lookup.get("vertical_size").asInt();
+        int spacing = lookup.getOrDefault("vertical_spacing", 5).asInt();
 
         int height = items*size + (items-1)*spacing;
         int offset = (page.height() - padding - height) / 2 + padding;
