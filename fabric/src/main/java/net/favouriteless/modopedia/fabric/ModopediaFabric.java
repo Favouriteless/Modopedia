@@ -29,7 +29,6 @@ public class ModopediaFabric implements ModInitializer {
     public void onInitialize() {
         Modopedia.init();
         registerPackets();
-        registerKeyMappings();
         FabricCommonEvents.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) -> MCommands.load(dispatcher, context));
@@ -47,10 +46,6 @@ public class ModopediaFabric implements ModInitializer {
         });
         NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.COMMON, CommonConfig.SPEC, "modopedia-common.toml");
         NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.SERVER, ServerConfig.SPEC, "modopedia-server.toml");
-    }
-
-    public void registerKeyMappings() {
-        KeyBindingHelper.registerKeyBinding(MKeyMappings.KEY_STUDY);
     }
 
     public void registerPackets() {
