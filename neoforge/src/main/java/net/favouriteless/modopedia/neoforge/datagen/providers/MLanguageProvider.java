@@ -25,6 +25,7 @@ public class MLanguageProvider extends LanguageProvider {
 
         add(Modopedia.translation("template", "shaped_recipe"), "Shaped Recipe");
         add(Modopedia.translation("template", "shapeless_recipe"), "Shapeless Recipe");
+        add(Modopedia.translation("template", "recipe"), "Recipe");
         add(Modopedia.translation("template", "smelting_recipe"), "Smelting Recipe");
         add(Modopedia.translation("template", "blasting_recipe"), "Blasting Recipe");
         add(Modopedia.translation("template", "smoking_recipe"), "Smoking Recipe");

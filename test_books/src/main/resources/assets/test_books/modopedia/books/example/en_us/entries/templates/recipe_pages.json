@@ -10,6 +10,31 @@
           "recipe2": "minecraft:iron_sword"
         }
       ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:page/crafting",
+          "recipe": "minecraft:beacon"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:page/double_cooking",
+          "recipe1": "minecraft:iron_ingot_from_smelting_iron_ore",
+          "recipe2": "minecraft:iron_ingot_from_blasting_iron_ore"
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:page/cooking",
+          "recipe": "minecraft:cooked_beef_from_smoking"
+        }
+      ]
     }
   ]
 }

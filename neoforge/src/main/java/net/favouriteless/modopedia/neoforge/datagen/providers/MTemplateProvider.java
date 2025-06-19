@@ -5,8 +5,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
-import net.favouriteless.modopedia.api.datagen.builders.templates.page.DoubleCraftingRecipeBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.templates.page.HeaderedTextBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.templates.page.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.recipes.*;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
 import net.favouriteless.modopedia.client.template_processors.*;
@@ -249,7 +248,20 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .build(output);
 
-        TemplateBuilder.of(DoubleCraftingRecipeBuilder.ID.getPath())
+        TemplateBuilder.of(CraftingPageBuilder.ID.getPath())
+                .processor(VerticalSpacingProcessor.ID)
+                .components(
+                        HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
+                        SeparatorBuilder.of().y(10),
+                        CraftingRecipeBuilder.of("#recipe")
+                                .y("#p_vertical_y1")
+                )
+                .defaultValue("p_with_header", true)
+                .defaultValue("p_vertical_items", 1)
+                .defaultValue("p_vertical_size_widget", "crafting_grid")
+                .build(output);
+
+        TemplateBuilder.of(DoubleCraftingPageBuilder.ID.getPath())
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
                         HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
@@ -264,7 +276,33 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("p_vertical_size_widget", "crafting_grid")
                 .build(output);
 
+        TemplateBuilder.of(CookingPageBuilder.ID.getPath())
+                .processor(VerticalSpacingProcessor.ID)
+                .components(
+                        HeaderBuilder.of(Modopedia.translation("template", "recipe")),
+                        SeparatorBuilder.of().y(10),
+                        CookingRecipeBuilder.of("#recipe")
+                                .y("#p_vertical_y1")
+                )
+                .defaultValue("p_with_header", true)
+                .defaultValue("p_vertical_items", 1)
+                .defaultValue("p_vertical_size", 33)
+                .build(output);
 
+        TemplateBuilder.of(DoubleCookingPageBuilder.ID.getPath())
+                .processor(VerticalSpacingProcessor.ID)
+                .components(
+                        HeaderBuilder.of(Modopedia.translation("template", "recipe")),
+                        SeparatorBuilder.of().y(10),
+                        CookingRecipeBuilder.of("#recipe1")
+                                .y("#p_vertical_y1"),
+                        CookingRecipeBuilder.of("#recipe2")
+                                .y("#p_vertical_y2")
+                )
+                .defaultValue("p_with_header", true)
+                .defaultValue("p_vertical_items", 2)
+                .defaultValue("p_vertical_size", 33)
+                .build(output);
     }
 
 }
