@@ -29,7 +29,7 @@ public class HeaderPageComponent extends PageComponent {
                 .withBold(lookup.getOrDefault("bold", false).asBoolean())
                 .withUnderlined(lookup.getOrDefault("underline", false).asBoolean());
 
-        header = Component.literal(lookup.get("text").asString()).withStyle(style);
+        header = Component.translatable(lookup.get("text").asString()).withStyle(style);
         centered = lookup.getOrDefault("centered", true).asBoolean();
         colour = Integer.parseInt(lookup.getOrDefault("colour", book.getHeaderColour()).asString(), 16);
     }

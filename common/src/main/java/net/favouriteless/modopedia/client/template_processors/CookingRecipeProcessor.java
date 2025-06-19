@@ -9,39 +9,54 @@ import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class CookingRecipeProcessor implements TemplateProcessor {
 
     public static final ResourceLocation ID = Modopedia.id("cooking_recipe");
+    public static final Map<Class<? extends AbstractCookingRecipe>, String> TYPE_KEYS = new HashMap<>();
+
+    static {
+        TYPE_KEYS.put(BlastingRecipe.class, Modopedia.translation("template", "blasting_recipe"));
+        TYPE_KEYS.put(SmeltingRecipe.class, Modopedia.translation("template", "smelting_recipe"));
+        TYPE_KEYS.put(SmokingRecipe.class, Modopedia.translation("template", "smoking_recipe"));
+    }
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
+        initComponents(book, lookup, level);
+        initRecipe(book, lookup, level);
+    }
+
+    protected void initRecipe(Book book, MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
         if(optional.isEmpty())
             throw new IllegalArgumentException(id + " is not a valid recipe.");
 
-        RecipeHolder<?> holder = optional.get();
+        Recipe<?> recipe = optional.get().value();
 
-        if(holder.value() instanceof AbstractCookingRecipe recipe) {
-            lookup.set("input", Variable.of(List.of(List.of(recipe.getIngredients().getFirst().getItems()))));
-            lookup.set("output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
-        }
-        else {
-            throw new IllegalArgumentException("Cooking recipe template must use a cooking recipe.");
-        }
+        if(!TYPE_KEYS.containsKey(recipe.getClass()))
+            throw new IllegalStateException("CookingRecipe template must use a valid cooking recipe");
 
+        lookup.set("p_tooltip", Variable.of(List.of(TYPE_KEYS.get(recipe.getClass()))));
+        lookup.set("p_inputs", Variable.of(List.of(List.of(recipe.getIngredients().getFirst().getItems()))));
+        lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+    }
+
+    protected void initComponents(Book book, MutableLookup lookup, Level level) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
         if(tex == null)
             throw new IllegalStateException("Crafting grid templates require the book to have a valid BookTexture");
 
+        Rectangle page = tex.pages().get(lookup.get("page_num").asInt() % tex.pages().size());
         Rectangle frame = tex.widgets().get("small_frame");
         Rectangle arrow = tex.widgets().get("crafting_arrow");
         Rectangle flame = tex.widgets().get("crafting_flame");
@@ -50,18 +65,27 @@ public class CookingRecipeProcessor implements TemplateProcessor {
             throw new IllegalStateException("Cooking recipe templates require the BookTexture to have crafting_flame, crafting_arrow and small_frame widgets");
 
         int spacing = (frame.width() - 16 ) / 2;
-        int flameX = 16 + spacing + 2;
-        int arrowX = flameX + flame.width() + 2;
 
-        lookup.set("flame_x", Variable.of(flameX));
-        lookup.set("flame_y", Variable.of(8 - flame.height() / 2));
+        int arrowX = 16 + spacing + 4;
+        int arrowY = 8 - arrow.height() / 2;
+        int flameX = arrowX + arrow.width()/2 - flame.width()/2;
+        int flameY = arrowY + arrow.height() + 2;
 
-        lookup.set("arrow_x", Variable.of(arrowX));
-        lookup.set("arrow_y", Variable.of(8 - arrow.height() / 2));
-        lookup.set("arrow_width", Variable.of(arrow.width()));
-        lookup.set("arrow_height", Variable.of(arrow.height()));
+        int outputX = arrowX + arrow.width() + 4 + spacing;
 
-        lookup.set("output_x", Variable.of(arrowX + arrow.width() + 2 + spacing));
+        int offset = (page.width() - (outputX + 16)) / 2; // This should self-center the components.
+
+        lookup.set("p_input_x", Variable.of(offset));
+
+        lookup.set("p_arrow_x", Variable.of(arrowX + offset));
+        lookup.set("p_arrow_y", Variable.of(arrowY));
+        lookup.set("p_arrow_width", Variable.of(arrow.width()));
+        lookup.set("p_arrow_height", Variable.of(arrow.height()));
+
+        lookup.set("p_flame_x", Variable.of(flameX + offset));
+        lookup.set("p_flame_y", Variable.of(flameY));
+
+        lookup.set("p_output_x", Variable.of(outputX + offset));
     }
 
 }

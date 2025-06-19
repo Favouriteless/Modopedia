@@ -66,6 +66,9 @@ public class ItemPageComponent extends PageComponent {
 
             ItemStack stack = itemList.get((context.getTicks() / 20) % itemList.size());
 
+            if(stack.isEmpty())
+                continue;
+
             graphics.renderItem(stack, x, y);
             graphics.renderItemDecorations(font, stack, x, y);
 

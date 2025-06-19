@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
-import net.favouriteless.modopedia.datagen.BookContentBuilder;
+import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Optional;

@@ -1,10 +1,10 @@
-package net.favouriteless.modopedia.api.datagen.builders.page_components.templates.base;
+package net.favouriteless.modopedia.api.datagen.builders.templates;
 
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.TemplateComponentBuilder;
+import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;

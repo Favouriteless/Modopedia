@@ -1,17 +1,17 @@
-package net.favouriteless.modopedia.api.datagen.builders.page_components.templates.base;
+package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.TemplateComponentBuilder;
+import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.minecraft.resources.ResourceLocation;
 
 public class HeaderedTextBuilder extends TemplateComponentBuilder {
 
-    public static final ResourceLocation ID = Modopedia.id("headered_text");
+    public static final ResourceLocation ID = Modopedia.id("page/headered_text");
 
     private final String header;
     private final String text;

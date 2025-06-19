@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "items": "#p_inputs",
+      "template": "modopedia:framed_item",
+      "x": "#p_input_x"
+    },
+    {
+      "type": "modopedia:crafting_arrow",
+      "x": "#p_arrow_x",
+      "y": "#p_arrow_y"
+    },
+    {
+      "type": "modopedia:crafting_flame",
+      "x": "#p_flame_x",
+      "y": "#p_flame_y"
+    },
+    {
+      "type": "modopedia:tooltip",
+      "height": "#p_arrow_height",
+      "tooltip": "#p_tooltip",
+      "width": "#p_arrow_width",
+      "x": "#p_arrow_x",
+      "y": "#p_arrow_y"
+    },
+    {
+      "items": "#p_output",
+      "template": "modopedia:framed_item",
+      "x": "#p_output_x"
+    }
+  ],
+  "processor": "modopedia:cooking_recipe"
+}

@@ -1,5 +1,9 @@
-- ADDED: Datagen providers for all Modopedia resources.
+- ADDED: `page/crafting` template.
+- ADDED: `page/double_crafting` template.
 
-- FIXED: Books can be forced to reload before recipes have finished syncing.
+- CHANGED: A variety of templates have been moved into subfolders.
+- CHANGED: Breaking changes to template datagen. Please update your code, this will not happen again it was just cleanup.
+- CHANGED: Crafting table and smelting/blasting/smoking recipes are now horizontally self-centering.
+- CHANGED: Headers now support translation keys (for use in templates)
 
-- CHANGED: Item and Image components now work with lists rather than arrays. This only impacts you if you have template processors.
+- FIXED: Crafting recipes of 1 width do not display correctly.

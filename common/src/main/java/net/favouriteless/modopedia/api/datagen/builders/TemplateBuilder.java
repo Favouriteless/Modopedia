@@ -51,6 +51,12 @@ public class TemplateBuilder extends PageBuilder {
         return this;
     }
 
+    public TemplateBuilder defaultValue(String key, boolean string) {
+        defaults.put(key, () -> new JsonPrimitive(string));
+        return this;
+    }
+
+
     @Override
     protected JsonElement build() {
         JsonObject json = super.build().getAsJsonObject();

@@ -2,8 +2,8 @@
   "components": [
     {
       "type": "modopedia:medium_frame",
-      "x": "#frame_offset",
-      "y": "#frame_offset"
+      "x": "#p_offset",
+      "y": "#p_offset"
     },
     {
       "type": "modopedia:entity",
@@ -15,6 +15,7 @@
       "width": "#width"
     }
   ],
-  "processor": "modopedia:medium_frame_spacing",
-  "width": 50
+  "p_widget": "medium_frame",
+  "p_width": 50,
+  "processor": "modopedia:widget_spacing"
 }

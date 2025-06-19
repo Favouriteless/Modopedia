@@ -2,8 +2,8 @@
   "components": [
     {
       "type": "modopedia:crafting_grid",
-      "x": "#frame_offset",
-      "y": "#frame_offset"
+      "x": "#p_offset",
+      "y": "#p_offset"
     },
     {
       "type": "modopedia:item",
@@ -12,6 +12,7 @@
       "row_max": 3
     }
   ],
-  "processor": "modopedia:crafting_grid_spacing",
-  "width": 50
+  "p_widget": "crafting_grid",
+  "p_width": 50,
+  "processor": "modopedia:widget_spacing"
 }

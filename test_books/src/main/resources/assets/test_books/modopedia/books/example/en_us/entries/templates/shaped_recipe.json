@@ -5,11 +5,11 @@
     {
       "components": [
         {
-          "template": "modopedia:crafting_table_recipe",
+          "template": "modopedia:recipe/crafting",
           "recipe": "minecraft:diamond_pickaxe"
         },
         {
-          "template": "modopedia:crafting_table_recipe",
+          "template": "modopedia:recipe/crafting",
           "recipe": "minecraft:crafting_table",
           "y": 60
         }

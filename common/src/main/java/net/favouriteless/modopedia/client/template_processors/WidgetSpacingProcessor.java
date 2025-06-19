@@ -11,18 +11,11 @@ import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-public class FrameSpacingProcessor implements TemplateProcessor {
+public class WidgetSpacingProcessor implements TemplateProcessor {
 
-    public static final ResourceLocation ID_SMALL = Modopedia.id("small_frame_spacing");
-    public static final ResourceLocation ID_MEDIUM = Modopedia.id("medium_frame_spacing");
-    public static final ResourceLocation ID_LARGE = Modopedia.id("large_frame_spacing");
-    public static final ResourceLocation ID_CRAFTING = Modopedia.id("crafting_grid_spacing");
+    public static final ResourceLocation ID = Modopedia.id("widget_spacing");
 
-    protected final String widgetId;
-
-    public FrameSpacingProcessor(String widgetId) {
-        this.widgetId = widgetId;
-    }
+    public WidgetSpacingProcessor() {}
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
@@ -30,13 +23,15 @@ public class FrameSpacingProcessor implements TemplateProcessor {
         if(tex == null)
             throw new IllegalStateException("Book is missing a valid BookTexture");
 
-        Rectangle rect = tex.widgets().get(widgetId);
+        String widget = lookup.get("p_widget").asString();
+        int width = lookup.get("p_width").asInt();
+
+        Rectangle rect = tex.widgets().get(widget);
         if(rect == null)
-            throw new IllegalStateException("Frame spacing processor cannot find widget: " + widgetId);
+            throw new IllegalStateException("Frame spacing processor cannot find widget: " + widget);
 
 
-        int width = lookup.get("width").asInt();
-        lookup.set("frame_offset", Variable.of(-(rect.width() - width) / 2));
+        lookup.set("p_offset", Variable.of(-(rect.width() - width) / 2));
     }
 
 }

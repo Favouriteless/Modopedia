@@ -5,7 +5,7 @@
     {
       "components": [
         {
-          "template": "modopedia:crafting_table_recipe",
+          "template": "modopedia:recipe/crafting",
           "recipe": "minecraft:purple_dye"
         }
       ]

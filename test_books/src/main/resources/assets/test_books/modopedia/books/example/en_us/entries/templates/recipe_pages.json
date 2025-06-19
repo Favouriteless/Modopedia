@@ -1,0 +1,15 @@
+{
+  "title": "Recipe Pages",
+  "icon": { "id": "minecraft:crafting_table" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:page/double_crafting",
+          "recipe1": "minecraft:diamond_pickaxe",
+          "recipe2": "minecraft:iron_sword"
+        }
+      ]
+    }
+  ]
+}

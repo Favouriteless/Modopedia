@@ -2,14 +2,15 @@
   "components": [
     {
       "type": "modopedia:small_frame",
-      "x": "#frame_offset",
-      "y": "#frame_offset"
+      "x": "#p_offset",
+      "y": "#p_offset"
     },
     {
       "type": "modopedia:item",
       "items": "#items"
     }
   ],
-  "processor": "modopedia:small_frame_spacing",
-  "width": 16
+  "p_widget": "small_frame",
+  "p_width": 16,
+  "processor": "modopedia:widget_spacing"
 }

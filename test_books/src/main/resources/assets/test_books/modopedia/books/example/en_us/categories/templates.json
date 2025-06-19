@@ -9,6 +9,7 @@
     "templates/framed_multiblocks",
     "templates/framed_entities",
     "templates/framed_showcases",
+    "templates/recipe_pages",
     "templates/cooking_recipes"
   ],
   "children": [

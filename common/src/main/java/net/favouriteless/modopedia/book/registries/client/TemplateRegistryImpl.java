@@ -4,10 +4,6 @@ import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.Template;
-import net.favouriteless.modopedia.client.template_processors.CookingRecipeProcessor;
-import net.favouriteless.modopedia.client.template_processors.CraftingTableRecipeProcessor;
-import net.favouriteless.modopedia.client.template_processors.FrameSpacingProcessor;
-import net.favouriteless.modopedia.client.template_processors.HeaderedTextProcessor;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -19,15 +15,7 @@ public class TemplateRegistryImpl implements TemplateRegistry {
     private final HashMap<ResourceLocation, Template> templates = new HashMap<>();
     private final HashMap<ResourceLocation, TemplateProcessor> processors = new HashMap<>();
 
-    private TemplateRegistryImpl() {
-        registerProcessor(HeaderedTextProcessor.ID, new HeaderedTextProcessor());
-        registerProcessor(FrameSpacingProcessor.ID_SMALL, new FrameSpacingProcessor("small_frame"));
-        registerProcessor(FrameSpacingProcessor.ID_MEDIUM, new FrameSpacingProcessor("medium_frame"));
-        registerProcessor(FrameSpacingProcessor.ID_LARGE, new FrameSpacingProcessor("large_frame"));
-        registerProcessor(FrameSpacingProcessor.ID_CRAFTING, new FrameSpacingProcessor("crafting_grid"));
-        registerProcessor(CraftingTableRecipeProcessor.ID, new CraftingTableRecipeProcessor());
-        registerProcessor(CookingRecipeProcessor.ID, new CookingRecipeProcessor());
-    }
+    private TemplateRegistryImpl() {}
 
     @Override
     public void registerTemplate(ResourceLocation id, JsonObject obj) {

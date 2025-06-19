@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api.datagen.builders;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.favouriteless.modopedia.datagen.BookContentBuilder;
+import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
