@@ -323,7 +323,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .viewAngle("#view_angle")
                                 .noOffsets("#no_offsets"),
                         TextBuilder.of("#text")
-                                .y("#p_text_y")
+                                .x("#p_x").y("#p_text_y")
                                 .width("#width")
                                 .justify(Justify.CENTER)
                 )
@@ -343,6 +343,25 @@ public class MTemplateProvider extends TemplateProvider {
                                 .scale("#scale")
                                 .viewAngle("#view_angle")
                                 .noOffsets(true)
+                )
+                .defaultValue("width", 100)
+                .defaultValue("height", 100)
+                .build(output);
+
+        TemplateBuilder.of(EntityPageBuilder.ID.getPath())
+                .processor(DescriptionPageProcessor.ID)
+                .components(
+                        EntityBuilder.of("#entity")
+                                .x("#p_x")
+                                .tag("#tag")
+                                .width("#width")
+                                .height("#height")
+                                .scale("#scale")
+                                .offsetY("#offsetY"),
+                        TextBuilder.of("#text")
+                                .x("#p_x").y("#p_text_y")
+                                .width("#width")
+                                .justify(Justify.CENTER)
                 )
                 .defaultValue("width", 100)
                 .defaultValue("height", 100)

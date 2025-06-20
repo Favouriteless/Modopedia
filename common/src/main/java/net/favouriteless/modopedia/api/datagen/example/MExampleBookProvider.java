@@ -21,7 +21,7 @@ public class MExampleBookProvider extends BookProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, Book> output) {
+    protected void build(Provider registries, BiConsumer<String, Book> output) {
         BookBuilder.of("datagen_example", "Datagen Example") // All fields except ID and title are optional.
                 .subtitle("Example Subtitle")
                 .type(new ClassicBookType(LockedViewType.TRANSLUCENT))

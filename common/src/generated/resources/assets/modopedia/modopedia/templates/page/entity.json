@@ -1,15 +1,12 @@
 {
   "components": [
     {
-      "type": "modopedia:multiblock",
+      "type": "modopedia:entity",
+      "entity": "#entity",
       "height": "#height",
-      "multiblock": "#multiblock",
-      "multiblock_id": "#multiblock_id",
-      "no_offsets": "#no_offsets",
-      "offset_x": "#offset_x",
-      "offset_y": "#offset_y",
+      "offset_y": "#offsetY",
       "scale": "#scale",
-      "view_angle": "#view_angle",
+      "tag": "#tag",
       "width": "#width",
       "x": "#p_x"
     },

@@ -36,7 +36,7 @@ public class SimpleStateMatcher implements StateMatcher {
 
     @Override
     public MapCodec<? extends StateMatcher> typeCodec() {
-        return typeCodec();
+        return CODEC;
     }
 
     public List<BlockState> getStates() {
