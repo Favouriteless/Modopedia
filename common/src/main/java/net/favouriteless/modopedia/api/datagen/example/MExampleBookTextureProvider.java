@@ -17,7 +17,7 @@ public class MExampleBookTextureProvider extends BookTextureProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, BookTexture> output) {
+    protected void build(Provider registries, BiConsumer<String, BookTexture> output) {
         BookTextureBuilder.of("example")
                 .texture(Modopedia.id("textures/gui/books/brown_brass.png"), 290, 310)
                 .sized(290, 182)

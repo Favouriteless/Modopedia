@@ -1,1 +1,6 @@
-- CHANGED: Block Page datagen now supports blockstates
+- ADDED: `modopedia:page/entity` template
+
+- CHANGED: Block page datagen now supports blockstates
+- CHANGED: Datagen now passes registry lookup into build methods.
+
+- FIXED: SimpleStateMatcher returns the wrong codec
