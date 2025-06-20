@@ -5,17 +5,19 @@ import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
 import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockPageBuilder extends TemplateComponentBuilder {
 
     public static final ResourceLocation ID = Modopedia.id("page/block");
 
     private final String text;
-    private final Either<Block, String> block;
+    private final Either<BlockState, String> block;
 
     private Either<Integer, String> width;
     private Either<Integer, String> height;
@@ -26,7 +28,7 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
     private Either<Float, String> scale;
     private Either<Float, String> viewAngle;
 
-    protected BlockPageBuilder(String text, Block block) {
+    protected BlockPageBuilder(String text, BlockState block) {
         super(ID);
         this.text = text;
         this.block = Either.left(block);
@@ -38,7 +40,7 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
         this.block = Either.right(block);
     }
 
-    public static BlockPageBuilder of(String text, Block block) {
+    public static BlockPageBuilder of(String text, BlockState block) {
         return new BlockPageBuilder(text, block);
     }
 
@@ -139,14 +141,14 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
     @Override
     protected void build(JsonObject json) {
         json.add("text", new JsonPrimitive(text));
+        if(block != null)
+            json.add("block", resolve(block).orElseGet(() -> BlockStateCodec.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(block)).getOrThrow()));
         if(textOffset != null)
             resolveNum(textOffset).ifPresent(o -> json.add("text_offset", o));
         if(width != null)
             resolveNum(width).ifPresent(w -> json.add("width", w));
         if(height != null)
             resolveNum(height).ifPresent(h -> json.add("height", h));
-        if(block != null)
-            json.add("block", resolve(block).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, BuiltInRegistries.BLOCK.getKey(orThrow(block))).getOrThrow()));
         if(offsetX != null)
             resolveNum(offsetX).ifPresent(o -> json.add("offset_x", o));
         if(offsetY != null)

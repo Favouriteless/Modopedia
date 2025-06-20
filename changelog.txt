@@ -1,1 +1,1 @@
-- FIXED: Startup crash on Fabric servers.
+- CHANGED: Block Page datagen now supports blockstates

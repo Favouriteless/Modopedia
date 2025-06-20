@@ -16,11 +16,11 @@ public class CategoryBuilder {
     private final String title;
 
     private String rawLandingText;
-    private ItemStack iconStack;
-    private boolean displayFrontPage;
+    private ItemStack iconStack = CategoryImpl.DEFAULT_ICON.get();
+    private boolean displayFrontPage = CategoryImpl.DEFAULT_DISPLAY_ON_FRONT_PAGE;
     private ResourceLocation advancement;
-    private List<String> entries = new ArrayList<>();
-    private List<String> children = new ArrayList<>();
+    private final List<String> entries = new ArrayList<>();
+    private final List<String> children = new ArrayList<>();
 
     private CategoryBuilder(String id, String title) {
         this.id = id;

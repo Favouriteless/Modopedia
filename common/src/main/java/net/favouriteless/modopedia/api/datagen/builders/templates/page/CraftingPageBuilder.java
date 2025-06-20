@@ -2,26 +2,19 @@ package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.datagen.builders.DoubleRecipeTemplateBuilder;
+import net.favouriteless.modopedia.datagen.builders.SingleRecipeTemplateBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class CraftingPageBuilder {
 
     public static final ResourceLocation ID = Modopedia.id("page/crafting");
 
-    public static DoubleRecipeTemplateBuilder of(ResourceLocation recipe1, ResourceLocation recipe2) {
-        return new DoubleRecipeTemplateBuilder(ID, recipe1, recipe2);
+    public static SingleRecipeTemplateBuilder of(ResourceLocation recipe) {
+        return new SingleRecipeTemplateBuilder(ID, recipe);
     }
 
-    public static DoubleRecipeTemplateBuilder of(ResourceLocation recipe1, String recipe2) {
-        return new DoubleRecipeTemplateBuilder(ID, recipe1, recipe2);
-    }
-
-    public static DoubleRecipeTemplateBuilder of(String recipe1, ResourceLocation recipe2) {
-        return new DoubleRecipeTemplateBuilder(ID, recipe1, recipe2);
-    }
-
-    public static DoubleRecipeTemplateBuilder of(String recipe1, String recipe2) {
-        return new DoubleRecipeTemplateBuilder(ID, recipe1, recipe2);
+    public static SingleRecipeTemplateBuilder of(String recipe) {
+        return new SingleRecipeTemplateBuilder(ID, recipe);
     }
     
 }
