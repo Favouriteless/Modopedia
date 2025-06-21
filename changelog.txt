@@ -1,1 +1,1 @@
-- CHANGED: TagStateMatcher now lazily resolves it's display states.
+- FIXED: Scale of Multiblock and Entity displays not having the same effect as expected.

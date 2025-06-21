@@ -84,7 +84,7 @@ public class JsonVariable implements Variable {
 
     @Override
     public float asFloat() {
-        return internal.getAsInt();
+        return internal.getAsFloat();
     }
 
     @Override
