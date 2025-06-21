@@ -35,6 +35,8 @@ public class GalleryPageComponent extends PageComponent {
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
+        if(holder.getComponents().isEmpty())
+            throw new IllegalArgumentException("Gallery cannot have zero components");
         holder.initComponents(book, lookup.get("entry").asString(), level);
 
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());

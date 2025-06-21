@@ -29,7 +29,7 @@ public abstract class SimpleCodecProvider<T> implements DataProvider {
         this.codec = codec;
     }
 
-    protected abstract void build(BiConsumer<String, T> output);
+    protected abstract void build(Provider registries, BiConsumer<String, T> output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
@@ -40,7 +40,7 @@ public abstract class SimpleCodecProvider<T> implements DataProvider {
         final Set<String> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
-        build((id, t) -> {
+        build(registries, (id, t) -> {
             if(!set.add(id))
                 throw new IllegalStateException("Duplicate " + getName() + ": " + id);
             generated.add(DataProvider.saveStable(output, registries, codec, t, pathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));

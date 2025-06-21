@@ -22,7 +22,7 @@ public class MExampleContentSetProvider extends ContentSetProvider {
     }
 
     @Override
-    public void buildEntries(BiConsumer<String, JsonElement> output) {
+    public void buildEntries(Provider registries, BiConsumer<String, JsonElement> output) {
         EntryBuilder.of("text_entry", "Text Entry")
                 .icon(Items.DIAMOND.getDefaultInstance())
                 .assignedItems(Items.DIAMOND)
@@ -40,7 +40,7 @@ public class MExampleContentSetProvider extends ContentSetProvider {
     }
 
     @Override
-    public void buildCategories(BiConsumer<String, Category> output) {
+    public void buildCategories(Provider registries, BiConsumer<String, Category> output) {
         CategoryBuilder.of("example", "Example Category")
                 .icon(Items.STONE.getDefaultInstance())
                 .entries("text_entry")

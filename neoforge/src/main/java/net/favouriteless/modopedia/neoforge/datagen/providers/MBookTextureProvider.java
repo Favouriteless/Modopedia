@@ -20,7 +20,7 @@ public class MBookTextureProvider extends BookTextureProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, BookTexture> output) {
+    protected void build(Provider registries, BiConsumer<String, BookTexture> output) {
         for(String colour : COLOURS) {
             for(String metal : METALS) {
                 String loc = colour + "_" + metal;

@@ -1,1 +1,1 @@
-- CHANGED: Block Page datagen now supports blockstates
+- CHANGED: TagStateMatcher now lazily resolves it's display states.
