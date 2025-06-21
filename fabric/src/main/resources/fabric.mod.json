@@ -19,6 +19,9 @@
         ],
         "client": [
             "net.favouriteless.modopedia.fabric.client.ModopediaFabricClient"
+        ],
+        "jei_mod_plugin": [
+            "net.favouriteless.modopedia.integrations.jei.MJeiPlugin"
         ]
     },
     "mixins": [

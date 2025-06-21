@@ -26,7 +26,7 @@ public class FabricClientRegistryHelper implements IClientRegistryHelper {
 
 	@Override
 	public KeyMapping createKeyMapping(String name, int keyCode, String category, KeyConflictContext conflictContext) {
-		return KeyBindingHelper.registerKeyBinding(new KeyMapping(name, keyCode, category));
+		return new KeyMapping(name, keyCode, category);
 	}
 
 }
