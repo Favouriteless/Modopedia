@@ -26,6 +26,7 @@ dependencies {
     compileOnly( libs.mixin )
     compileOnly( libs.mixinextras.common )
     compileOnly( libs.forgeconfigapi.common )
+    compileOnly( libs.jei.common.api )
 }
 
 sourceSets.main.get().resources.srcDir(file("src/generated/resources"))

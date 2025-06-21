@@ -6,6 +6,7 @@
     minecraft-range = "[1.21.1,)"
     forgeconfigapi = "21.1.1"
     neoform = "1.21-20240613.152323"
+    jei = "19.21.2.313"
 
 # Fabric
     fabric = "0.16.14"
@@ -15,7 +16,6 @@
     neoforge-loader-range = "[4,)"
     neoforge-range = "[21.1.72,)"
     neoforge = "21.1.179"
-
 
 # Dependencies
     mixin = "0.8.7"
@@ -38,10 +38,17 @@
 
 # Fabric
     forgeconfigapi-fabric = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-fabric", version.ref = "forgeconfigapi" }
+    jei-fabric-api = { group = "mezz.jei", name = "jei-1.21.1-fabric-api", version.ref = "jei" }
+    jei-fabric = { group = "mezz.jei", name = "jei-1.21.1-fabric", version.ref = "jei" }
 
 # Mixin
     mixin = { group = "org.spongepowered", name = "mixin", version.ref = "mixin" }
     mixinextras-common = { group = "io.github.llamalad7", name = "mixinextras-common", version.ref = "mixinextras" }
+    jei-common-api = { group = "mezz.jei", name = "jei-1.21.1-common-api", version.ref = "jei" }
+
+# NeoForge
+    jei-neoforge-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
+    jei-neoforge = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 
 # Platform
     neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }

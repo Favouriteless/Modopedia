@@ -10,6 +10,7 @@ subprojects {
 
     repositories {
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") { name = "Fuzs Mod Resources" }
+        maven("https://maven.blamejared.com/") { name = "Jared's maven" }
     }
 
 }

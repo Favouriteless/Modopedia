@@ -71,6 +71,9 @@ configurations.get("runtimeClasspath").extendsFrom(localRuntimeOnly)
 dependencies {
     compileOnly( project(":common") )
 
+    compileOnly( libs.jei.neoforge.api )
+    runtimeOnly( libs.jei.neoforge )
+
     localRuntimeOnly( project(":test_books") )
 }
 
