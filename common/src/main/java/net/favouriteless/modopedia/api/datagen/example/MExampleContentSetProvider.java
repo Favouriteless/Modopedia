@@ -1,13 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.example;
 
 import com.google.gson.JsonElement;
-import net.favouriteless.modopedia.api.book.Category;
-import net.favouriteless.modopedia.api.datagen.builders.CategoryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.GalleryBuilder;
+import net.favouriteless.modopedia.api.datagen.CategoryOutput;
+import net.favouriteless.modopedia.api.datagen.builders.*;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
-import net.favouriteless.modopedia.api.datagen.builders.EntryBuilder;
-import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
+
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
@@ -40,7 +39,7 @@ public class MExampleContentSetProvider extends ContentSetProvider {
     }
 
     @Override
-    public void buildCategories(Provider registries, BiConsumer<String, Category> output) {
+    public void buildCategories(Provider registries, CategoryOutput output) {
         CategoryBuilder.of("example", "Example Category")
                 .icon(Items.STONE.getDefaultInstance())
                 .entries("text_entry")

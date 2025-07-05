@@ -1,14 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders;
 
-import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.datagen.CategoryOutput;
 import net.favouriteless.modopedia.book.CategoryImpl;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.*;
 
 public class CategoryBuilder {
 
@@ -61,7 +59,7 @@ public class CategoryBuilder {
         return this;
     }
 
-    public void build(BiConsumer<String, Category> output) {
+    public void build(CategoryOutput output) {
         output.accept(id, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement));
     }
 

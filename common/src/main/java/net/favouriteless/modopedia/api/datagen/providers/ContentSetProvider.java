@@ -3,18 +3,15 @@ package net.favouriteless.modopedia.api.datagen.providers;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.datagen.CategoryOutput;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.PackOutput.PathProvider;
-import net.minecraft.data.PackOutput.Target;
+import net.minecraft.data.*;
+import net.minecraft.data.PackOutput.*;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
@@ -40,7 +37,7 @@ public abstract class ContentSetProvider implements DataProvider {
 
     public abstract void buildEntries(Provider registries, BiConsumer<String, JsonElement> output);
 
-    public abstract void buildCategories(Provider registries, BiConsumer<String, Category> output);
+    public abstract void buildCategories(Provider registries, CategoryOutput output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
