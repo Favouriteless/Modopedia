@@ -50,10 +50,12 @@ public class LandingScreenPage extends FormattedTextPage {
         TextColor color = title.getStyle().getColor();
         graphics.drawString(font, title, titleX, titleY, color != null ? color.getValue() : 0, false);
 
-        int subtitleX = backerX + backer.width() - (font.width(subtitle) + this.subtitleX);
-        int subtitleY = titleY + font.lineHeight - 2;
+        if(subtitle != null) {
+            int subtitleX = backerX + backer.width() - (font.width(subtitle) + this.subtitleX);
+            int subtitleY = titleY + font.lineHeight - 2;
 
-        graphics.drawString(font, subtitle, subtitleX, subtitleY, color != null ? color.getValue() : 0, false);
+            graphics.drawString(font, subtitle, subtitleX, subtitleY, color != null ? color.getValue() : 0, false);
+        }
 
         poseStack.pushPose();
         poseStack.translate(0, (backer.y() + backer.height()) - rectangle.v(), 0);
