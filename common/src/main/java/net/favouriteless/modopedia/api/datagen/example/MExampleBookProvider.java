@@ -24,7 +24,7 @@ public class MExampleBookProvider extends BookProvider {
     protected void build(Provider registries, BiConsumer<String, Book> output) {
         BookBuilder.of("Datagen Example") // All fields except title are optional.
                 .subtitle("Example Subtitle")
-                .type(new ClassicBookType(LockedViewType.TRANSLUCENT))
+                .type(new ClassicBookType(LockedViewType.TRANSLUCENT, 37, 7, 10))
                 .landingText("Example $(b)Landing$() $(c:green)Text$()!")
                 .texture(Modopedia.id("brown_brass"))
                 .itemModel(Modopedia.id("item/modopedia_books/purple_gold"))

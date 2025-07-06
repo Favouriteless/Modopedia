@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class BookImpl implements Book {
 
-    public static final BookType DEFAULT_TYPE = new ClassicBookType(LockedViewType.HIDDEN);
+    public static final BookType DEFAULT_TYPE = new ClassicBookType(LockedViewType.HIDDEN, 37, 7, 10);
     public static final ResourceLocation DEFAULT_TEXTURE = Modopedia.id("brown_brass");
     public static final ResourceLocation DEFAULT_ITEM_MODEL = Modopedia.id("item/modopedia_books/brown_brass");
     public static final Holder<SoundEvent> DEFAULT_OPEN_SOUND = MSoundEvents.BOOK_OPEN;
