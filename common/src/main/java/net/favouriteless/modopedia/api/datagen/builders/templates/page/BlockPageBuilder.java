@@ -1,15 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
+
+import net.minecraft.resources.*;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockPageBuilder extends TemplateComponentBuilder {
@@ -139,24 +136,25 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("text", new JsonPrimitive(text));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("text", resolveString(text));
+
         if(block != null)
-            json.add("block", resolve(block).orElseGet(() -> BlockStateCodec.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(block)).getOrThrow()));
+            json.add("block", resolve(block, b -> BlockStateCodec.CODEC.encodeStart(ops, b).getOrThrow()));
         if(textOffset != null)
-            resolveNum(textOffset).ifPresent(o -> json.add("text_offset", o));
+            json.add("text_offset", resolveNum(textOffset));
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
         if(offsetX != null)
-            resolveNum(offsetX).ifPresent(o -> json.add("offset_x", o));
+            json.add("offset_x", resolveNum(offsetX));
         if(offsetY != null)
-            resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
+            json.add("offset_y", resolveNum(offsetY));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
         if(viewAngle != null)
-            resolveNum(viewAngle).ifPresent(v -> json.add("view_angle", v));
+            json.add("view_angle", resolveNum(viewAngle));
     }
 
 }

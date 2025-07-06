@@ -14,7 +14,6 @@ import java.util.function.BiConsumer;
 
 public class BookBuilder {
 
-    private final String id;
     private final String title;
 
     private String subtitle;
@@ -30,13 +29,12 @@ public class BookBuilder {
     private int headerColour = BookImpl.DEFAULT_HEADER_COLOUR;
     private int lineWidth = BookImpl.DEFAULT_LINE_WIDTH;
 
-    private BookBuilder(String id, String title) {
-        this.id = id;
+    private BookBuilder(String title) {
         this.title = title;
     }
 
-    public static BookBuilder of(String id, String title) {
-        return new BookBuilder(id, title);
+    public static BookBuilder of(String title) {
+        return new BookBuilder(title);
     }
 
     public BookBuilder subtitle(String subtitle) {
@@ -103,7 +101,7 @@ public class BookBuilder {
         return this;
     }
 
-    public void build(BiConsumer<String, Book> output) {
+    public void build(String id, BiConsumer<String, Book> output) {
         output.accept(id, new BookImpl(title, subtitle, type, rawLandingText, texture, itemModel, tab, openSound, flipSound, font, textColour, headerColour, lineWidth));
     }
 

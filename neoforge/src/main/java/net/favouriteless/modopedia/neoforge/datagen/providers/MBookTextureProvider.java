@@ -25,7 +25,7 @@ public class MBookTextureProvider extends BookTextureProvider {
             for(String metal : METALS) {
                 String loc = colour + "_" + metal;
 
-                BookTextureBuilder.of(loc)
+                BookTextureBuilder.of()
                         .texture(Modopedia.id("textures/gui/books/" + loc + ".png"), 290, 310)
                         .sized(290, 182)
                         .titleBacker(0, 12, 0, 213, 140, 35)
@@ -42,7 +42,7 @@ public class MBookTextureProvider extends BookTextureProvider {
                         .widget("crafting_grid", 74, 255, 54, 54)
                         .widget("crafting_arrow", 73, 183, 16, 13)
                         .widget("crafting_flame", 89, 183, 14, 14)
-                        .build(output);
+                        .build(loc, output);
             }
         }
     }

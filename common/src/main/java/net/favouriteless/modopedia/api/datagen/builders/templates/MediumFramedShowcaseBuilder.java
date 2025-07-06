@@ -1,11 +1,11 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
+
+import net.minecraft.resources.*;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -77,12 +77,13 @@ public class MediumFramedShowcaseBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("items", resolve(items).orElseGet(() -> ItemStack.CODEC.listOf().encodeStart(JsonOps.INSTANCE, orThrow(items)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("items", resolve(items, l -> ItemStack.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
+
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
     }
 
 }

@@ -1,13 +1,13 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
+import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.world.entity.EntityType;
 
 public class MediumFramedEntityBuilder extends TemplateComponentBuilder {
@@ -99,17 +99,17 @@ public class MediumFramedEntityBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("entity", resolve(entity).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, BuiltInRegistries.ENTITY_TYPE.getKey(orThrow(entity))).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("entity", resolve(entity, e -> ResourceLocation.CODEC.encodeStart(ops, BuiltInRegistries.ENTITY_TYPE.getKey(e)).getOrThrow()));
 
         if(tag != null)
-            json.add("tag", resolve(tag).orElseGet(() -> CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(tag)).getOrThrow()));
+            json.add("tag", resolve(tag, t -> CompoundTag.CODEC.encodeStart(ops, t).getOrThrow()));
         if(offsetY != null)
-            resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
+            json.add("offset_y", resolveNum(offsetY));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
     }
 
 }

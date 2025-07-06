@@ -5,12 +5,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.JsonOps;
-import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
+import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.Optional;
+import java.util.function.Function;
 
-public abstract class PageComponentBuilder extends BookContentBuilder {
+public abstract class PageComponentBuilder implements BookContentBuilder {
 
     private final ResourceLocation type;
     private final boolean isTemplate;
@@ -27,7 +28,7 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         this(type, false);
     }
 
-    protected abstract void build(JsonObject json);
+    protected abstract void build(JsonObject json, RegistryOps<JsonElement> ops);
 
     public PageComponentBuilder x(int x) {
         this.x = Either.left(x);
@@ -50,50 +51,42 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
     }
 
     @Override
-    public JsonElement build() {
+    public JsonElement build(RegistryOps<JsonElement> ops) {
         JsonObject json = new JsonObject();
 
         if(type != null)
-            json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, type).getOrThrow());
+            json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(ops, type).getOrThrow());
         if(x != null)
-            resolveNum(x).ifPresent(j -> json.add("x", j));
+            json.add("x", resolveNum(x));
         if(y != null)
-            resolveNum(y).ifPresent(j -> json.add("y", j));
-        build(json);
+            json.add("y", resolveNum(y));
+        build(json, ops);
 
         return json;
     }
 
-    protected <L> Optional<JsonElement> resolve(Either<L, String> either) {
-        return either.right().isPresent() ? Optional.of(new JsonPrimitive(either.right().get())) : Optional.empty();
+    protected <L> JsonElement resolve(Either<L, String> either, Function<L, JsonElement> serializer) {
+        return either.map(serializer, JsonPrimitive::new);
     }
 
-    protected Optional<JsonElement> resolveString(Either<String, String> either) {
-        if(either.left().isPresent())
-            return Optional.of(new JsonPrimitive(either.left().get()));
-        if(either.right().isPresent())
-            return Optional.of(new JsonPrimitive(either.right().get()));
-        return Optional.empty();
+    protected JsonElement resolveBool(Either<Boolean, String> either) {
+        return either.map(JsonPrimitive::new, JsonPrimitive::new);
     }
 
-    protected Optional<JsonElement> resolveBool(Either<Boolean, String> either) {
-        if(either.left().isPresent())
-            return Optional.of(new JsonPrimitive(either.left().get()));
-        if(either.right().isPresent())
-            return Optional.of(new JsonPrimitive(either.right().get()));
-        return Optional.empty();
+    protected JsonElement resolveNum(Either<? extends Number, String> either) {
+        return either.map(JsonPrimitive::new, JsonPrimitive::new);
     }
 
-    protected Optional<JsonElement> resolveNum(Either<? extends Number, String> either) {
-        if(either.left().isPresent())
-            return Optional.of(new JsonPrimitive(either.left().get()));
-        if(either.right().isPresent())
-            return Optional.of(new JsonPrimitive(either.right().get()));
-        return Optional.empty();
+    protected JsonElement resolveString(Either<String, String> either) {
+        return either.map(JsonPrimitive::new, JsonPrimitive::new);
     }
 
-    protected <L> L orThrow(Either<L, String> either) {
-        return either.left().orElseThrow();
+    protected JsonElement resolveString(String string) {
+        return new JsonPrimitive(string);
+    }
+
+    protected JsonElement resolveResourceLocation(Either<ResourceLocation, String> either) {
+        return either.map(l -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, l).getOrThrow(), JsonPrimitive::new);
     }
 
 }

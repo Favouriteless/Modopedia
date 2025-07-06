@@ -1,8 +1,10 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.SeparatorPageComponent;
+
+import net.minecraft.resources.RegistryOps;
 
 public class SeparatorBuilder extends PageComponentBuilder {
 
@@ -15,6 +17,6 @@ public class SeparatorBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {}
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {}
 
 }

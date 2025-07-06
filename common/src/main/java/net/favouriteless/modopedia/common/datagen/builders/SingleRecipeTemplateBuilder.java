@@ -1,9 +1,9 @@
-package net.favouriteless.modopedia.datagen.builders;
+package net.favouriteless.modopedia.common.datagen.builders;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 public class SingleRecipeTemplateBuilder extends TemplateComponentBuilder {
 
@@ -20,8 +20,8 @@ public class SingleRecipeTemplateBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("recipe", resolve(recipe).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(recipe)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("recipe", resolveResourceLocation(recipe));
     }
 
 }

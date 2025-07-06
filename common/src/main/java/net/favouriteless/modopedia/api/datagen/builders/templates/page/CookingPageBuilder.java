@@ -1,8 +1,7 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.builders.DoubleRecipeTemplateBuilder;
-import net.favouriteless.modopedia.datagen.builders.SingleRecipeTemplateBuilder;
+import net.favouriteless.modopedia.common.datagen.builders.SingleRecipeTemplateBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class CookingPageBuilder {

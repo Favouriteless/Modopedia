@@ -1,11 +1,11 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
+
+import net.minecraft.resources.*;
 
 import java.util.List;
 
@@ -65,10 +65,11 @@ public class MediumFramedImageBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("images", resolve(images).orElseGet(() -> ResourceLocation.CODEC.listOf().encodeStart(JsonOps.INSTANCE, orThrow(images)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("images", resolve(images, l -> ResourceLocation.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
+
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
     }
 
 }

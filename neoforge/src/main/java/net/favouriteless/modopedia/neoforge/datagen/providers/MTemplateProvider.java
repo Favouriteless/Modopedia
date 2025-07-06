@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.neoforge.datagen.providers;
 
-import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
@@ -15,7 +15,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class MTemplateProvider extends TemplateProvider {
 
@@ -24,14 +23,14 @@ public class MTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, JsonElement> output) {
+    protected void build(Provider registries, BookContentOutput output) {
         buildBaseTemplates(output);
         buildRecipeTemplates(output);
         buildPageTemplates(output);
     }
 
-    public void buildBaseTemplates(BiConsumer<String, JsonElement> output) {
-        TemplateBuilder.of(FramedItemBuilder.ID.getPath())
+    public void buildBaseTemplates(BookContentOutput output) {
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         SmallFrameBuilder.of()
@@ -41,9 +40,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 16)
                 .defaultValue("widget", "small_frame")
-                .build(output);
+                .build(FramedItemBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(MediumFramedImageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         MediumFrameBuilder.of()
@@ -55,9 +54,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(output);
+                .build(MediumFramedImageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(LargeFramedImageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         LargeFrameBuilder.of()
@@ -69,9 +68,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(output);
+                .build(LargeFramedImageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(MediumFramedMultiblockBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         MediumFrameBuilder.of()
@@ -90,9 +89,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(output);
+                .build(MediumFramedMultiblockBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(LargeFramedMultiblockBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         LargeFrameBuilder.of()
@@ -111,9 +110,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(output);
+                .build(LargeFramedMultiblockBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(FramedCraftingGridBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         CraftingGridBuilder.of()
@@ -125,9 +124,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "crafting_grid")
-                .build(output);
+                .build(FramedCraftingGridBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(MediumFramedEntityBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         MediumFrameBuilder.of()
@@ -142,9 +141,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(output);
+                .build(MediumFramedEntityBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(LargeFramedEntityBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         LargeFrameBuilder.of()
@@ -159,9 +158,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(output);
+                .build(LargeFramedEntityBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(MediumFramedShowcaseBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         MediumFrameBuilder.of()
@@ -174,9 +173,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(output);
+                .build(MediumFramedShowcaseBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(LargeFramedShowcaseBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
                         LargeFrameBuilder.of()
@@ -189,11 +188,11 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(output);
+                .build(LargeFramedShowcaseBuilder.ID.getPath(), output);
     }
 
-    public void buildRecipeTemplates(BiConsumer<String, JsonElement> output) {
-        TemplateBuilder.of(CraftingRecipeBuilder.ID.getPath())
+    public void buildRecipeTemplates(BookContentOutput output) {
+        TemplateBuilder.of()
                 .processor(CraftingRecipeProcessor.ID)
                 .components(
                         FramedCraftingGridBuilder.of("#p_inputs")
@@ -210,9 +209,9 @@ public class MTemplateProvider extends TemplateProvider {
                                 .x("#p_output_x")
                                 .y(17)
                 )
-                .build(output);
+                .build(CraftingRecipeBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(CookingRecipeBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(CookingRecipeProcessor.ID)
                 .components(
                         FramedItemBuilder.of("#p_inputs")
@@ -231,11 +230,11 @@ public class MTemplateProvider extends TemplateProvider {
                         FramedItemBuilder.of("#p_output")
                                 .x("#p_output_x")
                 )
-                .build(output);
+                .build(CookingRecipeBuilder.ID.getPath(), output);
     }
 
-    public void buildPageTemplates(BiConsumer<String, JsonElement> output) {
-        TemplateBuilder.of(HeaderedTextBuilder.ID.getPath())
+    public void buildPageTemplates(BookContentOutput output) {
+        TemplateBuilder.of()
                 .processor(HeaderedTextProcessor.ID)
                 .components(
                         SeparatorBuilder.of().y(10),
@@ -250,9 +249,9 @@ public class MTemplateProvider extends TemplateProvider {
                                 .lineHeight("#line_height")
                                 .justify("#justify")
                 )
-                .build(output);
+                .build(HeaderedTextBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(CraftingPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
                         HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
@@ -263,9 +262,9 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("with_header", true)
                 .defaultValue("vertical_items", 1)
                 .defaultValue("vertical_size_widget", "crafting_grid")
-                .build(output);
+                .build(CraftingPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(DoubleCraftingPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
                         HeaderBuilder.of(Modopedia.translation("template", "crafting_recipe")),
@@ -278,9 +277,9 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("with_header", true)
                 .defaultValue("vertical_items", 2)
                 .defaultValue("vertical_size_widget", "crafting_grid")
-                .build(output);
+                .build(DoubleCraftingPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(CookingPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
                         HeaderBuilder.of(Modopedia.translation("template", "recipe")),
@@ -291,9 +290,9 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("with_header", true)
                 .defaultValue("vertical_items", 1)
                 .defaultValue("vertical_size", 33)
-                .build(output);
+                .build(CookingPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(DoubleCookingPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
                         HeaderBuilder.of(Modopedia.translation("template", "recipe")),
@@ -306,9 +305,9 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("with_header", true)
                 .defaultValue("vertical_items", 2)
                 .defaultValue("vertical_size", 33)
-                .build(output);
+                .build(DoubleCookingPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(MultiblockPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(DescriptionPageProcessor.ID)
                 .components(
                         MultiblockBuilder.of()
@@ -329,9 +328,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("height", 100)
-                .build(output);
+                .build(MultiblockPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(BlockPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(BlockMultiblockProcessor.ID)
                 .components(
                         MultiblockPageBuilder.of("#text")
@@ -346,9 +345,9 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("height", 100)
-                .build(output);
+                .build(BlockPageBuilder.ID.getPath(), output);
 
-        TemplateBuilder.of(EntityPageBuilder.ID.getPath())
+        TemplateBuilder.of()
                 .processor(DescriptionPageProcessor.ID)
                 .components(
                         EntityBuilder.of("#entity")
@@ -365,7 +364,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("height", 100)
-                .build(output);
+                .build(EntityPageBuilder.ID.getPath(), output);
     }
 
 }

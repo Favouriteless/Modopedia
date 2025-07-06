@@ -18,7 +18,7 @@ public class MExampleBookTextureProvider extends BookTextureProvider {
 
     @Override
     protected void build(Provider registries, BiConsumer<String, BookTexture> output) {
-        BookTextureBuilder.of("example")
+        BookTextureBuilder.of()
                 .texture(Modopedia.id("textures/gui/books/brown_brass.png"), 290, 310)
                 .sized(290, 182)
                 .titleBacker(0, 12, 0, 213, 140, 35)
@@ -35,7 +35,7 @@ public class MExampleBookTextureProvider extends BookTextureProvider {
                 .widget("crafting_grid", 74, 255, 54, 54)
                 .widget("crafting_arrow", 73, 183, 16, 13)
                 .widget("crafting_flame", 89, 183, 14, 14)
-                .build(output);
+                .build("example", output);
     }
 
 }

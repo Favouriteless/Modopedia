@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.client.page_components.MultiblockPageComponent;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 public class MultiblockBuilder extends PageComponentBuilder {
 
@@ -142,28 +142,28 @@ public class MultiblockBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         if(multiblock == null && multiblockId == null)
             throw new IllegalStateException("MultiblockBuilder needs either a multiblock or multiblockId");
 
         if(multiblock != null)
-            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(JsonOps.INSTANCE, orThrow(multiblock)).getOrThrow()));
+            json.add("multiblock", resolve(multiblock, m -> Multiblock.codec().encodeStart(ops, m).getOrThrow()));
         if(multiblockId != null)
-            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(multiblockId)).getOrThrow()));
+            json.add("multiblock_id", resolveResourceLocation(multiblockId));
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
         if(offsetX != null)
-            resolveNum(offsetX).ifPresent(o -> json.add("offset_x", o));
+            json.add("offset_x", resolveNum(offsetX));
         if(offsetY != null)
-            resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
+            json.add("offset_y", resolveNum(offsetY));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
         if(viewAngle != null)
-            resolveNum(viewAngle).ifPresent(v -> json.add("view_angle", v));
+            json.add("view_angle", resolveNum(viewAngle));
         if(noOffsets != null)
-            resolveBool(noOffsets).ifPresent(b -> json.add("no_offsets", b));
+            json.add("no_offsets", resolveBool(noOffsets));
     }
 
 }

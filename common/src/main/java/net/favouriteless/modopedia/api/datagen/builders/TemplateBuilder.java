@@ -3,27 +3,23 @@ package net.favouriteless.modopedia.api.datagen.builders;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.mojang.serialization.JsonOps;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class TemplateBuilder extends PageBuilder {
+public class TemplateBuilder extends PageBuilder  {
 
-    private final String id;
     private final Map<String, Supplier<JsonElement>> defaults = new HashMap<>();
     private ResourceLocation processor;
 
-    private TemplateBuilder(String id) {
-        this.id = id;
-    }
+    private TemplateBuilder() {}
 
-    public static TemplateBuilder of(String id) {
-        return new TemplateBuilder(id);
+    public static TemplateBuilder of() {
+        return new TemplateBuilder();
     }
 
     public TemplateBuilder processor(ResourceLocation processor) {
@@ -56,23 +52,18 @@ public class TemplateBuilder extends PageBuilder {
         return this;
     }
 
-
     @Override
-    public JsonElement build() {
-        JsonObject json = super.build().getAsJsonObject();
+    public JsonElement build(RegistryOps<JsonElement> ops) {
+        JsonObject json = super.build(ops).getAsJsonObject();
 
         if(processor != null)
-            json.add("processor", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, processor).getOrThrow());
+            json.add("processor", ResourceLocation.CODEC.encodeStart(ops, processor).getOrThrow());
 
         for(Entry<String, Supplier<JsonElement>> entry : this.defaults.entrySet()) {
             json.add(entry.getKey(), entry.getValue().get());
         }
 
         return json;
-    }
-
-    public void build(BiConsumer<String, JsonElement> output) {
-        output.accept(id, build());
     }
 
 }

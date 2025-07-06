@@ -1,11 +1,11 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.ImagePageComponent;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,13 +75,13 @@ public class ImageBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("images", resolve(images).orElseGet(() -> ResourceLocation.CODEC.listOf().encodeStart(JsonOps.INSTANCE, orThrow(images)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("images", resolve(images, l -> ResourceLocation.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
 
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
     }
 
 }

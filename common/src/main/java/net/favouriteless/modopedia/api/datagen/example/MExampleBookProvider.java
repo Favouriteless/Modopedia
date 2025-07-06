@@ -22,7 +22,7 @@ public class MExampleBookProvider extends BookProvider {
 
     @Override
     protected void build(Provider registries, BiConsumer<String, Book> output) {
-        BookBuilder.of("datagen_example", "Datagen Example") // All fields except ID and title are optional.
+        BookBuilder.of("Datagen Example") // All fields except title are optional.
                 .subtitle("Example Subtitle")
                 .type(new ClassicBookType(LockedViewType.TRANSLUCENT))
                 .landingText("Example $(b)Landing$() $(c:green)Text$()!")
@@ -35,7 +35,7 @@ public class MExampleBookProvider extends BookProvider {
                 .textColour(0x000000)
                 .headerColour(0x000000)
                 .lineWidth(100)
-                .build(output);
+                .build("datagen_example", output);
     }
 
 }

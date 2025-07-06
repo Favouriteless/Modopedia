@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author Traister101 - <a href="https://gitlab.com/Traister101/alekiships/-/blob/dev/data-driven-boat-material/src/main/java/com/alekiponi/alekiships/util/AlekiShipsExtraCodecs.java">GitLab</a>
+ * @author Traister101 - <a href="https://gist.github.com/Traister101/e5951a155dda9c82d91451d68f78601e">GitHub Gist</a>
  */
 public class BlockStateCodec {
 

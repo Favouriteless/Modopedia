@@ -5,13 +5,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
 import net.favouriteless.modopedia.util.common.MExtraCodecs;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,6 +28,7 @@ public class JsonVariable implements Variable {
     private static final Map<TypeToken<?>, Codec<?>> tokenCodecs = new HashMap<>();
 
     private final JsonElement internal;
+    private final RegistryOps<JsonElement> ops;
     private Object cached;
 
     static {
@@ -47,23 +48,24 @@ public class JsonVariable implements Variable {
         registerCodec(BlockState.class, BlockStateCodec.CODEC);
     }
 
-    private JsonVariable(JsonElement internal) {
+    private JsonVariable(JsonElement internal, RegistryOps<JsonElement> ops) {
         this.internal = internal;
+        this.ops = ops;
     }
 
     public <T> T as(Class<T> clazz) {
         return as(TypeToken.of(clazz));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T as(TypeToken<T> token) {
         Codec<T> codec = getCodec(token);
         if(codec == null)
             throw new JsonParseException(String.format("Could not decode JsonVariable: %s does not have a codec.", token.getType().getTypeName()));
 
         if(cached == null || token.getType() != cached.getClass()) {
-            cached = codec.decode(JsonOps.INSTANCE, internal)
+            cached = codec.decode(ops, internal)
                     .resultOrPartial(error -> { throw new JsonParseException("Could not decode JsonVariable: " + error); })
                     .map(Pair::getFirst)
                     .orElse(null);
@@ -107,7 +109,7 @@ public class JsonVariable implements Variable {
         if(!internal.isJsonArray())
             throw new JsonParseException("Could not decode JsonVariable: Cannot convert non-array variable to a stream");
 
-        return StreamSupport.stream(internal.getAsJsonArray().spliterator(), false).map(JsonVariable::of);
+        return StreamSupport.stream(internal.getAsJsonArray().spliterator(), false).map(element -> of(element, this.ops));
     }
 
     public static <T> void registerCodec(Class<T> clazz, Codec<T> codec) {
@@ -120,8 +122,8 @@ public class JsonVariable implements Variable {
 
     // ------------------------------------ Below this point is non-API functions ------------------------------------
 
-    public static Variable of(JsonElement internal) {
-        return new JsonVariable(internal);
+    public static Variable of(JsonElement internal, RegistryOps<JsonElement> ops) {
+        return new JsonVariable(internal, ops);
     }
 
     @SuppressWarnings("unchecked")

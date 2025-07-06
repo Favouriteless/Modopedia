@@ -13,8 +13,8 @@ import java.util.function.BiConsumer;
 
 public class BookTextureBuilder {
 
-    public static Stage1 of(String id) {
-        return new Builder(id);
+    public static Stage1 of() {
+        return new Builder();
     }
 
     public interface Stage1 {
@@ -55,13 +55,12 @@ public class BookTextureBuilder {
 
         FinalStage widget(String name, int u, int v, int width, int height);
 
-        void build(BiConsumer<String, BookTexture> output);
+        void build(String id, BiConsumer<String, BookTexture> output);
 
     }
 
     public static class Builder implements Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Stage7, Stage8, FinalStage {
 
-        private final String id;
         private ResourceLocation location;
         private int texWidth;
         private int texHeight;
@@ -76,9 +75,7 @@ public class BookTextureBuilder {
         private List<Rectangle> pages = new ArrayList<>();
         private Map<String, Rectangle> widgets = new HashMap<>();
 
-        private Builder(String id) {
-            this.id = id;
-        }
+        private Builder() {}
 
         @Override
         public Stage2 texture(ResourceLocation location, int texWidth, int texHeight) {
@@ -138,7 +135,7 @@ public class BookTextureBuilder {
         }
 
         @Override
-        public void build(BiConsumer<String, BookTexture> output) {
+        public void build(String id, BiConsumer<String, BookTexture> output) {
             if(pages.isEmpty())
                 throw new IllegalStateException("BookTexture has zero pages:" + id);
             output.accept(id, new BookTexture(location, width, height, texWidth, texHeight, pages, titleBacker, left, right, back, refresh, widgets));
