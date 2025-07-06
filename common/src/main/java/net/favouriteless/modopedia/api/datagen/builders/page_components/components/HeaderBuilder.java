@@ -87,16 +87,15 @@ public class HeaderBuilder extends PageComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("text", new JsonPrimitive(text));
-
+        json.add("text", resolveString(text));
         if(centered != null)
-            resolveBool(centered).ifPresent(c -> json.add("centered", c));
+            json.add("centered", resolveBool(centered));
         if(bold != null)
-            resolveBool(bold).ifPresent(b -> json.add("bold", b));
+            json.add("bold", resolveBool(bold));
         if(underline != null)
-            resolveBool(underline).ifPresent(u -> json.add("underline", u));
+            json.add("underline", resolveBool(underline));
         if(colour != null)
-            resolveNum(colour).ifPresent(c -> json.add("colour", c));
+            json.add("colour", resolveNum(colour));
     }
 
 }

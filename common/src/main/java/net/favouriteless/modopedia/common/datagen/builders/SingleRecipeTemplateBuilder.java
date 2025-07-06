@@ -21,7 +21,7 @@ public class SingleRecipeTemplateBuilder extends TemplateComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("recipe", resolve(recipe).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(recipe)).getOrThrow()));
+        json.add("recipe", resolveResourceLocation(recipe));
     }
 
 }

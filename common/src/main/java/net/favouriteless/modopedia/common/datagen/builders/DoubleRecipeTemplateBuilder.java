@@ -36,8 +36,8 @@ public class DoubleRecipeTemplateBuilder extends TemplateComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("recipe1", resolve(recipe1).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(recipe1)).getOrThrow()));
-        json.add("recipe2", resolve(recipe2).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(recipe2)).getOrThrow()));
+        json.add("recipe1", resolveResourceLocation(recipe1));
+        json.add("recipe2", resolveResourceLocation(recipe2));
     }
 
 }

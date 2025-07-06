@@ -77,12 +77,12 @@ public class TooltipBuilder extends PageComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("tooltip", resolve(tooltipLines).orElseGet(() -> Codec.STRING.listOf().encodeStart(ops, orThrow(tooltipLines)).getOrThrow()));
+        json.add("tooltip", resolve(tooltipLines, l -> Codec.STRING.listOf().encodeStart(ops, l).getOrThrow()));
 
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
     }
 
 }

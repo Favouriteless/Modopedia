@@ -110,18 +110,18 @@ public class EntityBuilder extends PageComponentBuilder {
 
     @Override
     protected void build(JsonObject json, final RegistryOps<JsonElement> ops) {
-        json.add("entity", resolve(entity).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, BuiltInRegistries.ENTITY_TYPE.getKey(orThrow(entity))).getOrThrow()));
+        json.add("entity", resolve(entity, e -> ResourceLocation.CODEC.encodeStart(ops, BuiltInRegistries.ENTITY_TYPE.getKey(e)).getOrThrow()));
 
         if(tag != null)
-            json.add("tag", resolve(tag).orElseGet(() -> CompoundTag.CODEC.encodeStart(ops, orThrow(tag)).getOrThrow()));
+            json.add("tag", resolve(tag, t -> CompoundTag.CODEC.encodeStart(ops, t).getOrThrow()));
         if(offsetY != null)
-            resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
+            json.add("offset_y", resolveNum(offsetY));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
     }
 
 }

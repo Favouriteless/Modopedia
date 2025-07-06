@@ -66,9 +66,10 @@ public class MediumFramedImageBuilder extends TemplateComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("images", resolve(images).orElseGet(() -> ResourceLocation.CODEC.listOf().encodeStart(ops, orThrow(images)).getOrThrow()));
+        json.add("images", resolve(images, l -> ResourceLocation.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
+
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
     }
 
 }

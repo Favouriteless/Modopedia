@@ -77,14 +77,14 @@ public class TextBuilder extends PageComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("text", new JsonPrimitive(text));
+        json.add("text", resolveString(text));
 
         if(width != null)
-            resolveNum(width).ifPresent(j -> json.add("width", j));
+            json.add("width", resolveNum(width));
         if(lineHeight != null)
-            resolveNum(lineHeight).ifPresent(j -> json.add("line_height", j));
+            json.add("line_height", resolveNum(lineHeight));
         if(justify != null)
-            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(ops, orThrow(justify)).getOrThrow()));
+            json.add("justify", resolve(justify, j -> Justify.CODEC.encodeStart(ops, j).getOrThrow()));
     }
 
 }

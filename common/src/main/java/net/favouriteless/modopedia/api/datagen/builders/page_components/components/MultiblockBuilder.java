@@ -147,23 +147,23 @@ public class MultiblockBuilder extends PageComponentBuilder {
             throw new IllegalStateException("MultiblockBuilder needs either a multiblock or multiblockId");
 
         if(multiblock != null)
-            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(ops, orThrow(multiblock)).getOrThrow()));
+            json.add("multiblock", resolve(multiblock, m -> Multiblock.codec().encodeStart(ops, m).getOrThrow()));
         if(multiblockId != null)
-            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(multiblockId)).getOrThrow()));
+            json.add("multiblock_id", resolveResourceLocation(multiblockId));
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(h -> json.add("height", h));
+            json.add("height", resolveNum(height));
         if(offsetX != null)
-            resolveNum(offsetX).ifPresent(o -> json.add("offset_x", o));
+            json.add("offset_x", resolveNum(offsetX));
         if(offsetY != null)
-            resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
+            json.add("offset_y", resolveNum(offsetY));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
         if(viewAngle != null)
-            resolveNum(viewAngle).ifPresent(v -> json.add("view_angle", v));
+            json.add("view_angle", resolveNum(viewAngle));
         if(noOffsets != null)
-            resolveBool(noOffsets).ifPresent(b -> json.add("no_offsets", b));
+            json.add("no_offsets", resolveBool(noOffsets));
     }
 
 }

@@ -78,11 +78,12 @@ public class LargeFramedShowcaseBuilder extends TemplateComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("items", resolve(items).orElseGet(() -> ItemStack.CODEC.listOf().encodeStart(ops, orThrow(items)).getOrThrow()));
+        json.add("items", resolve(items, l -> ItemStack.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
+
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(scale != null)
-            resolveNum(scale).ifPresent(s -> json.add("scale", s));
+            json.add("scale", resolveNum(scale));
     }
 
 }

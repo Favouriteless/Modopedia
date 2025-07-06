@@ -72,9 +72,9 @@ public class GalleryBuilder extends PageComponentBuilder {
         json.add("components", components);
 
         if(width != null)
-            resolveNum(width).ifPresent(w -> json.add("width", w));
+            json.add("width", resolveNum(width));
         if(height != null)
-            resolveNum(height).ifPresent(w -> json.add("height", w));
+            json.add("height", resolveNum(height));
     }
 
 }

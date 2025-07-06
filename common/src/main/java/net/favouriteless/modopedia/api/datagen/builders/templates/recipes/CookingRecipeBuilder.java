@@ -79,8 +79,8 @@ public class CookingRecipeBuilder extends TemplateComponentBuilder {
 
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
-        json.add("recipe", resolve(recipe).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(recipe)).getOrThrow()));
-        json.add("tooltip", resolve(tooltip).orElseGet(() -> Codec.STRING.listOf().encodeStart(ops, orThrow(tooltip)).getOrThrow()));
+        json.add("recipe", resolveResourceLocation(recipe));
+        json.add("tooltip", resolve(tooltip, l -> Codec.STRING.listOf().encodeStart(ops, l).getOrThrow()));
     }
 
 }
