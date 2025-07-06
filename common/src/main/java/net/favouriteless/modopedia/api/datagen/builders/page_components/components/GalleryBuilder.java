@@ -1,9 +1,10 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
+
+import net.minecraft.resources.RegistryOps;
 
 import java.util.List;
 
@@ -63,10 +64,10 @@ public class GalleryBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         JsonArray components = new JsonArray();
         for(PageComponentBuilder builder : this.components) {
-            components.add(builder.build());
+            components.add(builder.build(ops));
         }
         json.add("components", components);
 

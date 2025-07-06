@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 public class MediumFramedMultiblockBuilder extends TemplateComponentBuilder {
 
@@ -131,13 +131,13 @@ public class MediumFramedMultiblockBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         if(width != null)
             resolveNum(width).ifPresent(w -> json.add("width", w));
         if(multiblock != null)
-            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(JsonOps.INSTANCE, orThrow(multiblock)).getOrThrow()));
+            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(ops, orThrow(multiblock)).getOrThrow()));
         if(multiblockId != null)
-            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(multiblockId)).getOrThrow()));
+            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(multiblockId)).getOrThrow()));
         if(offsetX != null)
             resolveNum(offsetX).ifPresent(o -> json.add("offset_x", o));
         if(offsetY != null)

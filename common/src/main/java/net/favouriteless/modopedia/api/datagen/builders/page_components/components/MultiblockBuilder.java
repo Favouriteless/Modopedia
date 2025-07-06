@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.client.page_components.MultiblockPageComponent;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 public class MultiblockBuilder extends PageComponentBuilder {
 
@@ -142,14 +142,14 @@ public class MultiblockBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         if(multiblock == null && multiblockId == null)
             throw new IllegalStateException("MultiblockBuilder needs either a multiblock or multiblockId");
 
         if(multiblock != null)
-            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(JsonOps.INSTANCE, orThrow(multiblock)).getOrThrow()));
+            json.add("multiblock", resolve(multiblock).orElseGet(() -> Multiblock.codec().encodeStart(ops, orThrow(multiblock)).getOrThrow()));
         if(multiblockId != null)
-            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(multiblockId)).getOrThrow()));
+            json.add("multiblock_id", resolve(multiblockId).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, orThrow(multiblockId)).getOrThrow()));
         if(width != null)
             resolveNum(width).ifPresent(w -> json.add("width", w));
         if(height != null)

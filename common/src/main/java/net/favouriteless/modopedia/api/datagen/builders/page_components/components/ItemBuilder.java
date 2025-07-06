@@ -1,10 +1,11 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.ItemPageComponent;
+
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -103,8 +104,8 @@ public class ItemBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("items", resolve(items).orElseGet(() -> ItemStack.CODEC.listOf().listOf().encodeStart(JsonOps.INSTANCE, orThrow(items)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("items", resolve(items).orElseGet(() -> ItemStack.CODEC.listOf().listOf().encodeStart(ops, orThrow(items)).getOrThrow()));
 
         if(rowMax != null)
             resolveNum(rowMax).ifPresent(m -> json.add("row_max", m));

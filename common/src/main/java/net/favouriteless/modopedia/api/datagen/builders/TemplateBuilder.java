@@ -4,12 +4,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.resources.ResourceLocation;
+import net.favouriteless.modopedia.api.datagen.TemplateOutput;
+
+import net.minecraft.resources.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class TemplateBuilder extends PageBuilder {
@@ -58,11 +59,11 @@ public class TemplateBuilder extends PageBuilder {
 
 
     @Override
-    public JsonElement build() {
-        JsonObject json = super.build().getAsJsonObject();
+    public JsonElement build(RegistryOps<JsonElement> ops) {
+        JsonObject json = super.build(ops).getAsJsonObject();
 
         if(processor != null)
-            json.add("processor", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, processor).getOrThrow());
+            json.add("processor", ResourceLocation.CODEC.encodeStart(ops, processor).getOrThrow());
 
         for(Entry<String, Supplier<JsonElement>> entry : this.defaults.entrySet()) {
             json.add(entry.getKey(), entry.getValue().get());
@@ -71,8 +72,8 @@ public class TemplateBuilder extends PageBuilder {
         return json;
     }
 
-    public void build(BiConsumer<String, JsonElement> output) {
-        output.accept(id, build());
+    public void build(TemplateOutput output) {
+        output.accept(id, build(output.registryOps(JsonOps.INSTANCE)));
     }
 
 }

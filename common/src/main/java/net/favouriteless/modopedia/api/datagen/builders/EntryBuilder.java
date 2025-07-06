@@ -5,17 +5,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.book.Entry;
+import net.favouriteless.modopedia.api.datagen.EntryOutput;
 import net.favouriteless.modopedia.book.EntryImpl;
 import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
+
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class EntryBuilder extends BookContentBuilder {
 
@@ -63,18 +64,18 @@ public class EntryBuilder extends BookContentBuilder {
     }
 
     @Override
-    public JsonElement build() {
-        JsonObject json = Entry.codec().encodeStart(JsonOps.INSTANCE, new EntryImpl(title, iconStack, assignedItems, advancement)).getOrThrow().getAsJsonObject();
+    public JsonElement build(RegistryOps<JsonElement> ops) {
+        JsonObject json = Entry.codec().encodeStart(ops, new EntryImpl(title, iconStack, assignedItems, advancement)).getOrThrow().getAsJsonObject();
         JsonArray pages = new JsonArray();
         for(PageBuilder builder : this.pages) {
-            pages.add(builder.build());
+            pages.add(builder.build(ops));
         }
         json.add("pages", pages);
         return json;
     }
 
-    public void build(BiConsumer<String, JsonElement> output) {
-        output.accept(id, build());
+    public void build(EntryOutput output) {
+        output.accept(id, build(output.registryOps(JsonOps.INSTANCE)));
     }
 
 }

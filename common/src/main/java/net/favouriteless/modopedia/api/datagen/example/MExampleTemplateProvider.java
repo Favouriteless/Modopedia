@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api.datagen.example;
 
-import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.datagen.TemplateOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
@@ -9,7 +9,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class MExampleTemplateProvider extends TemplateProvider {
 
@@ -18,7 +17,7 @@ public class MExampleTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, JsonElement> output) {
+    protected void build(TemplateOutput output) {
         TemplateBuilder.of("example")
                 .processor(Modopedia.id("example"))
                 .components(

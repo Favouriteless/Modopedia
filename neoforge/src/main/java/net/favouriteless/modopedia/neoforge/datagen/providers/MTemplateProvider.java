@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.neoforge.datagen.providers;
 
-import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.Modopedia;
+import net.favouriteless.modopedia.api.datagen.TemplateOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
@@ -15,7 +15,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class MTemplateProvider extends TemplateProvider {
 
@@ -24,13 +23,13 @@ public class MTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(BiConsumer<String, JsonElement> output) {
+    protected void build(TemplateOutput output) {
         buildBaseTemplates(output);
         buildRecipeTemplates(output);
         buildPageTemplates(output);
     }
 
-    public void buildBaseTemplates(BiConsumer<String, JsonElement> output) {
+    public void buildBaseTemplates(TemplateOutput output) {
         TemplateBuilder.of(FramedItemBuilder.ID.getPath())
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
@@ -192,7 +191,7 @@ public class MTemplateProvider extends TemplateProvider {
                 .build(output);
     }
 
-    public void buildRecipeTemplates(BiConsumer<String, JsonElement> output) {
+    public void buildRecipeTemplates(TemplateOutput output) {
         TemplateBuilder.of(CraftingRecipeBuilder.ID.getPath())
                 .processor(CraftingRecipeProcessor.ID)
                 .components(
@@ -234,7 +233,7 @@ public class MTemplateProvider extends TemplateProvider {
                 .build(output);
     }
 
-    public void buildPageTemplates(BiConsumer<String, JsonElement> output) {
+    public void buildPageTemplates(TemplateOutput output) {
         TemplateBuilder.of(HeaderedTextBuilder.ID.getPath())
                 .processor(HeaderedTextProcessor.ID)
                 .components(

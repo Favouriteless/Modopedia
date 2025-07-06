@@ -1,10 +1,11 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.HeaderPageComponent;
+
+import net.minecraft.resources.RegistryOps;
 
 public class HeaderBuilder extends PageComponentBuilder {
 
@@ -85,7 +86,7 @@ public class HeaderBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         json.add("text", new JsonPrimitive(text));
 
         if(centered != null)

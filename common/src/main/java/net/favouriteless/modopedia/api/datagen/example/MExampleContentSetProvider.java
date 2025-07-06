@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.api.datagen.example;
 
-import com.google.gson.JsonElement;
-import net.favouriteless.modopedia.api.datagen.CategoryOutput;
+import net.favouriteless.modopedia.api.datagen.*;
 import net.favouriteless.modopedia.api.datagen.builders.*;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
@@ -12,7 +11,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class MExampleContentSetProvider extends ContentSetProvider {
 
@@ -21,7 +19,7 @@ public class MExampleContentSetProvider extends ContentSetProvider {
     }
 
     @Override
-    public void buildEntries(Provider registries, BiConsumer<String, JsonElement> output) {
+    public void buildEntries(Provider registries, EntryOutput output) {
         EntryBuilder.of("text_entry", "Text Entry")
                 .icon(Items.DIAMOND.getDefaultInstance())
                 .assignedItems(Items.DIAMOND)

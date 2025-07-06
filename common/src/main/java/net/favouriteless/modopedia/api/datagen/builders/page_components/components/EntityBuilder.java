@@ -1,13 +1,13 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.EntityPageComponent;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.world.entity.EntityType;
 
 public class EntityBuilder extends PageComponentBuilder {
@@ -109,11 +109,11 @@ public class EntityBuilder extends PageComponentBuilder {
 
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("entity", resolve(entity).orElseGet(() -> ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, BuiltInRegistries.ENTITY_TYPE.getKey(orThrow(entity))).getOrThrow()));
+    protected void build(JsonObject json, final RegistryOps<JsonElement> ops) {
+        json.add("entity", resolve(entity).orElseGet(() -> ResourceLocation.CODEC.encodeStart(ops, BuiltInRegistries.ENTITY_TYPE.getKey(orThrow(entity))).getOrThrow()));
 
         if(tag != null)
-            json.add("tag", resolve(tag).orElseGet(() -> CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(tag)).getOrThrow()));
+            json.add("tag", resolve(tag).orElseGet(() -> CompoundTag.CODEC.encodeStart(ops, orThrow(tag)).getOrThrow()));
         if(offsetY != null)
             resolveNum(offsetY).ifPresent(o -> json.add("offset_y", o));
         if(scale != null)

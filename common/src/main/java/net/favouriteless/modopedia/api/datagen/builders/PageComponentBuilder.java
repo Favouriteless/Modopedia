@@ -4,9 +4,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
         this(type, false);
     }
 
-    protected abstract void build(JsonObject json);
+    protected abstract void build(JsonObject json, RegistryOps<JsonElement> ops);
 
     public PageComponentBuilder x(int x) {
         this.x = Either.left(x);
@@ -50,16 +50,16 @@ public abstract class PageComponentBuilder extends BookContentBuilder {
     }
 
     @Override
-    public JsonElement build() {
+    public JsonElement build(RegistryOps<JsonElement> ops) {
         JsonObject json = new JsonObject();
 
         if(type != null)
-            json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(JsonOps.INSTANCE, type).getOrThrow());
+            json.add(isTemplate ? "template" : "type", ResourceLocation.CODEC.encodeStart(ops, type).getOrThrow());
         if(x != null)
             resolveNum(x).ifPresent(j -> json.add("x", j));
         if(y != null)
             resolveNum(y).ifPresent(j -> json.add("y", j));
-        build(json);
+        build(json, ops);
 
         return json;
     }

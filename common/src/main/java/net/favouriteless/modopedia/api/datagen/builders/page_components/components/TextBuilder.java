@@ -1,12 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.page_components.TextPageComponent;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
+
+import net.minecraft.resources.RegistryOps;
 
 public class TextBuilder extends PageComponentBuilder {
 
@@ -76,7 +76,7 @@ public class TextBuilder extends PageComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         json.add("text", new JsonPrimitive(text));
 
         if(width != null)
@@ -84,7 +84,7 @@ public class TextBuilder extends PageComponentBuilder {
         if(lineHeight != null)
             resolveNum(lineHeight).ifPresent(j -> json.add("line_height", j));
         if(justify != null)
-            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(justify)).getOrThrow()));
+            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(ops, orThrow(justify)).getOrThrow()));
     }
 
 }

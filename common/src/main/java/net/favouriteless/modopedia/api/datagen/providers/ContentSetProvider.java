@@ -2,18 +2,18 @@ package net.favouriteless.modopedia.api.datagen.providers;
 
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
+import com.mojang.serialization.DynamicOps;
 import net.favouriteless.modopedia.api.book.Category;
-import net.favouriteless.modopedia.api.datagen.CategoryOutput;
+import net.favouriteless.modopedia.api.datagen.*;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.*;
 import net.minecraft.data.PackOutput.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public abstract class ContentSetProvider implements DataProvider {
 
@@ -35,7 +35,7 @@ public abstract class ContentSetProvider implements DataProvider {
         this.modId = modId;
     }
 
-    public abstract void buildEntries(Provider registries, BiConsumer<String, JsonElement> output);
+    public abstract void buildEntries(Provider registries, EntryOutput output);
 
     public abstract void buildCategories(Provider registries, CategoryOutput output);
 
@@ -50,10 +50,19 @@ public abstract class ContentSetProvider implements DataProvider {
 
         final List<CompletableFuture<?>> futures = new ArrayList<>();
 
-        buildEntries(registries, (id, entry) -> {
-            if(!entries.add(id))
-                throw new IllegalStateException("Duplicate entry in " + getName() + " " + id);
-            futures.add(DataProvider.saveStable(output, entry, entryPathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
+        buildEntries(registries, new EntryOutput() {
+
+            @Override
+            public <T> RegistryOps<T> registryOps(DynamicOps<T> ops) {
+                return registries.createSerializationContext(ops);
+            }
+
+            @Override
+            public void accept(String id, JsonElement entry) {
+                if (!entries.add(id))
+                    throw new IllegalStateException("Duplicate entry in " + getName() + " " + id);
+                futures.add(DataProvider.saveStable(output, entry, entryPathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
+            }
         });
 
         buildCategories(registries, (id, cat) -> {

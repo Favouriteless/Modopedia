@@ -1,11 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.page_components.components;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.favouriteless.modopedia.client.page_components.TooltipPageComponent;
+
+import net.minecraft.resources.RegistryOps;
 
 import java.util.List;
 
@@ -75,8 +76,8 @@ public class TooltipBuilder extends PageComponentBuilder {
 
 
     @Override
-    protected void build(JsonObject json) {
-        json.add("tooltip", resolve(tooltipLines).orElseGet(() -> Codec.STRING.listOf().encodeStart(JsonOps.INSTANCE, orThrow(tooltipLines)).getOrThrow()));
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        json.add("tooltip", resolve(tooltipLines).orElseGet(() -> Codec.STRING.listOf().encodeStart(ops, orThrow(tooltipLines)).getOrThrow()));
 
         if(width != null)
             resolveNum(width).ifPresent(w -> json.add("width", w));

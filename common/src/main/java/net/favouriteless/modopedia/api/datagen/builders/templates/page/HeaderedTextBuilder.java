@@ -1,13 +1,12 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.*;
 
 public class HeaderedTextBuilder extends TemplateComponentBuilder {
 
@@ -126,7 +125,7 @@ public class HeaderedTextBuilder extends TemplateComponentBuilder {
     }
 
     @Override
-    protected void build(JsonObject json) {
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         json.add("header", new JsonPrimitive(header));
         json.add("text", new JsonPrimitive(text));
 
@@ -135,7 +134,7 @@ public class HeaderedTextBuilder extends TemplateComponentBuilder {
         if(lineHeight != null)
             resolveNum(lineHeight).ifPresent(j -> json.add("line_height", j));
         if(justify != null)
-            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(JsonOps.INSTANCE, orThrow(justify)).getOrThrow()));
+            json.add("justify", resolve(justify).orElseGet(() -> Justify.CODEC.encodeStart(ops, orThrow(justify)).getOrThrow()));
         if(centered != null)
             resolveBool(centered).ifPresent(c -> json.add("centered", c));
         if(bold != null)
