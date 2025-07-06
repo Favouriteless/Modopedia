@@ -32,7 +32,9 @@ public class TextPageComponent extends PageComponent {
 
         width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
         lineHeight = lookup.getOrDefault("line_height", Minecraft.getInstance().font.lineHeight).asInt();
-        textChunks = TextParser.parse(lookup.get("text").asString(), width, lineHeight, justify, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+
+        Style baseStyle = Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
+        textChunks = TextParser.parse(lookup.get("text").asString(), baseStyle, width, lineHeight, language, justify);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Map;
 public class TemplateLoader extends JsonResourceLoader {
 
     public TemplateLoader(Gson gson, String dir) {
-        super(gson, dir);
+        super(gson, dir, "templates");
     }
 
     @Override

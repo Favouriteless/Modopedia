@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.book.registries.client.TextFormatterRegistryI
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 
 import java.util.ArrayList;
@@ -12,9 +13,26 @@ import java.util.List;
 
 public class TextParser {
 
-    public static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
+    private static final String FORMATTER_REGEX = "\\$\\([^$()]*\\)";
+    private static final List<String> HYPHEN_EXCLUDE_LANGUAGES = List.of("ja_jp", "ko_kr", "lzh", "zh_cn", "zh_hk", "zh_tw");
 
-    public static List<TextChunk> parse(String rawText, int lineWidth, int lineHeight, Justify justify, Style baseStyle) {
+    public static List<TextChunk> parse(String rawText, Style baseStyle, int lineWidth, int lineHeight, String language, Justify justify) {
+        return parse(rawText, baseStyle, lineWidth, lineHeight, !HYPHEN_EXCLUDE_LANGUAGES.contains(language), justify);
+    }
+
+    /**
+     * Process a raw formatted string into a body of {@link TextChunk}s.
+     *
+     * @param rawText Raw text to be parsed.
+     * @param lineWidth Maximum width of each line. Used for wrapping and word splitting.
+     * @param lineHeight The spacing between each line.
+     * @param justify Text justification style (left, center or right).
+     * @param baseStyle The "base" style of the text. When the style is reset (e.g. via $() ), this style will be used.
+     * @param hyphenate If true, split words (single words which are longer than one line) will be indicated via a hyphen.
+     *
+     * @return A {@link List} of {@link TextChunk}s positioned and formatted according to the raw text.
+     */
+    public static List<TextChunk> parse(String rawText, Style baseStyle, int lineWidth, int lineHeight, boolean hyphenate, Justify justify) {
         if(rawText == null || rawText.isBlank())
             return List.of();
 
@@ -40,10 +58,10 @@ public class TextParser {
             }
         }
 
-        return getChunksFrom(paragraph, lineWidth, lineHeight, justify);
+        return getChunksFrom(paragraph, lineWidth, lineHeight, justify, hyphenate);
     }
 
-    private static List<TextChunk> getChunksFrom(List<Component> sections, int maxWidth, int lineHeight, Justify justify) {
+    private static List<TextChunk> getChunksFrom(List<Component> sections, int maxWidth, int lineHeight, Justify justify, boolean hyphenate) {
         Font font = Minecraft.getInstance().font;
 
         List<TextChunk> out = new ArrayList<>();
@@ -55,7 +73,7 @@ public class TextParser {
         for(int i = 0; i < sections.size(); i++) {
             Component section = sections.get(i);
             while(section != null) {
-                Pair<Component, Component> pair = tryWrapComponent(section, maxWidth-x, maxWidth);
+                Pair<Component, Component> pair = tryWrapComponent(section, maxWidth-x, maxWidth, hyphenate);
 
                 if(pair.getFirst() != null && !pair.getFirst().getString().isEmpty()) { // Add first component to current line
                     int width = font.width(pair.getFirst());
@@ -85,9 +103,9 @@ public class TextParser {
     }
 
     /**
-     * Similar to font split, but only splits one time, so we can use variable lengths.
+     * Similar to {@link Font#split(FormattedText, int)}, but only splits one time, so we can use variable lengths.
      */
-    private static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth) {
+    private static Pair<Component, Component> tryWrapComponent(Component text, int maxWidth, int lineWidth, boolean hyphenate) {
         Font font = Minecraft.getInstance().font;
         String rawString = text.getString();
 
@@ -97,12 +115,20 @@ public class TextParser {
 
         int firstSpace = rawString.indexOf(" "); // For single word sequences OR breaks from a newline
         if((firstSpace == -1 || lineBreak < firstSpace) && rawString.charAt(lineBreak) != '\n') { // If we follow word-split rules for \n we cause an infinite loop
-            if(font.width(text) > lineWidth)
-                // If the single word section is longer than an entire line, we split it and add a -
-                return Pair.of(Component.literal(rawString.substring(0, lineBreak-1) + "-").withStyle(text.getStyle()),
-                        Component.literal(rawString.substring(lineBreak)).withStyle(text.getStyle()));
-            else
-                return Pair.of(null, text); // For short single word sections, return it on the next line.
+            if(font.width(text) > lineWidth) { // If the single word section is longer than an entire line, we split it (and add hyphen if needed)
+                if(hyphenate) {
+                    return Pair.of(
+                            Component.literal(rawString.substring(0, lineBreak-1) + "-").withStyle(text.getStyle()),
+                            Component.literal(rawString.substring(lineBreak-1)).withStyle(text.getStyle())
+                    );
+                }
+
+                return Pair.of(
+                        Component.literal(rawString.substring(0, lineBreak)).withStyle(text.getStyle()),
+                        Component.literal(rawString.substring(lineBreak)).withStyle(text.getStyle())
+                );
+            }
+            return Pair.of(null, text); // For short single word sections, return it on the next line.
         }
 
         return Pair.of(

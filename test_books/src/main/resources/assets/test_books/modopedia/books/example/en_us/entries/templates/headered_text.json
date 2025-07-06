@@ -5,7 +5,7 @@
     {
       "components": [
         {
-          "template": "modopedia:headered_text",
+          "template": "modopedia:page/headered_text",
           "header": "Lorem Ipsum",
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nunc id arcu pulvinar ultrices. Maecenas in sapien id nisl commodo tempor. Nunc pellentesque, nibh sed tristique gravida, odio diam molestie dolor, a fringilla lacus mi ac felis. Nullam ultrices."
         }

@@ -13,7 +13,7 @@ import java.util.Map;
 public class MultiblockLoader extends JsonResourceLoader {
 
     public MultiblockLoader(Gson gson, String dir) {
-        super(gson, dir);
+        super(gson, dir, "multiblocks");
     }
 
     @Override

@@ -84,9 +84,15 @@ public class CategoryImpl implements Category {
         return advancement;
     }
 
-    public CategoryImpl init(Book book) {
-        landingText = TextParser.parse(rawLandingText, book.getLineWidth(), Minecraft.getInstance().font.lineHeight,
-                Justify.LEFT, Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()));
+    public CategoryImpl init(Book book, String language) {
+        landingText = TextParser.parse(
+                rawLandingText,
+                Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour()),
+                book.getLineWidth(),
+                Minecraft.getInstance().font.lineHeight,
+                language,
+                Justify.LEFT
+        );
         return this;
     }
 

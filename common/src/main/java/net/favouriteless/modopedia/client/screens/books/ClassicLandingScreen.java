@@ -46,8 +46,9 @@ public class ClassicLandingScreen extends ButtonListScreen {
         if(rawLandingText != null)
             rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
 
-        List<TextChunk> landingText = TextParser.parse(rawLandingText, texture.pages().getFirst().width(),
-                Minecraft.getInstance().font.lineHeight, Justify.LEFT, getStyle());
+        int lineWidth = texture.pages().getFirst().width();
+        int lineHeight = Minecraft.getInstance().font.lineHeight;
+        List<TextChunk> landingText = TextParser.parse(rawLandingText, getStyle(), lineWidth, lineHeight, language, Justify.LEFT);
 
         return new LandingScreenPage(this, title, subtitle, 37, 7, 10, landingText, 0, 0);
     }

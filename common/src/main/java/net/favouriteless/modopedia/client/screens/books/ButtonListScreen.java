@@ -28,9 +28,9 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
     private final List<Factory> buttonFactories;
     private final LockedViewType lockedType;
 
-    public ButtonListScreen(Book book, String lang, LocalisedBookContent content, Component title, BookScreen lastScreen, Component listTitle,
+    public ButtonListScreen(Book book, String language, LocalisedBookContent content, Component title, BookScreen lastScreen, Component listTitle,
                             LockedViewType type, List<Supplier<List<String>>> idSuppliers, List<Factory> buttonFactories) {
-        super(book, lang, content, lastScreen, title);
+        super(book, language, content, lastScreen, title);
         this.listTitle = listTitle;
         this.idSuppliers = idSuppliers;
         this.buttonFactories = buttonFactories;
@@ -94,7 +94,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
 
         return new BookItemTextButton(x, y, width, cat.getIcon(),
                 Component.literal(cat.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.lang, screen.content, cat, screen.lockedType, screen)),
+                b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.language, screen.content, cat, screen.lockedType, screen)),
                 screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(cat.getAdvancement())
         );
     }
@@ -105,7 +105,7 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
 
         return new BookItemTextButton(x, y, width, entry.getIcon(),
                 Component.literal(entry.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.lang, screen.content, entry, screen)),
+                b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.language, screen.content, entry, screen)),
                 screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(entry.getAdvancement())
         );
     }

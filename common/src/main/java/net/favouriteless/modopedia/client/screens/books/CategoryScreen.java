@@ -19,8 +19,8 @@ public class CategoryScreen extends ButtonListScreen {
 
     protected final Category category;
 
-    public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category, LockedViewType lockedType, Component title, BookScreen lastScreen) {
-        super(book, langCode, content, title, lastScreen, Component.translatable("screen.modopedia.entries").withStyle(Style.EMPTY.withColor(book.getHeaderColour())), lockedType,
+    public CategoryScreen(Book book, String language, LocalisedBookContent content, Category category, LockedViewType lockedType, Component title, BookScreen lastScreen) {
+        super(book, language, content, title, lastScreen, Component.translatable("screen.modopedia.entries").withStyle(Style.EMPTY.withColor(book.getHeaderColour())), lockedType,
                 List.of(
                         () -> category.getChildren().stream().filter(c -> {
                             Category cat = content.getCategory(c);

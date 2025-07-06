@@ -77,9 +77,9 @@ public class BookContentLoader {
 
     private static CompletableFuture<Void> preReload(ResourceManager manager) {
         return CompletableFuture.allOf(
-                CompletableFuture.runAsync(() -> templateLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded templates")), Util.backgroundExecutor()),
-                CompletableFuture.runAsync(() -> textureLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded book textures")), Util.backgroundExecutor()),
-                CompletableFuture.runAsync(() -> multiblockLoader.reload(manager).thenRun(() -> Modopedia.LOG.info("Reloaded multiblocks")), Util.backgroundExecutor())
+                templateLoader.reload(manager),
+                textureLoader.reload(manager),
+                multiblockLoader.reload(manager)
         );
     }
 
@@ -91,10 +91,10 @@ public class BookContentLoader {
         return CompletableFuture
                 .supplyAsync(() -> getBookResources(id, manager), Util.backgroundExecutor())
                 .thenApplyAsync(map -> parseBookResources(map, book, level), Util.backgroundExecutor())
-                .thenAccept(content -> {
+                .thenAcceptAsync(content -> {
                     BookContentRegistry.get().register(id, new BookContentImpl(content));
                     Modopedia.LOG.info("Reloaded book: {}", id);
-                });
+                }, Minecraft.getInstance());
     }
 
     private static Map<ResourceLocation, JsonElement> getBookResources(ResourceLocation bookId, ResourceManager manager) {
@@ -120,42 +120,42 @@ public class BookContentLoader {
                 Modopedia.LOG.error("Invalid book resource found: {}", entry.getKey());
                 continue;
             }
-            String langCode = splitPath[0];
+            String language = splitPath[0];
             String type = splitPath[1];
             String id = splitPath[2];
 
             if(type.equals("categories"))
-                loadCategory(entry.getValue(), book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).categories());
+                loadCategory(entry.getValue(), book, language, id, level, content.computeIfAbsent(language, k -> LocalisedBookContentImpl.create()).categories());
             else if(type.equals("entries"))
-                loadEntry(entry.getValue(), book, id, level, content.computeIfAbsent(langCode, k -> LocalisedBookContentImpl.create()).entries());
+                loadEntry(entry.getValue(), book, language, id, level, content.computeIfAbsent(language, k -> LocalisedBookContentImpl.create()).entries());
         }
         return new HashMap<>(content); // Convert map to the "immutable" LocalisedBookContent type after loading.
     }
 
-    private static void loadEntry(JsonElement json, Book book, String id, Level level,
+    private static void loadEntry(JsonElement json, Book book, String language, String id, Level level,
                                   Map<String, net.favouriteless.modopedia.api.book.Entry> entries) {
         EntryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                .ifSuccess(p -> entries.put(id, ((EntryImpl)p.getFirst()).addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, level))))
+                .ifSuccess(p -> entries.put(id, ((EntryImpl)p.getFirst()).addPages(loadPages(id, json.getAsJsonObject().getAsJsonArray("pages"), book, language, level))))
                 .ifError(e -> Modopedia.LOG.error("Error loading entry json {}: {}", id, e.message()));
     }
 
-    private static void loadCategory(JsonElement json, Book book, String id, Level level,
+    private static void loadCategory(JsonElement json, Book book, String language, String id, Level level,
                                      Map<String, Category> categories) {
         CategoryImpl.CODEC.decode(RegistryOps.create(JsonOps.INSTANCE, level.registryAccess()), json)
-                .ifSuccess(p -> categories.put(id, ((CategoryImpl)p.getFirst()).init(book))) // Init just parses the landing text
+                .ifSuccess(p -> categories.put(id, ((CategoryImpl)p.getFirst()).init(book, language))) // Init just parses the landing text
                 .ifError(e -> Modopedia.LOG.error("Error loading entry {}: {}", id, e.message()));
     }
 
     /**
      * Create pages from a given JsonArray and run init on their components.
      */
-    private static List<Page> loadPages(String entry, JsonArray array, Book book, Level level) {
+    private static List<Page> loadPages(String entry, JsonArray array, Book book, String language, Level level) {
         List<Page> out = new ArrayList<>();
 
         final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, level.registryAccess());
         for(JsonElement element : array) {
             try {
-                PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), out.size(), ops));
+                PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), language, out.size(), ops));
                 page.init(book, entry, level);
                 out.add(page);
             }
@@ -169,7 +169,7 @@ public class BookContentLoader {
     /**
      * Create a new PageComponentHolder and set up it's variables/components from the given JsonObject.
      */
-    private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, int pageNum, RegistryOps<JsonElement> ops) {
+    private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, String language, int pageNum, RegistryOps<JsonElement> ops) {
         PageComponentHolder holder = new PageComponentHolder();
 
         holder.set("page_num", Variable.of(pageNum));
@@ -189,7 +189,7 @@ public class BookContentLoader {
 
         for(JsonElement element : components) {
             if(element.isJsonObject())
-                loadComponent(entry, holder, element.getAsJsonObject(), pageNum, ops);
+                loadComponent(entry, holder, element.getAsJsonObject(), language, pageNum, ops);
             else
                 Modopedia.LOG.error("Invalid component found in {}", entry);
         }
@@ -205,7 +205,7 @@ public class BookContentLoader {
      * @param ops The registry ops
      *
      */
-    private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, int pageNum, RegistryOps<JsonElement> ops) {
+    private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, String language, int pageNum, RegistryOps<JsonElement> ops) {
         PageComponent component;
          if(json.has("type")) {
             ResourceLocation id = ResourceLocation.parse(json.get("type").getAsString());
@@ -221,10 +221,10 @@ public class BookContentLoader {
             Template template = TemplateRegistry.get().getTemplate(id);
             if(template == null)
                 throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered template", id));
-            component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum, ops));
+            component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), language, pageNum, ops));
         }
         else if(json.has("components")) {
-            component = new GalleryPageComponent(loadPageComponentHolder(entry, json, pageNum, ops));
+            component = new GalleryPageComponent(loadPageComponentHolder(entry, json, language, pageNum, ops));
         }
         else {
             throw new JsonParseException("Error creating PageComponent: component does not have a type, template or gallery");
@@ -233,6 +233,7 @@ public class BookContentLoader {
         VariableLookup lookup = new VariableLookup();
         lookup.set("page_num", Variable.of(pageNum));
         lookup.set("entry", Variable.of(entry));
+        lookup.set("language", Variable.of(language));
 
         for(String key : json.keySet()) {
             if(key.equals("type"))

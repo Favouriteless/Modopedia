@@ -23,8 +23,8 @@ public class PamphletLandingScreen extends CategoryScreen {
 
     protected final Component subtitle;
 
-    public PamphletLandingScreen(Book book, String langCode, LocalisedBookContent content, Category category, LockedViewType lockedType, BookScreen lastScreen) {
-        super(book, langCode, content, category, lockedType, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR)), lastScreen);
+    public PamphletLandingScreen(Book book, String language, LocalisedBookContent content, Category category, LockedViewType lockedType, BookScreen lastScreen) {
+        super(book, language, content, category, lockedType, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR)), lastScreen);
         this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR).withFont(Modopedia.id("default"))) : null;
     }
 
@@ -34,8 +34,9 @@ public class PamphletLandingScreen extends CategoryScreen {
         if(rawLandingText != null)
             rawLandingText = Language.getInstance().getOrDefault(rawLandingText);
 
-        List<TextChunk> landingText = TextParser.parse(rawLandingText, texture.pages().getFirst().width(),
-                Minecraft.getInstance().font.lineHeight, Justify.LEFT, getStyle());
+        int lineWidth = texture.pages().getFirst().width();
+        int lineHeight = Minecraft.getInstance().font.lineHeight;
+        List<TextChunk> landingText = TextParser.parse(rawLandingText, getStyle(), lineWidth, lineHeight, language, Justify.LEFT);
 
         return new LandingScreenPage(this, title, subtitle, 37, 7, 10, landingText, 0, 0);
     }

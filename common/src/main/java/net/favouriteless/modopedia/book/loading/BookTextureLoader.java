@@ -14,7 +14,7 @@ import java.util.Map;
 public class BookTextureLoader extends JsonResourceLoader {
 
     public BookTextureLoader(Gson gson, String dir) {
-        super(gson, dir);
+        super(gson, dir, "book textures");
     }
 
     @Override

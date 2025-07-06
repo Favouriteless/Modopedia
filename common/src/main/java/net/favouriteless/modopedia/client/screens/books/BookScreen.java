@@ -24,7 +24,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
 
     protected final ResourceLocation bookId;
     protected final Book book;
-    protected final String lang;
+    protected final String language;
     protected final LocalisedBookContent content;
     protected final BookTexture texture;
     protected final BookScreen lastScreen;
@@ -33,15 +33,15 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book, String lang, LocalisedBookContent content, BookScreen lastScreen, Component title) {
+    public BookScreen(Book book, String language, LocalisedBookContent content, BookScreen lastScreen, Component title) {
         super(title);
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
-        this.lang = lang;
+        this.language = language;
         this.content = content;
         this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
         this.lastScreen = lastScreen;
-        ScreenCache.get().setLastScreen(bookId, this.lang, this);
+        ScreenCache.get().setLastScreen(bookId, this.language, this);
     }
 
     @Override
@@ -80,12 +80,12 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
         if(hasShiftDown() || lastScreen == null) {
             if(isTopLevel())
                 return;
-            ScreenCache.get().setLastScreen(bookId, lang, null);
+            ScreenCache.get().setLastScreen(bookId, language, null);
             BookOpenHandler.tryOpenBook(bookId);
         }
         else {
             minecraft.setScreen(lastScreen);
-            ScreenCache.get().setLastScreen(bookId, lang, lastScreen);
+            ScreenCache.get().setLastScreen(bookId, language, lastScreen);
         }
     }
 

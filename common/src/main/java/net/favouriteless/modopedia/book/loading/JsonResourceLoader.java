@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.favouriteless.modopedia.Modopedia;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -22,16 +23,19 @@ public abstract class JsonResourceLoader {
 
     protected final Gson gson;
     protected final String dir;
+    protected final String name;
 
-    protected JsonResourceLoader(Gson gson, String dir) {
+    protected JsonResourceLoader(Gson gson, String dir, String name) {
         this.gson = gson;
         this.dir = dir;
+        this.name = name;
     }
 
     public CompletableFuture<Void> reload(ResourceManager manager) {
         return CompletableFuture
                 .supplyAsync(() -> getResources(manager), Util.backgroundExecutor())
-                .thenAccept(this::load);
+                .thenAcceptAsync(this::load, Util.backgroundExecutor())
+                .thenRunAsync(() -> Modopedia.LOG.info("Reloaded {}", name), Minecraft.getInstance());
     }
 
     protected Map<ResourceLocation, JsonElement> getResources(ResourceManager manager) {

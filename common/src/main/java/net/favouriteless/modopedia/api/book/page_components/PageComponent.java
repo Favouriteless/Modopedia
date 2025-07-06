@@ -15,6 +15,7 @@ public abstract class PageComponent implements PageRenderable, PageEventListener
     protected int y;
     protected int pageNum;
     protected String entryId;
+    protected String language;
 
     /**
      * Called when the component is first created. Use init to grab any values from the lookup. Lookup will only be
@@ -25,6 +26,7 @@ public abstract class PageComponent implements PageRenderable, PageEventListener
         this.y = lookup.getOrDefault("y", 0).asInt();
         this.pageNum = lookup.get("page_num").asInt();
         this.entryId = lookup.get("entry").asString();
+        this.language = lookup.get("language").asString();
     }
 
     /**

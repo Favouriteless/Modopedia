@@ -1,1 +1,7 @@
+- CHANGED: Datagen has had some small breaking changes, update your code.
+- CHANGED: Added hyphenated word-splitting exemptions for specific languages such as Chinese and Japanese.
+- CHANGED: PageComponents now have their language code passed in.
+
 - FIXED: Scale of Multiblock and Entity displays not having the same effect as expected.
+- FIXED: Word splitting loses a character
+- FIXED: Async ordering issue during book loading.
