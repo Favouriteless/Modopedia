@@ -152,9 +152,10 @@ public class BookContentLoader {
     private static List<Page> loadPages(String entry, JsonArray array, Book book, Level level) {
         List<Page> out = new ArrayList<>();
 
+        final var ops = RegistryOps.create(JsonOps.INSTANCE, level.registryAccess());
         for(JsonElement element : array) {
             try {
-                PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), out.size()));
+                PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), out.size(), ops));
                 page.init(book, entry, level);
                 out.add(page);
             }
@@ -168,7 +169,7 @@ public class BookContentLoader {
     /**
      * Create a new PageComponentHolder and set up it's variables/components from the given JsonObject.
      */
-    private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, int pageNum) {
+    private static PageComponentHolder loadPageComponentHolder(String entry, JsonObject json, int pageNum, RegistryOps<JsonElement> ops) {
         PageComponentHolder holder = new PageComponentHolder();
 
         holder.set("page_num", Variable.of(pageNum));
@@ -176,7 +177,7 @@ public class BookContentLoader {
 
         json.keySet().forEach(key -> {
             if(!key.equals("components"))
-                holder.set(key, JsonVariable.of(json.get(key)));
+                holder.set(key, JsonVariable.of(json.get(key), ops));
         });
 
         if(!json.has("components"))
@@ -188,7 +189,7 @@ public class BookContentLoader {
 
         for(JsonElement element : components) {
             if(element.isJsonObject())
-                loadComponent(entry, holder, element.getAsJsonObject(), pageNum);
+                loadComponent(entry, holder, element.getAsJsonObject(), pageNum, ops);
             else
                 Modopedia.LOG.error("Invalid component found in {}", entry);
         }
@@ -201,9 +202,10 @@ public class BookContentLoader {
      * @param holder Parent holder to fetch remote values from and add component to.
      * @param json JsonObject to be loaded.
      * @param pageNum Index of the page this component is on.
+     * @param ops The registry ops
      *
      */
-    private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, int pageNum) {
+    private static void loadComponent(String entry, PageComponentHolder holder, JsonObject json, int pageNum, RegistryOps<JsonElement> ops) {
         PageComponent component;
          if(json.has("type")) {
             ResourceLocation id = ResourceLocation.parse(json.get("type").getAsString());
@@ -219,10 +221,10 @@ public class BookContentLoader {
             Template template = TemplateRegistry.get().getTemplate(id);
             if(template == null)
                 throw new JsonParseException(String.format("Error creating PageComponent: %s is not a registered template", id));
-            component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum));
+            component = new TemplatePageComponent(loadPageComponentHolder(entry, template.getData(), pageNum, ops));
         }
         else if(json.has("components")) {
-            component = new GalleryPageComponent(loadPageComponentHolder(entry, json, pageNum));
+            component = new GalleryPageComponent(loadPageComponentHolder(entry, json, pageNum, ops));
         }
         else {
             throw new JsonParseException("Error creating PageComponent: component does not have a type, template or gallery");
@@ -245,7 +247,7 @@ public class BookContentLoader {
                     continue;
                 }
             }
-            lookup.set(key, JsonVariable.of(element));
+            lookup.set(key, JsonVariable.of(element, ops));
         }
         holder.addComponent(component, lookup);
     }
