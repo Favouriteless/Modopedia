@@ -5,15 +5,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.Variable;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
 import net.favouriteless.modopedia.util.common.MExtraCodecs;
-
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.*;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -58,8 +57,8 @@ public class JsonVariable implements Variable {
         return as(TypeToken.of(clazz));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T as(TypeToken<T> token) {
         Codec<T> codec = getCodec(token);
         if(codec == null)

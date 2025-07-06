@@ -68,14 +68,6 @@ public abstract class PageComponentBuilder implements BookContentBuilder {
         return either.right().isPresent() ? Optional.of(new JsonPrimitive(either.right().get())) : Optional.empty();
     }
 
-    protected Optional<JsonElement> resolveString(Either<String, String> either) {
-        if(either.left().isPresent())
-            return Optional.of(new JsonPrimitive(either.left().get()));
-        if(either.right().isPresent())
-            return Optional.of(new JsonPrimitive(either.right().get()));
-        return Optional.empty();
-    }
-
     protected Optional<JsonElement> resolveBool(Either<Boolean, String> either) {
         if(either.left().isPresent())
             return Optional.of(new JsonPrimitive(either.left().get()));
