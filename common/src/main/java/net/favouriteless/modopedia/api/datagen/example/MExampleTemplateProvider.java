@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api.datagen.example;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.datagen.TemplateOutput;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
@@ -17,8 +17,8 @@ public class MExampleTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(TemplateOutput output) {
-        TemplateBuilder.of("example")
+    protected void build(Provider registries, BookContentOutput output) {
+        TemplateBuilder.of()
                 .processor(Modopedia.id("example"))
                 .components(
                         TextBuilder.of("example text")
@@ -26,7 +26,7 @@ public class MExampleTemplateProvider extends TemplateProvider {
                                 .lineHeight(9)
                 )
                 .defaultValue("width", 100)
-                .build(output);
+                .build("example", output);
     }
 
 }

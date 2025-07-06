@@ -1,16 +1,19 @@
 package net.favouriteless.modopedia.api.datagen.builders;
 
-import net.favouriteless.modopedia.api.datagen.CategoryOutput;
+import com.google.gson.JsonElement;
+import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.book.CategoryImpl;
-
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class CategoryBuilder {
+public class CategoryBuilder implements BookContentBuilder {
 
-    private final String id;
     private final String title;
 
     private String rawLandingText;
@@ -20,13 +23,12 @@ public class CategoryBuilder {
     private final List<String> entries = new ArrayList<>();
     private final List<String> children = new ArrayList<>();
 
-    private CategoryBuilder(String id, String title) {
-        this.id = id;
+    private CategoryBuilder(String title) {
         this.title = title;
     }
 
-    public static CategoryBuilder of(String id, String title) {
-        return new CategoryBuilder(id, title);
+    public static CategoryBuilder of(String title) {
+        return new CategoryBuilder(title);
     }
 
     public CategoryBuilder landingText(String landingText) {
@@ -59,8 +61,9 @@ public class CategoryBuilder {
         return this;
     }
 
-    public void build(CategoryOutput output) {
-        output.accept(id, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement));
+    @Override
+    public JsonElement build(RegistryOps<JsonElement> ops) {
+        return Category.codec().encodeStart(ops, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement)).getOrThrow();
     }
 
 }

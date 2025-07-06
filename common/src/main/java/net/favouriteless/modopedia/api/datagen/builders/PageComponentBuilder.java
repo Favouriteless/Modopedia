@@ -4,13 +4,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
-import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
+import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 
 import net.minecraft.resources.*;
 
 import java.util.Optional;
 
-public abstract class PageComponentBuilder extends BookContentBuilder {
+public abstract class PageComponentBuilder implements BookContentBuilder {
 
     private final ResourceLocation type;
     private final boolean isTemplate;

@@ -3,28 +3,23 @@ package net.favouriteless.modopedia.api.datagen.builders;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.mojang.serialization.JsonOps;
-import net.favouriteless.modopedia.api.datagen.TemplateOutput;
-
-import net.minecraft.resources.*;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
-public class TemplateBuilder extends PageBuilder {
+public class TemplateBuilder extends PageBuilder  {
 
-    private final String id;
     private final Map<String, Supplier<JsonElement>> defaults = new HashMap<>();
     private ResourceLocation processor;
 
-    private TemplateBuilder(String id) {
-        this.id = id;
-    }
+    private TemplateBuilder() {}
 
-    public static TemplateBuilder of(String id) {
-        return new TemplateBuilder(id);
+    public static TemplateBuilder of() {
+        return new TemplateBuilder();
     }
 
     public TemplateBuilder processor(ResourceLocation processor) {
@@ -57,7 +52,6 @@ public class TemplateBuilder extends PageBuilder {
         return this;
     }
 
-
     @Override
     public JsonElement build(RegistryOps<JsonElement> ops) {
         JsonObject json = super.build(ops).getAsJsonObject();
@@ -70,10 +64,6 @@ public class TemplateBuilder extends PageBuilder {
         }
 
         return json;
-    }
-
-    public void build(TemplateOutput output) {
-        output.accept(id, build(output.registryOps(JsonOps.INSTANCE)));
     }
 
 }

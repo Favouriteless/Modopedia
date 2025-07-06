@@ -3,14 +3,12 @@ package net.favouriteless.modopedia.api.datagen.builders;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
 import net.favouriteless.modopedia.api.book.Entry;
-import net.favouriteless.modopedia.api.datagen.EntryOutput;
+import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.book.EntryImpl;
-import net.favouriteless.modopedia.datagen.builders.BookContentBuilder;
-
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.*;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,9 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EntryBuilder extends BookContentBuilder {
+public class EntryBuilder implements BookContentBuilder {
 
-    private final String id;
     private final String title;
 
     private ItemStack iconStack = EntryImpl.DEFAULT_ICON.get();
@@ -29,13 +26,12 @@ public class EntryBuilder extends BookContentBuilder {
 
     private final List<PageBuilder> pages = new ArrayList<>();
 
-    private EntryBuilder(String id, String title) {
-        this.id = id;
+    private EntryBuilder(String title) {
         this.title = title;
     }
 
-    public static EntryBuilder of(String id, String title) {
-        return new EntryBuilder(id, title);
+    public static EntryBuilder of(String title) {
+        return new EntryBuilder(title);
     }
 
     public EntryBuilder icon(ItemStack icon) {
@@ -72,10 +68,6 @@ public class EntryBuilder extends BookContentBuilder {
         }
         json.add("pages", pages);
         return json;
-    }
-
-    public void build(EntryOutput output) {
-        output.accept(id, build(output.registryOps(JsonOps.INSTANCE)));
     }
 
 }

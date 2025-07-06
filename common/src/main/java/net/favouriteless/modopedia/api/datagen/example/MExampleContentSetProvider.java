@@ -19,8 +19,8 @@ public class MExampleContentSetProvider extends ContentSetProvider {
     }
 
     @Override
-    public void buildEntries(Provider registries, EntryOutput output) {
-        EntryBuilder.of("text_entry", "Text Entry")
+    public void buildEntries(Provider registries, BookContentOutput output) {
+        EntryBuilder.of("Text Entry")
                 .icon(Items.DIAMOND.getDefaultInstance())
                 .assignedItems(Items.DIAMOND)
                 .page(
@@ -33,15 +33,15 @@ public class MExampleContentSetProvider extends ContentSetProvider {
                                 TextBuilder.of("$(c:blue)Gallery component 3").justify(Justify.CENTER)
                         )
                 )
-                .build(output);
+                .build("text_entry", output);
     }
 
     @Override
-    public void buildCategories(Provider registries, CategoryOutput output) {
-        CategoryBuilder.of("example", "Example Category")
+    public void buildCategories(Provider registries, BookContentOutput output) {
+        CategoryBuilder.of("Example Category")
                 .icon(Items.STONE.getDefaultInstance())
                 .entries("text_entry")
-                .build(output);
+                .build("example", output);
     }
 
 }

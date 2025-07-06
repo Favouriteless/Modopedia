@@ -1,8 +1,7 @@
-package net.favouriteless.modopedia.datagen.builders;
+package net.favouriteless.modopedia.common.datagen.builders;
 
 import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.JsonOps;
 
 import net.minecraft.resources.*;
 

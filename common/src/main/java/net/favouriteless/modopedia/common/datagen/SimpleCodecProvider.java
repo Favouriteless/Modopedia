@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.datagen;
+package net.favouriteless.modopedia.common.datagen;
 
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;

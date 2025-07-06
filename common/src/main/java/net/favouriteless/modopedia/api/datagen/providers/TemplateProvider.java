@@ -2,9 +2,8 @@ package net.favouriteless.modopedia.api.datagen.providers;
 
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
-import com.mojang.serialization.DynamicOps;
-import net.favouriteless.modopedia.api.datagen.TemplateOutput;
-
+import com.mojang.serialization.JsonOps;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.CachedOutput;
@@ -12,7 +11,8 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.PackOutput.PathProvider;
 import net.minecraft.data.PackOutput.Target;
-import net.minecraft.resources.*;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public abstract class TemplateProvider implements DataProvider {
         this.modId = modId;
     }
 
-    protected abstract void build(TemplateOutput output);
+    protected abstract void build(Provider registries, BookContentOutput output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
@@ -42,19 +42,14 @@ public abstract class TemplateProvider implements DataProvider {
         final Set<String> set = Sets.newHashSet();
         final List<CompletableFuture<?>> generated = new ArrayList<>();
 
-        build(new TemplateOutput() {
-            @Override
-            public <T> RegistryOps<T> registryOps( DynamicOps<T> ops) {
-                return registries.createSerializationContext(ops);
-            }
+        RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, registries);
 
-            @Override
-            public void accept(String id, JsonElement template) {
-                if (!set.add(id))
-                    throw new IllegalStateException("Duplicate " + getName() + ": " + id);
-                generated.add(DataProvider.saveStable(output, template, pathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
-            }
+        build(registries, (id, builder) -> {
+            if(!set.add(id))
+                throw new IllegalStateException("Duplicate " + getName() + ": " + id);
+            generated.add(DataProvider.saveStable(output, builder.build(ops), pathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
         });
+
         return CompletableFuture.allOf(generated.toArray(CompletableFuture[]::new));
     }
 

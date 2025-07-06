@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api.datagen.builders.templates;
 import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.datagen.builders.TemplateComponentBuilder;
+import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 
 import net.minecraft.resources.*;
