@@ -14,20 +14,20 @@ import net.favouriteless.modopedia.common.book_types.ClassicBookType;
 public class ClassicScreenFactory implements BookScreenFactory<ClassicBookType> {
 
     @Override
-    public BookScreen openLandingScreen(ClassicBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
-        return new ClassicLandingScreen(book, langCode, content, type.lockedViewType(), lastScreen);
+    public BookScreen openLandingScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, BookScreen lastScreen) {
+        return new ClassicLandingScreen(book, language, content, type.lockedViewType(), lastScreen);
     }
 
     @Override
-    public BookScreen openCategoryScreen(ClassicBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
+    public BookScreen openCategoryScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, langCode, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
+        return cat != null ? new CategoryScreen(book, language, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
     }
 
     @Override
-    public BookScreen openEntryScreen(ClassicBookType type, Book book, String langCode, LocalisedBookContent content, String entry, BookScreen lastScreen) {
+    public BookScreen openEntryScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, String entry, BookScreen lastScreen) {
         Entry ent = content.getEntry(entry);
-        return ent != null ? new EntryScreen(book, langCode, content, ent, lastScreen) : null;
+        return ent != null ? new EntryScreen(book, language, content, ent, lastScreen) : null;
     }
 
 }

@@ -11,21 +11,21 @@ import net.favouriteless.modopedia.common.book_types.PageBookType;
 public class PageScreenFactory implements BookScreenFactory<PageBookType> {
 
     @Override
-    public BookScreen openLandingScreen(PageBookType type, Book book, String langCode, LocalisedBookContent content, BookScreen lastScreen) {
+    public BookScreen openLandingScreen(PageBookType type, Book book, String language, LocalisedBookContent content, BookScreen lastScreen) {
         Entry entry = getFirstEntry(content);
-        return entry != null ? new EntryScreen(book, langCode, content, entry, lastScreen) : null;
+        return entry != null ? new EntryScreen(book, language, content, entry, lastScreen) : null;
     }
 
     @Override
-    public BookScreen openCategoryScreen(PageBookType type, Book book, String langCode, LocalisedBookContent content, String category, BookScreen lastScreen) {
+    public BookScreen openCategoryScreen(PageBookType type, Book book, String language, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Entry entry = getFirstEntry(content);
-        return entry != null ? new EntryScreen(book, langCode, content, entry, lastScreen) : null;
+        return entry != null ? new EntryScreen(book, language, content, entry, lastScreen) : null;
     }
 
     @Override
-    public BookScreen openEntryScreen(PageBookType type, Book book, String langCode, LocalisedBookContent content, String entry, BookScreen lastScreen) {
+    public BookScreen openEntryScreen(PageBookType type, Book book, String language, LocalisedBookContent content, String entry, BookScreen lastScreen) {
         Entry e = getFirstEntry(content);
-        return e != null ? new EntryScreen(book, langCode, content, e, lastScreen) : null;
+        return e != null ? new EntryScreen(book, language, content, e, lastScreen) : null;
     }
 
     public Entry getFirstEntry(LocalisedBookContent content) {

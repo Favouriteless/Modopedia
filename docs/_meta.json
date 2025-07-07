@@ -6,5 +6,9 @@
   "page_components": {
     "name": "Page Components",
     "icon": "Component"
+  },
+  "mod_developers": {
+    "name": "Mod Development",
+    "icon": "FolderCode"
   }
 }

@@ -1,0 +1,74 @@
+---
+title: Custom Page Components
+---
+---
+Modopedia allows you to register your own **[Page Components](../books/page-components)** for books. I'll be using the **[Text Box](../page_components/text-box)** as an example of how to implement one.
+
+## Step 1.) Create a PageComponent class
+
+First, create a new class extending `net.favouriteless.modopedia.api.book.page_components.PageComponent`, the JavaDocs in the class will explain how to use each method. I recommend storing the ID of the page component in a constant in this class to make it easier to find.
+
+```java
+public class TextPageComponent extends PageComponent {
+    
+    public static final ResourceLocation ID = Modopedia.id("text");
+
+}
+```
+
+## Step 2.) Grab your variables from the lookup
+
+Next, override `init` and use it to grab any values you need from the `Lookup` provided to you. You need to cache every value you need here as the lookup is discarded after initialisation. Make sure to call `super.init` if you want the position and page number to load correctly.
+
+Mandatory fields should use `Lookup#get` while optional fields should use `Lookup#getOrDefault` and/or `Lookup#has`. The keys used here are will be the names of the fields in your component's JSON objects. If any exceptions are thrown, the component will get replaced with an error component on the page, so the user can see what happened. It is recommended to throw a descriptive exception to make this clearer for the user.
+
+<Callout variant="warning">
+    Trying to use **`Lookup#get`** to grab a value which doesn't exist will throw a NullPointerException. This is intended!
+</Callout>
+
+```java
+private List<TextChunk> textChunks;
+private int width;
+private int lineHeight;
+
+@Override
+public void init(Book book, Lookup lookup, Level level) {
+    super.init(book, lookup, level);
+    Justify justify = lookup.getOrDefault("justify", Justify.LEFT).as(Justify.class);
+    Style baseStyle = Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
+
+    width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
+    lineHeight = lookup.getOrDefault("line_height", Minecraft.getInstance().font.lineHeight).asInt();
+    textChunks = TextParser.parse(lookup.get("text").asString(), baseStyle, width, lineHeight, language, justify);
+}
+```
+
+## Step 3.) Rendering and click handling
+
+The final step of creating your PageComponent class is to (if your component needs it) implement `render` and/or input handling. The `PoseStack` in render is already transformed to the position of the PageComponent and any mouse positions provided are relative to the page.
+
+```java
+@Override
+public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTicks) {
+    for(TextChunk word : textChunks) {
+        word.render(graphics, x, y, mouseX - x, mouseY - y);
+    }
+}
+
+@Override
+public boolean mouseClicked(BookRenderContext context, double mouseX, double mouseY, int button) {
+    for(TextChunk chunk : textChunks) {
+        if(chunk.mouseClicked(context, mouseX - x, mouseY - y, button))
+            return true;
+    }
+    return false;
+}
+```
+
+## Step 4.) Registering your PageComponent
+
+The last thing you need to do for Modopedia to load your new PageComponent is add it to `PageComponentRegistry`. You can do this by calling `PageComponentRegistry#register` in your mod's **Client Entrypoint**. The ID you use to register your processor will be what pages use to reference it in their field.
+
+```java
+PageComponentRegistry.get().register(TextPageComponent.ID, TextPageComponent::new);
+```

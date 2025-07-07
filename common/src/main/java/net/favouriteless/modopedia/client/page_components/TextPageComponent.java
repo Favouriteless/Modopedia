@@ -29,11 +29,10 @@ public class TextPageComponent extends PageComponent {
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
         Justify justify = lookup.getOrDefault("justify", Justify.LEFT).as(Justify.class);
+        Style baseStyle = Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
 
         width = lookup.getOrDefault("width", book.getLineWidth()).asInt();
         lineHeight = lookup.getOrDefault("line_height", Minecraft.getInstance().font.lineHeight).asInt();
-
-        Style baseStyle = Style.EMPTY.withFont(book.getFont()).withColor(book.getTextColour());
         textChunks = TextParser.parse(lookup.get("text").asString(), baseStyle, width, lineHeight, language, justify);
     }
 

@@ -1,0 +1,69 @@
+---
+title: Custom Book Types
+---
+---
+Adding your own **[Book Type](../books/book-types)** in Modopedia is incredibly simple and can allow you near infinite freedom in how your book is structured if none of the built-in options fit your needs.
+
+## Step 1.) Creating a BookType
+
+First, create a class implementing `net.favouriteless.modopedia.api.book.BookType`, this class will be used to provide data for your `BookScreenFactory`. Every BookType must provide a `Type` which contains it's ID and a `MapCodec<? extends BookType>` used to encode and decode this type. This documentation will not explain how to write codecs. 
+
+```java
+public record ExampleBookType(String exampleField) implements BookType {
+
+    public static final MapCodec<ExampleBookType> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.STRING.fieldOf("example_field").forGetter(ExampleBookType::exampleField)
+    ).apply(instance, ExampleBookType::new));
+    
+    public static final Type<ExampleBookType> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("modopedia", "example"), CODEC);
+
+    @Override
+    public Type<ExampleBookType> type() {
+        return TYPE;
+    }
+
+}
+```
+
+## Step 2.) Registering your BookType
+
+Next, register your BookType by calling `BookTypeRegistry#register` and providing your `Type` in your mod's **Common Entrypoint**.
+
+```java
+BookTypeRegistry.get().register(ExampleBookType.TYPE);
+```
+
+## Step 3.) Creating a BookScreenFactory
+
+Now your type has data and can synchronise correctly, you need to tell Modopedia what to do with that type. This is done by implementing `BookScreenFactory`, which creates `BookScreen`s from your book type data. The example below is just replicating what the `modopedia:classic` factory does. Returning null from any of these methods will cause Modopedia to not open a screen. Your `BookType` is provided if you need to grab any of your values.
+
+```java
+public class ExampleScreenFactory implements BookScreenFactory<ExampleBookType> {
+
+    @Override
+    public BookScreen openLandingScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, BookScreen lastScreen) {
+        return new ClassicLandingScreen(book, language, content, type.lockedViewType(), lastScreen);
+    }
+
+    @Override
+    public BookScreen openCategoryScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, String category, BookScreen lastScreen) {
+        Category cat = content.getCategory(category);
+        return cat != null ? new CategoryScreen(book, language, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
+    }
+
+    @Override
+    public BookScreen openEntryScreen(ClassicBookType type, Book book, String language, LocalisedBookContent content, String entry, BookScreen lastScreen) {
+        Entry ent = content.getEntry(entry);
+        return ent != null ? new EntryScreen(book, language, content, ent, lastScreen) : null;
+    }
+
+}
+```
+
+## Step 4.) Registering your BookScreenFactory
+
+Just like your `BookType`, a `BookScreenFactory` also needs to be registered. This should be done from the **Client Entrypoint** of your mod.
+
+```java
+BookScreenFactoryRegistry.get().register(ExampleBookType.TYPE, new ExampleScreenFactory());
+```

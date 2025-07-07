@@ -1,0 +1,41 @@
+---
+title: Custom Text Formatting
+---
+---
+Adding your own **[Text Formatting](../books/text-formatting)** tags in Modopedia is incredibly simple.
+
+## Step 1.) Create a TextFormatter class
+
+First, create a class for your formatting tag. It should implement `net.favouriteless.modopedia.api.text.TextFormatter`. Your class will need to provide a method determining if a given tag matches yours (excluding the parentheses), and one used to modify the `StyleStack` if it does. Feel free to throw an exception if you get an invalid input, but ideally you should check in `matches`.
+
+```java
+public class CommandFormatter implements TextFormatter {
+
+    @Override
+    public boolean matches(String tag) {
+        return tag.startsWith("cmd:");
+    }
+
+    @Override
+    public void apply(StyleStack styleStack, String tag) {
+        String command = tag.substring(4);
+
+        if(command.length() < 2 || !command.startsWith("/")) {
+            styleStack.pop();
+            throw new IllegalArgumentException(command + " is not a valid command.");
+        }
+
+        styleStack.modify(style -> style.withClickEvent(new ClickEvent(Action.RUN_COMMAND, command)));
+    }
+
+}
+```
+
+If you decide your formatting tag shouldn't do anything, call `StyleStack#pop` and exit the method.
+
+## Step 2.) Registering your TextFormatter
+
+All you need to do now is register your TextFormatter by calling `TextFormatterRegistry#register` in your mod's **Client Entrypoint**.
+```java
+TextFormatterRegistry.get().register(new CommandFormatter());
+```

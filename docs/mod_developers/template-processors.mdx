@@ -1,0 +1,33 @@
+---
+title: Template Processors
+---
+---
+A template processor is used to transform a **MutableLookup** before components are initialised with it. This allows mod developers to perform complex actions such as grabbing items from a recipe and passing those into item galleries. Creating a Template Processor is extremely simple:
+
+## Step 1.) Create a Template Processor
+
+TemplateProcessor is a functional interface, you could pass a lambda or method reference into registration but for the purposes of the documentation it's being implemented as a class. In this example we'll just be replacing `input_string` with `b` if it was `a`.
+
+```java
+public class MyTemplateProcessor implements TemplateProcessor {
+    
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("mymod", "myprocessor");
+
+    @Override
+    public void init(Book book, MutableLookup lookup, Level level) {
+        String input = lookup.get("input_string").asString();
+
+        if(input.equals("a"))
+            lookup.set("input_string", Variable.of("b"));
+    }
+
+}
+```
+
+## Step 2.) Registering your Template Processor
+
+All you need to do now is register your Template Processor by calling `TemplateRegistry#registerProcessor` in your mod's **Client Entrypoint**. The ID you use to register your processor will be what templates use to reference it in their `processor` field.
+
+```java
+TemplateRegistry.get().registerProcessor(MyTemplateProcessor.ID, new MyTemplateProcessor());
+```
