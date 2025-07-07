@@ -8,4 +8,4 @@ features an extensive API and a wide range of out-of-the-box content.
 If you're a user or modpack developer, please refer to Modopedia's [CurseForge](https://www.curseforge.com/minecraft/mc-mods/modopedia) or
 [Modrinth](https://modrinth.com/mod/modopedia) pages.
 
-If you're a developer, go to the [Wiki](https://github.com/Favouriteless/Modopedia/wiki).
+If you're a mod or modpack developer, go to the [Wiki](https://moddedmc.wiki/en/project/modopedia/docs).
