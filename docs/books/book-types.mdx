@@ -1,0 +1,60 @@
+---
+title: Book Types
+---
+
+---
+<Callout variant="warning">
+    While they do have similar names, **Book Types** and **Book Textures** should not be confused!
+</Callout>
+
+## Using Book Types
+A **Book Type** is an object used to provide additional information needed to create a book's screens. Modopedia provides a few built-in types but other mod developers may wish to add their own to suit their needs.
+
+### Example
+
+```json
+{ 
+  "id": "modopedia:classic",
+  "locked_view_type": "translucent"
+}
+```
+
+## Classic (`modopedia:classic`)
+
+Classic patchouli-styled book with a landing screen containing categories, and each category containing a list of entries. Users coming from patchouli will find this type of book the most familiar and it is the default type for all books.
+
+<Asset location="modopedia:book_types/classic" width={580} height={364} />
+
+### JSON Schema
+| ID               | Type   | Required | Default | Description                                                                                         |
+|------------------|--------|----------|---------|-----------------------------------------------------------------------------------------------------|
+| locked_view_type | String | &cross;  | hidden  | How locked categories and entries should display. Options are "translucent" or "hidden".            |
+| title_x          | String | &cross;  | 37      | X position of the landing screen title, starting from the left side of the title backer widget.     |
+| title_y          | String | &cross;  | 7       | Y position of the landing screen title, starting from the left side of the title backer widget.     |
+| subtitle_x       | String | &cross;  | 10      | X position of the landing screen subtitle, starting from the right side of the title backer widget. |
+
+
+## Pamphlet (`modopedia:pamphlet`)
+
+A pamphlet is another book type from Patchouli. In this type, the book will open directly into it's first category. Modopedia allows you to choose which category this is via the `display_on_front_page` field in `category.json`. The first category found with this value as true will be the one Modopedia opens.
+
+<Asset location="modopedia:book_types/pamphlet" width={580} height={364} />
+
+### JSON Schema
+| ID               | Type   | Required | Default | Description                                                                                         |
+|------------------|--------|----------|---------|-----------------------------------------------------------------------------------------------------|
+| locked_view_type | String | &cross;  | hidden  | How locked categories and entries should display. Options are "translucent" or "hidden".            |
+| title_x          | String | &cross;  | 37      | X position of the landing screen title, starting from the left side of the title backer widget.     |
+| title_y          | String | &cross;  | 7       | Y position of the landing screen title, starting from the left side of the title backer widget.     |
+| subtitle_x       | String | &cross;  | 10      | X position of the landing screen subtitle, starting from the right side of the title backer widget. |
+
+## Page (`modopedia:page`)
+
+A page is a book which only contains one single entry and will open straight into it, with no category or landing screens. If you have multiple entries, Modopedia will not gaurantee which one it opens, it will just open the first one it finds.
+
+<Asset location="modopedia:book_types/page" width={580} height={364} />
+
+### JSON Schema
+| ID               | Type   | Required | Default | Description                                                                              |
+|------------------|--------|----------|---------|------------------------------------------------------------------------------------------|
+| locked_view_type | String | &cross;  | hidden  | How locked categories and entries should display. Options are "translucent" or "hidden". |

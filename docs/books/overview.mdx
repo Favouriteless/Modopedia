@@ -1,0 +1,29 @@
+---
+title: Overview
+---
+
+Books in Modopedia are formed by two parts:
+- The **book.json** defining basic properties about your book and its item. This is placed in a **datapack**.
+- **Content Sets** defining the categories, entries and localisations for your book. These are placed in a **resource pack**.
+
+## Book.json
+
+Every book starts with a `book.json`, which is used to define the basic properties of the book such as the title, subtitle, type and more. This should be located in a **datapack** at `data/<namespace>/modopedia/books/<book_id>.json` where `namespace` is the ID of your mod or namespace of your modpack, and `book_id` is the ID of your book. Both of these need to follow Minecraft's [ResourceLocation rules](https://minecraft.wiki/w/Resource_location).
+
+The full structure and available properties of `book.json` can be viewed [here](./book-json).
+
+## Content Sets
+
+Books also contain **Content Sets**, which are groups of **[Categories](./category-json)** and **[Entries](./entry-json)** forming the content for each localisation (language) your book supports. All content sets for a book should be located in a **resource pack** at `assets/<namespace>/modopedia_books/<book_id>/<lang_code>` where `namespace` and `book_id` match those used for the `book.json`, and the `lang_code` is the localisation code for that content set (e.g `en_us`). This location will be referred to as the `BASE_LOCATION` of the content set.
+
+### Entries
+
+An **[Entry](./entry-json)** is a collection of Pages with content on them, used to give information about a specific topic. For example, the "Iron Ore" entry might contain pages about where to find Iron Ore and what it can be used for. All entries for a content set should be located at `BASE_LOCATION/entries/<entry_id>.json` where `entry_id` will be the ID the entry is referred to within this book.
+
+The full structure and available properties of an Entry can be viewed [here](./entry-json).
+
+### Categories
+
+A **[Category](./category-json)** is a collection of **entries** used for organisation and navigation. In some book types (for example `modopedia:classic`) a category is **required** for an Entry to appear in a book. All categories for a content set should be located at `BASE_LOCATION/categories/<category_id>.json` where `category_id` will be the ID the category is referred to within this book.
+
+The full structure and available properties of Category can be viewed [here](./category-json).

@@ -1,0 +1,23 @@
+---
+title: Text Box
+---
+**`modopedia:text`**
+
+---
+
+## Description
+Renders a body of formatted text, as well as any hover or click events it has. This component which should form the bulk of your books.
+
+## Screenshot
+<Asset location="modopedia:page_components/text" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+| ID          | Type    | Required | Default | Description                                                                           |
+|-------------|---------|----------|---------|---------------------------------------------------------------------------------------|
+| text        | FString | &check;  | -       | Text to be displayed.                                                                 |
+| width       | Integer | &cross;  | *       | Width at which lines of text will wrap. Defaults to the book's line width.            |
+| line_height | String  | &cross;  | 9       | Spacing between lines of text.                                                        |
+| justify     | *       | &cross;  | `left`  | Margin text inside the box should be justified on. Can be `left`, `center` or `right` |

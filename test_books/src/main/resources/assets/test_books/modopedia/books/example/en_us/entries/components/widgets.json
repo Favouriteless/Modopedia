@@ -1,0 +1,22 @@
+{
+  "title": "Widgets",
+  "icon": { "id": "minecraft:egg" },
+  "assigned_items": [ "minecraft:egg" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "components": [
+            { "type": "modopedia:crafting_arrow" },
+            { "type": "modopedia:crafting_flame" },
+            { "type": "modopedia:crafting_grid" },
+            { "type": "modopedia:small_frame" },
+            { "type": "modopedia:medium_frame" },
+            { "type": "modopedia:large_frame" },
+            { "type": "modopedia:separator" }
+          ]
+        }
+      ]
+    }
+  ]
+}

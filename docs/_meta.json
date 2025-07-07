@@ -1,0 +1,10 @@
+{
+  "books": {
+    "name": "Creating a Book",
+    "icon": "BookCheck"
+  },
+  "page_components": {
+    "name": "Page Components",
+    "icon": "Component"
+  }
+}

@@ -1,0 +1,49 @@
+---
+title: Entries
+---
+
+An Entry is a collection of **Pages** you should use to give information about a specific topic. For example, the "Iron Ore" entry might contain pages about where to find Iron Ore, how to smelt it and what the ingots are used for.
+
+### Resource Pack Location
+
+All entries for a content set should be located at `BASE_LOCATION/entries/<entry_id>.json` where `entry_id` will be the ID the entry is referred to within this book. If you don't know what `BASE_LOCATION` is, refer to [here](./overview). Entries may be placed in a subfolder, in which case their ID will include the subfolder, e.g `my_subfolder/my_entry`.
+
+## JSON Schema
+
+| ID             | Type               | Required | Default     | Description                                                                     |
+|----------------|--------------------|----------|-------------|---------------------------------------------------------------------------------|
+| title          | String             | &check;  | -           | Title of the entry.                                                             |
+| icon           | ItemStack          | &cross;  | Grass Block | ItemStack to use as the icon for this entry.                                    |
+| assigned_items | ResourceLocation[] | &cross;  | -           | Item IDs associated with this entry. This will be used for the "Study" feature. |
+| advancement    | ResourceLocation   | &cross;  | -           | ID of the advancement needed to unlock this category.                           |
+| pages          | Page[]             | &check;  | -           | Page objects within this entry. See below for more details.                     |
+
+## Page JSON Schema
+
+Pages are where your actual content gets placed in the entry. Each page is made of **[Page Components](./page-components)** which display content for the user. Modopedia provides a large variety of Page Components but mod developers may wish to add their own.
+
+Every field in a Page which isn't the components list will be read as a **Variable**. This may be useful for passing data into the components, but it mainly exists for **[Templates](./templates)**, so you can read about what passthrough is there.
+
+### The Components List
+
+The only required field for a Page object is `components`. This will be a list containing various **Page Component** objects, each of which will have a type and a number of fields determined by the component being used. More information about this can be found **[here](./page-components)**
+
+## Example Entry JSON
+
+```json
+{
+  "title": "Fishing",
+  "icon": { "id": "minecraft:fishing_rod", "count": 1 },
+  "assigned_items": [ "minecraft:fishing_rod" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:text",
+          "text": "This is a very cool page about fishing."
+        }
+      ]
+    }
+  ]
+}
+```

@@ -20,6 +20,7 @@ import net.favouriteless.modopedia.fabric.common.FabricCommonEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.config.ModConfig.Type;
 
@@ -36,7 +37,7 @@ public class ModopediaFabric implements ModInitializer {
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) -> {
             for(Book book : BookRegistry.get().getBooks()) {
                 ResourceKey<CreativeModeTab> key = BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElseThrow();
-                if(!key.equals(book.getCreativeTab()))
+                if(!key.equals(book.getCreativeTab()) && !key.equals(CreativeModeTabs.SEARCH))
                     continue;
 
                 ItemStack item = new ItemStack(MItems.BOOK.get(), 1);

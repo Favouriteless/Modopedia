@@ -1,0 +1,74 @@
+---
+title: Templates
+---
+
+---
+A template is a group of **[Page Components](./page-components)** which can be re-used from any book. For example, a template for an item showcase page might contain a header, a separator, a text box and an item showcase. Modopedia provides a list of built-in templates for common use cases, but you can also create your own using a single JSON file in your resource pack.
+
+## Using Templates
+
+Using a template is very similar to using a regular page component; the only difference is that the `type` field on the component's is replaced with a `template` field, with the ID of the template. A lot of templates will also make use of **Variables**, which are explained below.
+
+```json
+{
+    "template": "modopedia:text_page",
+    "text": "Text, on a page!"
+}
+```
+
+### Variables
+Some templates may want values to be passed in, for either their **[page components](./page-components)** or their **[template processor (mod developers only)](../mod_developers/template-processors)**. To do this, you use a **Variable**, a field you fill in when using the template. Page components or template processors can grab values they need from the variables on the template. For example, the `modopedia:text_page` example shown above is passing in `"Text, on a page!"` via the `text` variable.
+
+### Built-in Templates
+Modopedia provides a large variety of built-in templates, there's too many to list on this page so they all have their own pages in the Templates section on the sidebar. Please bear in mind that these templates only cover the most common use cases, and in order to create the best books possible you will probably need to make some of your own, combine existing templates or add new components alongside them.
+
+## Creating a Template
+
+The only thing required to make a new template is a **template.json**. It should be located in a **resource pack** at `assets/<namespace>/modopedia_books/templates/<template_id>.json` where `namespace` is the ID of your mod or namespace of your modpack, and `template_id` is the ID of your template. Both of these need to follow Minecraft's [ResourceLocation rules](https://minecraft.wiki/w/Resource_location). When referring to your template you should use its full ID in the format `namespace:template_id`. 
+
+Inside your template you should define a list containing its components.
+```json
+{
+  "components": [
+    {
+      "type": "modopedia:text",
+      "text": "#passthrough"
+    },
+    {
+      "type": "modopedia:tooltip",
+      "x": 10,
+      "width": 30,
+      "height": 9,
+      "tooltip": ["Example tooltip line 1", "Line 2"]
+    }
+  ]
+}
+```
+
+### Using Variables
+As explained above, **variables** can be used to pass data into your template. To declare a variable, you replace any field in any of your components with a string starting with **#**. The above example does this with the `text` field in its text box.
+
+#### Variable Types
+
+By default, variables only support primitives and a select few codecs provided by Minecraft or Modopedia. The API allows mod developers to register new codecs as needed, simply call `Variable#registerCodec` from your mod's constructor. The supported types are as follows:
+
+* String
+* Integer
+* Long
+* Float
+* Double
+* Boolean
+* ResourceLocation (single, array or list)
+* CompoundTag (single, array or list)
+* ItemStack (single, array or list) **NOTE:** Lists can also be defined using a tag ID such as `minecraft:small_flowers`
+* Multiblock
+* StateMatcher
+* Justify
+* CompoundTag
+* BlockState (string format)
+* A Stream containing any of the above. This will be an array in JSON.
+
+
+### Nesting
+
+Templates fully support nesting, just put a template component inside your template.

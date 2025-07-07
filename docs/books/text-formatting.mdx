@@ -1,0 +1,42 @@
+---
+title: Text Formatting
+---
+
+Modopedia has its own simplified version of markdown used for text formatting, fields which support this will be called `FString` (Formatted String) in the documentation. Text formatting works by supplying "Formatting Tags" which change the style of text. For example:
+
+## Example Formatted Paragraph
+
+The following is an example of a paragraph of formatted text and how the mod displays it in-game.
+
+```
+$(c:#32A852)Testing text with$()$(b) $(u)bold$(/b) and$(c:red) red $(i)italic$() text! And a bunch of$(b) text to make it longer\n\nplus$(/b) newline test.
+```
+<Asset location="modopedia:text_formatting/text_formatting_example" width={580} height={364} />
+
+## Built-in Formatting Tags
+
+| Tag                          | Description                                                                                                                                   |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `$(b)`                       | Bold                                                                                                                                          |
+| `$(/b)`                      | Stop bold                                                                                                                                     |
+| `$(i)`                       | Italics                                                                                                                                       |
+| `$(/i)`                      | Stop italics                                                                                                                                  |
+| `$(u)`                       | Underline                                                                                                                                     |
+| `$(/u)`                      | Stop underline                                                                                                                                |
+| `$(o)`                       | Obfuscated                                                                                                                                    |
+| `$(/o)`                      | Stop obfuscated                                                                                                                               |
+| `$(s)`                       | Strikethrough                                                                                                                                 |
+| `$(/s)`                      | Stop strikethrough                                                                                                                            |
+| `$(c:mycolour)`              | Text colour, where `mycolour` is a hex colour code (e.g. `#FF0000`)`, a ChatFormatting name (e.g. `dark_red`)` or a ChatFormatting ID (0-15)` |
+| `$(/c)`                      | Revert back to default colour                                                                                                                 |
+| `$(l:https://...)`           | Opens link when clicked                                                                                                                       |
+| `$(clip:text)`               | Copy `text` to clipboard when clicked                                                                                                         |
+| `$(cmd:/command)`            | Run `/command` as a command when clicked                                                                                                      |
+| `$(/l)` `$(/clip)` `$(/cmd)` | Stop current click event (link, clipboard or command)                                                                                         |
+| `$(t:tooltip)`               | Show `tooltip` as a tooltip when hovering                                                                                                     |
+| `$(/t)`                      | Stop current hover event (tooltip)                                                                                                            |
+| `$(f:font)`                  | Font, where `font` is a ResourceLocation                                                                                                      |
+| `$(/f)`                      | Revert back to default font                                                                                                                   |
+| `$(cl:mycategory)`           | Link to the specified category                                                                                                                |
+| `$(el:myentry)`              | Link to the specified entry                                                                                                                   |
+| `$()`                        | Reset all formatting                                                                                                                          |

@@ -1,0 +1,30 @@
+---
+title: Book JSON
+---
+
+A `book.json` file is what tells Modopedia the basic properties of a book such as the title, subtitle, type and many other properties. Without a `book.json`, Modopedia will not be aware of your book existing and therefore be unable to load it.
+
+### Datapack Location
+
+The `book.json` for your book should be located in a **datapack** at `data/<namespace>/modopedia/books/<book_id>.json` where `namespace` is the ID of your mod or namespace of your modpack and `book_id` is the ID of your book, both of these need to follow Minecraft's [ResourceLocation rules](https://minecraft.wiki/w/Resource_location). When referencing your book, for example on a book item, `namespace:book_id` should be used.
+
+## JSON Schema
+<Callout variant="warning">
+    Item models for Modopedia books need to be placed inside the **`item/modopedia_books`** folder in your resource pack to be loaded.
+</Callout>
+
+| ID            | Type             | Required | Default                                       | Description                                                                                                                                      |
+|---------------|------------------|----------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| title         | String           | &check;  | -                                             | Title of the book, supports translation keys.                                                                                                    |
+| subtitle      | String           | &cross;  | -                                             | Subtitle of the book, supports translation keys.                                                                                                 |
+| type          | BookType         | &cross;  | *                                             | Type of book, this is further explained in [Book Types](./book-types). It will default to the `modopedia:classic` type with it's default values. |
+| landing_text  | FString          | &cross;  | -                                             | Landing text displayed on the book's front page.                                                                                                 |
+| texture       | ResourceLocation | &cross;  | `modopedia:default`                           | GUI texture for this book. This is explained further in [Book Textures](./book-textures)                                                         |
+| model         | ResourceLocation | &cross;  | `modopedia:item/modopedia_books/book_default` | Item model for this book. **These models must be placed in `models/item/modopedia_books` for Modopedia to load them for you**.                   |
+| font          | ResourceLocation | &cross;  | `modopedia:default`                           | Default font for all formatted text in this book. Other options include `minecraft:default` and `minecraft:uniform`.                             |
+| text_colour   | HString          | &cross;  | "000000"                                      | Default colour for formatted text in this book.                                                                                                  |
+| header_colour | HString          | &cross;  | "000000"                                      | Default colour for headers in this book.                                                                                                         |
+| line_width    | Integer          | &cross;  | 100                                           | Default line width for formatted text in this book.                                                                                              |
+| creative_tab  | ResourceLocation | &cross;  | -                                             | Creative tab this book should be added to.                                                                                                       |
+| open_sound    | ResourceLocation | &cross;  | `modopedia:book_open`                         | Sound played when opening this book.                                                                                                             |
+| flip_sound    | ResourceLocation | &cross;  | `modopedia:book_flip`                         | Sound played when turning pages in this book.                                                                                                    |

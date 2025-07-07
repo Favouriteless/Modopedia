@@ -1,0 +1,26 @@
+{
+  "title": "Item Gallery",
+  "icon": { "id": "minecraft:writable_book" },
+  "assigned_items": [ "minecraft:diamond" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:item",
+          "row_max": 3,
+          "items": [
+            [ { "id": "minecraft:grass_block" } ],
+            [ { "id": "minecraft:crafting_table" } ],
+            [ { "id": "minecraft:diamond_block" } ],
+            [ { "id": "minecraft:ice" } ],
+            [ { "id": "minecraft:dirt" } ],
+            [ { "id": "minecraft:iron_ore" } ],
+            [ { "id": "minecraft:nether_gold_ore" } ],
+            [ { "id": "minecraft:furnace" } ],
+            [ { "id": "minecraft:anvil" } ]
+          ]
+        }
+      ]
+    }
+  ]
+}

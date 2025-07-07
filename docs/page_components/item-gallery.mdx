@@ -1,0 +1,21 @@
+---
+title: Item Gallery
+---
+**`modopedia:item`**
+
+---
+
+## Description
+Renders lists of ItemStacks on the page, cycling between each ItemStack in the list. If multiple lists are specified, they will be laid out in rows. You can get a column by setting the row width to 1.
+
+## Screenshot
+<Asset location="modopedia:page_components/item" width={580} height={364} />
+
+---
+
+## JSON Schema
+| ID      | Type          | Required | Default | Description                           |
+|---------|---------------|----------|---------|---------------------------------------|
+| items   | ItemStack[][] | &check;  | -       | Items to be displayed in the gallery. |
+| row_max | Integer       | &cross;  | MAX     | Maximum number of items per row.      |
+| padding | Integer       | &cross;  | 16      | Padding between items in the gallery. |

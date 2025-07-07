@@ -1,0 +1,23 @@
+---
+title: Image Gallery
+---
+**`modopedia:image`**
+
+---
+
+## Description
+Renders images from a resource pack. If multiple images are specified, the gallery will include small arrow buttons to change image.
+
+The image will be stretched or squished to fit the size of the image gallery.
+
+## Screenshot
+<Asset location="modopedia:page_components/image" width={580} height={364} />
+
+---
+
+## JSON Schema
+| ID     | Type               | Required | Default | Description                       |
+|--------|--------------------|----------|---------|-----------------------------------|
+| images | ResourceLocation[] | &check;  | -       | Images to be displayed.           |
+| width  | Integer            | &cross;  | 100     | Width of the images on the page.  |
+| height | Integer            | &cross;  | 100     | Height of the images on the page. |

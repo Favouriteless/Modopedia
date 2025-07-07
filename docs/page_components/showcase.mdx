@@ -1,0 +1,22 @@
+---
+title: Item Showcase
+---
+**`modopedia:showcase`**
+
+---
+
+## Description
+Renders a rotating view of a 3D item on the page. If multiple items or a tag are specified, the showcase will cycle between items.
+
+## Screenshot
+<Asset location="modopedia:page_components/showcase" width={580} height={364} />
+
+---
+
+## JSON Schema
+| ID     | Type        | Required | Default | Description                   |
+|--------|-------------|----------|---------|-------------------------------|
+| items  | ItemStack[] | &check;  | -       | Items to be rendered.         |
+| width  | Integer     | &cross;  | 100     | Width of the viewing window.  |
+| height | Integer     | &cross;  | 100     | Height of the viewing window. |
+| scale  | Float       | &cross;  | 1       | Scale of the item             |

@@ -31,6 +31,7 @@
     plugin-curseforge-gradle = "1.1.25"
     plugin-idea-ext = "1.1.8"
     plugin-mixin = "0.7.+"
+    plugin-wikitoolkit = "0.2.7"
 
 [libraries]
 # Common
@@ -63,6 +64,7 @@
 # Publishing
     minotaur = { id = "com.modrinth.minotaur", version.ref = "plugin-minotaur" }
     curseforgegradle = { id = "net.darkhax.curseforgegradle", version.ref = "plugin-curseforge-gradle" }
+    wikitoolkit = { id = "org.moddedmc.wiki.toolkit", version.ref = "plugin-wikitoolkit" }
 
 # Platform
     moddevgradle = { id = "net.neoforged.moddev", version.ref = "plugin-mod-dev-gradle" }

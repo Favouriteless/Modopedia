@@ -1,0 +1,37 @@
+---
+title: Categories
+---
+
+A Category is a collection of [entries](./entry-json) used to organise them. For example, a book about all of Minecraft could have a category called "Ores" containing entries about every ore in the game, and a description about what ores are on its landing page.
+
+### Resource Pack Location
+
+All categories for a content set should be located at `BASE_LOCATION/categories/<category_id>.json` where `category_id` will be the ID the category is referred to within this book. If you don't know what `BASE_LOCATION` is, refer to [here](./overview). Categories may be placed in a subfolder, in which case their ID will include the subfolder, e.g `my_subfolder/my_category`.
+
+### JSON Schema
+
+| ID                    | Type             | Required | Default | Description                                                              |
+|-----------------------|------------------|----------|---------|--------------------------------------------------------------------------|
+| title                 | String           | &check;  | -       | Title of the category.                                                   |
+| landing_text          | FString          | &cross;  | -       | Landing text displayed on the category's page.                           |
+| icon                  | ItemStack        | &cross;  | Grass   | ItemStack to use as the icon for this category.                          |
+| entries               | String[]         | &cross;  | -       | Entries this category contains, referred to by their ID.                 |
+| children              | String[]         | &cross;  | -       | Subcategories this category contains, referred to by their ID.           |
+| display_on_front_page | boolean          | &cross;  | true    | If false, this category will not display on the landing screen of books. |
+| advancement           | ResourceLocation | &cross;  | -       | ID of the advancement needed to unlock this category.                    |
+
+## Example Category JSON
+
+```json
+{
+  "title": "Test Category",
+  "icon": { "id": "minecraft:diamond" },
+  "landing_text": "This is a $(u)test$(/u) description for a category.",
+  "entries": [
+    "test_entry"
+  ],
+  "children": [
+    "other_category"
+  ]
+}
+```

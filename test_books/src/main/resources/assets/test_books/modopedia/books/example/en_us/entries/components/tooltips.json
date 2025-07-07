@@ -1,0 +1,17 @@
+{
+  "title": "Tooltips",
+  "icon": { "id": "minecraft:writable_book" },
+  "assigned_items": [ "minecraft:diamond" ],
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:tooltip",
+          "width": 100,
+          "height": 100,
+          "tooltip": [ "This text is displayed when the", "area is hovered over" ]
+        }
+      ]
+    }
+  ]
+}

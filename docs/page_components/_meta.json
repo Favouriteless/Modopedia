@@ -1,0 +1,17 @@
+{
+  "text-box.mdx": "Text Box",
+  "header.mdx": "Header",
+  "separator.mdx": "Separator",
+  "tooltip.mdx": "Tooltip Area",
+  "image-gallery.mdx": "Image Gallery",
+  "item-gallery.mdx": "Item Gallery",
+  "entity.mdx": "Entity Display",
+  "multiblock.mdx": "Multiblock Display",
+  "showcase.mdx": "Item Showcase",
+  "large-frame.mdx": "Large Frame",
+  "medium-frame.mdx": "Medium Frame",
+  "small-frame.mdx": "Small Frame",
+  "crafting-grid.mdx": "Crafting Grid",
+  "crafting-arrow.mdx": "Crafting Arrow",
+  "crafting-flame.mdx": "Crafting Flame"
+}

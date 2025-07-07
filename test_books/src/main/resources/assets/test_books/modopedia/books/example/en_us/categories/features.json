@@ -10,6 +10,9 @@
     "components/headers",
     "components/entities",
     "components/showcase",
-    "components/frames"
+    "components/frames",
+    "components/widgets",
+    "components/tooltips",
+    "components/items"
   ]
 }

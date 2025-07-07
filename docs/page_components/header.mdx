@@ -1,0 +1,24 @@
+---
+title: Header
+---
+**`modopedia:header`**
+
+---
+
+## Description
+Renders large, bold text used to denote the start of a page or section of a page. Pairs well with [Separators](./separator)
+
+## Screenshot
+<Asset location="modopedia:page_components/header" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+| ID        | Type    | Required | Default | Description                                              |
+|-----------|---------|----------|---------|----------------------------------------------------------|
+| text      | String  | &check;  | -       | Text to be displayed.                                    |
+| centered  | Boolean | &cross;  | true    | If true, header will center on page.                     |
+| colour    | HString | &cross;  | *       | Colour of header text. Defaults to book's header colour. |
+| bold      | Boolean | &cross;  | false   | If true, header will be bold.                            |
+| underline | Boolean | &cross;  | false   | If true, header will be underlined.                      |
