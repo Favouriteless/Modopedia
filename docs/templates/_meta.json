@@ -1,0 +1,16 @@
+{
+  "pages": {
+    "name": "Pages",
+    "icon": null
+  },
+  "recipes": {
+    "name": "Recipes",
+    "icon": null
+  },
+  "framed-item.mdx": "Framed Item Gallery",
+  "framed-image.mdx": "Framed Image Galleries",
+  "framed-multiblock.mdx": "Framed Multiblock Displays",
+  "framed-entity.mdx": "Framed Entity Displays",
+  "framed-showcase.mdx": "Framed Item Showcases",
+  "framed-crafting-grid.mdx": "Framed Crafting Grid"
+}

@@ -1,8 +1,4 @@
-- CHANGED: Datagen has had some small breaking changes, update your code.
-- CHANGED: Added hyphenated word-splitting exemptions for specific languages such as Chinese and Japanese.
-- CHANGED: PageComponents now have their language code passed in.
-- CHANGED: Books should now have an item added to the search tab even if you don't add them to another tab.
+- CHANGED: Cooking and double cooking page templates now use the title "Cooking Recipe" instead of "Recipe"
+- CHANGED: Entity/Multiblock page templates (and by extension block pages) now automatically set their width to the width of the page. The `width` field they use has been removed.
 
-- FIXED: Scale of Multiblock and Entity displays not having the same effect as expected.
-- FIXED: Word splitting loses a character
-- FIXED: Async ordering issue during book loading.
+- FIXED: Page Components which use a widget (e.g. image gallery buttons) do not create their widget when used as part of a template.

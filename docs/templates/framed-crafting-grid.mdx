@@ -1,0 +1,24 @@
+---
+title: Framed Crafting Grid
+---
+`modopedia:framed_crafting_grid`
+
+---
+
+## Description
+An **[Item Gallery](../page_components/item-gallery)** with a **[Crafting Grid](../page_components/crafting-grid)**. This template is placed so that the item gallery is at (0, 0), and the frame is automatically spaced to fit that.
+
+## Screenshots
+<Asset location="modopedia:templates/framed_crafting_grid" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the gallery itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
+| ID    | Type          | Required | Default | Description                                                                                                  |
+|-------|---------------|----------|---------|--------------------------------------------------------------------------------------------------------------|
+| items | ItemStack[][] | &check;  | -       | Items to be rendered. This is typically used for a crafting recipe, so empty slots should use an empty list. |

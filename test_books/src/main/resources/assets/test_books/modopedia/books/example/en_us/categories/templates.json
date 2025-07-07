@@ -8,9 +8,13 @@
     "templates/shapeless_recipe",
     "templates/framed_multiblocks",
     "templates/framed_entities",
+    "templates/framed_images",
     "templates/framed_showcases",
+    "templates/framed_crafting_grid",
+    "templates/framed_items",
     "templates/recipe_pages",
     "templates/multiblock_page",
+    "templates/entity_page",
     "templates/template_gallery",
     "templates/cooking_recipes"
   ],

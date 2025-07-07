@@ -1,0 +1,29 @@
+---
+title: Crafting Recipe Page
+---
+`modopedia:page/crafting` and `modopedia:page/double_crafting`
+
+---
+
+## Description
+A page displaying one or two **[Crafting Recipes](../recipes/crafting)** with a **[Header](../../page_components/header)** and **[Separator](../../page_components/separator)**. Includes a template processor which automatically vertically centers the crafting recipes on the page, accounting for the header and separator sizes.
+
+## Screenshots
+<Asset location="modopedia:templates/page/crafting_recipe" width={580} height={364} />
+
+---
+
+## JSON Schemas 
+
+### `modopedia:page/crafting`
+
+| ID     | Type   | Required | Default | Description                                                      |
+|--------|--------|----------|---------|------------------------------------------------------------------|
+| recipe | String | &check;  | -       | The recipe to show. Must be either a shaped or shapeless recipe. |
+
+### `modopedia:page/double_crafting`
+
+| ID      | Type   | Required | Default | Description                                                             |
+|---------|--------|----------|---------|-------------------------------------------------------------------------|
+| recipe1 | String | &check;  | -       | The first recipe to show. Must be either a shaped or shapeless recipe.  |
+| recipe2 | String | &check;  | -       | The second recipe to show. Must be either a shaped or shapeless recipe. |

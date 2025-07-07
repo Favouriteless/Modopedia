@@ -7,16 +7,6 @@
         {
           "template": "modopedia:recipe/cooking",
           "recipe": "minecraft:iron_ingot_from_smelting_iron_ore"
-        },
-        {
-          "template": "modopedia:recipe/cooking",
-          "recipe": "minecraft:iron_ingot_from_blasting_iron_ore",
-          "y": 40
-        },
-        {
-          "template": "modopedia:recipe/cooking",
-          "recipe": "minecraft:cooked_beef_from_smoking",
-          "y": 80
         }
       ]
     }

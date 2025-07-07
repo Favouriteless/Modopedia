@@ -1,0 +1,25 @@
+---
+title: Framed Image Galleries
+---
+`modopedia:large_framed_image` and `modopedia:medium_framed_image`
+
+---
+
+## Description
+An **[Image Gallery](../page_components/image-gallery)** with a **[Medium](../page_components/medium-frame)** or **[Large](../page_components/large-frame)** frame. This template is placed so that the image is at (0, 0), and the frame is automatically spaced to fit that.
+
+## Screenshots
+<Asset location="modopedia:templates/framed_image" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the image itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
+| ID     | Type               | Required | Default | Description                      |
+|--------|--------------------|----------|---------|----------------------------------|
+| images | ResourceLocation[] | &check;  | -       | Images to be displayed.          |
+| width  | Integer            | &cross;  | 100, 50 | Width of the images on the page. |

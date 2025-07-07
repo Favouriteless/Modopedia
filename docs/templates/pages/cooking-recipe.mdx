@@ -1,0 +1,29 @@
+---
+title: Cooking Recipe Page
+---
+`modopedia:page/cooking` and `modopedia:page/double_cooking`
+
+---
+
+## Description
+A page displaying one or two **[Cooking Recipes](../recipes/cooking)** with a **[Header](../../page_components/header)** and **[Separator](../../page_components/separator)**. Includes a template processor which automatically vertically centers the crafting recipes on the page, accounting for the header and separator sizes.
+
+## Screenshots
+<Asset location="modopedia:templates/page/cooking_recipe" width={580} height={364} />
+
+---
+
+## JSON Schemas 
+
+### `modopedia:page/cooking`
+
+| ID     | Type   | Required | Default | Description                                                                                 |
+|--------|--------|----------|---------|---------------------------------------------------------------------------------------------|
+| recipe | String | &check;  | -       | The recipe to show. Must be a cooking recipe variant such as smelting, smoking or blasting. |
+
+### `modopedia:page/double_cooking`
+
+| ID      | Type   | Required | Default | Description                                                                                        |
+|---------|--------|----------|---------|----------------------------------------------------------------------------------------------------|
+| recipe1 | String | &check;  | -       | The first recipe to show. Must be a cooking recipe variant such as smelting, smoking or blasting.  |
+| recipe2 | String | &check;  | -       | The second recipe to show. Must be a cooking recipe variant such as smelting, smoking or blasting. |

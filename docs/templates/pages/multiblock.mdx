@@ -1,0 +1,44 @@
+---
+title: Multiblock/Block
+---
+`modopedia:page/multiblock` and `modopedia:page/block`
+
+---
+
+## Description
+A page with a **[Multiblock Display](../../page_components/multiblock)** and **[Text Box](../../page_components/text-box)**. Includes a template processor which automatically positions the text box and multiblock display.
+
+The `modopedia:page/block` variant also includes a template processor which creates a simple multiblock from a BlockState, for ease of use.
+
+## Screenshots
+<Asset location="modopedia:templates/page/multiblock" width={580} height={364} />
+
+---
+
+## JSON Schemas
+
+### Shared
+
+| ID          | Type    | Required | Default | Description                                                                       |
+|-------------|---------|----------|---------|-----------------------------------------------------------------------------------|
+| text        | FString | &check;  | -       | Height of the multiblock display.                                                 |
+| text_offset | Integer | &cross;  | 0       | Y offset of the description text. In most cases you will not need to change this. |
+| height      | Integer | &cross;  | 100     | Height of the multiblock display.                                                 |
+| offset_x    | Float   | &cross;  | 0       | X viewing offset of the multiblock.                                               |
+| offset_y    | Float   | &cross;  | 0       | Y viewing offset of the multiblock.                                               |
+| scale       | Float   | &cross;  | 0       | Scale of the multiblock.                                                          |
+| view_angle  | Float   | &cross;  | 30      | X axis angle the multiblock will be viewed at. Default is isometric.              |
+
+### `modopedia:page/multiblock`
+
+| ID            | Type             | Required | Default | Description                                                                  |
+|---------------|------------------|----------|---------|------------------------------------------------------------------------------|
+| multiblock_id | ResourceLocation | *        | -       | ID of the multiblock to be rendered.                                         |
+| multiblock    | Multiblock       | *        | -       | Multiblock to be rendered. See **[here](../books/multiblocks)** for details. |
+| no_offsets    | Boolean          | &cross;  | false   | If true, blocks with an offset function (like flowers) will not be offset.   |
+
+### `modopedia:page/block`
+
+| ID    | Type        | Required | Default | Description                                                                                                            |
+|-------|-------------|----------|---------|------------------------------------------------------------------------------------------------------------------------|
+| block | BlockState* | &check;  | -       | BlockState to be displayed. This is in the same format as **[/setblock](https://minecraft.wiki/w/Commands/setblock)**. |

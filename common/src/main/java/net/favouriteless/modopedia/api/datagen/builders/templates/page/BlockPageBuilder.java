@@ -16,7 +16,6 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
     private final String text;
     private final Either<BlockState, String> block;
 
-    private Either<Integer, String> width;
     private Either<Integer, String> height;
     private Either<Integer, String> textOffset;
 
@@ -63,16 +62,6 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
     @Override
     public BlockPageBuilder y(String y) {
         return (BlockPageBuilder)super.y(y);
-    }
-
-    public BlockPageBuilder width(int width) {
-        this.width = Either.left(width);
-        return this;
-    }
-
-    public BlockPageBuilder width(String width) {
-        this.width = Either.right(width);
-        return this;
     }
 
     public BlockPageBuilder height(int height) {
@@ -143,8 +132,6 @@ public class BlockPageBuilder extends TemplateComponentBuilder {
             json.add("block", resolve(block, b -> BlockStateCodec.CODEC.encodeStart(ops, b).getOrThrow()));
         if(textOffset != null)
             json.add("text_offset", resolveNum(textOffset));
-        if(width != null)
-            json.add("width", resolveNum(width));
         if(height != null)
             json.add("height", resolveNum(height));
         if(offsetX != null)

@@ -1,0 +1,28 @@
+---
+title: Framed Item Gallery
+---
+`modopedia:framed_item`
+
+---
+
+## Description
+An **[Item Gallery](../page_components/item-gallery)** with a **[Small Frame](../page_components/small-frame)**. This template is placed so that the item gallery is at (0, 0), and the frame is automatically spaced to fit that.
+
+<Callout variant="warning">
+    A framed item gallery technically can render multiple item lists, but it is not supposed to. There will only be a frame on the first one.
+</Callout>
+
+## Screenshots
+<Asset location="modopedia:templates/framed_item" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the gallery itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
+| ID    | Type          | Required | Default | Description                      |
+|-------|---------------|----------|---------|----------------------------------|
+| items | ItemStack[][] | &check;  | -       | Items to be rendered.            |

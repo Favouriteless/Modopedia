@@ -1,0 +1,26 @@
+---
+title: Entity
+---
+`modopedia:page/entity`
+
+---
+
+## Description
+A page with an **[Entity Display](../../page_components/entity)** and **[Text Box](../../page_components/text-box)**. Includes a template processor which automatically positions the text box and entity display.
+
+## Screenshots
+<Asset location="modopedia:templates/page/entity" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+| ID          | Type             | Required | Default | Description                                                                       |
+|-------------|------------------|----------|---------|-----------------------------------------------------------------------------------|
+| text        | FString          | &check;  | -       | Height of the multiblock display.                                                 |
+| entity      | ResourceLocation | &check;  | -       | ID of the entity to be rendered.                                                  |
+| tag         | CompoundTag      | &cross;  | -       | NBT data to be applied to the entity.                                             |
+| offset_y    | Float            | &cross;  | 0       | Y viewing offset of the entity.                                                   |
+| text_offset | Integer          | &cross;  | 0       | Y offset of the description text. In most cases you will not need to change this. |
+| height      | Integer          | &cross;  | 100     | Height of the entity display.                                                     |
+

@@ -9,11 +9,9 @@
       "scale": "#scale",
       "template": "modopedia:page/multiblock",
       "text": "#text",
-      "view_angle": "#view_angle",
-      "width": "#width"
+      "view_angle": "#view_angle"
     }
   ],
   "height": 100,
-  "processor": "modopedia:block_multiblock",
-  "width": 100
+  "processor": "modopedia:block_multiblock"
 }

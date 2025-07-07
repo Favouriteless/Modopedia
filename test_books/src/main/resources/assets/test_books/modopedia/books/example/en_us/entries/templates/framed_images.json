@@ -1,0 +1,22 @@
+{
+  "title": "Framed Images",
+  "icon": { "id": "minecraft:diamond" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:large_framed_image",
+          "images": [ "test_books:textures/gui/test_image_0.png", "test_books:textures/gui/test_image_1.png" ]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "template": "modopedia:medium_framed_image",
+          "images": [ "test_books:textures/gui/test_image_1.png", "test_books:textures/gui/test_image_0.png" ]
+        }
+      ]
+    }
+  ]
+}

@@ -7,19 +7,16 @@
       "offset_y": "#offsetY",
       "scale": "#scale",
       "tag": "#tag",
-      "width": "#width",
-      "x": "#p_x"
+      "width": "#p_width"
     },
     {
       "type": "modopedia:text",
       "justify": "center",
       "text": "#text",
-      "width": "#width",
-      "x": "#p_x",
+      "width": "#p_width",
       "y": "#p_text_y"
     }
   ],
   "height": 100,
-  "processor": "modopedia:description_page",
-  "width": 100
+  "processor": "modopedia:description_page"
 }

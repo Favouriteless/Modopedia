@@ -2,7 +2,7 @@
   "components": [
     {
       "type": "modopedia:header",
-      "text": "template.modopedia.recipe"
+      "text": "template.modopedia.cooking_recipe"
     },
     {
       "type": "modopedia:separator",

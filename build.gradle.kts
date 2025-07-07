@@ -7,7 +7,6 @@ plugins {
 }
 
 subprojects {
-
     repositories {
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") { name = "Fuzs Mod Resources" }
         maven("https://maven.blamejared.com/") { name = "Jared's maven" }
@@ -18,7 +17,6 @@ subprojects {
 wiki {
     docs.create("modopedia") {
         root = file("docs")
+        wikiAccessToken = System.getenv("WIKI_TOKEN")
     }
-
-    wikiAccessToken = System.getenv("MODDEDMC_WIKI_TOKEN")
 }

@@ -13,7 +13,6 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
     public static final ResourceLocation ID = Modopedia.id("page/multiblock");
 
     private final String text;
-    private Either<Integer, String> width;
     private Either<Integer, String> height;
     private Either<Integer, String> textOffset;
 
@@ -71,16 +70,6 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
 
     public MultiblockPageBuilder multiblockId(String multiblock) {
         this.multiblockId = Either.right(multiblock);
-        return this;
-    }
-
-    public MultiblockPageBuilder width(int width) {
-        this.width = Either.left(width);
-        return this;
-    }
-
-    public MultiblockPageBuilder width(String width) {
-        this.width = Either.right(width);
         return this;
     }
 
@@ -159,8 +148,6 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
         json.add("text", new JsonPrimitive(text));
         if(textOffset != null)
             json.add("text_offset", resolveNum(textOffset));
-        if(width != null)
-            json.add("width", resolveNum(width));
         if(height != null)
             json.add("height", resolveNum(height));
         if(multiblock != null)

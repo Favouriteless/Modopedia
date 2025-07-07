@@ -1,19 +1,24 @@
 ---
-title: Multiblock Display
+title: Framed Multiblock Displays
 ---
-**`modopedia:multiblock`**
+`modopedia:large_framed_multiblock` and `modopedia:medium_framed_multiblock`
 
 ---
 
 ## Description
-Renders a rotating view of a **[multiblock](../books/multiblock)** on the page.
+A **[Multiblock Display](../page_components/multiblock)** with a **[Medium](../page_components/medium-frame)** or **[Large](../page_components/large-frame)** frame. This template is placed so that the multiblock is at (0, 0), and the frame is automatically spaced to fit that.
 
-## Screenshot
-<Asset location="modopedia:page_components/multiblock" width={580} height={364} />
+## Screenshots
+<Asset location="modopedia:templates/framed_multiblock" width={580} height={364} />
 
 ---
 
 ## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the multiblock itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
 <Callout variant="warning">
     Must have either **`multiblock_id` or `multiblock`**, if both are present the ID will be prioritised.
 </Callout>
@@ -22,8 +27,7 @@ Renders a rotating view of a **[multiblock](../books/multiblock)** on the page.
 |---------------|------------------|----------|---------|------------------------------------------------------------------------------|
 | multiblock_id | ResourceLocation | *        | -       | ID of the multiblock to be rendered.                                         |
 | multiblock    | Multiblock       | *        | -       | Multiblock to be rendered. See **[here](../books/multiblocks)** for details. |
-| width         | Integer          | &cross;  | 100     | Width of the viewing window.                                                 |
-| height        | Integer          | &cross;  | 100     | Height of the viewing window.                                                |
+| width         | Integer          | &cross;  | 100, 50 | Width of the images on the page.                                             |
 | offset_x      | Float            | &cross;  | 0       | X viewing offset of the multiblock.                                          |
 | offset_y      | Float            | &cross;  | 0       | Y viewing offset of the multiblock.                                          |
 | scale         | Float            | &cross;  | 0       | Scale of the multiblock.                                                     |

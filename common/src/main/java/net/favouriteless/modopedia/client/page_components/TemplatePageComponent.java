@@ -6,6 +6,7 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.api.registries.client.TemplateRegistry;
 import net.favouriteless.modopedia.book.PageComponentHolder;
 import net.favouriteless.modopedia.book.variables.RemoteVariable;
@@ -54,6 +55,13 @@ public class TemplatePageComponent extends PageComponent {
             component.render(graphics, context, mouseX - x, mouseY - y, partialTick);
         }
         poseStack.popPose();
+    }
+
+    @Override
+    public void initWidgets(PageWidgetHolder holder, BookRenderContext context) {
+        for(PageComponent component : this.holder.getComponents()) {
+            component.initWidgets(holder, context);
+        }
     }
 
     @Override

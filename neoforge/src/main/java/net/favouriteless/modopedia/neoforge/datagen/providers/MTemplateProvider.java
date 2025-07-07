@@ -282,7 +282,7 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
-                        HeaderBuilder.of(Modopedia.translation("template", "recipe")),
+                        HeaderBuilder.of(Modopedia.translation("template", "cooking_recipe")),
                         SeparatorBuilder.of().y(10),
                         CookingRecipeBuilder.of("#recipe")
                                 .y("#p_vertical_y1")
@@ -295,7 +295,7 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(VerticalSpacingProcessor.ID)
                 .components(
-                        HeaderBuilder.of(Modopedia.translation("template", "recipe")),
+                        HeaderBuilder.of(Modopedia.translation("template", "cooking_recipe")),
                         SeparatorBuilder.of().y(10),
                         CookingRecipeBuilder.of("#recipe1")
                                 .y("#p_vertical_y1"),
@@ -311,10 +311,9 @@ public class MTemplateProvider extends TemplateProvider {
                 .processor(DescriptionPageProcessor.ID)
                 .components(
                         MultiblockBuilder.of()
-                                .x("#p_x")
                                 .multiblock("#multiblock")
                                 .multiblockId("#multiblock_id")
-                                .width("#width")
+                                .width("#p_width")
                                 .height("#height")
                                 .offsetX("#offset_x")
                                 .offsetY("#offset_y")
@@ -322,11 +321,10 @@ public class MTemplateProvider extends TemplateProvider {
                                 .viewAngle("#view_angle")
                                 .noOffsets("#no_offsets"),
                         TextBuilder.of("#text")
-                                .x("#p_x").y("#p_text_y")
-                                .width("#width")
+                                .y("#p_text_y")
+                                .width("#p_width")
                                 .justify(Justify.CENTER)
                 )
-                .defaultValue("width", 100)
                 .defaultValue("height", 100)
                 .build(MultiblockPageBuilder.ID.getPath(), output);
 
@@ -335,7 +333,6 @@ public class MTemplateProvider extends TemplateProvider {
                 .components(
                         MultiblockPageBuilder.of("#text")
                                 .multiblock("#p_multiblock")
-                                .width("#width")
                                 .height("#height")
                                 .offsetX("#offset_x")
                                 .offsetY("#offset_y")
@@ -343,7 +340,6 @@ public class MTemplateProvider extends TemplateProvider {
                                 .viewAngle("#view_angle")
                                 .noOffsets(true)
                 )
-                .defaultValue("width", 100)
                 .defaultValue("height", 100)
                 .build(BlockPageBuilder.ID.getPath(), output);
 
@@ -351,18 +347,16 @@ public class MTemplateProvider extends TemplateProvider {
                 .processor(DescriptionPageProcessor.ID)
                 .components(
                         EntityBuilder.of("#entity")
-                                .x("#p_x")
                                 .tag("#tag")
-                                .width("#width")
+                                .width("#p_width")
                                 .height("#height")
                                 .scale("#scale")
                                 .offsetY("#offsetY"),
                         TextBuilder.of("#text")
-                                .x("#p_x").y("#p_text_y")
-                                .width("#width")
+                                .y("#p_text_y")
+                                .width("#p_width")
                                 .justify(Justify.CENTER)
                 )
-                .defaultValue("width", 100)
                 .defaultValue("height", 100)
                 .build(EntityPageBuilder.ID.getPath(), output);
     }

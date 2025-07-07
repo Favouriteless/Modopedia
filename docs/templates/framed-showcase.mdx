@@ -1,0 +1,26 @@
+---
+title: Framed Item Showcases
+---
+`modopedia:large_framed_showcase` and `modopedia:medium_framed_showcase`
+
+---
+
+## Description
+An **[Item Showcase](../page_components/showcase)** with a **[Medium](../page_components/medium-frame)** or **[Large](../page_components/large-frame)** frame. This template is placed so that the showcase is at (0, 0), and the frame is automatically spaced to fit that.
+
+## Screenshots
+<Asset location="modopedia:templates/framed_showcase" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the showcase itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
+| ID    | Type        | Required | Default | Description                      |
+|-------|-------------|----------|---------|----------------------------------|
+| items | ItemStack[] | &check;  | -       | Items to be rendered.            |
+| width | Integer     | &cross;  | 100, 50 | Width of the images on the page. |
+| scale | Float       | &cross;  | 1       | Scale of the item                |

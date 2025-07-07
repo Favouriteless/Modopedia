@@ -1,0 +1,14 @@
+{
+  "title": "Framed Items",
+  "icon": { "id": "minecraft:diamond" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:framed_item",
+          "items": [[ { "id": "minecraft:diamond_sword" } ]]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+---
+title: Framed Entity Displays
+---
+`modopedia:large_framed_entity` and `modopedia:medium_framed_entity`
+
+---
+
+## Description
+A **[Entity Display](../page_components/entity)** with a **[Medium](../page_components/medium-frame)** or **[Large](../page_components/large-frame)** frame. This template is placed so that the multiblock is at (0, 0), and the frame is automatically spaced to fit that.
+
+## Screenshots
+
+<Asset location="modopedia:templates/framed_entity" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+<Callout variant="warning">
+    Changing `width` will not scale the size of the frame widgets, it will only change the size of the multiblock itself. If you want a different sized frame, you'll have to make one yourself.
+</Callout>
+
+| ID       | Type             | Required | Default | Description                           |
+|----------|------------------|----------|---------|---------------------------------------|
+| entity   | ResourceLocation | &check;  | -       | ID of the entity to be rendered.      |
+| tag      | CompoundTag      | &cross;  | -       | NBT data to be applied to the entity. |
+| width    | Integer          | &cross;  | 100, 50 | Width of the viewing window.          |
+| offset_y | Float            | &cross;  | 0       | Y viewing offset of the entity.       |

@@ -7,6 +7,10 @@
     "name": "Page Components",
     "icon": "Component"
   },
+  "templates": {
+    "name": "Templates",
+    "icon": "ClipboardList"
+  },
   "mod_developers": {
     "name": "Mod Development",
     "icon": "FolderCode"

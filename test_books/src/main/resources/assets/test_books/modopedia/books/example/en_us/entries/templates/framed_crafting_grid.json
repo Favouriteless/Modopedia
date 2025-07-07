@@ -1,0 +1,20 @@
+{
+  "title": "Framed Crafting Grids",
+  "icon": { "id": "minecraft:diamond" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:framed_crafting_grid",
+          "items": [
+            [ { "id": "minecraft:diamond_sword" } ],
+            [ { "id": "minecraft:diamond_pickaxe" } ],
+            [ { "id": "minecraft:diamond_axe" } ],
+            [ { "id": "minecraft:diamond_shovel" } ],
+            [ { "id": "minecraft:diamond_hoe" } ]
+          ]
+        }
+      ]
+    }
+  ]
+}

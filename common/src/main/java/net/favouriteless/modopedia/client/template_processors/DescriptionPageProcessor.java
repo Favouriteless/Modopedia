@@ -20,11 +20,10 @@ public class DescriptionPageProcessor implements TemplateProcessor {
         BookTexture texture = BookTextureRegistry.get().getTexture(book.getTexture());
         Rectangle page = texture.pages().get(lookup.get("page_num").asInt() % texture.pages().size());
 
-        int width = lookup.get("width").asInt();
         int height = lookup.get("height").asInt();
         int yOff = lookup.getOrDefault("text_offset", 0).asInt();
 
-        lookup.set("p_x", Variable.of((page.width() - width) / 2));
+        lookup.set("p_width", Variable.of(page.width()));
         lookup.set("p_text_y", Variable.of(height + yOff));
     }
 

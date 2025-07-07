@@ -1,0 +1,28 @@
+---
+title: Headered Text Page
+---
+`modopedia:page/headered_text`
+
+---
+
+## Description
+A **[Header](../../page_components/header)**, **[Separator](../../page_components/separator)** and **[Text Box](../../page_components/text-box)** for displaying a standard "text page". Includes a template processor which will automatically position the text box to be in the correct place according to separator size.
+
+## Screenshots
+<Asset location="modopedia:templates/page/headered_text" width={580} height={364} />
+
+---
+
+## JSON Schema
+
+| ID          | Type    | Required | Default | Description                                                                           |
+|-------------|---------|----------|---------|---------------------------------------------------------------------------------------|
+| header      | String  | &check;  | -       | Header text to be displayed.                                                          |
+| centered    | Boolean | &cross;  | true    | If true, header will center on page.                                                  |
+| colour      | HString | &cross;  | *       | Colour of header text. Defaults to book's header colour.                              |
+| bold        | Boolean | &cross;  | false   | If true, header will be bold.                                                         |
+| underline   | Boolean | &cross;  | false   | If true, header will be underlined.                                                   |
+| text        | FString | &check;  | -       | Text to be displayed.                                                                 |
+| width       | Integer | &cross;  | *       | Width at which lines of text will wrap. Defaults to the book's line width.            |
+| line_height | String  | &cross;  | 9       | Spacing between lines of text.                                                        |
+| justify     | *       | &cross;  | `left`  | Margin text inside the box should be justified on. Can be `left`, `center` or `right` |

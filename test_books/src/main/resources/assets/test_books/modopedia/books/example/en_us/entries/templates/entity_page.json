@@ -1,0 +1,15 @@
+{
+  "title": "Entity Page",
+  "icon": { "id": "minecraft:beacon" },
+  "pages": [
+    {
+      "components": [
+        {
+          "template": "modopedia:page/entity",
+          "entity": "minecraft:cat",
+          "text": "This is my cat $(c:gold)Jasper$(). He is a very good boy."
+        }
+      ]
+    }
+  ]
+}
