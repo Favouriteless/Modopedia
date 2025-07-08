@@ -1,4 +1,4 @@
-- CHANGED: Cooking and double cooking page templates now use the title "Cooking Recipe" instead of "Recipe"
-- CHANGED: Entity/Multiblock page templates (and by extension block pages) now automatically set their width to the width of the page. The `width` field they use has been removed.
+- CHANGED: Updated Chinese localisation.
 
-- FIXED: Page Components which use a widget (e.g. image gallery buttons) do not create their widget when used as part of a template.
+- FIXED: Creative menu crash from having a book registered twice. Oops.
+- FIXED: Datagen builders do not create their registryops in the correct way.

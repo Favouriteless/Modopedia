@@ -4,6 +4,7 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.common.CommonConfig;
+import net.favouriteless.modopedia.common.CommonEvents;
 import net.favouriteless.modopedia.common.ServerConfig;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.favouriteless.modopedia.common.init.MItems;
@@ -11,6 +12,7 @@ import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTab.TabVisibility;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
@@ -52,15 +54,7 @@ public class ModopediaNeo {
 
     @SubscribeEvent
     public static void onTabContents(final BuildCreativeModeTabContentsEvent event) {
-        for(Book book : BookRegistry.get().getBooks()) {
-            ResourceKey<CreativeModeTab> key = event.getTabKey();
-            if(!key.equals(book.getCreativeTab()) && !key.equals(CreativeModeTabs.SEARCH))
-                continue;
-
-            ItemStack item = new ItemStack(MItems.BOOK.get(), 1);
-            item.set(MDataComponents.BOOK, BookRegistry.get().getId(book));
-            event.accept(item);
-        }
+        CommonEvents.onTabContents(event.getTabKey(), i -> event.accept(i, TabVisibility.PARENT_TAB_ONLY));
     }
 
 }
