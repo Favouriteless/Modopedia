@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.common.datagen.builders;
+package net.favouriteless.modopedia.api.datagen.builders.page_components;
 
 import net.favouriteless.modopedia.api.datagen.builders.PageComponentBuilder;
 import net.minecraft.resources.ResourceLocation;

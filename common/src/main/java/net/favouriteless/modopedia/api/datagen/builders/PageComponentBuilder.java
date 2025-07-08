@@ -51,7 +51,7 @@ public abstract class PageComponentBuilder implements BookContentBuilder {
     }
 
     @Override
-    public JsonElement build(RegistryOps<JsonElement> ops) {
+    public final JsonElement build(RegistryOps<JsonElement> ops) {
         JsonObject json = new JsonObject();
 
         if(type != null)

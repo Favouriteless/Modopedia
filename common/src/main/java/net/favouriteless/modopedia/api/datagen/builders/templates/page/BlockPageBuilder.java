@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
-import net.favouriteless.modopedia.common.datagen.builders.TemplateComponentBuilder;
+import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
 
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.state.BlockState;

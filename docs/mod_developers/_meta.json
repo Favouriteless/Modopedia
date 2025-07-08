@@ -1,4 +1,5 @@
 {
+  "environment-setup.mdx": "Environment Setup",
   "datagen.mdx": "Data Generation",
   "template-processors.mdx": "Template Processors",
   "custom-page-components.mdx": "Custom Page Components",

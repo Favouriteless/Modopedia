@@ -1,6 +1,101 @@
 ---
 title: Data Generation
 ---
-<Callout variant="danger">
-    This article is still being written. Please refer to the javadocs in the API package for some basic datagen examples, it should be fairly easy to understand.
+<Callout variant="warning">
+    This page is about the recommended method to add datagen support for custom content, it is not about how to use the existing builders and providers. There are too many builders to document them all here, and it would not be reasonable or helpful to do so. You can check the examples in the **`net.favouriteless.modopedia.api.datagen.example`** package.
 </Callout>
+---
+
+If you have added your own **[Custom Page Components](./custom-page-components) or **[Templates](../books/templates)**, it is a good idea to create datagen builders for these to prevent any mistakes.
+
+## Custom Page Components
+All builders for **[Page Components](../books/page-components)** need to extend `PageComponentBuilder`, which handles the type and position of the generated `JsonElement`, as well as providing a few useful utility methods for generating your `JsonElement`.
+
+Values inside your component need to support **[Variables](../books/templates.mdx)**, so any non-string fields need to be implemented as an `Either<T, String>`. You can look at Modopedia's built-in builders to see how this is handled.
+
+<details>
+<summary>**Example Page Component Builder**</summary>
+
+```java
+public class ImageBuilder extends PageComponentBuilder {
+
+    private final Either<List<ResourceLocation>, String> images;
+    private Either<Integer, String> width;
+    private Either<Integer, String> height;
+
+    private ImageBuilder(String images) { // This constructor is for a variable
+        super(ImagePageComponent.ID);
+        this.images = Either.right(images);
+    }
+
+    private ImageBuilder(ResourceLocation... images) { // This constructor is for a value
+        super(ImagePageComponent.ID);
+        this.images = Either.left(Arrays.asList(images));
+    }
+
+    public static ImageBuilder of(ResourceLocation... images) {
+        return new ImageBuilder(images);
+    }
+
+    public static ImageBuilder of(String images) {
+        return new ImageBuilder(images);
+    }
+
+    @Override
+    public ImageBuilder x(int x) {
+        return (ImageBuilder)super.x(x);
+    }
+
+    @Override
+    public ImageBuilder x(String x) {
+        return (ImageBuilder)super.x(x);
+    }
+
+    @Override
+    public ImageBuilder y(int y) {
+        return (ImageBuilder)super.y(y);
+    }
+
+    @Override
+    public ImageBuilder y(String y) {
+        return (ImageBuilder)super.y(y);
+    }
+
+    public ImageBuilder width(int width) {
+        this.width = Either.left(width);
+        return this;
+    }
+
+    public ImageBuilder width(String width) {
+        this.width = Either.right(width);
+        return this;
+    }
+
+    public ImageBuilder height(int height) {
+        this.height = Either.left(height);
+        return this;
+    }
+
+    public ImageBuilder height(String height) {
+        this.height = Either.right(height);
+        return this;
+    }
+
+    @Override
+    protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
+        // We use the helper methods in PageComponentBuilder to resolve the eithers easily.
+        json.add("images", resolve(images, l -> ResourceLocation.CODEC.listOf().encodeStart(ops, l).getOrThrow()));
+
+        if(width != null)
+            json.add("width", resolveNum(width));
+        if(height != null)
+            json.add("height", resolveNum(height));
+    }
+
+}
+```
+
+</details>
+
+### Custom Templates
+Builders for **[Templates](../books/templates)** are actually children of `PageComponentBuilder`. The template JSON is generated in a `TemplateProvider`, not requiring a custom builder, but you do need a builder for when the template is used. This should extend `TemplateComponentBuilder`, which does the same thing as `PageComponentBuilder` but swaps out the `type` field for a `template` field.

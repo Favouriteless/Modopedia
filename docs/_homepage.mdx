@@ -25,16 +25,16 @@ features an extensive API and a wide range of out-of-the-box content.
 
 ### Installation
 
-If you're a user or modpack developer, please refer to Modopedia's [CurseForge](https://www.curseforge.com/minecraft/mc-mods/modopedia) or [Modrinth](https://modrinth.com/mod/modopedia) pages.
+If you're a user or modpack developer, please refer to Modopedia's **[CurseForge](https://www.curseforge.com/minecraft/mc-mods/modopedia)** or **[Modrinth](https://modrinth.com/mod/modopedia)** pages.
 
-For mod developers, go to [[Environment Setup]]
+For mod developers, go to **[Environment Setup](./mod_developers/environment-setup)**
 
 ### Prerequisites
 
 This documentation expects you to have passing knowledge of a few prerequisites before attempting to use the mod:
 
 * A decent text editor, for example Visual Studio Code. I highly advise against using something like Notepad as it won't have support for JSON syntax highlighting.
-* Knowledge of the basic structure of Minecraft's [Datapacks](https://minecraft.wiki/w/Data_pack) and [Resource Packs](https://minecraft.wiki/w/Resource_pack).
+* Knowledge of the basic structure of Minecraft's **[Datapacks](https://minecraft.wiki/w/Data_pack)** and **[Resource Packs](https://minecraft.wiki/w/Resource_pack)**.
 * Knowledge of basic JSON syntax.
 
 <details>
@@ -48,14 +48,14 @@ This documentation expects you to have passing knowledge of a few prerequisites 
 
 Some components will use non-JSON data types with their own restrictions and rules such as FString or HString. These types are as follows:
 
-| Type    | Description                                                                                                    |
-|---------|----------------------------------------------------------------------------------------------------------------|
-| FString | Formattable String, this is a string which supports Modopedia's [[Text Formatting]] tags.                      |
-| HString | Hex String, a 6 digit hexadecimal number represented as a string, without a hash. e.g, "FF0000" is bright red. |
-| *[]     | Any data type followed by [] is an array of that type.                                                         |
+| Type    | Description                                                                                                               |
+|---------|---------------------------------------------------------------------------------------------------------------------------|
+| FString | Formattable String, this is a string which supports Modopedia's **[Text Formatting](./docs/books/text-formatting)** tags. |
+| HString | Hex String, a 6 digit hexadecimal number represented as a string, without a hash. e.g, "FF0000" is bright red.            |
+| *[]     | Any data type followed by [] is an array of that type.                                                                    |
 
 If the default value of a field is marked as an asterisk *, check the description as it isn't as simple as just a value.
 
-### Create your first Book
+### Creating your first Book
 
-After installing the mod, head over to [Creating a Book](https://github.com/Favouriteless/Modopedia/wiki/Creating-a-Book) to start working on your first book.
+After installing the mod, head over [here](./docs/books/overview) to start working on your first book.

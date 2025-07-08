@@ -1,0 +1,101 @@
+---
+title: Environment Setup
+---
+---
+
+## Installation
+
+Including Modopedia in your project is a simple process-- you just need to insert a couple lines into your build.gradle(.kts) file.
+
+First, add the maven repository to your `build.gradle(.kts)` file.
+
+<CodeTabs>
+
+```groovy !!tabs Groovy
+// This is the repositories block in your build.gradle. NOT the one in publishing, or in buildscript. If it does not exist already, create it.
+repositories {
+	maven {
+		name = 'Favouriteless Maven'
+		url 'https://maven.favouriteless.net/releases'
+	}
+}
+```
+
+```kotlin !!tabs Kotlin
+// This is the repositories block in your build.gradle. NOT the one in publishing, or in buildscript. If it does not exist already, create it.
+repositories {
+	maven("https://maven.favouriteless.net/releases") { name = 'Favouriteless Maven' }
+}
+```
+
+</CodeTabs>
+
+Then, add Modopedia to the dependencies block in your `build.gradle(.kts)`. This will be different depending on platform
+
+<details>
+<summary>NeoForge</summary>
+
+<CodeTabs>
+
+```groovy !!tabs Groovy
+dependencies {
+    implementation "net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}"
+}
+```
+
+```kotlin !!tabs Kotlin
+dependencies {
+    implementation("net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}")
+}
+```
+
+</CodeTabs>
+
+</details>
+<details>
+<summary>Fabric</summary>
+
+<CodeTabs>
+
+```groovy !!tabs Groovy
+dependencies {
+    implementation "net.favouriteless.modopedia:modopedia-fabric-${minecraft_version}:${modopedia_version}"
+}
+```
+
+```kotlin !!tabs Kotlin
+dependencies {
+    implementation("net.favouriteless.modopedia:modopedia-fabric-${minecraft_version}:${modopedia_version}")
+}
+```
+
+</CodeTabs>
+
+</details>
+<details>
+<summary>Multiloader</summary>
+
+Modopedia provides a `common` jar for multiloader projects. Follow the individual steps for NeoForge and Fabric in their respective subprojects and add the common jar to your common subproject.
+
+<CodeTabs>
+
+```groovy !!tabs Groovy
+dependencies {
+    implementation "net.favouriteless.modopedia:modopedia-common-${minecraft_version}:${modopedia_version}"
+}
+```
+
+```kotlin !!tabs Kotlin
+dependencies {
+    implementation("net.favouriteless.modopedia:modopedia-common-${minecraft_version}:${modopedia_version}")
+}
+```
+
+</CodeTabs>
+
+</details>
+
+Lastly, add a `modopedia_version` property to your `gradle.properties` file. The latest release versions for Modopedia can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/modopedia) and [Modrinth](https://modrinth.com/mod/modopedia).
+```groovy
+modopedia_version=1.0.0
+```

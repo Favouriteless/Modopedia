@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.common.datagen.builders;
 import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 
+import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
 import net.minecraft.resources.*;
 
 public class DoubleRecipeTemplateBuilder extends TemplateComponentBuilder {

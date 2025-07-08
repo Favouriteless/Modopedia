@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ImageBuilder extends PageComponentBuilder {
 
-    protected Either<List<ResourceLocation>, String> images;
+    private final Either<List<ResourceLocation>, String> images;
     private Either<Integer, String> width;
     private Either<Integer, String> height;
 
