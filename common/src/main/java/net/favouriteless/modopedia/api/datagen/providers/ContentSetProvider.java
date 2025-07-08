@@ -54,7 +54,7 @@ public abstract class ContentSetProvider implements DataProvider {
         final Set<String> categories = Sets.newHashSet();
 
         final List<CompletableFuture<?>> futures = new ArrayList<>();
-        RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, registries);
+        RegistryOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
 
         buildEntries(registries, (id, builder) -> {
             if(!entries.add(id))
