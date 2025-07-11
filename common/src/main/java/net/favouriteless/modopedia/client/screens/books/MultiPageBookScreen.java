@@ -80,6 +80,23 @@ public abstract class MultiPageBookScreen extends BookScreen {
     }
 
     @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button))
+            return true;
+        for(int i = 0; i < texture.pages().size() && leftPage+i < pages.size(); i++) {
+            ScreenPage page = pages.get(leftPage + i);
+            Rectangle details = texture.pages().get(i);
+
+            int xShift = leftPos + details.u();
+            int yShift = topPos + details.v();
+            if (page.mouseClicked(details, mouseX - xShift, mouseY - yShift, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         for(ScreenPage page : pages) {

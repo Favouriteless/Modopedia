@@ -36,6 +36,10 @@ public abstract class ScreenPage {
      */
     public abstract void render(GuiGraphics graphics, PoseStack poseStack, Rectangle dimensions, int mouseX, int mouseY, float partialTick);
 
+    public boolean mouseClicked(Rectangle rectangle, double mouseX, double mouseY, int button) {
+        return false;
+    }
+
     public void hideWidgets() {
         for(AbstractWidget widget : widgets) {
             widget.visible = false;
