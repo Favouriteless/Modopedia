@@ -58,12 +58,20 @@ public class LandingScreenPage extends FormattedTextPage {
         }
 
         poseStack.pushPose();
-        poseStack.translate(0, (backer.y() + backer.height()) - rectangle.v(), 0);
+        final var yShift = (backer.y() + backer.height()) - rectangle.v();
+        poseStack.translate(0, yShift, 0);
 
-        super.render(graphics, poseStack, rectangle, mouseX, mouseY, partialTick);
+        super.render(graphics, poseStack, rectangle, mouseX, mouseY - yShift, partialTick);
 
         poseStack.popPose();
 
     }
 
+    @Override
+    public boolean mouseClicked(Rectangle rectangle, double mouseX, double mouseY, int button) {
+        BookTexture texture = parent.getBookTexture();
+        FixedRectangle backer = texture.titleBacker();
+        final var yShift = (backer.y() + backer.height()) - rectangle.v();
+        return super.mouseClicked(rectangle, mouseX, mouseY - yShift, button);
+    }
 }

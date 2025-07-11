@@ -28,6 +28,13 @@ public class FormattedTextPage extends ScreenPage {
         }
     }
 
-
-
+    @Override
+    public boolean mouseClicked(Rectangle rectangle, double mouseX, double mouseY, int button) {
+        for (TextChunk chunk : landingText) {
+            if (chunk.mouseClicked(this.parent.getScreen(), mouseX - textX, mouseY - textY, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
