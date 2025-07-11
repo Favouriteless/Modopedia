@@ -2,22 +2,20 @@ package net.favouriteless.modopedia.client.multiblock.state_matchers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet.Named;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class TagStateMatcher implements StateMatcher {
+
+    public static final ResourceLocation ID = Modopedia.id("tag");
 
     public static final MapCodec<TagStateMatcher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(TagStateMatcher::getTag)

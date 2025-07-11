@@ -1,18 +1,11 @@
 package net.favouriteless.modopedia.client.page_components;
 
 import com.google.common.reflect.TypeToken;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
-import net.favouriteless.modopedia.book.StudyManager;
-import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry.EntryAssociation;
-import net.favouriteless.modopedia.client.BookOpenHandler;
-import net.favouriteless.modopedia.client.init.MKeyMappings;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +13,10 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
+/**
+ * @deprecated Use {@link ItemGalleryPageComponent} instead.
+ */
+@Deprecated(since = "1.1.0", forRemoval = true)
 public class ItemPageComponent extends PageComponent {
 
     public static final ResourceLocation ID = Modopedia.id("item");
@@ -45,7 +42,6 @@ public class ItemPageComponent extends PageComponent {
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, context, mouseX, mouseY, partialTick);
-        Font font = Minecraft.getInstance().font;
 
         int yOff = -padding; // Start at -padding because it'll get increased on 0
         for(int i = 0; i < items.size(); i++) {
@@ -64,25 +60,12 @@ public class ItemPageComponent extends PageComponent {
             if(centered)
                 x -= rowWidth/2;
 
-            ItemStack stack = itemList.get((context.getTicks() / 20) % itemList.size());
+            ItemStack item = itemList.get((context.getTicks() / 20) % itemList.size());
 
-            if(stack.isEmpty())
+            if(item.isEmpty())
                 continue;
 
-            graphics.renderItem(stack, x, y);
-            graphics.renderItemDecorations(font, stack, x, y);
-
-            if(context.isHovered(mouseX, mouseY, x, y, 16, 16)) {
-                graphics.renderTooltip(font, stack, mouseX, mouseY);
-
-                String langCode = Minecraft.getInstance().options.languageCode;
-                EntryAssociation association = StudyManager.getAssociation(langCode, stack.getItem());
-                if(association != null && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue())) {
-                    if(association.entryId().equals(entryId))
-                        return;
-                    BookOpenHandler.tryOpenEntry(association.book(), association.entryId());
-                }
-            }
+            context.renderItem(graphics, item, x, y, mouseX, mouseY, entryId);
         }
     }
 }

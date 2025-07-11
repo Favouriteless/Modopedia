@@ -1,4 +1,9 @@
-- CHANGED: Updated Chinese localisation.
+IMPORTANT: The `modopedia:item` component has been deprecated and marked for removal in 1.21.2. It will be replaced by the new `modopedia:item_gallery` component which offers better flexibility.
 
-- FIXED: Creative menu crash from having a book registered twice. Oops.
-- FIXED: Datagen builders do not create their registryops in the correct way.
+- ADDED: `FormattedTextBuilder` for use in datagen.
+- ADDED: `modopedia:item_gallery` component, this replaces the now deprecated `modopedia:item` component. See documentation for how to use this, it's very different.
+- ADDED: `BookRenderContext#renderItem` method. This should be used in place of traditional item rendering as it handles the Study keybind.
+
+- CHANGED: URL text formatters now display the URL on a tooltip.
+
+- FIXED: Books with no subtitle will crash when trying to render their tooltip.

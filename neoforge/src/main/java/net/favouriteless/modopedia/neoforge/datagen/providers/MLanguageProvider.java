@@ -18,6 +18,7 @@ public class MLanguageProvider extends LanguageProvider {
         add(Modopedia.translation("tooltip", "study"), "Hold [%1$s] to Study");
         add(Modopedia.translation("tooltip", "category_link"), "Go to category");
         add(Modopedia.translation("tooltip", "entry_link"), "Go to entry");
+        add(Modopedia.translation("tooltip", "url"), "Go to URL: %1$s");
 
         add(Modopedia.translation("screen", "error"), "Error");
         add(Modopedia.translation("screen", "categories"), "Chapters");

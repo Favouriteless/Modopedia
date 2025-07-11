@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.book.Book;
@@ -9,8 +10,11 @@ import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
+import net.favouriteless.modopedia.book.StudyManager;
 import net.favouriteless.modopedia.book.loading.BookContentLoader;
+import net.favouriteless.modopedia.book.registries.client.ItemAssociationRegistry.EntryAssociation;
 import net.favouriteless.modopedia.client.BookOpenHandler;
+import net.favouriteless.modopedia.client.init.MKeyMappings;
 import net.favouriteless.modopedia.client.screens.widgets.BookImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class BookScreen extends Screen implements BookRenderContext {
 
@@ -138,6 +143,25 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     @Override
     public int getTicks() {
         return ticks;
+    }
+
+    @Override
+    public void renderItem(GuiGraphics graphics, ItemStack item, int x, int y, int mouseX, int mouseY, String entry) {
+        graphics.renderItem(item, x, y);
+        graphics.renderItemDecorations(font, item, x, y);
+
+        if(!isHovered(mouseX, mouseY, x, y, 16, 16))
+            return;
+
+        graphics.renderTooltip(font, item, mouseX, mouseY);
+
+        EntryAssociation association = StudyManager.getAssociation(language, item.getItem());
+        if(association == null || association.entryId().equals(entry))
+            return;
+        if(!InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), MKeyMappings.KEY_STUDY.key.getValue()))
+            return;
+
+        BookOpenHandler.tryOpenEntry(association.book(), association.entryId());
     }
 
     /**

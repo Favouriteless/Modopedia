@@ -1,9 +1,6 @@
 package net.favouriteless.modopedia.client;
 
-import net.favouriteless.modopedia.client.init.MBookScreenFactories;
-import net.favouriteless.modopedia.client.init.MPageComponents;
-import net.favouriteless.modopedia.client.init.MTemplateProcessors;
-import net.favouriteless.modopedia.client.init.MTextFormatters;
+import net.favouriteless.modopedia.client.init.*;
 
 public class ModopediaClient {
 
@@ -12,6 +9,8 @@ public class ModopediaClient {
         MPageComponents.load();
         MTemplateProcessors.load();
         MBookScreenFactories.load();
+        MStateMatchers.load();
+        MItemDisplays.load();
     }
 
 }

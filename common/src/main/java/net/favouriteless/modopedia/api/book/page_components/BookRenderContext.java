@@ -3,7 +3,9 @@ package net.favouriteless.modopedia.api.book.page_components;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Provides rendering and input handling context for {@link PageRenderable}s and {@link PageEventListener}s.
@@ -46,5 +48,10 @@ public interface BookRenderContext {
      * @return The number of ticks the current book has been open for.
      */
     int getTicks();
+
+    /**
+     * Renders an item and it's decorations, taking into account Study inputs and navigation.
+     */
+    void renderItem(GuiGraphics graphics, ItemStack item, int x, int y, int mouseX, int mouseY, String entry);
 
 }

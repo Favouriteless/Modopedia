@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api.registries.client;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.favouriteless.modopedia.client.multiblock.state_matchers.StateMatcherRegistryImpl;
+import net.favouriteless.modopedia.client.multiblock.StateMatcherRegistryImpl;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
