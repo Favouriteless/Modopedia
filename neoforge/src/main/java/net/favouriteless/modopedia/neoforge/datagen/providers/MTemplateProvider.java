@@ -45,6 +45,18 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
+                        SmallFrameBuilder.of()
+                                .x("#p_offset")
+                                .y("#p_offset"),
+                        ItemGalleryBuilder.of("#display")
+                )
+                .defaultValue("width", 16)
+                .defaultValue("widget", "small_frame")
+                .build(FramedItemGalleryBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .processor(WidgetSpacingProcessor.ID)
+                .components(
                         MediumFrameBuilder.of()
                                 .x("#p_offset")
                                 .y("#p_offset"),
@@ -129,6 +141,18 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
+                        CraftingGridBuilder.of()
+                                .x("#p_offset")
+                                .y("#p_offset"),
+                        ItemGalleryBuilder.of("#display")
+                )
+                .defaultValue("width", 50)
+                .defaultValue("widget", "crafting_grid")
+                .build(GridFramedItemGalleryBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .processor(WidgetSpacingProcessor.ID)
+                .components(
                         MediumFrameBuilder.of()
                             .x("#p_offset")
                             .y("#p_offset"),
@@ -195,7 +219,7 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(CraftingRecipeProcessor.ID)
                 .components(
-                        FramedCraftingGridBuilder.of("#p_inputs")
+                        GridFramedItemGalleryBuilder.of("#p_inputs")
                                 .x("#p_grid_x"),
                         CraftingArrowBuilder.of()
                                 .x("#p_arrow_x")
@@ -205,7 +229,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .y("#p_arrow_y")
                                 .width("#p_arrow_width")
                                 .height("#p_arrow_height"),
-                        FramedItemBuilder.of("#p_output")
+                        FramedItemGalleryBuilder.of("#p_output")
                                 .x("#p_output_x")
                                 .y(17)
                 )
@@ -214,7 +238,7 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(CookingRecipeProcessor.ID)
                 .components(
-                        FramedItemBuilder.of("#p_inputs")
+                        FramedItemGalleryBuilder.of("#p_inputs")
                                 .x("#p_input_x"),
                         CraftingArrowBuilder.of()
                                 .x("#p_arrow_x")
@@ -227,7 +251,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .y("#p_arrow_y")
                                 .width("#p_arrow_width")
                                 .height("#p_arrow_height"),
-                        FramedItemBuilder.of("#p_output")
+                        FramedItemGalleryBuilder.of("#p_output")
                                 .x("#p_output_x")
                 )
                 .build(CookingRecipeBuilder.ID.getPath(), output);

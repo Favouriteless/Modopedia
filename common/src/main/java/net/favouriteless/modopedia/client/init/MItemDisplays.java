@@ -8,6 +8,7 @@ public class MItemDisplays {
     public static void load() {
         ItemDisplayRegistry registry = ItemDisplayRegistry.get();
 
+        registry.register(EmptyItemDisplay.ID, EmptyItemDisplay.CODEC);
         registry.register(SimpleItemDisplay.ID, SimpleItemDisplay.CODEC);
         registry.register(CyclingItemDisplay.ID, CyclingItemDisplay.CODEC);
         registry.register(TagItemDisplay.ID, TagItemDisplay.CODEC);

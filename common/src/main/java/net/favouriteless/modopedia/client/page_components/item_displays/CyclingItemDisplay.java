@@ -23,6 +23,8 @@ public class CyclingItemDisplay implements ItemDisplay {
 
     public CyclingItemDisplay(List<ItemStack> items) {
         this.items = items;
+        if(items.isEmpty())
+            throw new IllegalArgumentException("CyclingItemDisplay cannot have zero items.");
     }
 
     @Override

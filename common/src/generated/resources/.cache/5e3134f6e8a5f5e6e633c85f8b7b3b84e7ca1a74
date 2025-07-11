@@ -1,6 +1,8 @@
-// 1.21.1	2025-07-08T00:32:49.982582	Modopedia Templates[modopedia]
+// 1.21.1	2025-07-11T20:39:41.3858753	Modopedia Templates[modopedia]
 a76b02b4d94743cde0401b63b3cd163415d56fe7 assets/modopedia/modopedia/templates/framed_crafting_grid.json
 cd39282a3fc35a7a0f6aeadc6d806da7494be51d assets/modopedia/modopedia/templates/framed_item.json
+ded1e9648e3bae85d048b8e4261ddd3901341642 assets/modopedia/modopedia/templates/framed_item_gallery.json
+63a766e3a170ca08866a6164f0565f67456f1d96 assets/modopedia/modopedia/templates/grid_framed_item_gallery.json
 ebd1b7d18c4a48b33ff91d298eafd2a2a3387bd3 assets/modopedia/modopedia/templates/large_framed_entity.json
 8bec61c818b6e6c1d31ab64514042908eb5eb7df assets/modopedia/modopedia/templates/large_framed_image.json
 696ebe5760e7c32b5a0e54913d4b59ea51be5bfb assets/modopedia/modopedia/templates/large_framed_multiblock.json
@@ -17,5 +19,5 @@ c81cef193a62e2d3737845bb085205a90c82fef0 assets/modopedia/modopedia/templates/pa
 5e250113393442b08a3200ec9585f6ebe4f2263e assets/modopedia/modopedia/templates/page/entity.json
 5ca84bb1a24ac9cb42a8b6ef0b64cd9cad7ba40a assets/modopedia/modopedia/templates/page/headered_text.json
 8b4b4b51210720a2b011d5c922b52e96266c35ef assets/modopedia/modopedia/templates/page/multiblock.json
-7673bb90021f2b0ba4d24cddebfd6bbc8d615c0d assets/modopedia/modopedia/templates/recipe/cooking.json
-495a7ed6f8e52db84d5a6979ad1d1ce175877e91 assets/modopedia/modopedia/templates/recipe/crafting.json
+93ebc3aba40fbe772c767ca13d608d09e76aaf2e assets/modopedia/modopedia/templates/recipe/cooking.json
+be2abda96762702ff666469d4a8d3c2ba76dd7c4 assets/modopedia/modopedia/templates/recipe/crafting.json

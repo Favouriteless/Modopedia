@@ -8,14 +8,13 @@ import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.client.page_components.item_displays.CyclingItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CookingRecipeProcessor implements TemplateProcessor {
 
@@ -30,11 +29,11 @@ public class CookingRecipeProcessor implements TemplateProcessor {
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
-        initComponents(book, lookup, level);
-        initRecipe(book, lookup, level);
+        initComponents(book, lookup);
+        initRecipe(lookup, level);
     }
 
-    protected void initRecipe(Book book, MutableLookup lookup, Level level) {
+    protected void initRecipe(MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
@@ -47,11 +46,11 @@ public class CookingRecipeProcessor implements TemplateProcessor {
             throw new IllegalStateException("CookingRecipe template must use a valid cooking recipe");
 
         lookup.set("p_tooltip", Variable.of(List.of(TYPE_KEYS.get(recipe.getClass()))));
-        lookup.set("p_inputs", Variable.of(List.of(List.of(recipe.getIngredients().getFirst().getItems()))));
-        lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+        lookup.set("p_inputs", Variable.of(new CyclingItemDisplay(Arrays.asList(recipe.getIngredients().getFirst().getItems()))));
+        lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
     }
 
-    protected void initComponents(Book book, MutableLookup lookup, Level level) {
+    protected void initComponents(Book book, MutableLookup lookup) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
         if(tex == null)
             throw new IllegalStateException("CookingRecipe templates require the book to have a valid BookTexture");

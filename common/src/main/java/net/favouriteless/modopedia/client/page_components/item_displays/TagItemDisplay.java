@@ -34,6 +34,9 @@ public class TagItemDisplay implements ItemDisplay {
 
         this.tag = tag;
         this.items = optional.get();
+
+        if(items.size() == 0)
+            throw new IllegalArgumentException("TagItemDisplay cannot have zero items.");
     }
 
     @Override

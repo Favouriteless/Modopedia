@@ -1,11 +1,17 @@
-IMPORTANT: The `modopedia:item` component has been deprecated and marked for removal in 1.21.2. It will be replaced by the new `modopedia:item_gallery` component which offers better flexibility.
+- DEPRECATED: The following features have been deprecated and marked for removal in 1.21.2. They have been removed from the documentation and replaced by their successors:
+  - `modopedia:item` - replaced by `modopedia:item_gallery`
+  - `modopedia:framed_item` - replaced by `modopedia:framed_item_gallery`
+  - `modopedia:framed_crafting_grid` - replaced by `modopedia:grid_framed_item_gallery`
 
-- ADDED: `FormattedTextBuilder` for use in datagen.
+- BREAKING: Book types are now directly passed to BookScreen. Custom book types and screens will need to be adjusted accordingly.
+
 - ADDED: `modopedia:item_gallery` component, this replaces the now deprecated `modopedia:item` component. See documentation for how to use this, it's very different.
+- ADDED: `modopedia:grid_framed_item_gallery` component, this replaces the now deprecated `modopedia:framed_crafting_grid` component.
+- ADDED: `modopedia:framed_item_gallery` component, this replaces the now deprecated `modopedia:framed_item` component.
+- ADDED: `FormattedTextBuilder` for use in datagen.
 - ADDED: `BookRenderContext#renderItem` method. This should be used in place of traditional item rendering as it handles the Study keybind.
 - ADDED: `EntryBuilder` can now directly link itself to a category during datagen.
 
-- CHANGED: Book types are now directly passed to BookScreen.
 - CHANGED: URL text formatters now display the URL on a tooltip.
 - CHANGED: Click and hover events on formatted text will now work in landing and category screens.
 

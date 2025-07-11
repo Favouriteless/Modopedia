@@ -33,6 +33,9 @@ public class GridItemDisplay implements ItemDisplay {
         this.columns = columns;
         this.padding = padding;
         this.centered = centered;
+
+        if(displays.isEmpty())
+            throw new IllegalArgumentException("GridItemDisplay cannot have zero child displays.");
     }
 
     @Override

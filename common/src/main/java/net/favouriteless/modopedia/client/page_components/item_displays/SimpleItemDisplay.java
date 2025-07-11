@@ -21,6 +21,8 @@ public class SimpleItemDisplay implements ItemDisplay {
 
     public SimpleItemDisplay(ItemStack item) {
         this.item = item;
+        if(item == null)
+            throw new IllegalArgumentException("SimpleItemDisplay cannot have no item");
     }
 
     @Override

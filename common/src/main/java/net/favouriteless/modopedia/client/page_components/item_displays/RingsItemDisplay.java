@@ -35,6 +35,9 @@ public class RingsItemDisplay implements ItemDisplay {
         this.ringCount = ringCount;
         this.radius = radius;
         this.offset = offset;
+
+        if(displays.isEmpty())
+            throw new IllegalArgumentException("RingsItemDisplay cannot have zero child displays.");
     }
 
     @Override
