@@ -4,6 +4,7 @@
   "landing_text": "$(b)$(c:#B8A349)Modopedia$() provides a variety of features to build your $(b)$(c:green)guidebooks$() with. Check them out!",
   "entries": [
     "components/text_boxes",
+    "components/item_galleries",
     "components/image_galleries",
     "components/multiblocks",
     "components/templates",

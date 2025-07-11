@@ -19,19 +19,22 @@ public class RingsItemDisplay implements ItemDisplay {
 
     public static final MapCodec<RingsItemDisplay> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.lazyInitialized(ItemDisplay::codec).listOf().fieldOf("displays").forGetter(d -> d.displays),
-            Codec.INT.fieldOf("ring_max").forGetter(d -> d.ringMax),
-            Codec.INT.fieldOf("radius").forGetter(d -> d.radius)
+            Codec.INT.optionalFieldOf("ring_max", 6).forGetter(d -> d.ringMax),
+            Codec.INT.optionalFieldOf("radius", 16).forGetter(d -> d.radius),
+            Codec.INT.optionalFieldOf("offset", 8).forGetter(d -> d.offset)
     ).apply(instance, RingsItemDisplay::new));
 
 
     private final List<ItemDisplay> displays;
     private final int ringMax;
     private final int radius;
+    private final int offset;
 
-    public RingsItemDisplay(List<ItemDisplay> displays, int ringMax, int radius) {
+    public RingsItemDisplay(List<ItemDisplay> displays, int ringMax, int radius, int offset) {
         this.displays = displays;
         this.ringMax = ringMax;
         this.radius = radius;
+        this.offset = offset;
     }
 
     @Override
@@ -49,9 +52,12 @@ public class RingsItemDisplay implements ItemDisplay {
             float y = -radius * ringCount;
 
             for(ItemDisplay display : ring) {
+                int xr = Math.round(x) - offset;
+                int yr = Math.round(y) - offset;
+
                 pose.pushPose();
-                pose.translate(Math.round(x)-8, Math.round(y)-8, 0); // Offset by half an item width to center the items.
-                display.render(graphics, context, mouseX, mouseY, entry);
+                pose.translate(xr, yr, 0); // Offset by half an item width to center the items.
+                display.render(graphics, context, mouseX - xr, mouseY - yr, entry);
                 pose.popPose();
 
                 float xc = x; // Rotate around (0, 0)

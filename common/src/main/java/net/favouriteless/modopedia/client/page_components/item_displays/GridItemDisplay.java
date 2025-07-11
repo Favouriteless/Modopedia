@@ -18,9 +18,9 @@ public class GridItemDisplay implements ItemDisplay {
 
     public static final MapCodec<GridItemDisplay> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.lazyInitialized(ItemDisplay::codec).listOf().fieldOf("displays").forGetter(d -> d.displays),
-            Codec.INT.fieldOf("row_max").forGetter(d -> d.rowMax),
-            Codec.INT.fieldOf("padding").forGetter(d -> d.padding),
-            Codec.BOOL.fieldOf("centered").forGetter(d -> d.centered)
+            Codec.INT.optionalFieldOf("row_max", Integer.MAX_VALUE).forGetter(d -> d.rowMax),
+            Codec.INT.optionalFieldOf("padding", 17).forGetter(d -> d.padding),
+            Codec.BOOL.optionalFieldOf("centered", false).forGetter(d -> d.centered)
     ).apply(instance, GridItemDisplay::new));
 
     private final List<ItemDisplay> displays;
@@ -48,7 +48,7 @@ public class GridItemDisplay implements ItemDisplay {
             for(ItemDisplay display : row) {
                 pose.pushPose();
                 pose.translate(x, y, 0);
-                display.render(graphics, context, mouseX, mouseY, entry);
+                display.render(graphics, context, mouseX - x, mouseY - y, entry);
                 pose.popPose();
                 x += padding;
             }

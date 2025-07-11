@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
@@ -19,12 +20,17 @@ public class ItemGalleryPageComponent extends PageComponent {
     @Override
     public void init(Book book, Lookup lookup, Level level) {
         super.init(book, lookup, level);
-        display = lookup.get("item_display").as(ItemDisplay.class);
+        display = lookup.get("display").as(ItemDisplay.class);
     }
 
     @Override
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
-        display.render(graphics, context, mouseX, mouseY, entryId);
+        PoseStack pose = graphics.pose();
+
+        pose.pushPose();
+        pose.translate(x, y, 0);
+        display.render(graphics, context, mouseX - x, mouseY - y, entryId);
+        pose.popPose();
     }
 
 }
