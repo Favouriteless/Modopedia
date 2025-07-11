@@ -26,14 +26,14 @@ public class BookOpenHandler {
             return;
 
         String lang = Minecraft.getInstance().options.languageCode;
-        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+        BookScreen<?> last = ScreenCache.get().getLastScreen(id, lang);
 
         LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
         if(content == null)
             return;
 
         BookType type = book.getType();
-        openBookScreen(tryUseFactory(type, f -> last != null ? last : f.openLandingScreen(type, book, lang, content, null)));
+        openBookScreen(tryUseFactory(type, f -> last != null ? last : f.openLandingScreen(book, type, lang, content, null)));
     }
 
     public static void tryOpenCategory(ResourceLocation id, String category) {
@@ -42,14 +42,14 @@ public class BookOpenHandler {
             return;
 
         String lang = Minecraft.getInstance().options.languageCode;
-        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+        BookScreen<?> last = ScreenCache.get().getLastScreen(id, lang);
 
         LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
         if(content == null)
             return;
 
         BookType type = book.getType();
-        openBookScreen(tryUseFactory(type, f -> f.openCategoryScreen(type, book, lang, content, category, last)));
+        openBookScreen(tryUseFactory(type, f -> f.openCategoryScreen(book, type, lang, content, category, last)));
     }
 
     public static void tryOpenEntry(ResourceLocation id, String entry) {
@@ -58,32 +58,32 @@ public class BookOpenHandler {
             return;
 
         String lang = Minecraft.getInstance().options.languageCode;
-        BookScreen last = ScreenCache.get().getLastScreen(id, lang);
+        BookScreen<?> last = ScreenCache.get().getLastScreen(id, lang);
 
         LocalisedBookContent content = BookContentRegistry.get().getContent(id, lang);
         if(content == null)
             return;
 
         BookType type = book.getType();
-        openBookScreen(tryUseFactory(type, f -> f.openEntryScreen(type, book, lang, content, entry, last)));
+        openBookScreen(tryUseFactory(type, f -> f.openEntryScreen(book, type, lang, content, entry, last)));
     }
 
     public static void tryOpenCategory(String category) {
-        if(Minecraft.getInstance().screen instanceof BookScreen screen)
+        if(Minecraft.getInstance().screen instanceof BookScreen<?> screen)
             tryOpenCategory(BookRegistry.get().getId(screen.getBook()), category);
     }
 
     public static void tryOpenEntry(String entry) {
-        if(Minecraft.getInstance().screen instanceof BookScreen screen)
+        if(Minecraft.getInstance().screen instanceof BookScreen<?> screen)
             tryOpenEntry(BookRegistry.get().getId(screen.getBook()), entry);
     }
 
-    private static void openBookScreen(BookScreen screen) {
+    private static void openBookScreen(BookScreen<?> screen) {
         if(screen != null) {
             Minecraft mc = Minecraft.getInstance();
 
             Book book = screen.getBook();
-            Holder<SoundEvent> sound = mc.screen instanceof BookScreen s && s.getBook() == book ? book.getFlipSound() : book.getOpenSound();
+            Holder<SoundEvent> sound = mc.screen instanceof BookScreen<?> s && s.getBook() == book ? book.getFlipSound() : book.getOpenSound();
             if(sound != null)
                 mc.level.playSound(mc.player, mc.player.getX(), mc.player.getY(), mc.player.getZ(), sound, SoundSource.MASTER, 0.3F, 1.0F);
 
@@ -91,7 +91,7 @@ public class BookOpenHandler {
         }
     }
 
-    private static <T extends BookType> BookScreen tryUseFactory(T type, Function<BookScreenFactory<T>, BookScreen> user) {
+    private static <T extends BookType> BookScreen<?> tryUseFactory(T type, Function<BookScreenFactory<T>, BookScreen<?>> user) {
         BookScreenFactory<T> factory = BookScreenFactoryRegistry.get().get(type);
         if(factory == null)
             Modopedia.LOG.error("Could not find a BookScreenFactory for {}", type.type().id());

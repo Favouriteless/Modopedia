@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
@@ -25,23 +26,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 
-public abstract class BookScreen extends Screen implements BookRenderContext {
+public abstract class BookScreen<T extends BookType> extends Screen implements BookRenderContext {
 
     protected final ResourceLocation bookId;
     protected final Book book;
+    protected final T type;
     protected final String language;
     protected final LocalisedBookContent content;
     protected final BookTexture texture;
-    protected final BookScreen lastScreen;
+    protected final BookScreen<?> lastScreen;
 
     protected int ticks = 0;
     protected int leftPos = 0;
     protected int topPos = 0;
 
-    public BookScreen(Book book, String language, LocalisedBookContent content, BookScreen lastScreen, Component title) {
+    public BookScreen(Book book, T type, String language, LocalisedBookContent content, BookScreen<?> lastScreen, Component title) {
         super(title);
         this.bookId = BookRegistry.get().getId(book);
         this.book = book;
+        this.type = type;
         this.language = language;
         this.content = content;
         this.texture = BookTextureRegistry.get().getTexture(book.getTexture());
@@ -116,7 +119,7 @@ public abstract class BookScreen extends Screen implements BookRenderContext {
     }
 
     @Override
-    public BookScreen getScreen() {
+    public BookScreen<T> getScreen() {
         return this;
     }
 

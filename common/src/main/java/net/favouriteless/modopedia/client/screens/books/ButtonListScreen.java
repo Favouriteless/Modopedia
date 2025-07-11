@@ -3,41 +3,34 @@ package net.favouriteless.modopedia.client.screens.books;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.BlankScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.BookItemTextButton;
+import net.favouriteless.modopedia.common.book_types.LockedViewProvider;
 import net.favouriteless.modopedia.common.book_types.LockedViewType;
 import net.favouriteless.modopedia.util.client.AdvancementHelper;
-import net.favouriteless.modopedia.util.common.ListUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class ButtonListScreen extends MultiPageBookScreen {
+public abstract class ButtonListScreen<T extends BookType & LockedViewProvider> extends MultiPageBookScreen<T> {
 
     private final Component listTitle;
-    private final List<Supplier<List<String>>> idSuppliers;
-    private final List<Factory> buttonFactories;
-    private final LockedViewType lockedType;
+    private final Supplier<List<Factory>> factories;
 
-    public ButtonListScreen(Book book, String language, LocalisedBookContent content, Component title, BookScreen lastScreen, Component listTitle,
-                            LockedViewType type, List<Supplier<List<String>>> idSuppliers, List<Factory> buttonFactories) {
-        super(book, language, content, lastScreen, title);
+    public ButtonListScreen(Book book, T type, String language, LocalisedBookContent content, Component title, BookScreen<?> lastScreen,
+                            Component listTitle, Supplier<List<Factory>> factories) {
+        super(book, type, language, content, lastScreen, title);
         this.listTitle = listTitle;
-        this.idSuppliers = idSuppliers;
-        this.buttonFactories = buttonFactories;
-        this.lockedType = type;
-
-        if(idSuppliers.size() != buttonFactories.size())
-            throw new IllegalArgumentException("LandingScreen must have the same number of ID suppliers and button factories");
+        this.factories = factories;
     }
 
     protected abstract ScreenPage initFirstPage();
@@ -48,10 +41,8 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         if(content == null)
             return;
 
-        List<List<String>> idLists = new ArrayList<>();
-        idSuppliers.forEach(s -> idLists.add(s.get()));
-
-        if(ListUtils.size(idLists) == 0)
+        List<Factory> factories = this.factories.get();
+        if(factories.isEmpty())
             return;
 
         final int spacing = BookItemTextButton.SIZE+1;
@@ -64,56 +55,54 @@ public abstract class ButtonListScreen extends MultiPageBookScreen {
         if(sep != null)
             y += sep.height();
 
-        for(int i = 0; i < idLists.size(); i++) {
-            final List<String> ids = idLists.get(i);
-            final Factory factory = buttonFactories.get(i);
+        for(Factory factory : factories) {
+            int onPage = (rectangle.height() - (y - rectangle.v())) / spacing; // Max number of buttons on the current page.
+            int count = page.getWidgets().size();
 
-            int onPage = (rectangle.height() - (y - rectangle.v())) / spacing;
+            if(count >= onPage) {
+                pageConsumer.accept(page);
 
-            for(String id : ids) {
-                int count = page.getWidgets().size();
-
-                if(count >= onPage) {
-                    pageConsumer.accept(page);
-
-                    page = new BlankScreenPage(this);
-                    rectangle = texture.pages().get(getPageCount() % texture.pages().size());
-                    y = rectangle.v();
-                    count = 0;
-                }
-
-                page.addWidget(factory.create(this, id, leftPos + rectangle.u(), topPos + y + spacing*count, rectangle.width()));
+                page = new BlankScreenPage(this);
+                rectangle = texture.pages().get(getPageCount() % texture.pages().size());
+                y = rectangle.v();
+                count = 0;
             }
+
+            page.addWidget(factory.create(this, leftPos + rectangle.u(), topPos + y + spacing*count, rectangle.width()));
         }
         pageConsumer.accept(page);
     }
 
-    protected static BookItemTextButton createCategoryButton(ButtonListScreen screen, String id, int x, int y, int width) {
+    protected static BookItemTextButton createCategoryButton(ButtonListScreen<?> screen, String id, int x, int y, int width) {
         Category cat = screen.content.getCategory(id);
-        ResourceLocation advancement = cat.getAdvancement();
+        if(cat == null)
+            return null;
 
-        return new BookItemTextButton(x, y, width, cat.getIcon(),
-                Component.literal(cat.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new CategoryScreen(screen.book, screen.language, screen.content, cat, screen.lockedType, screen)),
-                screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(cat.getAdvancement())
-        );
+        boolean hasAdvancement = cat.getAdvancement() == null || AdvancementHelper.hasAdvancement(cat.getAdvancement());
+        if(!hasAdvancement && screen.type.lockedViewType() == LockedViewType.HIDDEN)
+            return null;
+
+        return new BookItemTextButton(x, y, width, cat.getIcon(), Component.literal(cat.getTitle()).withStyle(screen.getStyle()), screen.book.getFlipSound(), !hasAdvancement,
+                b -> Minecraft.getInstance().setScreen(new CategoryScreen<>(screen.book, screen.type, screen.language, screen.content, cat, screen)));
     }
 
-    protected static BookItemTextButton createEntryButton(ButtonListScreen screen, String id, int x, int y, int width) {
+    protected static BookItemTextButton createEntryButton(ButtonListScreen<?> screen, String id, int x, int y, int width) {
         Entry entry = screen.content.getEntry(id);
-        ResourceLocation advancement = entry.getAdvancement();
+        if(entry == null)
+            return null;
 
-        return new BookItemTextButton(x, y, width, entry.getIcon(),
-                Component.literal(entry.getTitle()).withStyle(screen.getStyle()),
-                b -> Minecraft.getInstance().setScreen(new EntryScreen(screen.book, screen.language, screen.content, entry, screen)),
-                screen.book.getFlipSound(), advancement != null && !AdvancementHelper.hasAdvancement(entry.getAdvancement())
-        );
+        boolean hasAdvancement = entry.getAdvancement() == null || AdvancementHelper.hasAdvancement(entry.getAdvancement());
+        if(!hasAdvancement && screen.type.lockedViewType() == LockedViewType.HIDDEN)
+            return null;
+
+        return new BookItemTextButton(x, y, width, entry.getIcon(), Component.literal(entry.getTitle()).withStyle(screen.getStyle()), screen.book.getFlipSound(), !hasAdvancement,
+                b -> Minecraft.getInstance().setScreen(new EntryScreen<>(screen.book, screen.type, screen.language, screen.content, entry, screen)));
     }
 
     @FunctionalInterface
     public interface Factory {
 
-        BookItemTextButton create(ButtonListScreen screen, String id, int x, int y, int width);
+        @Nullable BookItemTextButton create(ButtonListScreen<?> screen, int x, int y, int width);
 
     }
 

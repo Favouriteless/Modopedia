@@ -67,7 +67,6 @@ public class CategoryBuilder implements BookContentBuilder {
         return Category.codec().encodeStart(ops, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement)).getOrThrow();
     }
 
-    @Override
     public void build(String id, BookContentOutput output) {
         this.entries.addAll(output.getEntries(id));
         BookContentBuilder.super.build(id, output);
