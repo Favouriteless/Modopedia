@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.api.datagen.builders;
 import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.book.CategoryImpl;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
@@ -64,6 +65,12 @@ public class CategoryBuilder implements BookContentBuilder {
     @Override
     public JsonElement build(RegistryOps<JsonElement> ops) {
         return Category.codec().encodeStart(ops, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement)).getOrThrow();
+    }
+
+    @Override
+    public void build(String id, BookContentOutput output) {
+        this.entries.addAll(output.getEntries(id));
+        BookContentBuilder.super.build(id, output);
     }
 
 }

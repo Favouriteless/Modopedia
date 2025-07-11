@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.neoforge.datagen.providers;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
@@ -23,13 +23,13 @@ public class MTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(Provider registries, BookContentOutput output) {
+    protected void build(Provider registries, BookOutput output) {
         buildBaseTemplates(output);
         buildRecipeTemplates(output);
         buildPageTemplates(output);
     }
 
-    public void buildBaseTemplates(BookContentOutput output) {
+    public void buildBaseTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
@@ -191,7 +191,7 @@ public class MTemplateProvider extends TemplateProvider {
                 .build(LargeFramedShowcaseBuilder.ID.getPath(), output);
     }
 
-    public void buildRecipeTemplates(BookContentOutput output) {
+    public void buildRecipeTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(CraftingRecipeProcessor.ID)
                 .components(
@@ -233,7 +233,7 @@ public class MTemplateProvider extends TemplateProvider {
                 .build(CookingRecipeBuilder.ID.getPath(), output);
     }
 
-    public void buildPageTemplates(BookContentOutput output) {
+    public void buildPageTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(HeaderedTextProcessor.ID)
                 .components(
