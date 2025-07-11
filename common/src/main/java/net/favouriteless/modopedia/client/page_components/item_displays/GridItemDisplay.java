@@ -18,19 +18,19 @@ public class GridItemDisplay implements ItemDisplay {
 
     public static final MapCodec<GridItemDisplay> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.lazyInitialized(ItemDisplay::codec).listOf().fieldOf("displays").forGetter(d -> d.displays),
-            Codec.INT.optionalFieldOf("row_max", Integer.MAX_VALUE).forGetter(d -> d.rowMax),
-            Codec.INT.optionalFieldOf("padding", 17).forGetter(d -> d.padding),
+            Codec.INT.optionalFieldOf("columns", Integer.MAX_VALUE).forGetter(d -> d.columns),
+            Codec.INT.optionalFieldOf("padding", 16).forGetter(d -> d.padding),
             Codec.BOOL.optionalFieldOf("centered", false).forGetter(d -> d.centered)
     ).apply(instance, GridItemDisplay::new));
 
-    private final List<ItemDisplay> displays;
-    private final int rowMax;
-    private final int padding;
-    private final boolean centered;
+    protected final List<ItemDisplay> displays;
+    protected final int columns;
+    protected final int padding;
+    protected final boolean centered;
 
-    public GridItemDisplay(List<ItemDisplay> displays, int rowMax, int padding, boolean centered) {
+    public GridItemDisplay(List<ItemDisplay> displays, int columns, int padding, boolean centered) {
         this.displays = displays;
-        this.rowMax = rowMax;
+        this.columns = columns;
         this.padding = padding;
         this.centered = centered;
     }
@@ -39,7 +39,7 @@ public class GridItemDisplay implements ItemDisplay {
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, String entry) {
         int rowCount = 0;
         for(int i = 0; i < displays.size();) {
-            List<ItemDisplay> row = displays.subList(i, Math.min(i + rowMax, displays.size()));
+            List<ItemDisplay> row = displays.subList(i, Math.min(i + columns, displays.size()));
 
             PoseStack pose = graphics.pose();
             int x = centered ? -(row.size() * padding / 2) : 0;

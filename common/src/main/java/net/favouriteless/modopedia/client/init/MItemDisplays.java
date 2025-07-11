@@ -12,6 +12,7 @@ public class MItemDisplays {
         registry.register(CyclingItemDisplay.ID, CyclingItemDisplay.CODEC);
         registry.register(TagItemDisplay.ID, TagItemDisplay.CODEC);
         registry.register(GridItemDisplay.ID, GridItemDisplay.CODEC);
+        registry.register(TagGridItemDisplay.ID, TagGridItemDisplay.CODEC);
         registry.register(RingsItemDisplay.ID, RingsItemDisplay.CODEC);
     }
 

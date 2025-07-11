@@ -19,20 +19,20 @@ public class RingsItemDisplay implements ItemDisplay {
 
     public static final MapCodec<RingsItemDisplay> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.lazyInitialized(ItemDisplay::codec).listOf().fieldOf("displays").forGetter(d -> d.displays),
-            Codec.INT.optionalFieldOf("ring_max", 6).forGetter(d -> d.ringMax),
+            Codec.INT.optionalFieldOf("ring_count", 6).forGetter(d -> d.ringCount),
             Codec.INT.optionalFieldOf("radius", 16).forGetter(d -> d.radius),
             Codec.INT.optionalFieldOf("offset", 8).forGetter(d -> d.offset)
     ).apply(instance, RingsItemDisplay::new));
 
 
     private final List<ItemDisplay> displays;
-    private final int ringMax;
+    private final int ringCount;
     private final int radius;
     private final int offset;
 
-    public RingsItemDisplay(List<ItemDisplay> displays, int ringMax, int radius, int offset) {
+    public RingsItemDisplay(List<ItemDisplay> displays, int ringCount, int radius, int offset) {
         this.displays = displays;
-        this.ringMax = ringMax;
+        this.ringCount = ringCount;
         this.radius = radius;
         this.offset = offset;
     }
@@ -41,7 +41,7 @@ public class RingsItemDisplay implements ItemDisplay {
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, String entry) {
         int ringCount = 1;
         for(int i = 0; i < displays.size();) {
-            List<ItemDisplay> ring = displays.subList(i, Math.min(i + ringMax * ringCount, displays.size()));
+            List<ItemDisplay> ring = displays.subList(i, Math.min(i + this.ringCount * ringCount, displays.size()));
 
             PoseStack pose = graphics.pose();
             float a = 360.0F / ring.size() * Mth.DEG_TO_RAD;
