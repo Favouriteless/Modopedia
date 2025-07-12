@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 public class BlankScreenPage extends ScreenPage {
 
-    public BlankScreenPage(BookScreen parent) {
+    public BlankScreenPage(BookScreen<?> parent) {
         super(parent);
     }
 

@@ -18,7 +18,7 @@ public class TitledTextPage extends FormattedTextPage {
     protected final Component title;
     protected final Rectangle page;
 
-    public TitledTextPage(BookScreen parent, Component title, List<TextChunk> text, int textY, Rectangle page) {
+    public TitledTextPage(BookScreen<?> parent, Component title, List<TextChunk> text, int textY, Rectangle page) {
         super(parent, text, 0, textY);
         this.title = title;
         this.page = page;

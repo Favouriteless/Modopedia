@@ -23,7 +23,7 @@ public class LandingScreenPage extends FormattedTextPage {
     private final int titleY;
     private final int subtitleX;
 
-    public LandingScreenPage(BookScreen parent, Component title, Component subtitle, int titleX, int titleY, int subtitleX,
+    public LandingScreenPage(BookScreen<?> parent, Component title, Component subtitle, int titleX, int titleY, int subtitleX,
                              List<TextChunk> landingText, int textX, int textY) {
         super(parent, landingText, textX, textY);
         this.title = title;

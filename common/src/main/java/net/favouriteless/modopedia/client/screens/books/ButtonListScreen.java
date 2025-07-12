@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
@@ -68,7 +69,11 @@ public abstract class ButtonListScreen<T extends BookType & LockedViewProvider> 
                 count = 0;
             }
 
-            page.addWidget(factory.create(this, leftPos + rectangle.u(), topPos + y + spacing*count, rectangle.width()));
+            BookItemTextButton button = factory.create(this, leftPos + rectangle.u(), topPos + y + spacing*count, rectangle.width());
+            if(button != null)
+                page.addWidget(button);
+            else
+                Modopedia.LOG.warn("Tried to add a null button to a page. This is most likely due to a missing/incorrect category or entry.");
         }
         pageConsumer.accept(page);
     }

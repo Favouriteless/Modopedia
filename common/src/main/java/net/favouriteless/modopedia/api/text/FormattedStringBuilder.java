@@ -19,6 +19,22 @@ public class FormattedStringBuilder {
         return this;
     }
 
+    public FormattedStringBuilder paragraph() {
+        return then("\n\n");
+    }
+
+    public FormattedStringBuilder paragraph(String text) {
+        return paragraph().then(text);
+    }
+
+    public FormattedStringBuilder linebreak() {
+        return then("\n");
+    }
+
+    public FormattedStringBuilder linebreak(String text) {
+        return linebreak().then(text);
+    }
+
     public FormattedStringBuilder apply(String tag) {
         return then("$(").then(tag).then(")");
     }

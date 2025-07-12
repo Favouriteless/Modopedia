@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.datagen.builders.*;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
 
 import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;

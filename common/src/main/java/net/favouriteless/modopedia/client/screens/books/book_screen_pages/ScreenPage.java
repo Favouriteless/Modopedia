@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.client.screens.books.book_screen_pages;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.Page;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
@@ -17,10 +18,10 @@ import java.util.Set;
  */
 public abstract class ScreenPage {
 
-    protected final BookScreen parent;
+    protected final BookScreen<?> parent;
     protected final Set<AbstractWidget> widgets;
 
-    public ScreenPage(BookScreen parent) {
+    public ScreenPage(BookScreen<?> parent) {
         this.parent = parent;
         this.widgets = new HashSet<>();
     }
@@ -55,7 +56,10 @@ public abstract class ScreenPage {
     }
 
     public void addWidget(AbstractWidget widget) {
-        widgets.add(widget);
+        if(widget == null)
+            Modopedia.LOG.warn("Tried to add a null widget to a ScreenPage");
+        else
+            widgets.add(widget);
     }
 
     public Set<AbstractWidget> getWidgets() {

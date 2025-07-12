@@ -1,1 +1,3 @@
-- Fixed problem where modopedia components may not be registered in time during neoforge datagen.
+- ADDED: Paragraph and linebreak helper methods in `FormattedStringBuilder`, this should now be shorter than using a text block for the same purpose.
+
+- FIXED: CategoryScreens crash when trying to open a non-existent entry or child category. This now gives the appropriate warning instead.
