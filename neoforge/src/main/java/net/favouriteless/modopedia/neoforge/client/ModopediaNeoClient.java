@@ -28,14 +28,9 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 public class ModopediaNeoClient {
 
     public ModopediaNeoClient(IEventBus bus, ModContainer container) {
+        ModopediaClient.init();
         container.registerConfig(Type.CLIENT, ClientConfig.SPEC, "modopedia-client.toml");
     }
-
-    @SubscribeEvent
-    public static void onClientSetup(final FMLClientSetupEvent event) {
-        ModopediaClient.init();
-    }
-
 
     @SubscribeEvent
     public static void registerClientReloadListeners(final RegisterClientReloadListenersEvent event) {
