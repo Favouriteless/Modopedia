@@ -14,6 +14,7 @@ public class MPageComponents {
         registry.register(HeaderPageComponent.ID, HeaderPageComponent::new);
         registry.register(SeparatorPageComponent.ID, SeparatorPageComponent::new);
         registry.register(ItemPageComponent.ID, ItemPageComponent::new);
+        registry.register(ItemGalleryPageComponent.ID, ItemGalleryPageComponent::new);
         registry.register(MultiblockPageComponent.ID, MultiblockPageComponent::new);
         registry.register(WidgetPageComponent.ID_SMALL_FRAME, () -> new WidgetPageComponent("small_frame"));
         registry.register(WidgetPageComponent.ID_MEDIUM_FRAME, () -> new WidgetPageComponent("medium_frame"));

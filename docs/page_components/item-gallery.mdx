@@ -1,21 +1,83 @@
 ---
 title: Item Gallery
 ---
-**`modopedia:item`**
+**`modopedia:item_gallery`**
 
 ---
 
 ## Description
-Renders lists of ItemStacks on the page, cycling between each ItemStack in the list. If multiple lists are specified, they will be laid out in rows. You can get a column by setting the row width to 1.
+Renders items on the page in a configurable format, using **Item Displays** which can be plugged into the component and chained together.
 
 ## Screenshot
 <Asset location="modopedia:page_components/item" width={580} height={364} />
 
+## JSON Schema
+| ID      | Type         | Required | Default | Description                                        |
+|---------|--------------|----------|---------|----------------------------------------------------|
+| display | ItemDisplay* | &check;  | -       | ItemDisplay to render. See below for more details. |
+
 ---
 
-## JSON Schema
-| ID      | Type          | Required | Default | Description                           |
-|---------|---------------|----------|---------|---------------------------------------|
-| items   | ItemStack[][] | &check;  | -       | Items to be displayed in the gallery. |
-| row_max | Integer       | &cross;  | MAX     | Maximum number of items per row.      |
-| padding | Integer       | &cross;  | 16      | Padding between items in the gallery. |
+## ItemDisplay
+An **Item Display** is a component used inside item galleries to define how an item (or other displays) should be rendered. For example, `modopedia:simple` will simply render an item on the page, while `modopedia:grid` will render a grid of ItemDisplays on the page, the available types and their json schemas are listed below. An ItemDisplay is defined in JSON as a JSON Object with a `type` field, the rest of the object being defined by the type. For example:
+
+```json
+{
+  "type": "modopedia:simple",
+  "item": { "id": "minecraft:diamond" }
+}
+```
+
+### Simple (`modopedia:simple`)
+Renders a single **ItemStack**, nothing special happening here.
+
+| ID   | Type      | Required | Default | Description          |
+|------|-----------|----------|---------|----------------------|
+| item | ItemStack | &check;  | -       | ItemStack to render. |
+
+### Cycling (`modopedia:cycling`)
+Renders a single **ItemStack** at a time from a group, cycling between the available items every second or 20 ticks.
+
+| ID    | Type        | Required | Default | Description           |
+|-------|-------------|----------|---------|-----------------------|
+| items | ItemStack[] | &check;  | -       | ItemStacks to render. |
+
+### Tag (`modopedia:tag`)
+Renders a single **ItemStack** at a time from a tag, cycling between the available items every second or 20 ticks.
+
+| ID  | Type             | Required | Default | Description                         |
+|-----|------------------|----------|---------|-------------------------------------|
+| tag | ResourceLocation | &check;  | -       | Location of the item tag to render. |
+
+### Grid (`modopedia:grid`)
+Renders a list of **Item Displays** in a grid, with a configurable number of displays per row and padding.
+
+| ID       | Type          | Required | Default | Description                                          |
+|----------|---------------|----------|---------|------------------------------------------------------|
+| displays | ItemDisplay[] | &check;  | -       | Item displays to be rendered.                        |
+| columns  | Integer       | &cross;  | MAX     | Number of columns in the grid.                       |
+| padding  | Integer       | &cross;  | 16      | Padding (in pixels) between each item display.       |
+| centered | Boolean       | &cross;  | false   | If true, the grid will be **horizontally** centered. |
+
+### Tag Grid (`modopedia:tag_grid`)
+Renders all **Items** in a given tag as a grid. This is an extension to the `modopedia:grid` display for ease of use.
+
+| ID       | Type             | Required | Default | Description                                          |
+|----------|------------------|----------|---------|------------------------------------------------------|
+| tag      | ResourceLocation | &check;  | -       | Location of the item tag to render.                  |
+| columns  | Integer          | &cross;  | MAX     | Number of columns in the grid.                       |
+| padding  | Integer          | &cross;  | 16      | Padding (in pixels) between each item display.       |
+| centered | Boolean          | &cross;  | false   | If true, the grid will be **horizontally** centered. |
+
+## Rings (`modopedia:rings`)
+Renders a list of **Item Displays** in rings/circles, with a configurable radius and number of displays per ring.
+
+| ID         | Type          | Required | Default | Description                                                                        |
+|------------|---------------|----------|---------|------------------------------------------------------------------------------------|
+| displays   | ItemDisplay[] | &check;  | -       | Item displays to be rendered.                                                      |
+| ring_count | Integer       | &cross;  | 6       | Number of displays to be shown in the first ring.                                  |
+| radius     | Integer       | &cross;  | 16      | Radius of the rings, subsequent rings will multiply this.                          |
+| offset     | Integer       | &cross;  | 8       | Centering offset for displays, the default of 8 will center a standard 16x16 item. |
+
+## Empty (`modopedia:empty`)
+Renders nothing, intended to be used for spacing on layout type displays such as grids. Has no additional fields.

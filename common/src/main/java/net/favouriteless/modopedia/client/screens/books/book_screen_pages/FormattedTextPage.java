@@ -14,7 +14,7 @@ public class FormattedTextPage extends ScreenPage {
     protected final int textY;
     protected final List<TextChunk> landingText;
 
-    public FormattedTextPage(BookScreen parent, List<TextChunk> landingText, int textX, int textY) {
+    public FormattedTextPage(BookScreen<?> parent, List<TextChunk> landingText, int textX, int textY) {
         super(parent);
         this.textX = textX;
         this.textY = textY;
@@ -28,6 +28,13 @@ public class FormattedTextPage extends ScreenPage {
         }
     }
 
-
-
+    @Override
+    public boolean mouseClicked(Rectangle rectangle, double mouseX, double mouseY, int button) {
+        for (TextChunk chunk : landingText) {
+            if (chunk.mouseClicked(this.parent.getScreen(), mouseX - textX, mouseY - textY, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -14,21 +14,21 @@ import net.favouriteless.modopedia.common.book_types.PamphletBookType;
 public class PamphletScreenFactory implements BookScreenFactory<PamphletBookType> {
 
     @Override
-    public BookScreen openLandingScreen(PamphletBookType type, Book book, String language, LocalisedBookContent content, BookScreen lastScreen) {
+    public BookScreen<?> openLandingScreen(Book book, PamphletBookType type, String language, LocalisedBookContent content, BookScreen lastScreen) {
         Category cat = getCategory(content);
-        return cat != null ? new PamphletLandingScreen(book, language, content, cat, type.lockedViewType(), lastScreen) : null;
+        return cat != null ? new PamphletLandingScreen<>(book, type, language, content, cat, lastScreen) : null;
     }
 
     @Override
-    public BookScreen openCategoryScreen(PamphletBookType type, Book book, String language, LocalisedBookContent content, String category, BookScreen lastScreen) {
+    public BookScreen<?> openCategoryScreen(Book book, PamphletBookType type, String language, LocalisedBookContent content, String category, BookScreen lastScreen) {
         Category cat = content.getCategory(category);
-        return cat != null ? new CategoryScreen(book, language, content, cat, type.lockedViewType(), lastScreen) : lastScreen;
+        return cat != null ? new CategoryScreen<>(book, type, language, content, cat, lastScreen) : lastScreen;
     }
 
     @Override
-    public BookScreen openEntryScreen(PamphletBookType type, Book book, String language, LocalisedBookContent content, String entry, BookScreen lastScreen) {
+    public BookScreen<?> openEntryScreen(Book book, PamphletBookType type, String language, LocalisedBookContent content, String entry, BookScreen lastScreen) {
         Entry ent = content.getEntry(entry);
-        return ent != null ? new EntryScreen(book, language, content, ent, lastScreen) : null;
+        return ent != null ? new EntryScreen<>(book, type, language, content, ent, lastScreen) : null;
     }
 
     public static Category getCategory(LocalisedBookContent content) {

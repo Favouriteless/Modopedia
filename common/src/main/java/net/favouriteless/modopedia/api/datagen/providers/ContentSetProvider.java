@@ -3,7 +3,9 @@ package net.favouriteless.modopedia.api.datagen.providers;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.CachedOutput;
@@ -14,9 +16,7 @@ import net.minecraft.data.PackOutput.Target;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class ContentSetProvider implements DataProvider {
@@ -48,25 +48,25 @@ public abstract class ContentSetProvider implements DataProvider {
         return registries.thenCompose(registries -> run(output, registries));
     }
 
-    // TODO: Make the entry/category building async.
     private CompletableFuture<?> run(final CachedOutput output, final HolderLookup.Provider registries) {
         final Set<String> entries = Sets.newHashSet();
         final Set<String> categories = Sets.newHashSet();
 
         final List<CompletableFuture<?>> futures = new ArrayList<>();
-        RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, registries);
+        final RegistryOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
+        final Map<String, List<String>> links = new HashMap<>();
 
-        buildEntries(registries, (id, builder) -> {
+        buildEntries(registries, new Output(links, (id, builder) -> {
             if(!entries.add(id))
                 throw new IllegalStateException("Duplicate entry in " + getName() + " " + id);
             futures.add(DataProvider.saveStable(output, builder.build(ops), entryPathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
-        });
+        }));
 
-        buildCategories(registries, (id, builder) -> {
+        buildCategories(registries, new Output(links, (id, builder) -> {
             if(!categories.add(id))
                 throw new IllegalStateException("Duplicate category in " + getName() + " " + id);
             futures.add(DataProvider.saveStable(output, builder.build(ops), categoryPathProvider.json(ResourceLocation.fromNamespaceAndPath(modId, id))));
-        });
+        }));
 
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
@@ -74,6 +74,26 @@ public abstract class ContentSetProvider implements DataProvider {
     @Override
     public String getName() {
         return "Modopedia BookContent[" + modId + "]: " + book + "[" + language + "]";
+    }
+
+
+    private record Output(Map<String, List<String>> links, BookOutput out) implements BookContentOutput {
+
+        @Override
+        public List<String> getEntries(String to) {
+            return links.containsKey(to) ? links.get(to) : List.of();
+        }
+
+        @Override
+        public void addLink(String from, String to) {
+            links.computeIfAbsent(to, s -> new ArrayList<>()).add(from);
+        }
+
+        @Override
+        public void accept(String id, BookContentBuilder builder) {
+            out.accept(id, builder);
+        }
+
     }
 
 }

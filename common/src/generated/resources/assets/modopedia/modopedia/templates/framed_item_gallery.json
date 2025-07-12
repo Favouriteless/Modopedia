@@ -1,0 +1,16 @@
+{
+  "components": [
+    {
+      "type": "modopedia:small_frame",
+      "x": "#p_offset",
+      "y": "#p_offset"
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#display"
+    }
+  ],
+  "processor": "modopedia:widget_spacing",
+  "widget": "small_frame",
+  "width": 16
+}

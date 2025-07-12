@@ -8,7 +8,7 @@ public interface BookContentBuilder {
 
     JsonElement build(RegistryOps<JsonElement> ops);
 
-    default void build(String id, BookContentOutput output) {
+    default void build(String id, BookOutput output) {
         output.accept(id, this);
     }
 

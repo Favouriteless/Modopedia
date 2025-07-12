@@ -10,6 +10,10 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
+/**
+ * @deprecated Use {@link FramedItemGalleryBuilder} instead.
+ */
+@Deprecated(since = "1.1.0", forRemoval = true)
 public class FramedItemBuilder extends TemplateComponentBuilder {
 
     public static final ResourceLocation ID = Modopedia.id("framed_item");
@@ -17,12 +21,12 @@ public class FramedItemBuilder extends TemplateComponentBuilder {
     private final Either<List<List<ItemStack>>, String> items;
     private Either<Integer, String> width;
 
-    protected FramedItemBuilder(ItemStack... items) {
+    private FramedItemBuilder(ItemStack... items) {
         super(ID);
         this.items = Either.left(List.of(List.of(items)));
     }
 
-    protected FramedItemBuilder(String items) {
+    private FramedItemBuilder(String items) {
         super(ID);
         this.items = Either.right(items);
     }

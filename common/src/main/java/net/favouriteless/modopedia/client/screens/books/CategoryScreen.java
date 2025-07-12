@@ -3,43 +3,33 @@ package net.favouriteless.modopedia.client.screens.books;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.api.book.Category;
-import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.TitledTextPage;
-import net.favouriteless.modopedia.common.book_types.LockedViewType;
-import net.favouriteless.modopedia.util.client.AdvancementHelper;
+import net.favouriteless.modopedia.common.book_types.LockedViewProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
-import java.util.List;
+import java.util.stream.Stream;
 
-public class CategoryScreen extends ButtonListScreen {
+public class CategoryScreen<T extends BookType & LockedViewProvider> extends ButtonListScreen<T> {
 
     protected final Category category;
 
-    public CategoryScreen(Book book, String language, LocalisedBookContent content, Category category, LockedViewType lockedType, Component title, BookScreen lastScreen) {
-        super(book, language, content, title, lastScreen, Component.translatable("screen.modopedia.entries").withStyle(Style.EMPTY.withColor(book.getHeaderColour())), lockedType,
-                List.of(
-                        () -> category.getChildren().stream().filter(c -> {
-                            Category cat = content.getCategory(c);
-                            return cat != null && (cat.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(cat.getAdvancement()));
-                        }).toList(),
-                        () -> category.getEntries().stream().filter(e -> {
-                            Entry entry = content.getEntry(e);
-                            return entry != null && (entry.getAdvancement() == null || lockedType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(entry.getAdvancement()));
-                        }).toList()
-                ),
-                List.of(
-                        CategoryScreen::createCategoryButton,
-                        CategoryScreen::createEntryButton
-                ));
+    public CategoryScreen(Book book, T type, String language, LocalisedBookContent content, Category category, Component title, BookScreen<?> lastScreen) {
+        super(book, type, language, content, title, lastScreen, Component.translatable("screen.modopedia.entries").withStyle(Style.EMPTY.withColor(book.getHeaderColour())),
+                () -> Stream.<Factory>concat(
+                        category.getChildren().stream().map(id -> (s, x, y, width) -> createCategoryButton(s, id, x, y, width)),
+                        category.getEntries().stream().map(id -> (s, x, y, width) -> createEntryButton(s, id, x, y, width))
+                ).toList()
+        );
         this.category = category;
     }
 
-    public CategoryScreen(Book book, String langCode, LocalisedBookContent content, Category category, LockedViewType viewType, BookScreen lastScreen) {
-        this(book, langCode, content, category, viewType, Component.literal(category.getTitle()), lastScreen);
+    public CategoryScreen(Book book, T type, String language, LocalisedBookContent content, Category category, BookScreen<?> lastScreen) {
+        this(book, type, language, content, category, Component.literal(category.getTitle()), lastScreen);
     }
 
     @Override

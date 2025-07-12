@@ -1,0 +1,54 @@
+{
+  "title": "Item Gallery",
+  "icon": { "id": "minecraft:writable_book" },
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:item_gallery",
+          "display": {
+            "type": "modopedia:grid",
+            "row_max": 3,
+            "displays": [
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "type": "modopedia:item_gallery",
+          "x": 50,
+          "y": 50,
+          "display": {
+            "type": "modopedia:rings",
+            "displays": [
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" },
+              { "type": "modopedia:simple", "item": { "id": "minecraft:emerald"} },
+              { "type": "modopedia:cycling", "items": [ { "id": "minecraft:diamond" }, { "id": "minecraft:gold_ingot" } ] },
+              { "type": "modopedia:tag", "tag": "minecraft:small_flowers" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

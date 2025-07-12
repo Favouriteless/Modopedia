@@ -3,14 +3,13 @@ package net.favouriteless.modopedia.client.screens.books;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
-import net.favouriteless.modopedia.api.book.Category;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.book.text.TextChunk;
 import net.favouriteless.modopedia.book.text.TextParser;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.LandingScreenPage;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
-import net.favouriteless.modopedia.common.book_types.LockedViewType;
-import net.favouriteless.modopedia.util.client.AdvancementHelper;
+import net.favouriteless.modopedia.common.book_types.LockedViewProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -18,24 +17,19 @@ import net.minecraft.network.chat.Style;
 
 import java.util.List;
 
-public class ClassicLandingScreen extends ButtonListScreen {
+public class ClassicLandingScreen<T extends BookType & LockedViewProvider> extends ButtonListScreen<T> {
 
     public static final int TITLE_COLOUR = 0xEFE732;
 
     protected final Component subtitle;
 
-    public ClassicLandingScreen(Book book, String langCode, LocalisedBookContent content, LockedViewType viewType, BookScreen lastScreen) {
-        super(book, langCode, content, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR)), lastScreen,
-                Component.translatable("screen.modopedia.categories").withStyle(Style.EMPTY.withColor(book.getHeaderColour())), viewType,
-                List.of(
-                        () -> content.getCategoryIds().stream().filter(c -> {
-                            Category cat = content.getCategory(c);
-                            return cat != null && cat.getDisplayOnFrontPage() && (cat.getAdvancement() == null || viewType == LockedViewType.TRANSLUCENT || AdvancementHelper.hasAdvancement(cat.getAdvancement()));
-                        }).toList()
-                ),
-                List.of(
-                        ClassicLandingScreen::createCategoryButton
-                )
+    public ClassicLandingScreen(Book book, T type, String language, LocalisedBookContent content, BookScreen<?> lastScreen) {
+        super(book, type, language, content, Component.translatable(book.getTitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR)), lastScreen,
+                Component.translatable("screen.modopedia.categories").withStyle(Style.EMPTY.withColor(book.getHeaderColour())),
+                () -> content.getCategoryIds().stream()
+                        .filter(c -> content.hasCategory(c) && content.getCategory(c).getDisplayOnFrontPage())
+                        .<Factory>map(id -> (s, x, y, width) -> createCategoryButton(s, id, x, y, width))
+                        .toList()
         );
         this.subtitle = book.getSubtitle() != null ? Component.translatable(book.getSubtitle()).withStyle(Style.EMPTY.withColor(TITLE_COLOUR).withFont(Modopedia.id("default"))) : null;
     }

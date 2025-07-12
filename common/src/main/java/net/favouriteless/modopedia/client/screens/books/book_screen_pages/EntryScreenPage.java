@@ -20,7 +20,7 @@ public class EntryScreenPage extends ScreenPage implements PageWidgetHolder, Pag
     protected boolean dragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreenPage(BookScreen parent, Rectangle rectangle, Page page) {
+    public EntryScreenPage(BookScreen<?> parent, Rectangle rectangle, Page page) {
         super(parent);
         this.rectangle = rectangle;
         for(PageComponent component : page.getComponents()) {

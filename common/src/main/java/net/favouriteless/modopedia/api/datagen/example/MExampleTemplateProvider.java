@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.api.datagen.example;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.TextBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.TemplateProvider;
@@ -17,7 +17,7 @@ public class MExampleTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(Provider registries, BookContentOutput output) {
+    protected void build(Provider registries, BookOutput output) {
         TemplateBuilder.of()
                 .processor(Modopedia.id("example"))
                 .components(

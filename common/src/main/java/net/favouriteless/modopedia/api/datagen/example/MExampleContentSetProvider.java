@@ -3,9 +3,12 @@ package net.favouriteless.modopedia.api.datagen.example;
 import net.favouriteless.modopedia.api.datagen.*;
 import net.favouriteless.modopedia.api.datagen.builders.*;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
+import net.favouriteless.modopedia.api.datagen.builders.templates.FramedItemGalleryBuilder;
 import net.favouriteless.modopedia.api.datagen.providers.ContentSetProvider;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.text.Justify;
 
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
@@ -32,6 +35,9 @@ public class MExampleContentSetProvider extends ContentSetProvider {
                                 TextBuilder.of("$(c:green)Gallery component 2").justify(Justify.CENTER),
                                 TextBuilder.of("$(c:blue)Gallery component 3").justify(Justify.CENTER)
                         )
+                )
+                .page(
+                        FramedItemGalleryBuilder.of(new SimpleItemDisplay(Items.GRASS_BLOCK.getDefaultInstance()))
                 )
                 .build("text_entry", output);
     }

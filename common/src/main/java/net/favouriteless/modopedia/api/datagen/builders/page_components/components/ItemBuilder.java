@@ -11,6 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @deprecated Use {@link ItemGalleryBuilder} instead.
+ */
+@Deprecated(since = "1.1.0", forRemoval = true)
 public class ItemBuilder extends PageComponentBuilder {
 
     private Either<List<List<ItemStack>>, String> items = Either.left(new ArrayList<>());

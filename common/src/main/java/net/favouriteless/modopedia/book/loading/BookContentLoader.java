@@ -152,7 +152,7 @@ public class BookContentLoader {
     private static List<Page> loadPages(String entry, JsonArray array, Book book, String language, Level level) {
         List<Page> out = new ArrayList<>();
 
-        final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, level.registryAccess());
+        final RegistryOps<JsonElement> ops = level.registryAccess().createSerializationContext(JsonOps.INSTANCE);
         for(JsonElement element : array) {
             try {
                 PageImpl page = new PageImpl(loadPageComponentHolder(entry, element.getAsJsonObject(), language, out.size(), ops));

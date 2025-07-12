@@ -1,7 +1,7 @@
 package net.favouriteless.modopedia.neoforge.datagen.providers;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.favouriteless.modopedia.api.datagen.builders.TemplateBuilder;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.components.*;
 import net.favouriteless.modopedia.api.datagen.builders.templates.*;
@@ -23,13 +23,13 @@ public class MTemplateProvider extends TemplateProvider {
     }
 
     @Override
-    protected void build(Provider registries, BookContentOutput output) {
+    protected void build(Provider registries, BookOutput output) {
         buildBaseTemplates(output);
         buildRecipeTemplates(output);
         buildPageTemplates(output);
     }
 
-    public void buildBaseTemplates(BookContentOutput output) {
+    public void buildBaseTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
@@ -41,6 +41,18 @@ public class MTemplateProvider extends TemplateProvider {
                 .defaultValue("width", 16)
                 .defaultValue("widget", "small_frame")
                 .build(FramedItemBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .processor(WidgetSpacingProcessor.ID)
+                .components(
+                        SmallFrameBuilder.of()
+                                .x("#p_offset")
+                                .y("#p_offset"),
+                        ItemGalleryBuilder.of("#display")
+                )
+                .defaultValue("width", 16)
+                .defaultValue("widget", "small_frame")
+                .build(FramedItemGalleryBuilder.ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -129,6 +141,18 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
                 .components(
+                        CraftingGridBuilder.of()
+                                .x("#p_offset")
+                                .y("#p_offset"),
+                        ItemGalleryBuilder.of("#display")
+                )
+                .defaultValue("width", 50)
+                .defaultValue("widget", "crafting_grid")
+                .build(GridFramedItemGalleryBuilder.ID.getPath(), output);
+
+        TemplateBuilder.of()
+                .processor(WidgetSpacingProcessor.ID)
+                .components(
                         MediumFrameBuilder.of()
                             .x("#p_offset")
                             .y("#p_offset"),
@@ -191,11 +215,11 @@ public class MTemplateProvider extends TemplateProvider {
                 .build(LargeFramedShowcaseBuilder.ID.getPath(), output);
     }
 
-    public void buildRecipeTemplates(BookContentOutput output) {
+    public void buildRecipeTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(CraftingRecipeProcessor.ID)
                 .components(
-                        FramedCraftingGridBuilder.of("#p_inputs")
+                        GridFramedItemGalleryBuilder.of("#p_inputs")
                                 .x("#p_grid_x"),
                         CraftingArrowBuilder.of()
                                 .x("#p_arrow_x")
@@ -205,7 +229,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .y("#p_arrow_y")
                                 .width("#p_arrow_width")
                                 .height("#p_arrow_height"),
-                        FramedItemBuilder.of("#p_output")
+                        FramedItemGalleryBuilder.of("#p_output")
                                 .x("#p_output_x")
                                 .y(17)
                 )
@@ -214,7 +238,7 @@ public class MTemplateProvider extends TemplateProvider {
         TemplateBuilder.of()
                 .processor(CookingRecipeProcessor.ID)
                 .components(
-                        FramedItemBuilder.of("#p_inputs")
+                        FramedItemGalleryBuilder.of("#p_inputs")
                                 .x("#p_input_x"),
                         CraftingArrowBuilder.of()
                                 .x("#p_arrow_x")
@@ -227,13 +251,13 @@ public class MTemplateProvider extends TemplateProvider {
                                 .y("#p_arrow_y")
                                 .width("#p_arrow_width")
                                 .height("#p_arrow_height"),
-                        FramedItemBuilder.of("#p_output")
+                        FramedItemGalleryBuilder.of("#p_output")
                                 .x("#p_output_x")
                 )
                 .build(CookingRecipeBuilder.ID.getPath(), output);
     }
 
-    public void buildPageTemplates(BookContentOutput output) {
+    public void buildPageTemplates(BookOutput output) {
         TemplateBuilder.of()
                 .processor(HeaderedTextProcessor.ID)
                 .components(

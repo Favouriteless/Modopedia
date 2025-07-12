@@ -1,0 +1,16 @@
+{
+  "components": [
+    {
+      "type": "modopedia:crafting_grid",
+      "x": "#p_offset",
+      "y": "#p_offset"
+    },
+    {
+      "type": "modopedia:item_gallery",
+      "display": "#display"
+    }
+  ],
+  "processor": "modopedia:widget_spacing",
+  "widget": "crafting_grid",
+  "width": 50
+}

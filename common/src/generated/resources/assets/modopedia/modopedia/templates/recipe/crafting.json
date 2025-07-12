@@ -1,8 +1,8 @@
 {
   "components": [
     {
-      "items": "#p_inputs",
-      "template": "modopedia:framed_crafting_grid",
+      "display": "#p_inputs",
+      "template": "modopedia:grid_framed_item_gallery",
       "x": "#p_grid_x"
     },
     {
@@ -19,8 +19,8 @@
       "y": "#p_arrow_y"
     },
     {
-      "items": "#p_output",
-      "template": "modopedia:framed_item",
+      "display": "#p_output",
+      "template": "modopedia:framed_item_gallery",
       "x": "#p_output_x",
       "y": 17
     }

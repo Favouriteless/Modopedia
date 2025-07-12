@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.screens.books;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.api.book.Page;
 import net.favouriteless.modopedia.api.book.page_components.PageEventListener;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EntryScreen extends MultiPageBookScreen {
+public class EntryScreen<T extends BookType> extends MultiPageBookScreen<T> {
 
     protected final Entry entry;
 
@@ -22,13 +23,13 @@ public class EntryScreen extends MultiPageBookScreen {
     protected boolean isDragging = false;
     protected PageEventListener focused = null;
 
-    public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry, BookScreen lastScreen) {
-        super(book, langCode, content, lastScreen, Component.literal(entry.getTitle()));
+    public EntryScreen(Book book, T type, String language, LocalisedBookContent content, Entry entry, BookScreen<?> lastScreen) {
+        super(book, type, language, content, lastScreen, Component.literal(entry.getTitle()));
         this.entry = entry;
     }
 
-    public EntryScreen(Book book, String langCode, LocalisedBookContent content, Entry entry) {
-        this(book, langCode, content, entry, null);
+    public EntryScreen(Book book, T type, String language, LocalisedBookContent content, Entry entry) {
+        this(book, type, language, content, entry, null);
     }
 
     @Override

@@ -10,6 +10,10 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
+/**
+ * @deprecated Use {@link GridFramedItemGalleryBuilder} instead.
+ */
+@Deprecated(since = "1.1.0", forRemoval = true)
 public class FramedCraftingGridBuilder extends TemplateComponentBuilder {
 
     public static final ResourceLocation ID = Modopedia.id("framed_crafting_grid");

@@ -3,7 +3,7 @@ package net.favouriteless.modopedia.api.datagen.providers;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.datagen.BookOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.CachedOutput;
@@ -31,7 +31,7 @@ public abstract class TemplateProvider implements DataProvider {
         this.modId = modId;
     }
 
-    protected abstract void build(Provider registries, BookContentOutput output);
+    protected abstract void build(Provider registries, BookOutput output);
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {

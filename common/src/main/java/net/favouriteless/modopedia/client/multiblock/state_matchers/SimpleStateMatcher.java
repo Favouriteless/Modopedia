@@ -2,13 +2,17 @@ package net.favouriteless.modopedia.client.multiblock.state_matchers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
 public class SimpleStateMatcher implements StateMatcher {
+
+    public static final ResourceLocation ID = Modopedia.id("simple");
 
     public static final MapCodec<SimpleStateMatcher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             BlockStateCodec.CODEC.listOf().fieldOf("states").forGetter(SimpleStateMatcher::getStates)

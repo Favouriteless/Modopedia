@@ -20,8 +20,8 @@ public class BookItemTextButton extends Button {
     private final ItemStack stack;
     private final boolean isLocked;
 
-    public BookItemTextButton(int x, int y, int width, ItemStack stack, Component message, Button.OnPress onPress,
-                              Holder<SoundEvent> sound, boolean isLocked) {
+    public BookItemTextButton(int x, int y, int width, ItemStack stack, Component message, Holder<SoundEvent> sound,
+                              boolean isLocked, Button.OnPress onPress) {
         super(x, y, width, SIZE, message, onPress, DEFAULT_NARRATION);
         this.stack = stack;
         this.sound = sound;

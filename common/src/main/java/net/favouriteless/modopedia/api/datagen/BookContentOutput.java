@@ -1,7 +1,11 @@
 package net.favouriteless.modopedia.api.datagen;
 
-public interface BookContentOutput {
+import java.util.List;
 
-	void accept(String id, BookContentBuilder category);
+public interface BookContentOutput extends BookOutput {
+
+	List<String> getEntries(String category);
+
+	void addLink(String entry, String category);
 
 }

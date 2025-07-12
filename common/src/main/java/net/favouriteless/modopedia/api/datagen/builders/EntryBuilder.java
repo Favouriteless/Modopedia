@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
+import net.favouriteless.modopedia.api.datagen.BookContentOutput;
 import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
@@ -68,6 +69,12 @@ public class EntryBuilder implements BookContentBuilder {
         }
         json.add("pages", pages);
         return json;
+    }
+
+    public void build(String id, BookContentOutput output, String... categories) {
+        for(String cat : categories)
+            output.addLink(id, cat);
+        BookContentBuilder.super.build(id, output);
     }
 
 }

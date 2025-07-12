@@ -3,7 +3,9 @@ package net.favouriteless.modopedia.client.multiblock.state_matchers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
  * Special state matcher which returns true if both A and B match
  */
 public class BothStateMatcher implements StateMatcher {
+
+    public static final ResourceLocation ID = Modopedia.id("both");
 
     public static final MapCodec<BothStateMatcher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.lazyInitialized(StateMatcher::codec).fieldOf("a").forGetter(m -> m.a),

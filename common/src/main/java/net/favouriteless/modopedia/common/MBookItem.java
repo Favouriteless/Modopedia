@@ -42,7 +42,7 @@ public class MBookItem extends Item {
             return;
 
         Book book = BookRegistry.get().getBook(bookId);
-        if(book != null)
+        if(book != null && book.getSubtitle() != null)
             tooltip.add(Component.translatable(book.getSubtitle()).withStyle(ChatFormatting.GRAY));
 
         if(flag.isAdvanced())

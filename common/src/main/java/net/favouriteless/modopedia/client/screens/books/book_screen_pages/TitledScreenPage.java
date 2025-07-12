@@ -15,7 +15,7 @@ public class TitledScreenPage extends ScreenPage {
     protected final Component title;
     protected final Rectangle page;
 
-    public TitledScreenPage(BookScreen parent, Component title, Rectangle page) {
+    public TitledScreenPage(BookScreen<?> parent, Component title, Rectangle page) {
         super(parent);
         this.title = title;
         this.page = page;

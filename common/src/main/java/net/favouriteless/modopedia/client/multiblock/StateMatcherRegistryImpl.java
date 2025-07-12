@@ -1,4 +1,4 @@
-package net.favouriteless.modopedia.client.multiblock.state_matchers;
+package net.favouriteless.modopedia.client.multiblock;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -31,13 +31,7 @@ public class StateMatcherRegistryImpl implements StateMatcherRegistry {
     private final Codec<StateMatcher> codec = typeCodec.dispatch("type", StateMatcher::typeCodec, Function.identity());
 
 
-    private StateMatcherRegistryImpl() {
-        register(Modopedia.id("air"), AirStateMatcher.CODEC);
-        register(Modopedia.id("simple"), SimpleStateMatcher.CODEC);
-        register(Modopedia.id("tag"), TagStateMatcher.CODEC);
-        register(Modopedia.id("either"), EitherStateMatcher.CODEC);
-        register(Modopedia.id("both"), BothStateMatcher.CODEC);
-    }
+    private StateMatcherRegistryImpl() {}
 
     @Override
     public void register(ResourceLocation id, MapCodec<? extends StateMatcher> codec) {

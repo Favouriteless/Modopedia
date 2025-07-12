@@ -7,7 +7,12 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookTexture;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.TemplateProcessor;
+import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
 import net.favouriteless.modopedia.api.registries.client.BookTextureRegistry;
+import net.favouriteless.modopedia.client.page_components.item_displays.CyclingItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.EmptyItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.GridItemDisplay;
+import net.favouriteless.modopedia.client.page_components.item_displays.SimpleItemDisplay;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +23,7 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +34,11 @@ public class CraftingRecipeProcessor implements TemplateProcessor {
 
     @Override
     public void init(Book book, MutableLookup lookup, Level level) {
-        initComponents(book, lookup, level);
-        initRecipe(book, lookup, level);
+        initComponents(book, lookup);
+        initRecipe(lookup, level);
     }
 
-    protected void initRecipe(Book book, MutableLookup lookup, Level level) {
+    protected void initRecipe(MutableLookup lookup, Level level) {
         ResourceLocation id = lookup.get("recipe").as(ResourceLocation.class);
 
         Optional<RecipeHolder<?>> optional = level.getRecipeManager().byKey(id);
@@ -42,29 +48,31 @@ public class CraftingRecipeProcessor implements TemplateProcessor {
         RecipeHolder<?> holder = optional.get();
 
         if(holder.value() instanceof ShapelessRecipe recipe) {
-            List<List<ItemStack>> inputs = new ArrayList<>();
-            recipe.getIngredients().forEach(i -> inputs.add(List.of(i.getItems())));
+            List<ItemDisplay> displays = recipe.getIngredients().stream()
+                    .<ItemDisplay>map(i -> new CyclingItemDisplay(Arrays.asList(i.getItems())))
+                    .toList();
 
-            lookup.set("p_inputs", Variable.of(inputs));
-            lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+            lookup.set("p_inputs", Variable.of(new GridItemDisplay(displays, 3, 17, false)));
+            lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
             lookup.set("p_tooltip", Variable.of(List.of(Modopedia.translation("template", "shapeless_recipe"))));
         }
         else if(holder.value() instanceof ShapedRecipe recipe) {
             NonNullList<Ingredient> ingredients = recipe.getIngredients();
-            List<List<ItemStack>> inputs = new ArrayList<>();
+            List<ItemDisplay> displays = new ArrayList<>();
 
             int rows = recipe.getHeight();
             int columns = recipe.getWidth();
             for(int y = 0; y < rows; y++) {
                 for(int x = 0; x < columns; x++) {
-                    inputs.add(List.of(ingredients.get(x + y*columns).getItems()));
+                    ItemStack[] items = ingredients.get(x + y*columns).getItems();
+                    displays.add(items.length == 0 ? new EmptyItemDisplay() : new CyclingItemDisplay(Arrays.asList(items)));
                 }
                 for(int i = 0; i < 3 - columns; i++)
-                    inputs.add(List.of(ItemStack.EMPTY));
+                    displays.add(new EmptyItemDisplay());
             }
 
-            lookup.set("p_inputs", Variable.of(inputs));
-            lookup.set("p_output", Variable.of(List.of(List.of(recipe.getResultItem(level.registryAccess())))));
+            lookup.set("p_inputs", Variable.of(new GridItemDisplay(displays, 3, 17, false)));
+            lookup.set("p_output", Variable.of(new SimpleItemDisplay(recipe.getResultItem(level.registryAccess()))));
             lookup.set("p_tooltip", Variable.of(List.of(Modopedia.translation("template", "shaped_recipe"))));
         }
         else {
@@ -72,7 +80,7 @@ public class CraftingRecipeProcessor implements TemplateProcessor {
         }
     }
 
-    protected void initComponents(Book book, MutableLookup lookup, Level level) {
+    protected void initComponents(Book book, MutableLookup lookup) {
         BookTexture tex = BookTextureRegistry.get().getTexture(book.getTexture());
         if(tex == null)
             throw new IllegalStateException("CraftingRecipe templates require the book to have a valid BookTexture");

@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import net.favouriteless.modopedia.api.Variable;
+import net.favouriteless.modopedia.api.book.page_components.ItemDisplay;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.book.text.Justify;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
@@ -46,6 +47,7 @@ public class JsonVariable implements Variable {
         registerCodec(Justify.class, Justify.CODEC);
         registerCodec(CompoundTag.class, CompoundTag.CODEC);
         registerCodec(BlockState.class, BlockStateCodec.CODEC);
+        registerCodec(ItemDisplay.class, ItemDisplay.codec());
     }
 
     private JsonVariable(JsonElement internal, RegistryOps<JsonElement> ops) {

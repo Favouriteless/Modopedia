@@ -33,18 +33,6 @@ public class ModopediaFabric implements ModInitializer {
         FabricCommonEvents.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) -> MCommands.load(dispatcher, context));
-
-        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) -> {
-            for(Book book : BookRegistry.get().getBooks()) {
-                ResourceKey<CreativeModeTab> key = BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElseThrow();
-                if(!key.equals(book.getCreativeTab()) && !key.equals(CreativeModeTabs.SEARCH))
-                    continue;
-
-                ItemStack item = new ItemStack(MItems.BOOK.get(), 1);
-                item.set(MDataComponents.BOOK.get(), BookRegistry.get().getId(book));
-                entries.accept(item);
-            }
-        });
         NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.COMMON, CommonConfig.SPEC, "modopedia-common.toml");
         NeoForgeConfigRegistry.INSTANCE.register(Modopedia.MOD_ID, Type.SERVER, ServerConfig.SPEC, "modopedia-server.toml");
     }

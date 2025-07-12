@@ -1,8 +1,8 @@
 {
   "components": [
     {
-      "items": "#p_inputs",
-      "template": "modopedia:framed_item",
+      "display": "#p_inputs",
+      "template": "modopedia:framed_item_gallery",
       "x": "#p_input_x"
     },
     {
@@ -24,8 +24,8 @@
       "y": "#p_arrow_y"
     },
     {
-      "items": "#p_output",
-      "template": "modopedia:framed_item",
+      "display": "#p_output",
+      "template": "modopedia:framed_item_gallery",
       "x": "#p_output_x"
     }
   ],

@@ -5,6 +5,7 @@ import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookContent.LocalisedBookContent;
 import net.favouriteless.modopedia.api.book.BookTexture.FixedRectangle;
 import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
+import net.favouriteless.modopedia.api.book.BookType;
 import net.favouriteless.modopedia.client.screens.books.book_screen_pages.ScreenPage;
 import net.favouriteless.modopedia.client.screens.widgets.BookImageButton;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class MultiPageBookScreen extends BookScreen {
+public abstract class MultiPageBookScreen<T extends BookType> extends BookScreen<T> {
 
     private final List<ScreenPage> pages = new ArrayList<>();
 
@@ -26,8 +27,8 @@ public abstract class MultiPageBookScreen extends BookScreen {
     private BookImageButton rightButton;
     private BookImageButton backButton;
 
-    public MultiPageBookScreen(Book book, String language, LocalisedBookContent content, BookScreen lastScreen, Component title) {
-        super(book, language, content, lastScreen, title);
+    public MultiPageBookScreen(Book book, T type, String language, LocalisedBookContent content, BookScreen<?> lastScreen, Component title) {
+        super(book, type, language, content, lastScreen, title);
     }
 
     protected abstract void initPages(final Consumer<ScreenPage> pageConsumer);
@@ -77,6 +78,23 @@ public abstract class MultiPageBookScreen extends BookScreen {
             page.render(graphics, poseStack, details, mouseX - xShift, mouseY - yShift, partialTick);
             poseStack.popPose();
         }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (super.mouseClicked(mouseX, mouseY, button))
+            return true;
+        for(int i = 0; i < texture.pages().size() && leftPage+i < pages.size(); i++) {
+            ScreenPage page = pages.get(leftPage + i);
+            Rectangle details = texture.pages().get(i);
+
+            int xShift = leftPos + details.u();
+            int yShift = topPos + details.v();
+            if (page.mouseClicked(details, mouseX - xShift, mouseY - yShift, button)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
