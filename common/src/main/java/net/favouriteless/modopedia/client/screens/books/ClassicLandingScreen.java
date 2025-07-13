@@ -15,6 +15,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ClassicLandingScreen<T extends BookType & LockedViewProvider> extends ButtonListScreen<T> {
@@ -28,6 +29,7 @@ public class ClassicLandingScreen<T extends BookType & LockedViewProvider> exten
                 Component.translatable("screen.modopedia.categories").withStyle(Style.EMPTY.withColor(book.getHeaderColour())),
                 () -> content.getCategoryIds().stream()
                         .filter(c -> content.hasCategory(c) && content.getCategory(c).getDisplayOnFrontPage())
+                        .sorted(Comparator.comparingInt(o -> content.getCategory(o).getSortNum()))
                         .<Factory>map(id -> (s, x, y, width) -> createCategoryButton(s, id, x, y, width))
                         .toList()
         );

@@ -23,6 +23,7 @@ public class CategoryBuilder implements BookContentBuilder {
     private ResourceLocation advancement;
     private final List<String> entries = new ArrayList<>();
     private final List<String> children = new ArrayList<>();
+    private int sortNum = 0;
 
     private CategoryBuilder(String title) {
         this.title = title;
@@ -62,9 +63,14 @@ public class CategoryBuilder implements BookContentBuilder {
         return this;
     }
 
+    public CategoryBuilder sortNum(int value) {
+        this.sortNum = value;
+        return this;
+    }
+
     @Override
     public JsonElement build(RegistryOps<JsonElement> ops) {
-        return Category.codec().encodeStart(ops, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement)).getOrThrow();
+        return Category.codec().encodeStart(ops, new CategoryImpl(title, rawLandingText, iconStack, entries, children, displayFrontPage, advancement, sortNum)).getOrThrow();
     }
 
     public void build(String id, BookContentOutput output) {

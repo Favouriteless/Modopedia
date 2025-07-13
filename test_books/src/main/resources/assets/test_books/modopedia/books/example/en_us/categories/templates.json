@@ -19,5 +19,6 @@
     "templates/cooking_recipes"
   ],
   "children": [
-  ]
+  ],
+  "sort_num": 2
 }

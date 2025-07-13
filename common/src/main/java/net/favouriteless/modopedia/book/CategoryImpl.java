@@ -30,11 +30,12 @@ public class CategoryImpl implements Category {
     private final ResourceLocation advancement;
     private final List<String> entries;
     private final List<String> children;
+    private final int sortNum;
 
     private List<TextChunk> landingText = null; // Fields here get built after the constructor runs. They aren't encoded ever.
 
     public CategoryImpl(String title, String rawLandingText, ItemStack iconStack, List<String> entries,
-                        List<String> children, boolean displayFrontPage, ResourceLocation advancement) {
+                        List<String> children, boolean displayFrontPage, ResourceLocation advancement, int sortNum) {
         this.title = title;
         this.rawLandingText = rawLandingText;
         this.iconStack = iconStack;
@@ -42,6 +43,7 @@ public class CategoryImpl implements Category {
         this.children = children;
         this.displayFrontPage = displayFrontPage;
         this.advancement = advancement;
+        this.sortNum = sortNum;
     }
 
     @Override
@@ -84,6 +86,11 @@ public class CategoryImpl implements Category {
         return advancement;
     }
 
+    @Override
+    public int getSortNum() {
+        return sortNum;
+    }
+
     public CategoryImpl init(Book book, String language) {
         landingText = TextParser.parse(
                 rawLandingText,
@@ -103,9 +110,10 @@ public class CategoryImpl implements Category {
             Codec.STRING.listOf().optionalFieldOf("entries", new ArrayList<>()).forGetter(Category::getEntries),
             Codec.STRING.listOf().optionalFieldOf("children", new ArrayList<>()).forGetter(Category::getChildren),
             Codec.BOOL.optionalFieldOf("display_on_front_page", DEFAULT_DISPLAY_ON_FRONT_PAGE).forGetter(Category::getDisplayOnFrontPage),
-            ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement()))
-    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront, advancement) -> new CategoryImpl(
-            title, landingText.orElse(null), iconStack, entries, children, displayFront, advancement.orElse(null)))
+            ResourceLocation.CODEC.optionalFieldOf("advancement").forGetter(c -> Optional.ofNullable(c.getAdvancement())),
+            Codec.INT.optionalFieldOf("sort_num", 0).forGetter(Category::getSortNum)
+    ).apply(instance, (title, landingText, iconStack, entries, children, displayFront, advancement, sortNum) -> new CategoryImpl(
+            title, landingText.orElse(null), iconStack, entries, children, displayFront, advancement.orElse(null), sortNum))
     );
 
 }

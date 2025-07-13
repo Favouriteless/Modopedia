@@ -55,6 +55,11 @@ public interface Category {
      */
     ResourceLocation getAdvancement();
 
+    /**
+     * @return Sortnum of this category.
+     */
+    int getSortNum();
+
     static Codec<Category> codec() {
         return CategoryImpl.CODEC;
     }

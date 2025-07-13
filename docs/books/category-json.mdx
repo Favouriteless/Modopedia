@@ -10,15 +10,16 @@ All categories for a content set should be located at `BASE_LOCATION/categories/
 
 ### JSON Schema
 
-| ID                    | Type             | Required | Default | Description                                                              |
-|-----------------------|------------------|----------|---------|--------------------------------------------------------------------------|
-| title                 | String           | &check;  | -       | Title of the category.                                                   |
-| landing_text          | FString          | &cross;  | -       | Landing text displayed on the category's page.                           |
-| icon                  | ItemStack        | &cross;  | Grass   | ItemStack to use as the icon for this category.                          |
-| entries               | String[]         | &cross;  | -       | Entries this category contains, referred to by their ID.                 |
-| children              | String[]         | &cross;  | -       | Subcategories this category contains, referred to by their ID.           |
-| display_on_front_page | boolean          | &cross;  | true    | If false, this category will not display on the landing screen of books. |
-| advancement           | ResourceLocation | &cross;  | -       | ID of the advancement needed to unlock this category.                    |
+| ID                    | Type             | Required | Default | Description                                                                                       |
+|-----------------------|------------------|----------|---------|---------------------------------------------------------------------------------------------------|
+| title                 | String           | &check;  | -       | Title of the category.                                                                            |
+| landing_text          | FString          | &cross;  | -       | Landing text displayed on the category's page.                                                    |
+| icon                  | ItemStack        | &cross;  | Grass   | ItemStack to use as the icon for this category.                                                   |
+| entries               | String[]         | &cross;  | -       | Entries this category contains, referred to by their ID.                                          |
+| children              | String[]         | &cross;  | -       | Subcategories this category contains, referred to by their ID.                                    |
+| display_on_front_page | boolean          | &cross;  | true    | If false, this category will not display on the landing screen of books.                          |
+| advancement           | ResourceLocation | &cross;  | -       | ID of the advancement needed to unlock this category.                                             |
+| sort_num              | Integer          | &cross;  | 0       | Decides the ordering of categories on the landing page. Lowest at the top, highest at the bottom. |
 
 ## Example Category JSON
 

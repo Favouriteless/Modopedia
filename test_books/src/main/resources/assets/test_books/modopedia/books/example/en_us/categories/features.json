@@ -15,5 +15,6 @@
     "components/widgets",
     "components/tooltips",
     "components/items"
-  ]
+  ],
+  "sort_num": 3
 }
