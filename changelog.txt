@@ -1,3 +1,3 @@
-- ADDED: Paragraph and linebreak helper methods in `FormattedStringBuilder`, this should now be shorter than using a text block for the same purpose.
+- ADDED: `FormattedStringBuilder` overloads for links with colours.
 
-- FIXED: CategoryScreens crash when trying to open a non-existent entry or child category. This now gives the appropriate warning instead.
+- CHANGED: Modopedia books should now show up on JEI and REI searches under the namespace they were created in (e.g. for searching `@enchanted`). This feature currently only works on NeoForge.

@@ -1,10 +1,12 @@
 package net.favouriteless.modopedia.common;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.client.BookOpenHandler;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -57,6 +59,13 @@ public class MBookItem extends Item {
         }
 
         return super.getName(stack);
+    }
+
+    // Soft-implement NeoForge's IItemExtension#getCreatorModId method. This is to allow JEI, REI etc. to include modopedia books in searches for other mod IDs.
+    // Potentially this will soft-implement it for Fabric API too but that may or may not be added by the time you read this comment.
+    public String getCreatorModId(ItemStack item) {
+        ResourceLocation book = item.get(MDataComponents.BOOK.get());
+        return book != null ? book.getNamespace() : BuiltInRegistries.ITEM.getKey(item.getItem()).getNamespace();
     }
 
     public static ResourceLocation getBookId(ItemStack stack) {

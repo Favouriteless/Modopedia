@@ -107,6 +107,10 @@ public class FormattedStringBuilder {
         return apply("l", url).then(text).apply("/l");
     }
 
+    public FormattedStringBuilder url(String url, String text, int colour) {
+        return colour(colour).apply("l", url).then(text).apply("/l").stopColour();
+    }
+
     public FormattedStringBuilder command(String command, String text) {
         return apply("cmd", command).then(text).apply("/cmd");
     }
@@ -121,6 +125,10 @@ public class FormattedStringBuilder {
 
     public FormattedStringBuilder colour(int colour) {
         return apply("c", "#" + Integer.toHexString(colour).toUpperCase());
+    }
+
+    public FormattedStringBuilder colour(int colour, String text) {
+        return colour(colour).then(text).stopColour();
     }
 
     public FormattedStringBuilder stopColour() {
@@ -143,16 +151,32 @@ public class FormattedStringBuilder {
         return apply("el:" + entry).then(text).apply("/el");
     }
 
+    public FormattedStringBuilder entryLink(String entry, String text, int colour) {
+        return colour(colour).apply("el:" + entry).then(text).apply("/el").stopColour();
+    }
+
     public FormattedStringBuilder categoryLink(String category, String text) {
         return apply("cl:" + category).then(text).apply("/cl");
+    }
+
+    public FormattedStringBuilder categoryLink(String category, String text, int colour) {
+        return colour(colour).apply("cl:" + category).then(text).apply("/cl").stopColour();
     }
 
     public FormattedStringBuilder boldEntryLink(String entry, String text) {
         return bold().entryLink(entry, text).stopBold();
     }
 
+    public FormattedStringBuilder boldEntryLink(String entry, String text, int colour) {
+        return colour(colour).bold().entryLink(entry, text).stopBold().stopColour();
+    }
+
     public FormattedStringBuilder boldCategoryLink(String entry, String text) {
         return bold().categoryLink(entry, text).stopBold();
+    }
+
+    public FormattedStringBuilder boldCategoryLink(String entry, String text, int colour) {
+        return colour(colour).bold().categoryLink(entry, text).stopBold().stopColour();
     }
 
     @Override
