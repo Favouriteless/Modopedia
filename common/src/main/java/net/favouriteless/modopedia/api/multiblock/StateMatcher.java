@@ -5,8 +5,10 @@ import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.registries.client.StateMatcherRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -40,4 +42,9 @@ public interface StateMatcher {
      */
     MapCodec<? extends StateMatcher> typeCodec();
 
+    /**
+     * Initializes the provided BlockEntity however applicable
+     */
+    default void initializeBlockEntity(BlockEntity blockEntity) {
+    }
 }
