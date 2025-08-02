@@ -1,28 +1,19 @@
 package net.favouriteless.modopedia.client.multiblock;
 
-import net.favouriteless.modopedia.api.multiblock.Multiblock;
-import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
-import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
+import net.favouriteless.modopedia.api.multiblock.*;
+
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.ColorResolver;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.jetbrains.annotations.NotNull;
+import java.util.*;
 
 public class PlacedMultiblock implements MultiblockInstance {
 
@@ -67,10 +58,23 @@ public class PlacedMultiblock implements MultiblockInstance {
         BlockState state = getBlockState(pos);
 
         if(state.getBlock() instanceof EntityBlock block) {
-            if(blockEntities.containsKey(pos) && !blockEntities.get(pos).getBlockState().equals(state))
+            if (blockEntities.containsKey(pos) && !blockEntities.get(pos).getType().isValid(state)) {
                 blockEntities.remove(pos);
+            }
 
-            return blockEntities.computeIfAbsent(pos, k -> block.newBlockEntity(pos, state));
+            final var blockEntity = blockEntities.computeIfAbsent(pos, k -> {
+                final var stateMatcher = multiblock.getStateMatcher(pos);
+                final var be = block.newBlockEntity(pos, state);
+                if (stateMatcher != null && be != null) {
+                    stateMatcher.initializeBlockEntity(be);
+                }
+                return be;
+            });
+            if (blockEntity != null) {
+                //noinspection deprecation Mojang deprecated
+                blockEntity.setBlockState(state); // Always set the current state since it may frequently update and should be trivial
+            }
+            return blockEntity;
         }
 
         return null;
