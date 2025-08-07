@@ -23,17 +23,14 @@ public class NeoClientPlatformHelper implements IClientPlatformHelper {
 			boolean checkSides, boolean noOffsets) {
 		BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 
-		// RNG is seeded by the state (model variants and other such things)
 		RAND.setSeed(state.getSeed(pos));
 
 		ModelData modelData = ModelData.EMPTY;
-		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity != null) {
-			// BE model data first
-			modelData = blockEntity.getModelData();
-		}
+		BlockEntity be = level.getBlockEntity(pos);
+		if(be != null)
+			modelData = be.getModelData();
+
 		BakedModel model = dispatcher.getBlockModel(state);
-		// The model might have model data
 		modelData = model.getModelData(level, pos, state, modelData);
 
 		for (RenderType type : model.getRenderTypes(state, RAND, modelData)) {

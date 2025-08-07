@@ -8,7 +8,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public interface StateMatcher {
     }
 
     /**
-     * @return true if the given state matches.
+     * @return True if the given state matches.
      */
     boolean matches(BlockState state);
 
@@ -42,9 +41,4 @@ public interface StateMatcher {
      */
     MapCodec<? extends StateMatcher> typeCodec();
 
-    /**
-     * Initializes the provided BlockEntity however applicable
-     */
-    default void initializeBlockEntity(BlockEntity blockEntity) {
-    }
 }

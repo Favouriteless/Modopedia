@@ -1,4 +1,0 @@
-- ADDED: `FormattedStringBuilder` overloads for links with colours.
-- ADDED: `sort_num` field in category.json for deciding the ordering of categories on the landing page.
-
-- CHANGED: Modopedia books should now show up on JEI and REI searches under the namespace they were created in (e.g. for searching `@enchanted`). This feature currently only works on NeoForge.

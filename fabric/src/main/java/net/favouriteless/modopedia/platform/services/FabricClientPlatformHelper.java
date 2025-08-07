@@ -20,7 +20,6 @@ public class FabricClientPlatformHelper implements IClientPlatformHelper {
             boolean checkSides, boolean noOffsets) {
         BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 
-	    // RNG is seeded by the state (model variants and other such things)
         RAND.setSeed(state.getSeed(pos));
 
         if (noOffsets) {
@@ -29,7 +28,6 @@ public class FabricClientPlatformHelper implements IClientPlatformHelper {
         }
 
         VertexConsumer buffer = bufferSource.getBuffer(ItemBlockRenderTypes.getChunkRenderType(state));
-
         dispatcher.renderBatched(state, pos, level, pose, buffer, false, RAND);
     }
 }

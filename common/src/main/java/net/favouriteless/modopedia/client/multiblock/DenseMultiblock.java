@@ -41,13 +41,13 @@ public class DenseMultiblock implements Multiblock {
             List<String> layer = pattern.get(y);
 
             if(layer.size() != zSize)
-                throw new IllegalArgumentException("DenseMultiblock must have a rectangle footprint.");
+                throw new IllegalArgumentException("DenseMultiblock must have a rectangular footprint.");
 
             for(int z = 0; z < layer.size(); z++) {
                 String row = layer.get(z);
 
                 if(row.length() != xSize)
-                    throw new IllegalArgumentException("DenseMultiblock must have a rectangle footprint.");
+                    throw new IllegalArgumentException("DenseMultiblock must have a rectangular footprint.");
 
                 for(int x = 0; x < row.length(); x++) {
                     states[PosUtils.posToIndex(x, y, z, xSize, ySize)] = key.get(row.charAt(x));

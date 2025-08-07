@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.*;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class PlacedMultiblock implements MultiblockInstance {
@@ -25,7 +24,7 @@ public class PlacedMultiblock implements MultiblockInstance {
     public BlockPos pos;
     private int ticks = 0;
 
-    private final Map<BlockPos, BlockEntity> blockEntities = new HashMap<>();
+    private final Map<BlockPos, BlockEntity> beCache = new HashMap<>();
 
     public PlacedMultiblock(Multiblock multiblock, Level level, BlockPos pos) {
         this.multiblock = multiblock;
@@ -58,23 +57,22 @@ public class PlacedMultiblock implements MultiblockInstance {
         BlockState state = getBlockState(pos);
 
         if(state.getBlock() instanceof EntityBlock block) {
-            if (blockEntities.containsKey(pos) && !blockEntities.get(pos).getType().isValid(state)) {
-                blockEntities.remove(pos);
-            }
+            if(beCache.containsKey(pos) && !beCache.get(pos).getType().isValid(state))
+                beCache.remove(pos);
 
-            final var blockEntity = blockEntities.computeIfAbsent(pos, k -> {
-                final var stateMatcher = multiblock.getStateMatcher(pos);
-                final var be = block.newBlockEntity(pos, state);
-                if (stateMatcher != null && be != null) {
-                    stateMatcher.initializeBlockEntity(be);
-                }
-                return be;
+            BlockEntity be = beCache.computeIfAbsent(pos, k -> {
+                StateMatcher matcher = multiblock.getStateMatcher(pos);
+                BlockEntity _be = block.newBlockEntity(pos, state);
+                if(matcher instanceof BEStateMatcher<?> beMatcher)
+                    beMatcher.init(_be);
+
+                return _be;
             });
-            if (blockEntity != null) {
-                //noinspection deprecation Mojang deprecated
-                blockEntity.setBlockState(state); // Always set the current state since it may frequently update and should be trivial
-            }
-            return blockEntity;
+
+            if(be != null)
+                be.setBlockState(state);
+
+            return be;
         }
 
         return null;
