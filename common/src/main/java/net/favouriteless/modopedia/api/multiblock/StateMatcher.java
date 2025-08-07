@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.registries.client.StateMatcherRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface StateMatcher {
     }
 
     /**
-     * @return true if the given state matches.
+     * @return True if the given state matches.
      */
     boolean matches(BlockState state);
 

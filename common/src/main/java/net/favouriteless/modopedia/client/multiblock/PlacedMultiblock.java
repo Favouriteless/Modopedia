@@ -1,28 +1,18 @@
 package net.favouriteless.modopedia.client.multiblock;
 
-import net.favouriteless.modopedia.api.multiblock.Multiblock;
-import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
-import net.favouriteless.modopedia.api.multiblock.StateMatcher;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
+import net.favouriteless.modopedia.api.multiblock.*;
+
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.ColorResolver;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlacedMultiblock implements MultiblockInstance {
 
@@ -34,7 +24,7 @@ public class PlacedMultiblock implements MultiblockInstance {
     public BlockPos pos;
     private int ticks = 0;
 
-    private final Map<BlockPos, BlockEntity> blockEntities = new HashMap<>();
+    private final Map<BlockPos, BlockEntity> beCache = new HashMap<>();
 
     public PlacedMultiblock(Multiblock multiblock, Level level, BlockPos pos) {
         this.multiblock = multiblock;
@@ -67,10 +57,21 @@ public class PlacedMultiblock implements MultiblockInstance {
         BlockState state = getBlockState(pos);
 
         if(state.getBlock() instanceof EntityBlock block) {
-            if(blockEntities.containsKey(pos) && !blockEntities.get(pos).getBlockState().equals(state))
-                blockEntities.remove(pos);
+            if(beCache.containsKey(pos) && !beCache.get(pos).getType().isValid(state))
+                beCache.remove(pos);
 
-            return blockEntities.computeIfAbsent(pos, k -> block.newBlockEntity(pos, state));
+            BlockEntity be = beCache.computeIfAbsent(pos, k -> {
+                BlockEntity _be = block.newBlockEntity(pos, state);
+                if(multiblock.getStateMatcher(pos) instanceof BEStateMatcher<?> beMatcher)
+                    beMatcher.init(_be);
+
+                return _be;
+            });
+
+            if(be != null)
+                be.setBlockState(state);
+
+            return be;
         }
 
         return null;

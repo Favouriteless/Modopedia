@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
@@ -16,25 +15,20 @@ import net.favouriteless.modopedia.platform.ClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 
 public class MultiblockPageComponent extends PageComponent {
 
     public static final ResourceLocation ID = Modopedia.id("multiblock");
-    private static final RandomSource RANDOM = RandomSource.createNewThreadLocalInstance();
 
     private MultiblockInstance multiblock;
     private int width;
@@ -120,23 +114,13 @@ public class MultiblockPageComponent extends PageComponent {
     }
 
     protected void renderBlocks(PoseStack pose, MultiBufferSource bufferSource, Vec3i dims, float partialTicks) {
-        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
-        for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
+	    for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
             pose.pushPose();
             pose.translate(pos.getX(), pos.getY(), pos.getZ());
 
             BlockState state = multiblock.getBlockState(pos);
             if(state.getRenderShape() == RenderShape.MODEL) {
-                for(RenderType type : ClientServices.PLATFORM.getRenderTypes(multiblock, pos, state)) {
-                    VertexConsumer buffer = bufferSource.getBuffer(type);
-
-                    if(noOffsets) {
-                        Vec3 offset = state.getOffset(multiblock, pos);
-                        pose.translate(-offset.x, -offset.y, -offset.z);
-                    }
-
-                    dispatcher.renderBatched(state, pos, multiblock, pose, buffer, false, RANDOM);
-                }
+                ClientServices.PLATFORM.renderBatched(state, pos, multiblock, pose, bufferSource, false, noOffsets);
             }
 
             pose.popPose();
