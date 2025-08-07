@@ -22,7 +22,7 @@ public interface BEStateMatcher<T extends BlockEntity> extends StateMatcher {
      *
      * @return True if the BEs match, otherwise false.
      */
-    boolean matches(T self, T other);
+    boolean matches(T other);
 
     /**
      * Called immediately after a {@link BlockEntity} is first created in a {@link MultiblockInstance}. Use this method
@@ -39,10 +39,8 @@ public interface BEStateMatcher<T extends BlockEntity> extends StateMatcher {
         cast(be).ifPresent(this::postInit);
     }
 
-    default boolean tryMatches(BlockEntity self, BlockEntity other) {
-        Optional<? extends T> _self = cast(self);
-        Optional<? extends T> _other = cast(other);
-        return _self.isPresent() && _other.isPresent() && matches(_self.get(), _other.get());
+    default boolean tryMatches(BlockEntity other) {
+        return cast(other).map(this::matches).orElse(false);
     }
 
 }

@@ -61,9 +61,8 @@ public class PlacedMultiblock implements MultiblockInstance {
                 beCache.remove(pos);
 
             BlockEntity be = beCache.computeIfAbsent(pos, k -> {
-                StateMatcher matcher = multiblock.getStateMatcher(pos);
                 BlockEntity _be = block.newBlockEntity(pos, state);
-                if(matcher instanceof BEStateMatcher<?> beMatcher)
+                if(multiblock.getStateMatcher(pos) instanceof BEStateMatcher<?> beMatcher)
                     beMatcher.init(_be);
 
                 return _be;
