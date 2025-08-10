@@ -15,7 +15,7 @@ license = "MIT"
 [[dependencies.test_books]]
     modId = "neoforge"
     type="required" #mandatory
-    versionRange = "${neoforge_version_range}"
+    versionRange = "[${neoforge_version},)"
     ordering = "NONE"
     side = "BOTH"
 

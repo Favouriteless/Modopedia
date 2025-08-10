@@ -1,0 +1,61 @@
+plugins {
+    id "java-library"
+}
+
+
+VersionCatalog libs = project.extensions.getByType(VersionCatalogsExtension).named("libs")
+
+String mcVersion = libs.findVersion("minecraft").get()
+String mcVersionRange = libs.findVersion("minecraft.range").get()
+String neoVersion = libs.findVersion("neoforge").get()
+String neoLoaderVersionRange = libs.findVersion("neoforge.loader.range").get()
+String fapiVersion = libs.findVersion("fabric.api").get()
+String fabricLoaderVersion = libs.findVersion("fabric").get()
+
+version = libs.findVersion("modopedia").get()
+group = "net.favouriteless.modopedia"
+
+base {
+    archivesName = "modopedia-${project.name}-$mcVersion"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+    withJavadocJar()
+}
+
+jar {
+    from(rootProject.file("LICENSE")) {
+        rename { "${it}_Modopedia" }
+    }
+
+    manifest {
+        attributes([
+                "Specification-Title"    : "Modopedia",
+                "Specification-Vendor"   : "Favouriteless",
+                "Specification-Version"  : project.jar.archiveVersion,
+                "Implementation-Title"   : project.name,
+                "Implementation-Version" : project.jar.archiveVersion,
+                "Implementation-Vendor"  : "Favouriteless",
+                "Built-On-Minecraft"     : mcVersion
+        ])
+    }
+}
+
+processResources {
+    var expandProps = [
+            "version"                       : version,
+            "minecraft_version"             : mcVersion,
+            "minecraft_version_range"       : mcVersionRange,
+            "fabric_api_version"            : fapiVersion,
+            "fabric_loader_version"         : fabricLoaderVersion,
+            "neoforge_version"              : neoVersion,
+            "neoforge_loader_range"         : neoLoaderVersionRange
+    ]
+
+    filesMatching(["pack.mcmeta", "fabric.mod.json", "META-INF/neoforge.mods.toml", "*.mixins.json"]) {
+        expand expandProps
+    }
+    inputs.properties(expandProps)
+}
