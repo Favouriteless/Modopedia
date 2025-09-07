@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.registries.client.StateMatcherRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -25,6 +26,11 @@ public interface StateMatcher {
     default boolean matches(BlockGetter level, BlockPos pos) {
         return matches(level.getBlockState(pos));
     }
+
+    /**
+     * @return True if the given block matches.
+     */
+    boolean matches(Block block);
 
     /**
      * @return True if the given state matches.

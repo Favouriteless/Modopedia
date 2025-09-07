@@ -30,17 +30,17 @@ public interface BEStateMatcher<T extends BlockEntity> extends StateMatcher {
      */
     void postInit(T be);
 
-    @SuppressWarnings("unchecked")
-    default Optional<T> cast(BlockEntity be) {
-        return getType() == be.getType() ? Optional.of((T)be) : Optional.empty();
-    }
-
     default void init(BlockEntity be) {
         cast(be).ifPresent(this::postInit);
     }
 
     default boolean tryMatches(BlockEntity other) {
         return cast(other).map(this::matches).orElse(false);
+    }
+
+    @SuppressWarnings("unchecked")
+    default Optional<T> cast(BlockEntity be) {
+        return getType() == be.getType() ? Optional.of((T)be) : Optional.empty();
     }
 
 }

@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
@@ -32,6 +33,11 @@ public class EitherStateMatcher implements StateMatcher {
         this.b = b;
         displayStates.addAll(a.getDisplayStates());
         displayStates.addAll(b.getDisplayStates());
+    }
+
+    @Override
+    public boolean matches(Block block) {
+        return a.matches(block) || b.matches(block);
     }
 
     @Override

@@ -15,16 +15,14 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 
 @Mod(value = Modopedia.MOD_ID, dist = Dist.CLIENT)
-@EventBusSubscriber(modid = Modopedia.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Modopedia.MOD_ID, value = Dist.CLIENT)
 public class ModopediaNeoClient {
 
     public ModopediaNeoClient(IEventBus bus, ModContainer container) {

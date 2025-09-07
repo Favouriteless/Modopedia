@@ -6,7 +6,8 @@
       "components": [
         {
           "type": "modopedia:multiblock",
-          "multiblock_id": "test_books:simple"
+          "multiblock_id": "test_books:simple",
+          "previewable": true
         }
       ]
     },

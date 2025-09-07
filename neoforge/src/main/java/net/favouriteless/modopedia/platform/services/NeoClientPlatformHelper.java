@@ -33,10 +33,10 @@ public class NeoClientPlatformHelper implements IClientPlatformHelper {
 		BakedModel model = dispatcher.getBlockModel(state);
 		modelData = model.getModelData(level, pos, state, modelData);
 
-		for (RenderType type : model.getRenderTypes(state, RAND, modelData)) {
+		for(RenderType type : model.getRenderTypes(state, RAND, modelData)) {
 			VertexConsumer buffer = bufferSource.getBuffer(type);
 
-			if (noOffsets) {
+			if(noOffsets) {
 				Vec3 offset = state.getOffset(level, pos);
 				pose.translate(-offset.x, -offset.y, -offset.z);
 			}

@@ -6,22 +6,26 @@ import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
 import net.favouriteless.modopedia.client.multiblock.BlockStateCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class SimpleStateMatcher implements StateMatcher {
+public record SimpleStateMatcher(List<BlockState> states) implements StateMatcher {
 
     public static final ResourceLocation ID = Modopedia.id("simple");
 
     public static final MapCodec<SimpleStateMatcher> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            BlockStateCodec.CODEC.listOf().fieldOf("states").forGetter(SimpleStateMatcher::getStates)
+            BlockStateCodec.CODEC.listOf().fieldOf("states").forGetter(SimpleStateMatcher::states)
     ).apply(instance, SimpleStateMatcher::new));
 
-    private final List<BlockState> states;
-
-    public SimpleStateMatcher(List<BlockState> state) {
-        this.states = state;
+    @Override
+    public boolean matches(Block block) {
+        for(BlockState s : states) {
+            if(s.getBlock() == block)
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -41,10 +45,6 @@ public class SimpleStateMatcher implements StateMatcher {
     @Override
     public MapCodec<? extends StateMatcher> typeCodec() {
         return CODEC;
-    }
-
-    public List<BlockState> getStates() {
-        return states;
     }
 
 }

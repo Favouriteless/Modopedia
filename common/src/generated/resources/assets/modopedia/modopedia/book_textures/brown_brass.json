@@ -60,7 +60,7 @@
   "widgets": {
     "crafting_arrow": {
       "height": 13,
-      "u": 73,
+      "u": 90,
       "v": 183,
       "width": 16
     },
@@ -87,6 +87,12 @@
       "u": 0,
       "v": 255,
       "width": 54
+    },
+    "preview": {
+      "height": 10,
+      "u": 73,
+      "v": 183,
+      "width": 16
     },
     "separator": {
       "height": 6,

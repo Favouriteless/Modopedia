@@ -40,8 +40,9 @@ public class MBookTextureProvider extends BookTextureProvider {
                         .widget("medium_frame", 0, 255, 54, 54)
                         .widget("large_frame", 140, 182, 104, 104)
                         .widget("crafting_grid", 74, 255, 54, 54)
-                        .widget("crafting_arrow", 73, 183, 16, 13)
+                        .widget("crafting_arrow", 90, 183, 16, 13)
                         .widget("crafting_flame", 89, 183, 14, 14)
+                        .widget("preview", 73, 183, 16, 10)
                         .build(loc, output);
             }
         }

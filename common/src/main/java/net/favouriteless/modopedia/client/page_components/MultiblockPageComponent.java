@@ -5,26 +5,25 @@ import com.mojang.math.Axis;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.Lookup;
 import net.favouriteless.modopedia.api.book.Book;
+import net.favouriteless.modopedia.api.book.BookTexture;
+import net.favouriteless.modopedia.api.book.BookTexture.Rectangle;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
+import net.favouriteless.modopedia.api.book.page_components.PageWidgetHolder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
+import net.favouriteless.modopedia.api.multiblock.MultiblockVisualiser;
 import net.favouriteless.modopedia.api.registries.client.MultiblockRegistry;
+import net.favouriteless.modopedia.client.multiblock.render.MultiblockRenderer;
 import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
-import net.favouriteless.modopedia.platform.ClientServices;
+import net.favouriteless.modopedia.client.page_widgets.PageImageButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class MultiblockPageComponent extends PageComponent {
 
@@ -40,6 +39,8 @@ public class MultiblockPageComponent extends PageComponent {
     private float scale;
     private boolean noOffsets;
     private float viewAngle;
+
+    private boolean previewable;
 
     @Override
     public void init(Book book, Lookup lookup, Level level) {
@@ -72,6 +73,21 @@ public class MultiblockPageComponent extends PageComponent {
         scale = lookup.getOrDefault("scale", 1.0F).asFloat();
         noOffsets = lookup.getOrDefault("no_offsets", false).asBoolean();
         viewAngle = lookup.getOrDefault("view_angle", 30.0F).asFloat();
+        previewable = lookup.getOrDefault("previewable", false).asBoolean();
+    }
+
+    @Override
+    public void initWidgets(PageWidgetHolder holder, BookRenderContext context) {
+        if(!previewable)
+            return;
+
+        BookTexture bookTex = context.getBookTexture();
+        ResourceLocation tex = bookTex.location();
+        Rectangle rec = bookTex.widgets().get("preview");
+
+        holder.addRenderableWidget(new PageImageButton(tex, x, y + height - rec.height(), rec.width(), rec.height(),
+                rec.u(), rec.v(), bookTex.texWidth(), bookTex.texHeight(), b -> tryPlace())
+        );
     }
 
     @Override
@@ -107,51 +123,15 @@ public class MultiblockPageComponent extends PageComponent {
         pose.mulPose(Axis.YP.rotationDegrees(180 + context.getTicks() + partialTick));
         pose.translate(-dims.getX() / 2.0F, -dims.getY() / 2.0F, -dims.getZ() / 2.0F);
 
-        renderBlocks(pose, bufferSource, dims, partialTick);
-        renderBlockEntities(pose, bufferSource, dims, partialTick);
+        MultiblockRenderer.render(multiblock, pose, bufferSource, partialTick);
 
         pose.popPose();
     }
 
-    protected void renderBlocks(PoseStack pose, MultiBufferSource bufferSource, Vec3i dims, float partialTicks) {
-	    for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
-            pose.pushPose();
-            pose.translate(pos.getX(), pos.getY(), pos.getZ());
-
-            BlockState state = multiblock.getBlockState(pos);
-            if(state.getRenderShape() == RenderShape.MODEL) {
-                ClientServices.PLATFORM.renderBatched(state, pos, multiblock, pose, bufferSource, false, noOffsets);
-            }
-
-            pose.popPose();
-        }
-    }
-
-    protected void renderBlockEntities(PoseStack pose, MultiBufferSource bufferSource, Vec3i dims, float partialTicks) {
+    private void tryPlace() {
         Minecraft mc = Minecraft.getInstance();
-
-        for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX(), dims.getY(), dims.getZ())) {
-            BlockEntity be = multiblock.getBlockEntity(pos);
-
-            if(be == null)
-                continue;
-
-            be.setLevel(mc.level);
-
-            pose.pushPose();
-            pose.translate(pos.getX(), pos.getY(), pos.getZ());
-
-            try {
-                BlockEntityRenderer<BlockEntity> renderer = mc.getBlockEntityRenderDispatcher().getRenderer(be);
-                if(renderer != null)
-                    renderer.render(be, partialTicks, pose, bufferSource, 0xF000F0, OverlayTexture.NO_OVERLAY);
-            }
-            catch(Exception ignored) {
-
-            }
-
-            pose.popPose();
-        }
+        MultiblockVisualiser.get().place(multiblock.getMultiblock(), mc.level, mc.player.blockPosition());
     }
+
 
 }

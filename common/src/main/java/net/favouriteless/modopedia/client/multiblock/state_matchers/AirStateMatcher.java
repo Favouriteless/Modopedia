@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -14,6 +16,11 @@ public class AirStateMatcher implements StateMatcher {
     public static final MapCodec<AirStateMatcher> CODEC = MapCodec.unit(AirStateMatcher::new);
 
     public AirStateMatcher() {
+    }
+
+    @Override
+    public boolean matches(Block block) {
+        return block == Blocks.AIR || block == Blocks.CAVE_AIR || block == Blocks.VOID_AIR;
     }
 
     @Override
