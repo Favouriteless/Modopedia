@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.api.datagen.builders;
 
 import net.favouriteless.modopedia.api.book.Book;
 import net.favouriteless.modopedia.api.book.BookType;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.BookImpl;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -37,14 +38,26 @@ public class BookBuilder {
         return new BookBuilder(title);
     }
 
+    public static BookBuilder of(FormattedStringBuilder title) {
+        return of(title.toString());
+    }
+
     public BookBuilder subtitle(String subtitle) {
         this.subtitle = subtitle;
         return this;
     }
 
+    public BookBuilder subtitle(FormattedStringBuilder subtitle) {
+        return subtitle(subtitle.toString());
+    }
+
     public BookBuilder landingText(String landingText) {
         this.rawLandingText = landingText;
         return this;
+    }
+
+    public BookBuilder landingText(FormattedStringBuilder landingText) {
+        return landingText(landingText.toString());
     }
 
     public BookBuilder type(BookType type) {

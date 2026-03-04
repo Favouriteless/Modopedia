@@ -4,10 +4,12 @@ import com.google.gson.JsonElement;
 import net.favouriteless.modopedia.api.book.Category;
 import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.CategoryImpl;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +35,26 @@ public class CategoryBuilder implements BookContentBuilder {
         return new CategoryBuilder(title);
     }
 
+    public static CategoryBuilder of(FormattedStringBuilder title) {
+        return of(title.toString());
+    }
+
     public CategoryBuilder landingText(String landingText) {
         this.rawLandingText = landingText;
         return this;
     }
 
+    public CategoryBuilder landingText(FormattedStringBuilder landingText) {
+        return landingText(landingText.toString());
+    }
+
     public CategoryBuilder icon(ItemStack icon) {
         this.iconStack = icon;
         return this;
+    }
+
+    public CategoryBuilder icon(ItemLike icon) {
+        return icon(icon.asItem().getDefaultInstance());
     }
 
     public CategoryBuilder displayOnFrontPage(boolean value) {

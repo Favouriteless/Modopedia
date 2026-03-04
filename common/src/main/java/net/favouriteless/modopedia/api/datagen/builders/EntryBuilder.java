@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
@@ -35,9 +36,17 @@ public class EntryBuilder implements BookContentBuilder {
         return new EntryBuilder(title);
     }
 
+    public static EntryBuilder of(FormattedStringBuilder title) {
+        return of(title.toString());
+    }
+
     public EntryBuilder icon(ItemStack icon) {
         this.iconStack = icon;
         return this;
+    }
+
+    public EntryBuilder icon(ItemLike icon) {
+        return icon(icon.asItem().getDefaultInstance());
     }
 
     public EntryBuilder advancement(ResourceLocation advancement) {
