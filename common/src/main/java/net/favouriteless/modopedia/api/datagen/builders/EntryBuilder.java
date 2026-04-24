@@ -6,12 +6,13 @@ import com.google.gson.JsonObject;
 import net.favouriteless.modopedia.api.book.Entry;
 import net.favouriteless.modopedia.api.datagen.BookContentBuilder;
 import net.favouriteless.modopedia.api.datagen.BookContentOutput;
+import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.EntryImpl;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,9 +36,17 @@ public class EntryBuilder implements BookContentBuilder {
         return new EntryBuilder(title);
     }
 
+    public static EntryBuilder of(FormattedStringBuilder title) {
+        return of(title.toString());
+    }
+
     public EntryBuilder icon(ItemStack icon) {
         this.iconStack = icon;
         return this;
+    }
+
+    public EntryBuilder icon(ItemLike icon) {
+        return icon(icon.asItem().getDefaultInstance());
     }
 
     public EntryBuilder advancement(ResourceLocation advancement) {
@@ -45,8 +54,8 @@ public class EntryBuilder implements BookContentBuilder {
         return this;
     }
 
-    public EntryBuilder assignedItems(Item... items) {
-        this.assignedItems.addAll(Arrays.stream(items).map(BuiltInRegistries.ITEM::getKey).toList());
+    public EntryBuilder assignedItems(ItemLike... items) {
+        this.assignedItems.addAll(Arrays.stream(items).map(ItemLike::asItem).map(BuiltInRegistries.ITEM::getKey).toList());
         return this;
     }
 
