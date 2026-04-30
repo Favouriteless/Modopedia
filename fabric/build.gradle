@@ -102,7 +102,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     
     main.addRequirement(
         "fabric-api",
-        "forge-config-api-port-fabric"
+        "forge-config-api-port"
     )
 
     //debugMode = true

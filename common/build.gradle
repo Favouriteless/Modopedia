@@ -8,6 +8,8 @@ plugins {
     alias libs.plugins.moddevgradle
 }
 
+String mcVersion = libs.versions.minecraft.asProvider().get()
+
 neoForge {
     neoFormVersion = libs.versions.neoform.get()
 
