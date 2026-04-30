@@ -63,7 +63,7 @@ public class MultiblockPageComponent extends PageComponent {
         if(multiblock == null)
             throw new NullPointerException("Lookup is missing a \"multiblock_id\" or \"multiblock\" key");
 
-        this.multiblock = new PlacedMultiblock(multiblock, level);
+        this.multiblock = new PlacedMultiblock(multiblock, level.dimension());
         width = lookup.getOrDefault("width", 100).asInt();
         height = lookup.getOrDefault("height", 100).asInt();
 
@@ -99,9 +99,6 @@ public class MultiblockPageComponent extends PageComponent {
     public void render(GuiGraphics graphics, BookRenderContext context, int mouseX, int mouseY, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
         MultiBufferSource bufferSource = mc.renderBuffers().bufferSource();
-
-        if(multiblock.getLevel() != mc.level)
-            multiblock = new PlacedMultiblock(multiblock.getMultiblock(), mc.level, multiblock.getPos());
 
         PoseStack pose = graphics.pose();
 

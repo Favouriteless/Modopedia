@@ -3,10 +3,7 @@ package net.favouriteless.modopedia.api.multiblock;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.favouriteless.modopedia.api.registries.client.StateMatcherRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -21,10 +18,6 @@ public interface StateMatcher {
      */
     static Codec<StateMatcher> codec() {
         return StateMatcherRegistry.get().codec();
-    }
-
-    default boolean matches(BlockGetter level, BlockPos pos) {
-        return matches(level.getBlockState(pos));
     }
 
     /**

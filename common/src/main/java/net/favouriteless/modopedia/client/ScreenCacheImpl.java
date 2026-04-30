@@ -2,7 +2,6 @@ package net.favouriteless.modopedia.client;
 
 import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.client.screens.books.BookScreen;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;

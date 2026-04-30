@@ -22,7 +22,7 @@ public class MultiblockRenderer {
         renderBlockEntities(multiblock, pose, bufferSource, partialTicks, multiblock, false);
     }
 
-    public static void render(Level level, MultiblockInstance multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
+    public static void renderInLevel(Level level, MultiblockInstance multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
         renderBlocks(multiblock, pose, bufferSource, level, true);
         renderBlockEntities(multiblock, pose, bufferSource, partialTicks, level, true);
     }

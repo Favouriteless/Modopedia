@@ -1,0 +1,6 @@
+- ADDED: Multiblock preview feature. See docs to enable it.
+- ADDED: New helpers and overloads for various datagen methods.
+
+- FIXED: FormattedStringBuilder#colour truncates leading zeros from it's output
+
+- CHANGED: Updated Javadoc formatting to be more consistent and readable

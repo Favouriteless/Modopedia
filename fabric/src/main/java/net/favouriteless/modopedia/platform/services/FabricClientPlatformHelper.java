@@ -22,7 +22,7 @@ public class FabricClientPlatformHelper implements IClientPlatformHelper {
 
         RAND.setSeed(state.getSeed(pos));
 
-        if (noOffsets) {
+        if(noOffsets) {
             Vec3 offset = state.getOffset(level, pos);
             pose.translate(-offset.x, -offset.y, -offset.z);
         }
@@ -30,4 +30,5 @@ public class FabricClientPlatformHelper implements IClientPlatformHelper {
         VertexConsumer buffer = bufferSource.getBuffer(ItemBlockRenderTypes.getChunkRenderType(state));
         dispatcher.renderBatched(state, pos, level, pose, buffer, false, RAND);
     }
+
 }

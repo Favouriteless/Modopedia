@@ -20,7 +20,7 @@ public interface BookRenderContext {
     /**
      * @return The screen currently being rendered.
      */
-    BookScreen getScreen();
+    BookScreen<?> getScreen();
 
     /**
      * @return Default style for the current book.

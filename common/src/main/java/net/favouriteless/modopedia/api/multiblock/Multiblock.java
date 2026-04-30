@@ -8,8 +8,8 @@ import net.minecraft.core.Vec3i;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Defines a group of {@link StateMatcher}s within a bounding box. Does not define rotations, offsets or any other
- * per-instance data.
+ * Defines a group of {@link StateMatcher}s within a bounding box to form a single Multiblock. Does not define
+ * rotations, offsets or any other per-instance data.
  */
 public interface Multiblock {
 
@@ -31,7 +31,7 @@ public interface Multiblock {
     @Nullable StateMatcher getStateMatcher(BlockPos pos);
 
     /**
-     * @return {@link MapCodec} for this type of Multiblock.
+     * @return The {@link MapCodec} for this type of Multiblock.
      */
     MapCodec<? extends Multiblock> typeCodec();
 

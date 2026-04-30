@@ -1,39 +1,53 @@
 package net.favouriteless.modopedia.client.multiblock;
 
-import net.favouriteless.modopedia.api.multiblock.*;
-
-import net.minecraft.core.*;
+import net.favouriteless.modopedia.api.multiblock.BEStateMatcher;
+import net.favouriteless.modopedia.api.multiblock.Multiblock;
+import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
+import net.favouriteless.modopedia.api.multiblock.StateMatcher;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.ColorResolver;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
-import net.minecraft.world.level.material.*;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlacedMultiblock implements MultiblockInstance {
 
     public static final int TICKS_PER_STATE = 20;
 
     private final Multiblock multiblock;
+    private final ResourceKey<Level> dimension;
 
-    private final Level level;
     public BlockPos pos;
     private int ticks = 0;
 
     private final Map<BlockPos, BlockEntity> beCache = new HashMap<>();
 
-    public PlacedMultiblock(Multiblock multiblock, Level level, BlockPos pos) {
+    public PlacedMultiblock(Multiblock multiblock, ResourceKey<Level> dimension, BlockPos pos) {
         this.multiblock = multiblock;
-        this.level = level;
+        this.dimension = dimension;
         this.pos = pos;
     }
 
-    public PlacedMultiblock(Multiblock multiblock, Level level) {
-        this(multiblock, level, BlockPos.ZERO);
+    public PlacedMultiblock(Multiblock multiblock, ResourceKey<Level> dimension) {
+        this(multiblock, dimension, BlockPos.ZERO);
     }
 
     @Override
@@ -48,7 +62,7 @@ public class PlacedMultiblock implements MultiblockInstance {
 
     @Override
     public int getBlockTint(BlockPos pos, ColorResolver resolver) {
-        Biome biome = level.registryAccess().registryOrThrow(Registries.BIOME).getOrThrow(Biomes.FOREST);
+        Biome biome = getLevel().registryAccess().registryOrThrow(Registries.BIOME).getOrThrow(Biomes.FOREST);
         return resolver.getColor(biome, pos.getX(), pos.getY());
     }
 
@@ -107,12 +121,12 @@ public class PlacedMultiblock implements MultiblockInstance {
 
     @Override
     public int getHeight() {
-        return level.getMaxBuildHeight();
+        return getLevel().getMaxBuildHeight();
     }
 
     @Override
     public int getMinBuildHeight() {
-        return level.getMinBuildHeight();
+        return getLevel().getMinBuildHeight();
     }
 
     @Override
@@ -130,8 +144,8 @@ public class PlacedMultiblock implements MultiblockInstance {
     }
 
     @Override
-    public Level getLevel() {
-        return level;
+    public ResourceKey<Level> getDimension() {
+        return dimension;
     }
 
     @Override
@@ -147,6 +161,20 @@ public class PlacedMultiblock implements MultiblockInstance {
     @Override
     public void tick() {
         ticks++;
+    }
+
+    @Override
+    public void move(Axis axis, int distance) {
+        // TODO: Test these axes are actually correct
+        switch(axis) {
+            case X -> pos = pos.east(distance);
+            case Y -> pos = pos.above(distance);
+            case Z -> pos = pos.north(distance);
+        }
+    }
+
+    public Level getLevel() {
+        return Minecraft.getInstance().level;
     }
 
 }

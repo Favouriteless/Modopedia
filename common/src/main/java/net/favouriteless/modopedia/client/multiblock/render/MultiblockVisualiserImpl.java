@@ -15,11 +15,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -32,28 +33,47 @@ public class MultiblockVisualiserImpl implements MultiblockVisualiser {
     private MultiblockVisualiserImpl() {}
 
     @Override
-    public MultiblockInstance place(Multiblock multiblock, Level level, BlockPos pos) {
-        remove(level, multiblock);
-        MultiblockInstance instance = new PlacedMultiblock(multiblock, level, pos);
-        multiblocks.computeIfAbsent(level.dimension(), k -> new HashSet<>()).add(instance);
+    public MultiblockInstance place(Multiblock multiblock, ResourceKey<Level> dimension, BlockPos pos) {
+        if(multiblocks.containsKey(dimension)) {
+            for(MultiblockInstance instance : multiblocks.get(dimension)) {
+                if(instance.getPos().equals(pos))
+                    return instance;
+            }
+        }
+
+        MultiblockInstance instance = new PlacedMultiblock(multiblock, dimension, pos);
+        multiblocks.computeIfAbsent(dimension, k -> new HashSet<>()).add(instance);
         return instance;
     }
 
     @Override
-    public void remove(Level level, Multiblock multiblock) {
-        if(!multiblocks.containsKey(level.dimension()))
+    public void remove(MultiblockInstance multiblock) {
+        ResourceKey<Level> dimension = multiblock.getDimension();
+        if(!multiblocks.containsKey(dimension))
             return;
-        multiblocks.get(level.dimension()).removeIf(i -> i.getMultiblock().equals(multiblock));
+        multiblocks.get(dimension).remove(multiblock);
     }
 
     @Override
-    public Collection<MultiblockInstance> getMultiblocksAt(Level level, BlockPos pos) {
-        ResourceKey<Level> dim = level.dimension();
-        return multiblocks.containsKey(dim) ? multiblocks.get(dim).stream().filter(i -> i.getPos().equals(pos)).toList() : Collections.emptySet();
-    }
+    public MultiblockInstance getSelected(Player player) {
+        Level level = player.level();
+        Set<MultiblockInstance> instances = multiblocks.get(level.dimension());
+        if(instances == null || instances.isEmpty())
+            return null;
 
-    @Override
-    public @Nullable MultiblockInstance getIntersecting(Level level, Vec3 ray) {
+        float delta = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+        Vec3 start = player.getEyePosition(delta);
+        Vec3 end = start.add(player.getViewVector(delta).scale(25));
+
+        for(MultiblockInstance instance : instances) {
+            BlockPos pos = instance.getPos();
+            Vec3i size = instance.getMultiblock().getDimensions();
+            AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + size.getX(), pos.getY() + size.getY(), pos.getZ() + size.getZ());
+
+            if(aabb.intersects(start, end))
+                return instance;
+        }
+
         return null;
     }
 
@@ -80,7 +100,7 @@ public class MultiblockVisualiserImpl implements MultiblockVisualiser {
             pose.pushPose();
             pose.translate(corner.getX() - cx, corner.getY() - cy, corner.getZ() - cz);
 
-            MultiblockRenderer.render(level, instance, pose, bufferSource, partialTicks);
+            MultiblockRenderer.renderInLevel(level, instance, pose, bufferSource, partialTicks);
 
             VertexConsumer buffer = bufferSource.getBuffer(RenderType.lines());
             for(BlockPos local : BlockPos.betweenClosed(0, 0, 0, dims.getX()-1, dims.getY()-1, dims.getZ()-1)) {
@@ -91,17 +111,20 @@ public class MultiblockVisualiserImpl implements MultiblockVisualiser {
                 BlockPos pos = corner.offset(local);
                 BlockState state = level.getBlockState(pos);
 
+                MatcherResult p = MatcherResult.PARTIAL_MATCH;
                 MatcherResult result = matches(state, matcher);
                 if(result == MatcherResult.FULL_MATCH)
                     continue;
+
 
                 VoxelShape shape = !state.isAir() ? state.getShape(level, pos) : instance.getBlockState(local).getShape(level, local);
                 if(shape.isEmpty())
                     return;
 
                 pose.pushPose();
+
                 if(state.isAir())
-                    LevelRenderer.renderVoxelShape(pose, buffer, shape, local.getX(), local.getY(), local.getZ(), 0.11F, 0.54F, 0.9F, 1.0F, false);
+                    LevelRenderer.renderVoxelShape(pose, buffer, shape, local.getX(), local.getY(), local.getZ(), p.r, p.g, p.b, 1.0F, false);
                 else
                     LevelRenderer.renderVoxelShape(pose, buffer, shape, local.getX(), local.getY(), local.getZ(), result.r, result.g, result.b, 1.0F, false);
                 pose.popPose();

@@ -1,8 +1,6 @@
 package net.favouriteless.modopedia.client.screens.books;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.vertex.*;
-import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.ScreenCache;
 import net.favouriteless.modopedia.api.book.Book;
@@ -27,7 +25,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
-import org.joml.Matrix4f;
 
 public abstract class BookScreen<T extends BookType> extends Screen implements BookRenderContext {
 

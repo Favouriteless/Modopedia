@@ -11,16 +11,17 @@ import java.util.Optional;
 public interface BEStateMatcher<T extends BlockEntity> extends StateMatcher {
 
     /**
-     * @return {@link BlockEntityType} this StateMatcher is matching against. If the BE does not have this type, matching
-     * will be skipped.
+     * @return The {@link BlockEntityType} this StateMatcher is matching against. If the BE is not of this type,
+     * matching will be skipped.
      */
     BlockEntityType<? extends T> getType();
 
     /**
-     * @param self {@link BlockEntity} belonging to this StateMatcher.
-     * @param other {@link BlockEntity} being checked against.
+     * Check if a given {@link BlockEntity} is a valid match.
      *
-     * @return True if the BEs match, otherwise false.
+     * @param other the {@link BlockEntity} being checked.
+     *
+     * @return {@code true} if the BEs match, otherwise {@code false}.
      */
     boolean matches(T other);
 

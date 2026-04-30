@@ -12,31 +12,40 @@ public class MLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add(Modopedia.translation("item", "book"), "Book (No ID)");
+        add("item", "book", "Book (No ID)");
 
-        add(Modopedia.translation("tooltip", "book_id"), "Book ID: %1$s");
-        add(Modopedia.translation("tooltip", "study"), "Hold [%1$s] to Study");
-        add(Modopedia.translation("tooltip", "category_link"), "Go to category");
-        add(Modopedia.translation("tooltip", "entry_link"), "Go to entry");
-        add(Modopedia.translation("tooltip", "url"), "Go to URL: %1$s");
+        add("tooltip", "book_id", "Book ID: %1$s");
+        add("tooltip", "study", "Hold [%1$s] to Study");
+        add("tooltip", "category_link", "Go to category");
+        add("tooltip", "entry_link", "Go to entry");
+        add("tooltip", "url", "Go to URL: %1$s");
 
-        add(Modopedia.translation("screen", "error"), "Error");
-        add(Modopedia.translation("screen", "categories"), "Chapters");
-        add(Modopedia.translation("screen", "entries"), "Entries");
+        add("screen", "error", "Error");
+        add("screen", "categories", "Chapters");
+        add("screen", "entries", "Entries");
+        add("screen", "config_preview", "Configure Preview");
+        add("screen", "config_preview.x", "Multiblock X");
+        add("screen", "config_preview.y", "Multiblock Y");
+        add("screen", "config_preview.z", "Multiblock Z");
+        add("screen", "config_preview.remove", "Remove");
 
-        add(Modopedia.translation("template", "shaped_recipe"), "Shaped Recipe");
-        add(Modopedia.translation("template", "shapeless_recipe"), "Shapeless Recipe");
-        add(Modopedia.translation("template", "recipe"), "Recipe");
-        add(Modopedia.translation("template", "smelting_recipe"), "Smelting Recipe");
-        add(Modopedia.translation("template", "blasting_recipe"), "Blasting Recipe");
-        add(Modopedia.translation("template", "smoking_recipe"), "Smoking Recipe");
-        add(Modopedia.translation("template", "crafting_recipe"), "Crafting Recipe");
-        add(Modopedia.translation("template", "cooking_recipe"), "Cooking Recipe");
+        add("template", "shaped_recipe", "Shaped Recipe");
+        add("template", "shapeless_recipe", "Shapeless Recipe");
+        add("template", "recipe", "Recipe");
+        add("template", "smelting_recipe", "Smelting Recipe");
+        add("template", "blasting_recipe", "Blasting Recipe");
+        add("template", "smoking_recipe", "Smoking Recipe");
+        add("template", "crafting_recipe", "Crafting Recipe");
+        add("template", "cooking_recipe", "Cooking Recipe");
 
-        add(Modopedia.translation("subtitle", "book_flip"), "Page Turning");
-        add(Modopedia.translation("subtitle", "book_open"), "Book Opening");
+        add("subtitle", "book_flip", "Page Turning");
+        add("subtitle", "book_open", "Book Opening");
 
         add("modopedia.study", "Study");
+    }
+    
+    protected void add(String prefix, String suffix, String translation) {
+        add(Modopedia.translation(prefix, suffix), translation);
     }
 
 }

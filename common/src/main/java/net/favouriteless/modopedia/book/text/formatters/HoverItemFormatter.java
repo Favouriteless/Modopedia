@@ -4,7 +4,6 @@ import com.mojang.brigadier.StringReader;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.text.StyleStack;
 import net.favouriteless.modopedia.api.text.TextFormatter;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.item.ItemParser;
 import net.minecraft.commands.arguments.item.ItemParser.ItemResult;
