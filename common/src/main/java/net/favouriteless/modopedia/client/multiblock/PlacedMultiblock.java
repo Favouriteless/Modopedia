@@ -165,11 +165,10 @@ public class PlacedMultiblock implements MultiblockInstance {
 
     @Override
     public void move(Axis axis, int distance) {
-        // TODO: Test these axes are actually correct
         switch(axis) {
             case X -> pos = pos.east(distance);
             case Y -> pos = pos.above(distance);
-            case Z -> pos = pos.north(distance);
+            case Z -> pos = pos.south(distance);
         }
     }
 

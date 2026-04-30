@@ -3,6 +3,7 @@ package net.favouriteless.modopedia.client.screens;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
 import net.favouriteless.modopedia.api.multiblock.MultiblockVisualiser;
+import net.favouriteless.modopedia.client.screens.widgets.MButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -32,7 +33,7 @@ public class ConfigureMultiblockScreen extends Screen {
     private EditBox zEditBox;
 
     public ConfigureMultiblockScreen(MultiblockInstance instance) {
-        super(Component.translatable("screen.modopedia.configure_multiblock"));
+        super(Modopedia.translatable("screen", "config_preview"));
         this.instance = instance;
     }
 
@@ -67,7 +68,7 @@ public class ConfigureMultiblockScreen extends Screen {
         grid.defaultCellSetting().padding(4, 4, 4, 0);
         layout.addChild(grid);
 
-        RowHelper rowHelper = grid.createRowHelper(2);
+        RowHelper rowHelper = grid.createRowHelper(3);
 
         xEditBox = addRenderableWidget(new EditBox(mc.font, 0, 0, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatable("screen", "config_preview.x")));
         yEditBox = addRenderableWidget(new EditBox(mc.font, 0, 18, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatable("screen", "config_preview.y")));
@@ -81,17 +82,20 @@ public class ConfigureMultiblockScreen extends Screen {
         yEditBox.setResponder(value -> updateMultiblock());
         zEditBox.setResponder(value -> updateMultiblock());
 
+        Component plusMinus = Component.literal("+/-");
+        int plusMinusWidth = font.width(plusMinus) + 12;
+
         rowHelper.addChild(new StringWidget(Component.literal("X"), mc.font));
         rowHelper.addChild(xEditBox);
+        rowHelper.addChild(new MButton(plusMinusWidth, 20, plusMinus, (b, i) -> move(Axis.X, i)));
 
         rowHelper.addChild(new StringWidget(Component.literal("Y"), mc.font));
         rowHelper.addChild(yEditBox);
+        rowHelper.addChild(new MButton(plusMinusWidth, 20, plusMinus, (b, i) -> move(Axis.Y, i)));
 
         rowHelper.addChild(new StringWidget(Component.literal("Z"), mc.font));
         rowHelper.addChild(zEditBox);
-
-
-        // TODO: Create custom button class to handle left/right click.
+        rowHelper.addChild(new MButton(plusMinusWidth, 20, plusMinus, (b, i) -> move(Axis.Z, i)));
 
         Component removeText = Modopedia.translatable("screen", "config_preview.remove");
         layout.addChild(
