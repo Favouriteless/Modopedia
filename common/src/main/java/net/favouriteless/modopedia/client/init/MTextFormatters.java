@@ -1,7 +1,6 @@
 package net.favouriteless.modopedia.client.init;
 
 import net.favouriteless.modopedia.api.registries.client.TextFormatterRegistry;
-import net.favouriteless.modopedia.api.text.FormattedStringBuilder;
 import net.favouriteless.modopedia.book.text.formatters.*;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -40,17 +39,6 @@ public class MTextFormatters {
         registry.register(new InternalLinkFormatter("el:", "entry"));
         registry.register(new ColorFormatter());
         registry.register(new HoverItemFormatter());
-
-        String string = FormattedStringBuilder.begin()
-                .then("Start of the string ")
-                .colour(0xFF0000)
-                .then("red ")
-                .bold()
-                .then("bold")
-                .stopBold().stopColour()
-                .entryLink("example_entry", "Example Entry")
-                .toString();
-
     }
 
 }

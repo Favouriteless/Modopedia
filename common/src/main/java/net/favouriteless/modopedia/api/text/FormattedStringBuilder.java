@@ -2,8 +2,11 @@ package net.favouriteless.modopedia.api.text;
 
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HexFormat;
+
 public class FormattedStringBuilder {
 
+    private static final HexFormat HEX_FORMAT = HexFormat.of();
     private final StringBuilder builder;
 
     private FormattedStringBuilder() {
@@ -124,7 +127,7 @@ public class FormattedStringBuilder {
     }
 
     public FormattedStringBuilder colour(int colour) {
-        return apply("c", "#" + Integer.toHexString(colour).toUpperCase());
+        return apply("c", "#" + HEX_FORMAT.toHexDigits(colour).toUpperCase());
     }
 
     public FormattedStringBuilder colour(int colour, String text) {

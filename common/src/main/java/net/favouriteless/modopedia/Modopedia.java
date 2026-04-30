@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.common.init.MItems;
 import net.favouriteless.modopedia.common.init.MSoundEvents;
 import net.favouriteless.modopedia.platform.CommonServices;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class Modopedia {
         return String.format("%s.%s.%s", prefix, MOD_ID, suffix);
     }
 
-    public static Component translatedComponent(String prefix, String suffix) {
+    public static MutableComponent translatable(String prefix, String suffix) {
         return Component.translatable(translation(prefix, suffix));
     }
 

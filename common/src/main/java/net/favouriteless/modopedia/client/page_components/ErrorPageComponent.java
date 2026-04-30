@@ -1,5 +1,6 @@
 package net.favouriteless.modopedia.client.page_components;
 
+import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.book.page_components.BookRenderContext;
 import net.favouriteless.modopedia.api.book.page_components.PageComponent;
 import net.minecraft.client.Minecraft;
@@ -13,7 +14,7 @@ import net.minecraft.network.chat.Component;
  */
 public class ErrorPageComponent extends PageComponent {
 
-    public static final Component ERROR = Component.translatable("screen.modopedia.error");
+    public static final Component ERROR = Modopedia.translatable("screen", "error");
 
     protected final Component error;
 

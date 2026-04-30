@@ -61,7 +61,7 @@ public class ConfigureMultiblockScreen extends Screen {
                 .alignHorizontallyCenter()
                 .padding(0, 10, 0, 0);
 
-        layout.addChild(new StringWidget(Modopedia.translatedComponent("screen", "config_preview"), font), LayoutSettings.defaults().alignHorizontallyCenter());
+        layout.addChild(new StringWidget(Modopedia.translatable("screen", "config_preview"), font), LayoutSettings.defaults().alignHorizontallyCenter());
 
         GridLayout grid = new GridLayout();
         grid.defaultCellSetting().padding(4, 4, 4, 0);
@@ -69,9 +69,9 @@ public class ConfigureMultiblockScreen extends Screen {
 
         RowHelper rowHelper = grid.createRowHelper(2);
 
-        xEditBox = addRenderableWidget(new EditBox(mc.font, 0, 0, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatedComponent("screen", "config_preview.x")));
-        yEditBox = addRenderableWidget(new EditBox(mc.font, 0, 18, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatedComponent("screen", "config_preview.y")));
-        zEditBox = addRenderableWidget(new EditBox(mc.font, 0, 36, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatedComponent("screen", "config_preview.z")));
+        xEditBox = addRenderableWidget(new EditBox(mc.font, 0, 0, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatable("screen", "config_preview.x")));
+        yEditBox = addRenderableWidget(new EditBox(mc.font, 0, 18, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatable("screen", "config_preview.y")));
+        zEditBox = addRenderableWidget(new EditBox(mc.font, 0, 36, EDIT_WIDTH, ROW_HEIGHT, Modopedia.translatable("screen", "config_preview.z")));
         updateEditBoxes();
 
         xEditBox.setFilter(this::numericBoxFilter);
@@ -93,7 +93,7 @@ public class ConfigureMultiblockScreen extends Screen {
 
         // TODO: Create custom button class to handle left/right click.
 
-        Component removeText = Modopedia.translatedComponent("screen", "config_preview.remove");
+        Component removeText = Modopedia.translatable("screen", "config_preview.remove");
         layout.addChild(
                 Button.builder(removeText, b -> removeMultiblock())
                         .width(font.width(removeText) + 12)
