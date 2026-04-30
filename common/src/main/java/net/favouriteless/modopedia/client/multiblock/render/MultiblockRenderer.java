@@ -18,17 +18,19 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MultiblockRenderer {
 
     public static void render(MultiblockInstance multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
-        renderBlocks(multiblock, pose, bufferSource, multiblock, false);
+        renderBlocks(multiblock, pose, bufferSource, multiblock, false, false);
         renderBlockEntities(multiblock, pose, bufferSource, partialTicks, multiblock, false);
     }
 
     public static void renderInLevel(Level level, MultiblockInstance multiblock, PoseStack pose, MultiBufferSource bufferSource, float partialTicks) {
-        renderBlocks(multiblock, pose, bufferSource, level, true);
-        renderBlockEntities(multiblock, pose, bufferSource, partialTicks, level, true);
+        MultiBufferSource ghostSource = type -> bufferSource.getBuffer(GhostRenderType.get(type));
+
+        renderBlocks(multiblock, pose, ghostSource, level, true, true);
+        renderBlockEntities(multiblock, pose, ghostSource, partialTicks, level, true);
     }
 
     protected static void renderBlocks(MultiblockInstance multiblock, PoseStack pose, MultiBufferSource bufferSource,
-                                       BlockGetter level, boolean checkState) {
+                                       BlockGetter level, boolean checkSides, boolean checkState) {
         Vec3i dims = multiblock.getMultiblock().getDimensions();
         for(BlockPos pos : BlockPos.betweenClosed(0, 0, 0, dims.getX()-1, dims.getY()-1, dims.getZ()-1)) {
             pose.pushPose();
@@ -37,7 +39,7 @@ public class MultiblockRenderer {
             BlockState state = multiblock.getBlockState(pos);
             boolean shouldRender = !checkState || level.getBlockState(multiblock.getPos().offset(pos)).isAir();
             if(shouldRender && state.getRenderShape() == RenderShape.MODEL)
-                ClientServices.PLATFORM.renderBatched(state, pos, multiblock, pose, bufferSource, false, false);
+                ClientServices.PLATFORM.renderBatched(state, pos, multiblock, pose, bufferSource, checkSides, true);
 
             pose.popPose();
         }
