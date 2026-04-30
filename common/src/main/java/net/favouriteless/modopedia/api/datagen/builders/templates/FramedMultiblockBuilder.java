@@ -1,16 +1,18 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
 import net.favouriteless.modopedia.api.multiblock.Multiblock;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.resources.*;
+public class FramedMultiblockBuilder extends TemplateComponentBuilder {
 
-public class LargeFramedMultiblockBuilder extends TemplateComponentBuilder {
-
-    public static final ResourceLocation ID = Modopedia.id("large_framed_multiblock");
+    public static final ResourceLocation LARGE_ID = Modopedia.id("large_framed_multiblock");
+    public static final ResourceLocation MEDIUM_ID = Modopedia.id("medium_framed_multiblock");
 
     private Either<Integer, String> width;
 
@@ -22,110 +24,114 @@ public class LargeFramedMultiblockBuilder extends TemplateComponentBuilder {
     private Either<Float, String> viewAngle;
     private Either<Boolean, String> noOffsets;
 
-    protected LargeFramedMultiblockBuilder() {
-        super(ID);
+    protected FramedMultiblockBuilder(ResourceLocation id) {
+        super(id);
     }
 
-    public static LargeFramedMultiblockBuilder of() {
-        return new LargeFramedMultiblockBuilder();
+    public static FramedMultiblockBuilder large() {
+        return new FramedMultiblockBuilder(LARGE_ID);
     }
 
-    @Override
-    public LargeFramedMultiblockBuilder x(int x) {
-        return (LargeFramedMultiblockBuilder)super.x(x);
-    }
-
-    @Override
-    public LargeFramedMultiblockBuilder x(String x) {
-        return (LargeFramedMultiblockBuilder)super.x(x);
+    public static FramedMultiblockBuilder medium() {
+        return new FramedMultiblockBuilder(MEDIUM_ID);
     }
 
     @Override
-    public LargeFramedMultiblockBuilder y(int y) {
-        return (LargeFramedMultiblockBuilder)super.y(y);
+    public FramedMultiblockBuilder x(int x) {
+        return (FramedMultiblockBuilder)super.x(x);
     }
 
     @Override
-    public LargeFramedMultiblockBuilder y(String y) {
-        return (LargeFramedMultiblockBuilder)super.y(y);
+    public FramedMultiblockBuilder x(String x) {
+        return (FramedMultiblockBuilder)super.x(x);
     }
 
-    public LargeFramedMultiblockBuilder multiblock(Multiblock multiblock) {
+    @Override
+    public FramedMultiblockBuilder y(int y) {
+        return (FramedMultiblockBuilder)super.y(y);
+    }
+
+    @Override
+    public FramedMultiblockBuilder y(String y) {
+        return (FramedMultiblockBuilder)super.y(y);
+    }
+
+    public FramedMultiblockBuilder multiblock(Multiblock multiblock) {
         this.multiblock = Either.left(multiblock);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder multiblock(String multiblock) {
+    public FramedMultiblockBuilder multiblock(String multiblock) {
         this.multiblock = Either.right(multiblock);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder multiblockId(ResourceLocation multiblock) {
+    public FramedMultiblockBuilder multiblockId(ResourceLocation multiblock) {
         this.multiblockId = Either.left(multiblock);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder multiblockId(String multiblock) {
+    public FramedMultiblockBuilder multiblockId(String multiblock) {
         this.multiblockId = Either.right(multiblock);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder width(int width) {
+    public FramedMultiblockBuilder width(int width) {
         this.width = Either.left(width);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder width(String width) {
+    public FramedMultiblockBuilder width(String width) {
         this.width = Either.right(width);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder scale(float scale) {
+    public FramedMultiblockBuilder scale(float scale) {
         this.scale = Either.left(scale);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder scale(String scale) {
+    public FramedMultiblockBuilder scale(String scale) {
         this.scale = Either.right(scale);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder offsetX(float offsetX) {
+    public FramedMultiblockBuilder offsetX(float offsetX) {
         this.offsetX = Either.left(offsetX);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder offsetX(String offsetX) {
+    public FramedMultiblockBuilder offsetX(String offsetX) {
         this.offsetX = Either.right(offsetX);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder offsetY(float offsetY) {
+    public FramedMultiblockBuilder offsetY(float offsetY) {
         this.offsetY = Either.left(offsetY);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder offsetY(String offsetY) {
+    public FramedMultiblockBuilder offsetY(String offsetY) {
         this.offsetY = Either.right(offsetY);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder viewAngle(float viewAngle) {
+    public FramedMultiblockBuilder viewAngle(float viewAngle) {
         this.viewAngle = Either.left(viewAngle);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder viewAngle(String viewAngle) {
+    public FramedMultiblockBuilder viewAngle(String viewAngle) {
         this.viewAngle = Either.right(viewAngle);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder noOffsets(boolean noOffsets) {
+    public FramedMultiblockBuilder noOffsets(boolean noOffsets) {
         this.noOffsets = Either.left(noOffsets);
         return this;
     }
 
-    public LargeFramedMultiblockBuilder noOffsets(String noOffsets) {
+    public FramedMultiblockBuilder noOffsets(String noOffsets) {
         this.noOffsets = Either.right(noOffsets);
         return this;
     }

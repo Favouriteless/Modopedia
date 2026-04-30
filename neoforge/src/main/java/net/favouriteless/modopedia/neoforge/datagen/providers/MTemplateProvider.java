@@ -66,7 +66,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(MediumFramedImageBuilder.ID.getPath(), output);
+                .build(FramedImageBuilder.MEDIUM_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -80,7 +80,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(LargeFramedImageBuilder.ID.getPath(), output);
+                .build(FramedImageBuilder.LARGE_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -101,7 +101,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(MediumFramedMultiblockBuilder.ID.getPath(), output);
+                .build(FramedMultiblockBuilder.MEDIUM_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -122,7 +122,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(LargeFramedMultiblockBuilder.ID.getPath(), output);
+                .build(FramedMultiblockBuilder.LARGE_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -165,7 +165,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(MediumFramedEntityBuilder.ID.getPath(), output);
+                .build(FramedEntityBuilder.MEDIUM_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -182,7 +182,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(LargeFramedEntityBuilder.ID.getPath(), output);
+                .build(FramedEntityBuilder.LARGE_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -197,7 +197,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
-                .build(MediumFramedShowcaseBuilder.ID.getPath(), output);
+                .build(FramedShowcaseBuilder.MEDIUM_ID.getPath(), output);
 
         TemplateBuilder.of()
                 .processor(WidgetSpacingProcessor.ID)
@@ -212,7 +212,7 @@ public class MTemplateProvider extends TemplateProvider {
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
-                .build(LargeFramedShowcaseBuilder.ID.getPath(), output);
+                .build(FramedShowcaseBuilder.LARGE_ID.getPath(), output);
     }
 
     public void buildRecipeTemplates(BookOutput output) {

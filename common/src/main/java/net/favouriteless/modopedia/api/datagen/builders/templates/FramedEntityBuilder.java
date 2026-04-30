@@ -1,18 +1,20 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.*;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 
-public class MediumFramedEntityBuilder extends TemplateComponentBuilder {
+public class FramedEntityBuilder extends TemplateComponentBuilder {
 
-    public static final ResourceLocation ID = Modopedia.id("medium_framed_entity");
+    public static final ResourceLocation LARGE_ID = Modopedia.id("large_framed_entity");
+    public static final ResourceLocation MEDIUM_ID = Modopedia.id("medium_framed_entity");
 
     private final Either<EntityType<?>, String> entity;
     private Either<CompoundTag, String> tag;
@@ -20,80 +22,88 @@ public class MediumFramedEntityBuilder extends TemplateComponentBuilder {
     private Either<Float, String> scale;
     private Either<Integer, String> width;
 
-    private MediumFramedEntityBuilder(EntityType<?> type) {
-        super(ID);
+    private FramedEntityBuilder(EntityType<?> type, ResourceLocation id) {
+        super(id);
         this.entity = Either.left(type);
     }
 
-    private MediumFramedEntityBuilder(String type) {
-        super(ID);
+    private FramedEntityBuilder(String type, ResourceLocation id) {
+        super(id);
         this.entity = Either.right(type);
     }
 
-    public static MediumFramedEntityBuilder of(EntityType<?> type) {
-        return new MediumFramedEntityBuilder(type);
+    public static FramedEntityBuilder large(EntityType<?> type) {
+        return new FramedEntityBuilder(type, LARGE_ID);
     }
 
-    public static MediumFramedEntityBuilder of(String type) {
-        return new MediumFramedEntityBuilder(type);
+    public static FramedEntityBuilder large(String type) {
+        return new FramedEntityBuilder(type, LARGE_ID);
     }
 
-    @Override
-    public MediumFramedEntityBuilder x(int x) {
-        return (MediumFramedEntityBuilder)super.x(x);
+    public static FramedEntityBuilder medium(EntityType<?> type) {
+        return new FramedEntityBuilder(type, MEDIUM_ID);
     }
 
-    @Override
-    public MediumFramedEntityBuilder x(String x) {
-        return (MediumFramedEntityBuilder)super.x(x);
-    }
-
-    @Override
-    public MediumFramedEntityBuilder y(int y) {
-        return (MediumFramedEntityBuilder)super.y(y);
+    public static FramedEntityBuilder medium(String type) {
+        return new FramedEntityBuilder(type, MEDIUM_ID);
     }
 
     @Override
-    public MediumFramedEntityBuilder y(String y) {
-        return (MediumFramedEntityBuilder)super.y(y);
+    public FramedEntityBuilder x(int x) {
+        return (FramedEntityBuilder)super.x(x);
     }
 
-    public MediumFramedEntityBuilder tag(CompoundTag tag) {
+    @Override
+    public FramedEntityBuilder x(String x) {
+        return (FramedEntityBuilder)super.x(x);
+    }
+
+    @Override
+    public FramedEntityBuilder y(int y) {
+        return (FramedEntityBuilder)super.y(y);
+    }
+
+    @Override
+    public FramedEntityBuilder y(String y) {
+        return (FramedEntityBuilder)super.y(y);
+    }
+
+    public FramedEntityBuilder tag(CompoundTag tag) {
         this.tag = Either.left(tag);
         return this;
     }
 
-    public MediumFramedEntityBuilder tag(String tag) {
+    public FramedEntityBuilder tag(String tag) {
         this.tag = Either.right(tag);
         return this;
     }
 
-    public MediumFramedEntityBuilder width(int width) {
+    public FramedEntityBuilder width(int width) {
         this.width = Either.left(width);
         return this;
     }
 
-    public MediumFramedEntityBuilder width(String width) {
+    public FramedEntityBuilder width(String width) {
         this.width = Either.right(width);
         return this;
     }
 
-    public MediumFramedEntityBuilder scale(float scale) {
+    public FramedEntityBuilder scale(float scale) {
         this.scale = Either.left(scale);
         return this;
     }
 
-    public MediumFramedEntityBuilder scale(String reference) {
+    public FramedEntityBuilder scale(String reference) {
         this.scale = Either.right(reference);
         return this;
     }
 
-    public MediumFramedEntityBuilder offsetY(float offsetY) {
+    public FramedEntityBuilder offsetY(float offsetY) {
         this.offsetY = Either.left(offsetY);
         return this;
     }
 
-    public MediumFramedEntityBuilder offsetY(String reference) {
+    public FramedEntityBuilder offsetY(String reference) {
         this.offsetY = Either.right(reference);
         return this;
     }

@@ -1,6 +1,8 @@
 package net.favouriteless.modopedia.api.text;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 
 import java.util.HexFormat;
 
@@ -132,6 +134,28 @@ public class FormattedStringBuilder {
 
     public FormattedStringBuilder colour(int colour, String text) {
         return colour(colour).then(text).stopColour();
+    }
+
+    public FormattedStringBuilder colour(ChatFormatting colour) {
+        Integer c = colour.getColor();
+        if(c == null)
+            throw new IllegalArgumentException("ChatFormatting with a null colour was used as a colour");
+        return colour(c);
+    }
+
+    public FormattedStringBuilder colour(ChatFormatting colour, String text) {
+        Integer c = colour.getColor();
+        if(c == null)
+            throw new IllegalArgumentException("ChatFormatting with a null colour was used as a colour");
+        return colour(c, text);
+    }
+
+    public FormattedStringBuilder colour(DyeColor colour) {
+        return colour(colour.getTextColor());
+    }
+
+    public FormattedStringBuilder colour(DyeColor colour, String text) {
+        return colour(colour.getTextColor(), text);
     }
 
     public FormattedStringBuilder stopColour() {
