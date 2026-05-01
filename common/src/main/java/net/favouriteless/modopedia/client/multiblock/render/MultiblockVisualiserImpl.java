@@ -7,6 +7,7 @@ import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
 import net.favouriteless.modopedia.api.multiblock.MultiblockVisualiser;
 import net.favouriteless.modopedia.api.multiblock.StateMatcher;
 import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
+import net.favouriteless.modopedia.client.screens.ConfigureMultiblockScreen;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -75,6 +76,16 @@ public class MultiblockVisualiserImpl implements MultiblockVisualiser {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean tryOpenConfigureScreen(Player player) {
+        MultiblockInstance multiblock = getSelected(player);
+        if(multiblock == null)
+            return false;
+
+        Minecraft.getInstance().setScreen(new ConfigureMultiblockScreen(multiblock));
+        return true;
     }
 
     public void tick() {

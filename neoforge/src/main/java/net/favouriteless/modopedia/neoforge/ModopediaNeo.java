@@ -1,25 +1,16 @@
 package net.favouriteless.modopedia.neoforge;
 
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.book.Book;
-import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.common.CommonConfig;
 import net.favouriteless.modopedia.common.CommonEvents;
 import net.favouriteless.modopedia.common.ServerConfig;
-import net.favouriteless.modopedia.common.init.MDataComponents;
-import net.favouriteless.modopedia.common.init.MItems;
 import net.favouriteless.modopedia.common.network.packets.client.*;
 import net.favouriteless.modopedia.platform.services.NeoCommonRegistryHelper;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.TabVisibility;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -27,7 +18,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 @Mod(Modopedia.MOD_ID)
-@EventBusSubscriber(modid = Modopedia.MOD_ID, bus = Bus.MOD)
+@EventBusSubscriber(modid = Modopedia.MOD_ID)
 public class ModopediaNeo {
 
     public ModopediaNeo(IEventBus bus, ModContainer container) {

@@ -1,15 +1,1 @@
-- ADDED: Multiblock preview feature. See docs to enable it.
-- ADDED: New helpers and overloads for various datagen methods.
-
-- FIXED: FormattedStringBuilder#colour truncates leading zeros from it's output
-
-- CHANGED: Updated Javadoc formatting to be more consistent and readable.
-- CHANGED: The following datagen API builders/methods have been merged and renamed:
-  - LargeFramedEntityBuilder#of -> FramedEntityBuilder#large
-  - MediumFramedEntityBuilder#of -> FramedEntityBuilder#medium
-  - LargeFramedImageBuilder#of -> FramedImageBuilder#large
-  - MediumFramedImageBuilder#of -> FramedImageBuilder#medium
-  - LargeFramedMultiblockBuilder#of -> FramedMultiblockBuilder#large
-  - MediumFramedMultiblockBuilder#of -> FramedMultiblockBuilder#medium
-  - LargeFramedShowcaseBuilder#of -> FramedShowcaseBuilder#large
-  - MediumFramedShowcaseBuilder#of -> FramedShowcaseBuilder#medium
+- FIXED: Crash on dedicated servers

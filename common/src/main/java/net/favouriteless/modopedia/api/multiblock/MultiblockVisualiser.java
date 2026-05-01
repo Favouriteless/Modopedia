@@ -1,6 +1,7 @@
 package net.favouriteless.modopedia.api.multiblock;
 
 import net.favouriteless.modopedia.client.multiblock.render.MultiblockVisualiserImpl;
+import net.favouriteless.modopedia.client.screens.ConfigureMultiblockScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
@@ -41,5 +42,13 @@ public interface MultiblockVisualiser {
      * @return The first {@link MultiblockInstance} the given player is looking at, or null if none were found.
      */
     @Nullable MultiblockInstance getSelected(Player player);
+
+    /**
+     * Attempts to open a {@link ConfigureMultiblockScreen} for the given {@link Player}. If the player is not looking
+     * at any {@link MultiblockInstance}, no screen will be opened.
+     *
+     * @return {@code true} if a screen was opened, otherwise {@code false}.
+     */
+    boolean tryOpenConfigureScreen(Player player);
 
 }

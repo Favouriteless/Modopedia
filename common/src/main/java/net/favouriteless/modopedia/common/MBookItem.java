@@ -1,14 +1,11 @@
 package net.favouriteless.modopedia.common;
 
 import net.favouriteless.modopedia.api.book.Book;
-import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
 import net.favouriteless.modopedia.api.multiblock.MultiblockVisualiser;
 import net.favouriteless.modopedia.api.registries.common.BookRegistry;
 import net.favouriteless.modopedia.client.BookOpenHandler;
-import net.favouriteless.modopedia.client.screens.ConfigureMultiblockScreen;
 import net.favouriteless.modopedia.common.init.MDataComponents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,15 +30,8 @@ public class MBookItem extends Item {
         if(!level.isClientSide)
             return InteractionResultHolder.consume(player.getItemInHand(hand));
 
-        // This doesn't need to be a label, I just wanted an excuse to use labels. they're cool :(
-        out: if(player.isShiftKeyDown()) {
-            MultiblockInstance multiblock = MultiblockVisualiser.get().getSelected(player);
-            if(multiblock == null)
-                break out;
-
-            Minecraft.getInstance().setScreen(new ConfigureMultiblockScreen(multiblock));
+        if(player.isShiftKeyDown() && MultiblockVisualiser.get().tryOpenConfigureScreen(player))
             return InteractionResultHolder.success(player.getItemInHand(hand));
-        }
 
         ItemStack stack = player.getItemInHand(hand);
         if(stack.has(MDataComponents.BOOK.get()))
