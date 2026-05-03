@@ -2,6 +2,7 @@ package net.favouriteless.modopedia.api.multiblock;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -11,36 +12,53 @@ import java.util.Optional;
 public interface BEStateMatcher<T extends BlockEntity> extends StateMatcher {
 
     /**
-     * @return The {@link BlockEntityType} this StateMatcher is matching against. If the BE is not of this type,
-     * matching will be skipped.
+     * @return The {@link BlockEntityType} this StateMatcher is matching against. {@code null} is allowed, but the
+     * matcher will not be able to use the type safe methods.
      */
-    BlockEntityType<? extends T> getType();
+    @Nullable default BlockEntityType<? extends T> getType() {
+        return null;
+    }
 
     /**
      * Check if a given {@link BlockEntity} is a valid match.
      *
-     * @param other the {@link BlockEntity} being checked.
+     * @param be the {@link BlockEntity} being checked.
      *
      * @return {@code true} if the BEs match, otherwise {@code false}.
      */
-    boolean matches(T other);
+    default boolean matches(T be) {
+        return false;
+    }
+
+    /**
+     * Check if a given {@link BlockEntity} is a valid match. If possible, overriding
+     * {@link BEStateMatcher#matches(BlockEntity)} is preferred.
+     *
+     * @param be the {@link BlockEntity} being checked.
+     *
+     * @return {@code true} if the BEs match, otherwise {@code false}.
+     */
+    default boolean genericMatches(BlockEntity be) {
+        return cast(be).map(this::matches).orElse(false);
+    }
 
     /**
      * Called immediately after a {@link BlockEntity} is first created in a {@link MultiblockInstance}. Use this method
      * to do any setup such as setting fields.
      */
-    void postInit(T be);
+    default void init(T be) {}
 
-    default void init(BlockEntity be) {
-        cast(be).ifPresent(this::postInit);
-    }
-
-    default boolean tryMatches(BlockEntity other) {
-        return cast(other).map(this::matches).orElse(false);
+    /**
+     * Called immediately after a {@link BlockEntity} is first created in a {@link MultiblockInstance}. Use this method
+     * to do any setup such as setting fields. If possible, overriding {@link BEStateMatcher#init(BlockEntity)} is
+     * preferred.
+     */
+    default void genericInit(BlockEntity be) {
+        cast(be).ifPresent(this::init);
     }
 
     @SuppressWarnings("unchecked")
-    default Optional<T> cast(BlockEntity be) {
+    private Optional<T> cast(BlockEntity be) {
         return getType() == be.getType() ? Optional.of((T)be) : Optional.empty();
     }
 

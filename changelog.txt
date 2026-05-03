@@ -1,1 +1,1 @@
-- FIXED: Crash on dedicated servers
+- CHANGED: Breaking API change to BEStateMatcher, hopefully before anyone had time to be dependent on it.

@@ -2,10 +2,7 @@ package net.favouriteless.modopedia.client.multiblock.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.favouriteless.modopedia.api.multiblock.Multiblock;
-import net.favouriteless.modopedia.api.multiblock.MultiblockInstance;
-import net.favouriteless.modopedia.api.multiblock.MultiblockVisualiser;
-import net.favouriteless.modopedia.api.multiblock.StateMatcher;
+import net.favouriteless.modopedia.api.multiblock.*;
 import net.favouriteless.modopedia.client.multiblock.PlacedMultiblock;
 import net.favouriteless.modopedia.client.screens.ConfigureMultiblockScreen;
 import net.minecraft.client.Camera;
@@ -124,9 +121,12 @@ public class MultiblockVisualiserImpl implements MultiblockVisualiser {
 
                 MatcherResult p = MatcherResult.PARTIAL_MATCH;
                 MatcherResult result = matches(state, matcher);
-                if(result == MatcherResult.FULL_MATCH)
-                    continue;
 
+                if(result == MatcherResult.FULL_MATCH) {
+                    if(!(matcher instanceof BEStateMatcher<?> beMatcher) || beMatcher.genericMatches(level.getBlockEntity(pos)))
+                        continue;
+                    result = MatcherResult.PARTIAL_MATCH;
+                }
 
                 VoxelShape shape = !state.isAir() ? state.getShape(level, pos) : instance.getBlockState(local).getShape(level, local);
                 if(shape.isEmpty())
