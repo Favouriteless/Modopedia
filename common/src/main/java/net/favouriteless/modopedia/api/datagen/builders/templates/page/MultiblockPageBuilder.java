@@ -1,12 +1,14 @@
 package net.favouriteless.modopedia.api.datagen.builders.templates.page;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.mojang.datafixers.util.Either;
 import net.favouriteless.modopedia.Modopedia;
-import net.favouriteless.modopedia.api.multiblock.Multiblock;
 import net.favouriteless.modopedia.api.datagen.builders.page_components.TemplateComponentBuilder;
-
-import net.minecraft.resources.*;
+import net.favouriteless.modopedia.api.multiblock.Multiblock;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 
 public class MultiblockPageBuilder extends TemplateComponentBuilder {
 
@@ -23,6 +25,7 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
     private Either<Float, String> scale;
     private Either<Float, String> viewAngle;
     private Either<Boolean, String> noOffsets;
+    private Either<Boolean, String> previewable;
 
     protected MultiblockPageBuilder(String text) {
         super(ID);
@@ -143,6 +146,20 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
         return this;
     }
 
+    public MultiblockPageBuilder previewable(boolean previewable) {
+        this.previewable = Either.left(previewable);
+        return this;
+    }
+
+    public  MultiblockPageBuilder previewable(String previewable) {
+        this.previewable = Either.right(previewable);
+        return this;
+    }
+
+    public MultiblockPageBuilder previewable() {
+        return previewable(true);
+    }
+
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         json.add("text", new JsonPrimitive(text));
@@ -164,6 +181,8 @@ public class MultiblockPageBuilder extends TemplateComponentBuilder {
             json.add("view_angle", resolveNum(viewAngle));
         if(noOffsets != null)
             json.add("no_offsets", resolveBool(noOffsets));
+        if(previewable != null)
+            json.add("previewable", resolveBool(previewable));
     }
 
 }

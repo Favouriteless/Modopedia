@@ -98,6 +98,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .scale("#scale")
                                 .noOffsets("#no_offsets")
                                 .viewAngle("#view_angle")
+                                .previewable("#previewable")
                 )
                 .defaultValue("width", 50)
                 .defaultValue("widget", "medium_frame")
@@ -119,6 +120,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .scale("#scale")
                                 .noOffsets("#no_offsets")
                                 .viewAngle("#view_angle")
+                                .previewable("#previewable")
                 )
                 .defaultValue("width", 100)
                 .defaultValue("widget", "large_frame")
@@ -343,7 +345,8 @@ public class MTemplateProvider extends TemplateProvider {
                                 .offsetY("#offset_y")
                                 .scale("#scale")
                                 .viewAngle("#view_angle")
-                                .noOffsets("#no_offsets"),
+                                .noOffsets("#no_offsets")
+                                .previewable("#previewable"),
                         TextBuilder.of("#text")
                                 .y("#p_text_y")
                                 .width("#p_width")
@@ -363,6 +366,7 @@ public class MTemplateProvider extends TemplateProvider {
                                 .scale("#scale")
                                 .viewAngle("#view_angle")
                                 .noOffsets(true)
+                                .previewable("#previewable")
                 )
                 .defaultValue("height", 100)
                 .build(BlockPageBuilder.ID.getPath(), output);

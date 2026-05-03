@@ -22,6 +22,7 @@ public class MultiblockBuilder extends PageComponentBuilder {
     private Either<Float, String> scale;
     private Either<Float, String> viewAngle;
     private Either<Boolean, String> noOffsets;
+    private Either<Boolean, String> previewable;
 
     private MultiblockBuilder() {
         super(MultiblockPageComponent.ID);
@@ -141,6 +142,20 @@ public class MultiblockBuilder extends PageComponentBuilder {
         return this;
     }
 
+    public MultiblockBuilder previewable(boolean previewable) {
+        this.previewable = Either.left(previewable);
+        return this;
+    }
+
+    public  MultiblockBuilder previewable(String previewable) {
+        this.previewable = Either.right(previewable);
+        return this;
+    }
+
+    public MultiblockBuilder previewable() {
+        return previewable(true);
+    }
+
     @Override
     protected void build(JsonObject json, RegistryOps<JsonElement> ops) {
         if(multiblock == null && multiblockId == null)
@@ -164,6 +179,8 @@ public class MultiblockBuilder extends PageComponentBuilder {
             json.add("view_angle", resolveNum(viewAngle));
         if(noOffsets != null)
             json.add("no_offsets", resolveBool(noOffsets));
+        if(previewable != null)
+            json.add("previewable", resolveBool(previewable));
     }
 
 }

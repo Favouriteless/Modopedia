@@ -6,6 +6,7 @@
       "no_offsets": true,
       "offset_x": "#offset_x",
       "offset_y": "#offset_y",
+      "previewable": "#previewable",
       "scale": "#scale",
       "template": "modopedia:page/multiblock",
       "text": "#text",
