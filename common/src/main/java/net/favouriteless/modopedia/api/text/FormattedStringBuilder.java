@@ -129,7 +129,7 @@ public class FormattedStringBuilder {
     }
 
     public FormattedStringBuilder colour(int colour) {
-        return apply("c", "#" + HEX_FORMAT.toHexDigits(colour).toUpperCase());
+        return apply("c", "#" + HEX_FORMAT.toHexDigits(colour, 6).toUpperCase());
     }
 
     public FormattedStringBuilder colour(int colour, String text) {
