@@ -1,1 +1,1 @@
-- CHANGED: Fixed FormattedStringBuilder#colour (again)
+- ADDED: zh_cn translations for the multiblock previewer.
